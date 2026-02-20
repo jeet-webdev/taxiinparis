@@ -1,11 +1,10 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
-import type { ReactNode } from 'react';
-import { Box, useMediaQuery, useTheme } from '@mui/material';
-import AdminNavbar from './Header/AdminNavbar';
-import Sidebar from './Sidebar';
-
+import React, { useState } from "react";
+import type { ReactNode } from "react";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
+import AdminNavbar from "./Header/AdminNavbar";
+import Sidebar from "./Sidebar";
 
 interface AdminAppLayoutProps {
   children: ReactNode;
@@ -13,7 +12,9 @@ interface AdminAppLayoutProps {
 
 const AdminAppLayout: React.FC<AdminAppLayoutProps> = ({ children }) => {
   const theme = useTheme();
-  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"), {
+    defaultMatches: true,
+  });
 
   // 🔑 desktop & mobile states separated
   const [desktopOpen, setDesktopOpen] = useState(true);
@@ -28,21 +29,21 @@ const AdminAppLayout: React.FC<AdminAppLayoutProps> = ({ children }) => {
   };
 
   return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+    <Box sx={{ display: "flex", flexDirection: "column", height: "100vh" }}>
       <AdminNavbar onMenuClick={handleToggleSidebar} />
 
       {/* 🔑 MAIN ROW */}
-      <Box sx={{ display: 'flex', flexGrow: 1, overflow: 'hidden' }}>
+      <Box sx={{ display: "flex", flexGrow: 1, overflow: "hidden" }}>
         {/* SIDEBAR */}
         <Box
           sx={{
-            transition: 'width 0.25s ease',
+            transition: "width 0.25s ease",
             flexShrink: 0,
           }}
         >
           <Sidebar
             open={isDesktop ? desktopOpen : mobileOpen}
-            variant={isDesktop ? 'permanent' : 'temporary'}
+            variant={isDesktop ? "permanent" : "temporary"}
             onClose={() => setMobileOpen(false)}
           />
         </Box>
@@ -53,8 +54,8 @@ const AdminAppLayout: React.FC<AdminAppLayoutProps> = ({ children }) => {
           sx={{
             flexGrow: 1,
             p: 3,
-            overflow: 'auto',
-            backgroundColor: '#f9fafb',
+            overflow: "auto",
+            backgroundColor: "#f9fafb",
           }}
         >
           {children}

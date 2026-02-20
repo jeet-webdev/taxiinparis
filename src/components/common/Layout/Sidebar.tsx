@@ -32,12 +32,12 @@ export const SIDEBAR_MENU = [
     section: '',
     items: [
       {
-        name: 'Pages',
+        name: 'Blogs',
         link: '/admin/pages',
         icon: <RiPagesLine size={20}/>,
       },
       {
-        name: 'Page Editor',
+        name: 'Pages',
         icon: <MdCreditScore size={20}/>,
         children: [
           { name: 'Home Page', link: '/admin/home-editor' },

@@ -1,12 +1,13 @@
+import ServicesSection from "@/src/features/page-editor/ServicesPage/components/ServicesSection";
+import { ServicesPageFormValues } from "@/src/features/page-editor/ServicesPage/types/services.types";
 import type { Metadata } from "next";
 import { revalidatePath } from "next/cache";
 // import { prisma } from "@/src/lib/prisma";
-import AboutSection from "@/src/features/page-editor/AboutUs/components/AboutSection";
-import { AboutPageFormValues } from "@/src/features/page-editor/AboutUs/types/about.types";
+
 
 export const metadata: Metadata = {
-  title: "Edit About Page | Admin Dashboard",
-  description: "Edit and manage About Us page content.",
+  title: "Edit Service Page | Admin Dashboard",
+  description: "Edit and manage Service page content.",
   robots: {
     index: false,   // important for admin pages
     follow: false,
@@ -14,13 +15,13 @@ export const metadata: Metadata = {
 };
 
 
-export default async function AboutEditorPage() {
+export default async function ServiceEditorPage() {
   // const page = await prisma.page.findFirst({
-  //   where: { slug: "about-editor" },
+  //   where: { slug: "services-editor" },
   // });
-  const page: AboutPageFormValues = {
+  const page: ServicesPageFormValues = {
     title: "Get to Know Us - Taxi in Paris",
-    headerImage: null,
+    servicesHeaderImage: null,
     content: "Taxi in Paris is your best choice...",
     metaTitle: "Book Paris Taxi Service at Cheapest Fare | Taxis in Paris",
     metaDescription: "string",
@@ -29,7 +30,7 @@ export default async function AboutEditorPage() {
   };
 
 
-  // async function updateAboutSection(id: string, content: string) {
+  // async function updateServicesSection(id: string, content: string) {
   //   "use server";
 
   //   await prisma.page.update({
@@ -40,8 +41,8 @@ export default async function AboutEditorPage() {
   //     },
   //   });
 
-  //   // if you have public /about page
-  //   revalidatePath("/about-editor");
+  //   // if you have public /services page
+  //   revalidatePath("/services-editor");
   // }
-  return <AboutSection defaultValues={page} />;
+  return <ServicesSection defaultValues={page} />;
 }
