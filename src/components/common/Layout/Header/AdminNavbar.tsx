@@ -1,5 +1,4 @@
 'use client';
-import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import {
   AppBar,
   Box,
@@ -13,10 +12,9 @@ import {
 } from '@mui/material';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import AppButton from '../Ui/Button/AppButton';
 import { useState } from 'react';
-import { useLogout } from '@/features/auth/hooks/useLogout';
-
+import AppButton from '../../Ui/Admin/AppButton';
+import { MdOutlineMenuOpen } from "react-icons/md";
 interface NavbarProps {
   onMenuClick: () => void;
 }
@@ -26,11 +24,11 @@ const AdminNavbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
   const router = useRouter();
 
   // logout hook
-  const { logout, isPending } = useLogout();
+  // const { logout, isPending } = useLogout();
 
   const handleConfirm = async () => {
     try {
-      await logout();
+      // await logout();
       setOpen(false);
     } catch (error) {
       console.log(error);
@@ -75,15 +73,15 @@ const AdminNavbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
                 height: 44,
               }}
             >
-              <MenuOpenIcon sx={{ width: 20, height: 20 }} />
+              <MdOutlineMenuOpen size={40}/>
             </Button>
 
             <Image
-              src="/assets/images/logo.png"
+              src="/assets/images/logo.jpg"
               onClick={() => {
-                router.push('/admin/dashboard');
+                router.push('/admin');
               }}
-              alt="Perennialmath Logo"
+              alt="Taxxiinparis Logo"
               width={120}
               height={30}
               style={{
@@ -114,8 +112,8 @@ const AdminNavbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
             Cancel
           </AppButton>
           <AppButton
-            disabled={isPending}
-            loading={isPending}
+            // disabled={isPending}
+            // loading={isPending}
             variant="contained"
             onClick={handleConfirm}
             autoFocus

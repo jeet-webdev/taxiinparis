@@ -7,11 +7,11 @@ import AdminNavbar from './Header/AdminNavbar';
 import Sidebar from './Sidebar';
 
 
-interface AppLayoutProps {
+interface AdminAppLayoutProps {
   children: ReactNode;
 }
 
-const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
+const AdminAppLayout: React.FC<AdminAppLayoutProps> = ({ children }) => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
@@ -64,4 +64,4 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   );
 };
 
-export default AppLayout;
+export default AdminAppLayout;

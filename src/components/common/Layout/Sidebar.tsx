@@ -13,16 +13,13 @@ import {
   Tooltip,
   IconButton,
 } from '@mui/material';
-import DescriptionIcon from '@mui/icons-material/Description';
-import ExpandLess from '@mui/icons-material/ExpandLess';
-import ExpandMore from '@mui/icons-material/ExpandMore';
 
+import { IoIosArrowUp,IoIosArrowDown } from "react-icons/io";
 import { useRouter, usePathname } from 'next/navigation';
-import PersonIcon from '@mui/icons-material/Person';
-import { BarChart, Event, EmojiEvents, Category } from '@mui/icons-material';
 import { GridCloseIcon } from '@mui/x-data-grid';
 import Collapse from '@mui/material/Collapse';
-import { COMPETITION_PAGES } from '@/features/pages/CompetitionPage/config/competitionPages';
+import { RiPagesLine } from "react-icons/ri";
+import { MdCreditScore } from "react-icons/md";
 interface SidebarProps {
   open: boolean;
   onClose: () => void;
@@ -30,74 +27,24 @@ interface SidebarProps {
 }
 
 export const SIDEBAR_MENU = [
+
   {
-    section: 'Menu Items',
+    section: '',
     items: [
-      {
-        name: 'Users',
-        link: '/admin/users',
-        icon: <PersonIcon fontSize="small" />,
-      },
-      {
-        name: 'Season',
-        link: '/admin/season',
-        icon: <PersonIcon fontSize="small" />,
-      },
-      {
-        name: 'Grades',
-        link: '/admin/grades',
-        icon: <PersonIcon fontSize="small" />,
-      },
-      {
-        name: 'Level',
-        link: '/admin/level',
-        icon: <PersonIcon fontSize="small" />,
-      },
-      {
-        name: 'Questions',
-        link: '/admin/questions',
-        icon: <PersonIcon fontSize="small" />,
-      },
-      {
-        name: 'Events',
-        link: '/admin/events',
-        icon: <Event fontSize="small" />,
-      },
-      {
-        name: 'Award Categories',
-        link: '/admin/award-categories',
-        icon: <Category fontSize="small" />,
-      },
-      {
-        name: 'Awards',
-        link: '/admin/awards',
-        icon: <EmojiEvents fontSize="small" />,
-      },
-    ],
-  },
-  {
-    section: 'Extra Items',
-    items: [
-      {
-        name: 'Reports',
-        link: '/admin/reports',
-        icon: <BarChart fontSize="small" />,
-      },
       {
         name: 'Pages',
-        icon: <DescriptionIcon fontSize="small" />,
+        link: '/admin/pages',
+        icon: <RiPagesLine size={20}/>,
+      },
+      {
+        name: 'Page Editor',
+        icon: <MdCreditScore size={20}/>,
         children: [
-          { name: 'Home Page', link: '/admin/pages/home' },
-          { name: 'About Page', link: '/admin/pages/about' },
-          { name: 'Contact Page', link: '/admin/pages/contact' },
-          { name: 'Faq Page', link: '/admin/pages/faq' },
-          { name: 'Privacy Policy Page', link: '/admin/pages/privacy' },
-          { name: 'Return Policy Page', link: '/admin/pages/return-policy' },
-          { name: 'Terms of Service Page', link: '/admin/pages/terms' },
-          ...Object.values(COMPETITION_PAGES).map((page) => ({
-            name: page.title.replace(' Page', ''),
-            link: `/admin/pages/${page.slug}`,
-          })),
+          { name: 'Home Page', link: '/admin/home-editor' },
+          { name: 'About Us Page', link: '/admin/about-editor' },
+          { name: 'Services Page', link: '/admin/services-editor' },
+          { name: 'Terms Page', link: '/admin/terms-editor' },
+          
         ],
       },
     ],
@@ -161,7 +108,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose, variant }) => {
       )}
 
       {SIDEBAR_MENU.map((group, index) => (
-        <Box key={group.section} sx={{ mb: 2 }}>
+        <Box key={group.section || index} sx={{ mb: 2 }}>
           {index > 0 && <Divider sx={{ mb: 2 }} />}
 
           {open && (
@@ -204,7 +151,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose, variant }) => {
 
                       <ListItemText primary={item.name} sx={{ opacity: open ? 1 : 0 }} />
 
-                      {open && (isOpen ? <ExpandLess /> : <ExpandMore />)}
+                      {open && (isOpen ? <IoIosArrowUp />: <IoIosArrowDown />)}
                     </ListItemButton>
 
                     {/* 🔽 CHILD LINKS */}
