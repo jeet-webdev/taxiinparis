@@ -1,5 +1,5 @@
-import TermsSection from "@/src/features/page-editor/TermsPage/components/TermsSection";
-import { TermsPageFormValues } from "@/src/features/page-editor/TermsPage/types/terms.types";
+import TermsSection from "@/src/feature/page-editor/TermsPage/components/TermsSection";
+import { TermsPageFormValues } from "@/src/feature/page-editor/TermsPage/types/terms.types";
 import type { Metadata } from "next";
 import { revalidatePath } from "next/cache";
 // import { prisma } from "@/src/lib/prisma";

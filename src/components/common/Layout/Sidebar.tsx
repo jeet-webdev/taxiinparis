@@ -33,7 +33,7 @@ export const SIDEBAR_MENU = [
     items: [
       {
         name: 'Blogs',
-        link: '/admin/pages',
+        link: '/admin/blogs',
         icon: <RiPagesLine size={20}/>,
       },
       {

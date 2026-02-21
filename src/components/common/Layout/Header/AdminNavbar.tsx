@@ -77,13 +77,13 @@ const AdminNavbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
             </Button>
 
             <Image
-              src="/assets/images/logo.jpg"
+              src="/assets/images/flat-taxi-logo.jpg"
               onClick={() => {
                 router.push('/admin');
               }}
               alt="Taxxiinparis Logo"
-              width={120}
-              height={30}
+              width={60}
+              height={60}
               style={{
                 objectFit: 'contain',
                 cursor: 'pointer',

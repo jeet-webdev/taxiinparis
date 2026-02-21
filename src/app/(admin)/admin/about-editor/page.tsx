@@ -1,8 +1,9 @@
+import AboutSection from "@/src/feature/page-editor/AboutUs/components/AboutSection";
+import { AboutPageFormValues } from "@/src/feature/page-editor/AboutUs/types/about.types";
 import type { Metadata } from "next";
 import { revalidatePath } from "next/cache";
 // import { prisma } from "@/src/lib/prisma";
-import AboutSection from "@/src/features/page-editor/AboutUs/components/AboutSection";
-import { AboutPageFormValues } from "@/src/features/page-editor/AboutUs/types/about.types";
+
 
 export const metadata: Metadata = {
   title: "Edit About Page | Admin Dashboard",

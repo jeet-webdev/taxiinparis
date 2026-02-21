@@ -1,5 +1,5 @@
-import ServicesSection from "@/src/features/page-editor/ServicesPage/components/ServicesSection";
-import { ServicesPageFormValues } from "@/src/features/page-editor/ServicesPage/types/services.types";
+import ServicesSection from "@/src/feature/page-editor/ServicesPage/components/ServicesSection";
+import { ServicesPageFormValues } from "@/src/feature/page-editor/ServicesPage/types/services.types";
 import type { Metadata } from "next";
 import { revalidatePath } from "next/cache";
 // import { prisma } from "@/src/lib/prisma";

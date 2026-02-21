@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { revalidatePath } from "next/cache";
 // import { prisma } from "@/src/lib/prisma";
-import { HomePageFormValues } from "@/src/features/page-editor/HomePage/types/home.types";
-import HomePageSection from "@/src/features/page-editor/HomePage/components/HomeSection";
+import { HomePageFormValues } from "@/src/feature/page-editor/HomePage/types/home.types";
+import HomePageSection from "@/src/feature/page-editor/HomePage/components/HomeSection";
 
 export const metadata: Metadata = {
   title: "Edit Home Page | Admin Dashboard",
