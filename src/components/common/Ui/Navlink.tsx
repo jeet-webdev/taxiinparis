@@ -9,9 +9,18 @@ interface NavLinkProps {
 export default function NavLink({ href, children }: NavLinkProps) {
   return (
     <li>
-      <Link
+        <Link
         href={href}
-        className="hover:text-amber-400 transition-colors duration-200"
+        className="
+          text-[#C8A96A]
+          text-base
+          tracking-wide
+          transition-all
+          duration-300
+          font-medium
+          hover:text-[#E6C27A]
+          hover:drop-shadow-[0_0_6px_rgba(200,169,106,0.6)]
+        "
       >
         {children}
       </Link>
