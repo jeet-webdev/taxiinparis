@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   Drawer,
   ListItemButton,
@@ -8,43 +8,40 @@ import {
   Typography,
   Box,
   List,
-  Divider,
   ListItemIcon,
   Tooltip,
   IconButton,
-} from '@mui/material';
+} from "@mui/material";
 
-import { IoIosArrowUp,IoIosArrowDown } from "react-icons/io";
-import { useRouter, usePathname } from 'next/navigation';
-import { GridCloseIcon } from '@mui/x-data-grid';
-import Collapse from '@mui/material/Collapse';
+import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+import { useRouter, usePathname } from "next/navigation";
+import { GridCloseIcon } from "@mui/x-data-grid";
+import Collapse from "@mui/material/Collapse";
 import { RiPagesLine } from "react-icons/ri";
 import { MdCreditScore } from "react-icons/md";
 interface SidebarProps {
   open: boolean;
   onClose: () => void;
-  variant: 'permanent' | 'temporary';
+  variant: "permanent" | "temporary";
 }
 
 export const SIDEBAR_MENU = [
-
   {
-    section: '',
+    section: "",
     items: [
       {
-        name: 'Blogs',
-        link: '/admin/blogs',
-        icon: <RiPagesLine size={20}/>,
+        name: "Blogs",
+        link: "/admin/blogs",
+        icon: <RiPagesLine size={20} />,
       },
       {
-        name: 'Pages',
-        icon: <MdCreditScore size={20}/>,
+        name: "Pages",
+        icon: <MdCreditScore size={20} />,
         children: [
-          { name: 'Home Page', link: '/admin/home-editor' },
-          { name: 'About Us Page', link: '/admin/about-editor' },
-          { name: 'Services Page', link: '/admin/services-editor' },
-          { name: 'Terms Page', link: '/admin/terms-editor' },
-          
+          { name: "Home Page", link: "/admin/home-editor" },
+          { name: "About Us Page", link: "/admin/about-editor" },
+          { name: "Services Page", link: "/admin/services-editor" },
+          { name: "Terms Page", link: "/admin/terms-editor" },
         ],
       },
     ],
@@ -62,66 +59,51 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose, variant }) => {
   const navbarHeight = 64;
 
   return (
-    <Drawer
+        <Drawer
       variant={variant}
       open={open}
       onClose={onClose}
-      ModalProps={{
-        keepMounted: true,
-      }}
-      role="navigation"
-      aria-label="Main sidebar navigation"
       sx={{
-        width: variant === 'permanent' ? (open ? 240 : 64) : 240,
+        width: open ? 260 : 72,
         flexShrink: 0,
-
-        '& .MuiDrawer-paper': {
-          width: variant === 'permanent' ? (open ? 240 : 64) : '100vw',
-          maxWidth: 240,
-          boxSizing: 'border-box',
-
-          // 🔑 DESKTOP vs MOBILE
-          top: variant === 'temporary' ? 0 : `${navbarHeight}px`,
-          height: variant === 'temporary' ? '100vh' : `calc(100vh - ${navbarHeight}px)`,
-
-          backgroundColor: '#F5F6FA',
-          borderTop: variant === 'temporary' ? 'none' : '2px solid #e7e9ed',
-          px: open ? 1 : 0.5,
-          transition: 'width 0.25s ease',
-          overflowX: 'hidden',
+        "& .MuiDrawer-paper": {
+          width: open ? 260 : 72,
+          transition: "all 0.25s ease",
+          boxSizing: "border-box",
+          top: variant === "temporary" ? 0 : `${navbarHeight}px`,
+          height:
+            variant === "temporary"
+              ? "100vh"
+              : `calc(100vh - ${navbarHeight}px)`,
+          background: "#F8F9FC",
+          borderRight: "1px solid #E6E8F0",
+          px: 1,
+           borderTop: "2px solid #E6E8F0",
+          overflowX: "hidden",
         },
       }}
     >
-      {variant === 'temporary' && (
-        <Box
-          sx={{
-            display: 'flex',
-            justifyContent: 'flex-end',
-            px: 1,
-            pt: 1,
-          }}
-        >
-          <IconButton onClick={onClose} aria-label="Close sidebar">
+      {/* Close Button (Mobile) */}
+      {variant === "temporary" && (
+        <Box display="flex" justifyContent="flex-end" p={1}>
+          <IconButton onClick={onClose}>
             <GridCloseIcon />
           </IconButton>
         </Box>
       )}
 
       {SIDEBAR_MENU.map((group, index) => (
-        <Box key={group.section || index} sx={{ mb: 2 }}>
-          {index > 0 && <Divider sx={{ mb: 2 }} />}
-
+        <Box key={index} sx={{ mb: 3 }}>
           {open && (
             <Typography
               variant="caption"
               sx={{
                 px: 2,
-                pt: 0.25,
                 mb: 1,
-                display: 'block',
-                color: '#4a5269',
-                fontSize: 16,
                 fontWeight: 600,
+                color: "#8A90A2",
+                textTransform: "uppercase",
+                letterSpacing: 1,
               }}
             >
               {group.section}
@@ -130,9 +112,8 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose, variant }) => {
 
           <List disablePadding>
             {group.items.map((item) => {
-              const isActive = pathname === item.link;
+              const isActive = item.link && pathname.startsWith(item.link);
 
-              // 🔹 If item has children → render dropdown
               if (item.children) {
                 const isOpen = openMenus[item.name];
 
@@ -141,43 +122,73 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose, variant }) => {
                     <ListItemButton
                       onClick={() => handleToggle(item.name)}
                       sx={{
-                        py: 0.75,
-                        borderRadius: 1.5,
+                        borderRadius: 2,
                         mb: 0.5,
-                        justifyContent: open ? 'flex-start' : 'center',
+                        px: 2,
+                        py: 1,
+                        backgroundColor: isOpen ? "#EEF2FF" : "transparent",
+                        "&:hover": {
+                          backgroundColor: "#F1F3FA",
+                        },
                       }}
                     >
-                      <ListItemIcon sx={{ minWidth: open ? 28 : 'auto' }}>{item.icon}</ListItemIcon>
+                      <ListItemIcon
+                        sx={{
+                          minWidth: 0,
+                          mr: open ? 2 : 0,
+                          justifyContent: "center",
+                        }}
+                      >
+                        {item.icon}
+                      </ListItemIcon>
 
-                      <ListItemText primary={item.name} sx={{ opacity: open ? 1 : 0 }} />
-
-                      {open && (isOpen ? <IoIosArrowUp />: <IoIosArrowDown />)}
+                      {open && (
+                        <>
+                          <ListItemText
+                            primary={item.name}
+                            primaryTypographyProps={{
+                              fontSize: 15,
+                              fontWeight: 500,
+                            }}
+                          />
+                          {isOpen ? <IoIosArrowUp /> : <IoIosArrowDown />}
+                        </>
+                      )}
                     </ListItemButton>
 
-                    {/* 🔽 CHILD LINKS */}
-                    <Collapse in={isOpen && open} timeout="auto" unmountOnExit>
-                      <List component="div" disablePadding>
+                    <Collapse in={isOpen && open}>
+                      <List disablePadding>
                         {item.children.map((child) => {
-                          const isChildActive = pathname === child.link;
+                          const isChildActive =
+                            pathname === child.link;
 
                           return (
                             <ListItemButton
                               key={child.link}
                               onClick={() => router.push(child.link)}
                               sx={{
-                                pl: 5,
-                                py: 0.75,
-                                borderRadius: 1.5,
+                                pl: 6,
+                                py: 0.8,
+                                borderRadius: 2,
                                 mb: 0.5,
-                                backgroundColor: isChildActive ? '#edeff5' : 'transparent',
-                                '&:hover': { backgroundColor: '#edeff5' },
+                                backgroundColor: isChildActive
+                                  ? "#E6E9FF"
+                                  : "transparent",
+                                borderLeft: isChildActive
+                                  ? "3px solid #F4C430"
+                                  : "3px solid transparent",
+                                "&:hover": {
+                                  backgroundColor: "#E6E9FF",
+                                },
                               }}
                             >
                               <ListItemText
                                 primary={child.name}
                                 primaryTypographyProps={{
                                   fontSize: 14,
-                                  fontWeight: isChildActive ? 600 : 400,
+                                  fontWeight: isChildActive
+                                    ? 600
+                                    : 400,
                                 }}
                               />
                             </ListItemButton>
@@ -189,30 +200,58 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose, variant }) => {
                 );
               }
 
-              // 🔹 Normal menu item (no children)
               const button = (
                 <ListItemButton
-                  key={item.link}
-                  onClick={() => router.push(item.link)}
+                key={item.link}
+                  onClick={() => router.push(item.link!)}
                   sx={{
-                    py: 0.75,
-                    borderRadius: 1.5,
+                    borderRadius: 2,
                     mb: 0.5,
-                    justifyContent: open ? 'flex-start' : 'center',
-                    backgroundColor: isActive ? '#edeff5' : 'transparent',
-                    '&:hover': { backgroundColor: '#edeff5' },
+                    px: 2,
+                    py: 1,
+                    backgroundColor: isActive
+                      ? "#E6E9FF"
+                      : "transparent",
+                    borderLeft: isActive
+                      ? "3px solid #F4C430"
+                      : "3px solid transparent",
+                    "&:hover": {
+                      backgroundColor: "#F1F3FA",
+                    },
                   }}
                 >
-                  <ListItemIcon sx={{ minWidth: open ? 28 : 'auto' }}>{item.icon}</ListItemIcon>
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 2 : 0,
+                      justifyContent: "center",
+                      color: isActive ? "#4F46E5" : "inherit",
+                    }}
+                  >
+                    {item.icon}
+                  </ListItemIcon>
 
-                  <ListItemText primary={item.name} sx={{ opacity: open ? 1 : 0 }} />
+                  {open && (
+                    <ListItemText
+                      primary={item.name}
+                      primaryTypographyProps={{
+                        fontSize: 15,
+                        fontWeight: isActive ? 600 : 500,
+                      }}
+                    />
+                  )}
                 </ListItemButton>
               );
 
               return open ? (
                 button
               ) : (
-                <Tooltip key={item.link} title={item.name} placement="right" arrow>
+                <Tooltip
+                  key={item.link}
+                  title={item.name}
+                  placement="right"
+                  arrow
+                >
                   {button}
                 </Tooltip>
               );

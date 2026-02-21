@@ -107,18 +107,29 @@ export default function BlogsTable() {
   );
 
   return (
-    <Box p={3}>
+    <Box>
       <Box
         display="flex"
         justifyContent="space-between"
         alignItems="center"
         mb={2}
       >
-        <Typography variant="h4" mb={2}>
+        <Typography variant="h4" fontWeight={500} mb={2}>
           Blogs
         </Typography>
         <Button
           variant="contained"
+          sx={{
+            backgroundColor: "#F4C430",
+            color: "#111",
+            textTransform: "none",
+            borderRadius: 2,
+            px: 3,
+            fontWeight: 600,
+            "&:hover": {
+              backgroundColor: "#F6D365",
+            },
+          }}
           onClick={() => router.push("/admin/blogs/add")}
         >
           Add New Blog
@@ -201,7 +212,11 @@ export default function BlogsTable() {
                   {/* Action Column */}
                   <TableCell align="center">
                     <Button
-                      variant="outlined"
+                      variant="contained"
+                      sx={{
+                        textTransform: "none",
+                        fontWeight: 500,
+                      }}
                       size="small"
                       onClick={(e) => {
                         setAnchorEl(e.currentTarget);
