@@ -37,3 +37,19 @@ model Page {
  
   @@map("pages")
 }
+
+model Blog {
+  id              Int      @id @default(autoincrement())
+  title           String   @db.VarChar(255)
+  slug            String   @unique @db.VarChar(255)
+  text            String?  @db.Text
+  imageUpload     String?  @map("image_upload") @db.VarChar(255)
+  metaTitle       String?  @map("meta_title") @db.VarChar(255)
+  metaDescription String?  @map("meta_description") @db.Text
+  metaKeywords    String?  @map("meta_keywords") @db.Text
+  status          String   @default("active") @db.VarChar(20)
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @default(now()) @map("updated_at")
+
+  @@map("blogs")
+}

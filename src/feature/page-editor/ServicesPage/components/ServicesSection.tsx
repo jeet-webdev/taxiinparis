@@ -16,11 +16,14 @@ import FileUploadField from "@/src/components/common/Ui/Admin/FileUploadField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ServicesPageFormValues } from "../types/services.types";
 import { servicesPageSchema } from "../validations/servicesSchema";
+import type { UpdatePageInput } from "@/src/actions/page/updatePage";
+
 type Props = {
   defaultValues: ServicesPageFormValues;
+  onSave?: (data: UpdatePageInput) => Promise<{ success: boolean }>;
 };
 
-export default function ServicesSection({ defaultValues }: Props) {
+export default function ServicesSection({ defaultValues, onSave }: Props) {
   const methods = useForm<ServicesPageFormValues>({
     defaultValues,
     resolver: zodResolver(servicesPageSchema),
@@ -31,8 +34,19 @@ export default function ServicesSection({ defaultValues }: Props) {
 
   const onSubmit = (data: ServicesPageFormValues) => {
     startTransition(async () => {
-      console.log(data);
-      // call server action here
+      if (!onSave) return;
+      const result = await onSave({
+        title: data.title,
+        imageUpload: typeof data.servicesHeaderImage === "string" ? data.servicesHeaderImage : null,
+        content: data.content,
+        metaTitle: data.metaTitle,
+        metaDescription: data.metaDescription,
+        metaKeywords: data.metaKeywords,
+        status: data.status,
+      });
+      if (result.success) {
+        alert("Services page updated successfully!");
+      }
     });
   };
   return (

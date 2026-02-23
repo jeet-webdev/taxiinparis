@@ -16,11 +16,14 @@ import { AboutPageFormValues } from "../types/about.types";
 import FileUploadField from "@/src/components/common/Ui/Admin/FileUploadField";
 import { aboutPageSchema } from "../validations/aboutSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import type { UpdatePageInput } from "@/src/actions/page/updatePage";
+
 type Props = {
   defaultValues: AboutPageFormValues;
+  onSave?: (data: UpdatePageInput) => Promise<{ success: boolean }>;
 };
 
-export default function AboutSection({ defaultValues }: Props) {
+export default function AboutSection({ defaultValues, onSave }: Props) {
   const methods = useForm<AboutPageFormValues>({
     defaultValues,
     resolver: zodResolver(aboutPageSchema),
@@ -31,8 +34,19 @@ export default function AboutSection({ defaultValues }: Props) {
 
   const onSubmit = (data: AboutPageFormValues) => {
     startTransition(async () => {
-      console.log(data);
-      // call server action here
+      if (!onSave) return;
+      const result = await onSave({
+        title: data.title,
+        imageUpload: typeof data.headerImage === "string" ? data.headerImage : null,
+        content: data.content,
+        metaTitle: data.metaTitle,
+        metaDescription: data.metaDescription,
+        metaKeywords: data.metaKeywords,
+        status: data.status,
+      });
+      if (result.success) {
+        alert("About page updated successfully!");
+      }
     });
   };
   return (

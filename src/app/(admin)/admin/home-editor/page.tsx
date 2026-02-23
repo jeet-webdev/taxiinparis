@@ -1,50 +1,42 @@
 import type { Metadata } from "next";
-import { revalidatePath } from "next/cache";
-// import { prisma } from "@/src/lib/prisma";
-import { HomePageFormValues } from "@/src/feature/page-editor/HomePage/types/home.types";
+import { getPageBySlug } from "@/src/actions/page/getPage";
+import { updatePage, type UpdatePageInput } from "@/src/actions/page/updatePage";
 import HomePageSection from "@/src/feature/page-editor/HomePage/components/HomeSection";
+import type { HomePageFormValues } from "@/src/feature/page-editor/HomePage/types/home.types";
 
 export const metadata: Metadata = {
   title: "Edit Home Page | Admin Dashboard",
   description: "Edit and manage Home page content.",
   robots: {
-    index: false,   // important for admin pages
+    index: false,
     follow: false,
   },
 };
 
-
 export default async function HomeEditorPage() {
-  // const page = await prisma.page.findFirst({
-  //   where: { slug: "home-editor" },
-  // });
-  const page: HomePageFormValues = {
-    title: "Get to Know Us - Taxi in Paris",
-    homeHeaderImage: null,
-    secureBooking: "Taxi in Paris is your best choice...",
-    reliableServices: "Taxi in Paris is your best choice...",
-    customerServices: "Taxi in Paris is your best choice...",
-    fairPrice: "Taxi in Paris is your best choice...",
-    metaTitle: "Book Paris Taxi Service at Cheapest Fare | Taxis in Paris",
-    metaDescription: "string",
-    metaKeywords: "string",
-    status: "active",
+  const page = await getPageBySlug("home");
+
+  if (!page) {
+    return <div>Home page not found. Please run the seed command first.</div>;
+  }
+
+  const defaultValues: HomePageFormValues = {
+    title: page.title,
+    homeHeaderImage: page.imageUpload ?? null,
+    secureBooking: page.secureBooking ?? "",
+    reliableServices: page.reliableService ?? "",
+    customerServices: page.customerService ?? "",
+    fairPrice: page.fairPrice ?? "",
+    metaTitle: page.metaTitle ?? "",
+    metaDescription: page.metaDescription ?? "",
+    metaKeywords: page.metaKeywords ?? "",
+    status: (page.status as "active" | "inactive") ?? "active",
   };
 
+  async function handleSave(data: UpdatePageInput) {
+    "use server";
+    return updatePage("home", data);
+  }
 
-  // async function updateHomeSection(id: string, content: string) {
-  //   "use server";
-
-  //   await prisma.page.update({
-  //     where: { id },
-  //     data: {
-  //       content,
-  //       updatedAt: new Date(),
-  //     },
-  //   });
-
-  //   // if you have public /home page
-  //   revalidatePath("/home-editor");
-  // }
-  return <HomePageSection defaultValues={page} />;
+  return <HomePageSection defaultValues={defaultValues} onSave={handleSave} />;
 }

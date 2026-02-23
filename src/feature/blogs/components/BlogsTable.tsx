@@ -19,7 +19,7 @@ import {
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 
-interface PageRow {
+export interface BlogRow {
   id: number;
   title: string;
   slug: string;
@@ -27,56 +27,16 @@ interface PageRow {
   metaKeywords: string;
 }
 
-const rows: PageRow[] = [
-  {
-    id: 1,
-    title: "13 Interesting Facts About Paris",
-    slug: "13-interesting-facts-about-paris",
-    metaDescription: "Average taxi prices in Paris...",
-    metaKeywords: "taxi paris",
-  },
-  {
-    id: 2,
-    title: "3 Tips to Consider When Booking Limo",
-    slug: "limo-booking-service",
-    metaDescription: "Want to hire a limo?",
-    metaKeywords: "limo paris",
-  },
-  {
-    id: 3,
-    title: "Secret Places In Paris",
-    slug: "secret-places-paris",
-    metaDescription: "Hidden gems in Paris",
-    metaKeywords: "travel paris",
-  },
-  {
-    id: 4,
-    title: "13 Interesting Facts About Paris",
-    slug: "13-interesting-facts-about-paris",
-    metaDescription: "Average taxi prices in Paris...",
-    metaKeywords: "taxi paris",
-  },
-  {
-    id: 5,
-    title: "3 Tips to Consider When Booking Limo",
-    slug: "limo-booking-service",
-    metaDescription: "Want to hire a limo?",
-    metaKeywords: "limo paris",
-  },
-  {
-    id: 6,
-    title: "Secret Places In Paris",
-    slug: "secret-places-paris",
-    metaDescription: "Hidden gems in Paris",
-    metaKeywords: "travel paris",
-  },
-];
+interface BlogsTableProps {
+  rows: BlogRow[];
+  onDelete?: (id: number) => Promise<{ success: boolean }>;
+}
 
 type Order = "asc" | "desc";
 
-export default function BlogsTable() {
+export default function BlogsTable({ rows, onDelete }: BlogsTableProps) {
   const [order, setOrder] = React.useState<Order>("asc");
-  const [orderBy, setOrderBy] = React.useState<keyof PageRow>("title");
+  const [orderBy, setOrderBy] = React.useState<keyof BlogRow>("title");
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [selectedRowId, setSelectedRowId] = React.useState<number | null>(null);
@@ -84,7 +44,7 @@ export default function BlogsTable() {
 
   const router = useRouter();
 
-  const handleSort = (property: keyof PageRow) => {
+  const handleSort = (property: keyof BlogRow) => {
     const isAsc = orderBy === property && order === "asc";
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
@@ -292,7 +252,16 @@ export default function BlogsTable() {
         </MenuItem>
         <MenuItem onClick={() => setAnchorEl(null)}>View</MenuItem>
         <MenuItem onClick={() => setAnchorEl(null)}>Block</MenuItem>
-        <MenuItem onClick={() => setAnchorEl(null)}>Delete</MenuItem>
+        <MenuItem
+          onClick={async () => {
+            if (selectedRowId && onDelete) {
+              await onDelete(selectedRowId);
+            }
+            setAnchorEl(null);
+          }}
+        >
+          Delete
+        </MenuItem>
       </Menu>
     </Box>
   );

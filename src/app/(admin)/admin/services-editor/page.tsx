@@ -1,48 +1,39 @@
-import ServicesSection from "@/src/feature/page-editor/ServicesPage/components/ServicesSection";
-import { ServicesPageFormValues } from "@/src/feature/page-editor/ServicesPage/types/services.types";
 import type { Metadata } from "next";
-import { revalidatePath } from "next/cache";
-// import { prisma } from "@/src/lib/prisma";
-
+import { getPageBySlug } from "@/src/actions/page/getPage";
+import { updatePage, type UpdatePageInput } from "@/src/actions/page/updatePage";
+import ServicesSection from "@/src/feature/page-editor/ServicesPage/components/ServicesSection";
+import type { ServicesPageFormValues } from "@/src/feature/page-editor/ServicesPage/types/services.types";
 
 export const metadata: Metadata = {
   title: "Edit Service Page | Admin Dashboard",
   description: "Edit and manage Service page content.",
   robots: {
-    index: false,   // important for admin pages
+    index: false,
     follow: false,
   },
 };
 
-
 export default async function ServiceEditorPage() {
-  // const page = await prisma.page.findFirst({
-  //   where: { slug: "services-editor" },
-  // });
-  const page: ServicesPageFormValues = {
-    title: "Get to Know Us - Taxi in Paris",
-    servicesHeaderImage: null,
-    content: "Taxi in Paris is your best choice...",
-    metaTitle: "Book Paris Taxi Service at Cheapest Fare | Taxis in Paris",
-    metaDescription: "string",
-    metaKeywords: "string",
-    status: "active",
+  const page = await getPageBySlug("services");
+
+  if (!page) {
+    return <div>Services page not found. Please run the seed command first.</div>;
+  }
+
+  const defaultValues: ServicesPageFormValues = {
+    title: page.title,
+    servicesHeaderImage: page.imageUpload ?? null,
+    content: page.content ?? "",
+    metaTitle: page.metaTitle ?? "",
+    metaDescription: page.metaDescription ?? "",
+    metaKeywords: page.metaKeywords ?? "",
+    status: (page.status as "active" | "inactive") ?? "active",
   };
 
+  async function handleSave(data: UpdatePageInput) {
+    "use server";
+    return updatePage("services", data);
+  }
 
-  // async function updateServicesSection(id: string, content: string) {
-  //   "use server";
-
-  //   await prisma.page.update({
-  //     where: { id },
-  //     data: {
-  //       content,
-  //       updatedAt: new Date(),
-  //     },
-  //   });
-
-  //   // if you have public /services page
-  //   revalidatePath("/services-editor");
-  // }
-  return <ServicesSection defaultValues={page} />;
+  return <ServicesSection defaultValues={defaultValues} onSave={handleSave} />;
 }

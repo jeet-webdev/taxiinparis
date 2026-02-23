@@ -19,9 +19,10 @@ type Props = {
   mode: "add" | "edit";
   blogId?: string;
   defaultValues: BlogPagesFormValues;
+  onSave?: (data: BlogPagesFormValues) => Promise<{ success: boolean }>;
 };
 
-export default function BlogForm({ mode, blogId, defaultValues }: Props) {
+export default function BlogForm({ mode, blogId, defaultValues, onSave }: Props) {
   const methods = useForm<BlogPagesFormValues>({
     defaultValues,
     resolver: zodResolver(blogPagesSchema),
@@ -32,8 +33,11 @@ export default function BlogForm({ mode, blogId, defaultValues }: Props) {
 
   const onSubmit = (data: BlogPagesFormValues) => {
     startTransition(async () => {
-      console.log(data);
-      // call server action here
+      if (!onSave) return;
+      const result = await onSave(data);
+      if (result.success) {
+        alert(isEdit ? "Blog updated successfully!" : "Blog created successfully!");
+      }
     });
   };
   const isEdit = mode === "edit";

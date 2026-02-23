@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import BlogForm from "@/src/feature/blogs/components/BlogForm";
-import { BlogPagesFormValues } from "@/src/feature/blogs/types/blog.types";
+import { createBlog } from "@/src/actions/blog/createBlog";
+import type { BlogPagesFormValues } from "@/src/feature/blogs/types/blog.types";
 
 export const metadata: Metadata = {
   title: "Add New Blog | Admin Panel",
@@ -17,7 +18,7 @@ export const metadata: Metadata = {
   },
 };
 
-const page: BlogPagesFormValues = {
+const emptyDefaults: BlogPagesFormValues = {
   title: "",
   slug: "",
   text: "",
@@ -27,5 +28,10 @@ const page: BlogPagesFormValues = {
 };
 
 export default function AddBlogPage() {
-  return <BlogForm mode="add" defaultValues={page} />;
+  async function handleSave(data: BlogPagesFormValues) {
+    "use server";
+    return createBlog(data);
+  }
+
+  return <BlogForm mode="add" defaultValues={emptyDefaults} onSave={handleSave} />;
 }
