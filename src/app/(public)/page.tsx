@@ -38,9 +38,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function HomePage() {
   const page = await getHomePage();
+  console.log("Home page data:", page); // Debug log to check the fetched data
   return (
     <>
-      <HeroSection />
+      <HeroSection img={page?.imageUpload} />
       <DarkLuxuryBlock>
         <CommitmentSection customerService={page?.customerService} fairPrice={page?.fairPrice} reliableService={page?.reliableService} secureBooking={page?.secureBooking} />
         <TestimonialsSection />

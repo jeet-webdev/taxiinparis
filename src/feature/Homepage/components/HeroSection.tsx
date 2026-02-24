@@ -1,15 +1,18 @@
 import Image from "next/image";
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  img?: string | null;
+}
+export default function HeroSection({img}: HeroSectionProps) {
   return (
     <section className="relative min-h-screen w-full">
       {/* Background Image */}
       <Image
-        src="/assets/images/hero-img.jpeg"
+        src={img ?? "/assets/images/hero-img.jpeg"}
         alt="Luxury Car"
         fill
         priority
-        className="object-cover object-[15%_20%]"
+    className="object-cover object-center"
       />
 
       {/* Content Container */}
@@ -19,8 +22,9 @@ export default function HeroSection() {
           className="
     w-full
     max-w-100
-    h-auto
-    md:h-[95vh]
+    h-130
+            sm:h-145
+            md:h-172.5
     max-h-172.5
     rounded-2xl
     overflow-hidden
