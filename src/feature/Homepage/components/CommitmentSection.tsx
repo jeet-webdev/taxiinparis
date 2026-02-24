@@ -1,7 +1,7 @@
 
 
 import { Lock, HeadsetMic, Check, AddRoad, PriceChange } from "@mui/icons-material";
-import { Container } from "@mui/material";
+import { Box, Container } from "@mui/material";
 import FeatureCard from "./FeatureCard";
 import Section from "@/src/components/common/Ui/Section";
 
@@ -37,7 +37,7 @@ export default function CommitmentSection({customerService, fairPrice, reliableS
   ];
   return (
     <Section>
-      <Container className="relative z-10">
+      <Box className="relative max-w-7xl mx-auto z-10">
         {/* Heading */}
         <div className="flex items-center justify-center gap-6 mb-16">
           <div className="hidden md:block h-0.5 w-40 bg-linear-to-r from-transparent via-[#D4AF6A] to-transparent" />
@@ -62,7 +62,7 @@ export default function CommitmentSection({customerService, fairPrice, reliableS
             ) : null
           )}
         </div>
-      </Container>
+      </Box>
     </Section>
   );
 }

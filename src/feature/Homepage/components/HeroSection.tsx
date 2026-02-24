@@ -13,7 +13,7 @@ export default function HeroSection() {
       />
 
       {/* Content Container */}
-      <div className="relative z-10 container mx-auto h-full flex flex-col md:flex-row items-center justify-end px-6 py-10">
+      <div className="relative z-10 max-w-7xl mx-auto h-full flex flex-col md:flex-row items-center justify-end px-6 py-10">
         {/* Widget Container */}
         <div
           className="
