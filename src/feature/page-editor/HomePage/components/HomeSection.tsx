@@ -16,11 +16,14 @@ import FileUploadField from "@/src/components/common/Ui/Admin/FileUploadField";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { HomePageFormValues } from "../types/home.types";
 import { homePageSchema } from "../validations/homeSchema";
+import type { UpdatePageInput } from "@/src/actions/page/updatePage";
+
 type Props = {
   defaultValues: HomePageFormValues;
+  onSave?: (data: UpdatePageInput) => Promise<{ success: boolean }>;
 };
 
-export default function HomePageSection({ defaultValues }: Props) {
+export default function HomePageSection({ defaultValues, onSave }: Props) {
   const methods = useForm<HomePageFormValues>({
     defaultValues,
     resolver: zodResolver(homePageSchema),
@@ -31,8 +34,22 @@ export default function HomePageSection({ defaultValues }: Props) {
 
   const onSubmit = (data: HomePageFormValues) => {
     startTransition(async () => {
-      console.log(data);
-      // call server action here
+      if (!onSave) return;
+      const result = await onSave({
+        title: data.title,
+        imageUpload: typeof data.homeHeaderImage === "string" ? data.homeHeaderImage : null,
+        secureBooking: data.secureBooking,
+        reliableService: data.reliableServices,
+        customerService: data.customerServices,
+        fairPrice: data.fairPrice,
+        metaTitle: data.metaTitle,
+        metaDescription: data.metaDescription,
+        metaKeywords: data.metaKeywords,
+        status: data.status,
+      });
+      if (result.success) {
+        alert("Home page updated successfully!");
+      }
     });
   };
   return (

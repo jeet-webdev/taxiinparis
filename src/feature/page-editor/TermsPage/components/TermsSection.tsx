@@ -15,11 +15,14 @@ import { useTransition } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { TermsPageFormValues } from "../types/terms.types";
 import { termsPageSchema } from "../validations/termsSchema";
+import type { UpdatePageInput } from "@/src/actions/page/updatePage";
+
 type Props = {
   defaultValues: TermsPageFormValues;
+  onSave?: (data: UpdatePageInput) => Promise<{ success: boolean }>;
 };
 
-export default function TermsSection({ defaultValues }: Props) {
+export default function TermsSection({ defaultValues, onSave }: Props) {
   const methods = useForm<TermsPageFormValues>({
     defaultValues,
     resolver: zodResolver(termsPageSchema),
@@ -30,8 +33,18 @@ export default function TermsSection({ defaultValues }: Props) {
 
   const onSubmit = (data: TermsPageFormValues) => {
     startTransition(async () => {
-      console.log(data);
-      // call server action here
+      if (!onSave) return;
+      const result = await onSave({
+        title: data.title,
+        content: data.content,
+        metaTitle: data.metaTitle,
+        metaDescription: data.metaDescription,
+        metaKeywords: data.metaKeywords,
+        status: data.status,
+      });
+      if (result.success) {
+        alert("Terms page updated successfully!");
+      }
     });
   };
   return (

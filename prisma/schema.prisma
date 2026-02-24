@@ -6,9 +6,50 @@
 
 generator client {
   provider = "prisma-client"
-  output   = "../app/generated/prisma"
+  output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+}
+
+model Page {
+  id               Int      @id @default(autoincrement())
+  pageName         String?  @map("page_name") @db.VarChar(50)
+  title            String   @db.VarChar(255)
+  slug             String   @unique @db.VarChar(255) // Combined 'slag' and 'page_name' logic
+  // Content Fields
+  content          String?  @db.Text
+  text             String?  @db.Text
+  imageUpload      String?  @map("imageupload") @db.VarChar(255)
+  // Service Highlights (from page_editor)
+  secureBooking    String?  @map("secure_booking") @db.Text
+  reliableService  String?  @map("reliable_service") @db.Text
+  customerService  String?  @map("customer_service") @db.Text
+  fairPrice        String?  @map("fair_price") @db.Text
+  // SEO Metadata
+  metaTitle        String?  @map("meta_title") @db.VarChar(255)
+  metaDescription  String?  @map("meta_description") @db.Text
+  metaKeywords     String?  @map("meta_keywords") @db.Text
+  // Management
+  status           String   @default("active") @db.VarChar(255)
+  updatedAt        DateTime @updatedAt @default(now()) @map("updated_at")
+ 
+  @@map("pages")
+}
+
+model Blog {
+  id              Int      @id @default(autoincrement())
+  title           String   @db.VarChar(255)
+  slug            String   @unique @db.VarChar(255)
+  text            String?  @db.Text
+  imageUpload     String?  @map("image_upload") @db.VarChar(255)
+  metaTitle       String?  @map("meta_title") @db.VarChar(255)
+  metaDescription String?  @map("meta_description") @db.Text
+  metaKeywords    String?  @map("meta_keywords") @db.Text
+  status          String   @default("active") @db.VarChar(20)
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @default(now()) @map("updated_at")
+
+  @@map("blogs")
 }

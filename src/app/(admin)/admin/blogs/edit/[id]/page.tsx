@@ -1,10 +1,54 @@
+import type { Metadata } from "next";
 import BlogForm from "@/src/feature/blogs/components/BlogForm";
-
+import { getBlogById } from "@/src/actions/blog/getBlogs";
+import { updateBlog } from "@/src/actions/blog/updateBlog";
+import { notFound } from "next/navigation";
+import type { BlogPagesFormValues } from "@/src/feature/blogs/types/blog.types";
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
-export default function EditBlogPage({ params }: Props) {
-  return <BlogForm mode="edit" blogId={params.id} />;
+export const metadata: Metadata = {
+  title: "Edit Blog | Taxi in Paris Admin",
+  description:
+    "Edit blog content, SEO settings, and meta information from the admin dashboard of Taxi in Paris.",
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+  },
+  alternates: {
+    canonical: "/admin/blogs",
+  },
+};
+
+export default async function EditBlogPage({ params }: Props) {
+  const { id } = await params;
+  const blog = await getBlogById(Number(id));
+
+  if (!blog) notFound();
+
+  const defaultValues: BlogPagesFormValues = {
+    title: blog.title,
+    slug: blog.slug,
+    text: blog.text ?? "",
+    metaTitle: blog.metaTitle ?? "",
+    metaDescription: blog.metaDescription ?? "",
+    metaKeywords: blog.metaKeywords ?? "",
+  };
+
+  async function handleSave(data: BlogPagesFormValues) {
+    "use server";
+    return updateBlog(blog!.id, data);
+  }
+
+  return (
+    <BlogForm
+      mode="edit"
+      blogId={id}
+      defaultValues={defaultValues}
+      onSave={handleSave}
+    />
+  );
 }

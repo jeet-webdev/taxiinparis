@@ -1,9 +1,21 @@
-import Image from "next/image";
+// app/page.tsx
 
-export default function Home() {
+// import AppLayout from "@/src/components/common/Layout/AppLayout";
+import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
+import CommitmentSection from "@/src/feature/Homepage/components/CommitmentSection";
+import HeroSection from "@/src/feature/Homepage/components/HeroSection";
+import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
+
+export default function HomePage() {
   return (
- <div>
-  <p>public</p>
- </div>
+    // <AppLayout>
+    <>
+      <HeroSection />
+      <DarkLuxuryBlock>
+      <CommitmentSection />
+      <TestimonialsSection />
+      </DarkLuxuryBlock>
+      </>
+   
   );
 }
