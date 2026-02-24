@@ -19,12 +19,12 @@ export default function Navbar() {
         </div>
 
         <ul className="hidden md:flex gap-10 text-sm tracking-wide">
-        <NavLink href="#">Home</NavLink>
-          <NavLink href="#">About</NavLink>
-          <NavLink href="#">Services</NavLink>
-          <NavLink href="#">Chauffeurs</NavLink>
-          <NavLink href="#">Blog</NavLink>
-          <NavLink href="#">Contact</NavLink>
+        <NavLink href="/">Home</NavLink>
+          <NavLink href="/about">About</NavLink>
+          <NavLink href="/services">Services</NavLink>
+          <NavLink href="/chauffeurs">Chauffeurs</NavLink>
+          <NavLink href="/blog">Blog</NavLink>
+          <NavLink href="/contact">Contact</NavLink>
         </ul>
       </nav>
     </header>

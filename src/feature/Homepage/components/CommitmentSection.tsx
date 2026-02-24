@@ -1,17 +1,14 @@
 // app/(marketing)/components/commitment/CommitmentSection.tsx
 
 import { Lock, CheckCircle, HeadsetMic } from "@mui/icons-material";
-import Section from "./Section";
 import { Container, Typography } from "@mui/material";
 import FeatureCard from "./FeatureCard";
+import Section from "@/src/components/common/Ui/Section";
 
 export default function CommitmentSection() {
   return (
     <Section>
       <Container>
-        {/* Top Divider */}
-        <div className="h-px w-full bg-gradient-to-r from-transparent via-[#C8A96A]/40 to-transparent mb-16" />
-
         {/* Heading */}
         <Typography
           variant="h2"
@@ -46,9 +43,7 @@ export default function CommitmentSection() {
           />
         </div>
 
-        {/* Bottom Divider */}
-        <div className="h-px w-full bg-gradient-to-r from-transparent via-[#C8A96A]/40 to-transparent mt-20" />
-      </Container>
+        </Container>
     </Section>
   );
 }

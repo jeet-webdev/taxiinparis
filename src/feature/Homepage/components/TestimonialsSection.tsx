@@ -3,8 +3,8 @@
 import Image from "next/image";
 
 import TestimonialCard from "./TestimonialCard";
-import Section from "./Section";
 import { Container, Typography } from "@mui/material";
+import Section from "@/src/components/common/Ui/Section";
 
 export default function TestimonialsSection() {
   return (
