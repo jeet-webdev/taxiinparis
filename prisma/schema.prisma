@@ -53,3 +53,38 @@ model Blog {
 
   @@map("blogs")
 }
+
+// Additional models for user management and authentication
+// Roles for access control
+enum Role {
+  ADMIN
+  EDITOR
+  USER
+}
+
+model Account {
+  id        String    @id @default(uuid())
+  email     String    @unique
+  password  String
+  role      Role      @default(USER)
+
+  sessions  Session[]   // 🔁 reverse relation
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([role])
+}
+
+model Session {
+  id        String    @id @default(uuid())
+
+  accountId String
+  account   Account   @relation(fields: [accountId], references: [id], onDelete: Cascade)
+
+  expiresAt DateTime
+  createdAt DateTime  @default(now())
+
+  @@index([accountId])
+  @@index([expiresAt])
+}

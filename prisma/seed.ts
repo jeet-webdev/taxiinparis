@@ -1,5 +1,6 @@
 import { PrismaClient } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import * as bcrypt from "bcrypt";
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
@@ -63,6 +64,20 @@ async function main() {
     });
     console.log(`  ✓ ${page.slug}`);
   }
+
+  console.log("Seeding admin user...");
+  const hashedPassword = await bcrypt.hash("password123", 10); // Replace with a secure password
+
+  await prisma.account.upsert({
+    where: { email: "admin@example.com" },
+    update: {}, // Do not update if admin already exists
+    create: {
+      email: "admin@example.com",
+      password: hashedPassword,
+      role: "ADMIN",
+    },
+  });
+  console.log("  ✓ admin@example.com");
 
   console.log("Seed complete.");
 }

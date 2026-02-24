@@ -15,6 +15,8 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import AppButton from '../../Ui/Admin/AppButton';
 import { MdOutlineMenuOpen } from "react-icons/md";
+import { logoutAdmin } from '@/src/actions/logoutAdmin';
+
 interface NavbarProps {
   onMenuClick: () => void;
 }
@@ -23,12 +25,11 @@ const AdminNavbar: React.FC<NavbarProps> = ({ onMenuClick }) => {
   const [open, setOpen] = useState(false);
   const router = useRouter();
 
-  // logout hook
-  // const { logout, isPending } = useLogout();
+
 
   const handleConfirm = async () => {
     try {
-      // await logout();
+      await logoutAdmin();
       setOpen(false);
     } catch (error) {
       console.log(error);
