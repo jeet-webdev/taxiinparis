@@ -5,6 +5,7 @@ import Image from "next/image";
 import TestimonialCard from "./TestimonialCard";
 import { Container } from "@mui/material";
 import Section from "@/src/components/common/Ui/Section";
+import Link from "next/link";
 
 export default function TestimonialsSection() {
   return (
@@ -25,6 +26,7 @@ export default function TestimonialsSection() {
 
         {/* App Badges */}
         <div className="mt-8 flex justify-center gap-6">
+          <Link href='https://play.google.com/store/apps/details?id=com.vtcParis' target="_blank">
           <Image
             src="/assets/images/google-play-store.png"
             alt="Google Play"
@@ -32,6 +34,8 @@ export default function TestimonialsSection() {
             className="transition-transform duration-300 hover:scale-105 cursor-pointer"
             height={55}
           />
+          </Link>
+          <Link href="https://portail.driverconnect.fr/vtc-fils/template?act=storeIos&site=00001_3987058_-1157023572_1730893992059&app=CL&soc=Chauffeur_priv" target="_blank">
           <Image
             src="/assets/images/app-store-1.png"
             alt="App Store"
@@ -39,6 +43,7 @@ export default function TestimonialsSection() {
             className="transition-transform duration-300 hover:scale-105 cursor-pointer"
             height={55}
           />
+          </Link>
         </div>
 
         {/* Phone */}
