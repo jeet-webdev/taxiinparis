@@ -1,7 +1,7 @@
 
 
-import { Lock, HeadsetMic, Check, AddRoad, PriceChange } from "@mui/icons-material";
-import { Box, Container } from "@mui/material";
+import { Lock, HeadsetMic, AddRoad, PriceChange } from "@mui/icons-material";
+import { Box } from "@mui/material";
 import FeatureCard from "./FeatureCard";
 import Section from "@/src/components/common/Ui/Section";
 

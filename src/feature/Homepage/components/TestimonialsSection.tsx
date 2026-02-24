@@ -3,7 +3,7 @@
 import Image from "next/image";
 
 import TestimonialCard from "./TestimonialCard";
-import { Container, Typography } from "@mui/material";
+import { Container } from "@mui/material";
 import Section from "@/src/components/common/Ui/Section";
 
 export default function TestimonialsSection() {
@@ -29,12 +29,14 @@ export default function TestimonialsSection() {
             src="/assets/images/google-play-store.png"
             alt="Google Play"
             width={170}
+            className="transition-transform duration-300 hover:scale-105 cursor-pointer"
             height={55}
           />
           <Image
             src="/assets/images/app-store-1.png"
             alt="App Store"
             width={170}
+            className="transition-transform duration-300 hover:scale-105 cursor-pointer"
             height={55}
           />
         </div>
