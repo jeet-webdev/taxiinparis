@@ -17,27 +17,54 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { HomePageFormValues } from "../types/home.types";
 import { homePageSchema } from "../validations/homeSchema";
 import type { UpdatePageInput } from "@/src/actions/page/updatePage";
+import { uploadPageImage } from "@/src/actions/page/uploadPageImage";
 
 type Props = {
   defaultValues: HomePageFormValues;
   onSave?: (data: UpdatePageInput) => Promise<{ success: boolean }>;
+  pageId: number;
 };
 
-export default function HomePageSection({ defaultValues, onSave }: Props) {
+export default function HomePageSection({
+  defaultValues,
+  onSave,
+  pageId,
+}: Props) {
   const methods = useForm<HomePageFormValues>({
     defaultValues,
     resolver: zodResolver(homePageSchema),
   });
 
-  const { control, setValue, handleSubmit } = methods;
+  const { control, handleSubmit } = methods;
   const [isPending, startTransition] = useTransition();
 
   const onSubmit = (data: HomePageFormValues) => {
     startTransition(async () => {
       if (!onSave) return;
+
+      // Default to existing image string
+      let imagePath: string | null =
+        typeof data.homeHeaderImage === "string"
+          ? data.homeHeaderImage
+          : (defaultValues.homeHeaderImage as string | null);
+
+      // 1. If a NEW file is selected, upload it first
+      if (data.homeHeaderImage instanceof File) {
+        const formData = new FormData();
+        formData.append("image", data.homeHeaderImage);
+
+        const uploadRes = await uploadPageImage(pageId, formData);
+        if (uploadRes?.success && uploadRes.publicPath) {
+          imagePath = uploadRes.publicPath;
+        } else {
+          alert("Image upload failed. Saving other changes...");
+        }
+      }
+
+      // 2. Save all data (including the new image path)
       const result = await onSave({
         title: data.title,
-        imageUpload: typeof data.homeHeaderImage === "string" ? data.homeHeaderImage : null,
+        imageUpload: imagePath,
         secureBooking: data.secureBooking,
         reliableService: data.reliableServices,
         customerService: data.customerServices,
@@ -47,11 +74,13 @@ export default function HomePageSection({ defaultValues, onSave }: Props) {
         metaKeywords: data.metaKeywords,
         status: data.status,
       });
+
       if (result.success) {
         alert("Home page updated successfully!");
       }
     });
   };
+
   return (
     <FormProvider {...methods}>
       <Box
@@ -60,21 +89,19 @@ export default function HomePageSection({ defaultValues, onSave }: Props) {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Typography variant="h5" gutterBottom>
-          Edit Home Page
-        </Typography>
+        <Typography variant="h5">Edit Home Page</Typography>
       </Box>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
+
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
-          {/* Header Image */}
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <Controller
               name="homeHeaderImage"
               control={control}
               render={({ field, fieldState }) => (
                 <FileUploadField
                   label="Header Image"
-                  accept="image/jpeg,image/png,image/webp,image/svg+xml"
+                  accept="image/*"
                   files={field.value instanceof File ? field.value : null}
                   error={!!fieldState.error}
                   errorMessage={fieldState.error?.message}
@@ -87,16 +114,8 @@ export default function HomePageSection({ defaultValues, onSave }: Props) {
             />
           </Grid>
 
-          {/* Title */}
           <Grid item xs={12}>
-            <Typography
-              variant="body2"
-              sx={{
-                fontWeight: 600,
-                mb: 1,
-                color: "text.primary",
-              }}
-            >
+            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
               Title
             </Typography>
             <Controller
@@ -105,7 +124,6 @@ export default function HomePageSection({ defaultValues, onSave }: Props) {
               render={({ field, fieldState }) => (
                 <TextField
                   {...field}
-                  id="home-title"
                   fullWidth
                   error={!!fieldState.error}
                   helperText={fieldState.error?.message}
@@ -114,35 +132,20 @@ export default function HomePageSection({ defaultValues, onSave }: Props) {
             />
           </Grid>
 
-          {/* Secure Booking */}
+          {/* Repeat this pattern for RichTextEditors (secureBooking, reliableServices, etc.) */}
           <Grid item xs={12}>
-            <Typography
-              variant="body2"
-              sx={{
-                fontWeight: 600,
-                mb: 1,
-                color: "text.primary",
-              }}
-            >
+            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
               Secure Booking
             </Typography>
             <Controller
               name="secureBooking"
               control={control}
-              render={({ field, fieldState }) => (
-                <>
-                  <RichTextEditor
-                    content={field.value}
-                    onChange={field.onChange}
-                    placeholder="Enter Secure Booking content..."
-                    minHeight={300}
-                  />
-                  {fieldState.error && (
-                    <Typography color="error" variant="body2" mt={1}>
-                      {fieldState.error.message}
-                    </Typography>
-                  )}
-                </>
+              render={({ field }) => (
+                <RichTextEditor
+                  content={field.value}
+                  onChange={field.onChange}
+                  minHeight={200}
+                />
               )}
             />
           </Grid>
@@ -367,9 +370,8 @@ export default function HomePageSection({ defaultValues, onSave }: Props) {
             <Button
               type="submit"
               variant="contained"
-              color="primary"
               disabled={isPending}
-              startIcon={isPending ? <CircularProgress size={20} /> : null}
+              startIcon={isPending && <CircularProgress size={20} />}
             >
               {isPending ? "Saving..." : "Update Home Page"}
             </Button>

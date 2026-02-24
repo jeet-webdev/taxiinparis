@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { getPageBySlug } from "@/src/actions/page/getPage";
-import { updatePage, type UpdatePageInput } from "@/src/actions/page/updatePage";
+import {
+  updatePage,
+  type UpdatePageInput,
+} from "@/src/actions/page/updatePage";
 import AboutSection from "@/src/feature/page-editor/AboutUs/components/AboutSection";
 import type { AboutPageFormValues } from "@/src/feature/page-editor/AboutUs/types/about.types";
+import PageImageUpload from "../../../../components/common/Ui/Admin/PageImageUpload";
 
 export const metadata: Metadata = {
   title: "Edit About Page | Admin Dashboard",
@@ -35,5 +39,12 @@ export default async function AboutEditorPage() {
     return updatePage("about", data);
   }
 
-  return <AboutSection defaultValues={defaultValues} onSave={handleSave} />;
+  return (
+    <>
+     
+      {/* Image Upload Component */}
+      <PageImageUpload pageId={page.id} />
+      <AboutSection defaultValues={defaultValues} onSave={handleSave} />;
+      </>
+  ) 
 }

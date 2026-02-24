@@ -6,18 +6,13 @@ import type { HomePageFormValues } from "@/src/feature/page-editor/HomePage/type
 
 export const metadata: Metadata = {
   title: "Edit Home Page | Admin Dashboard",
-  description: "Edit and manage Home page content.",
-  robots: {
-    index: false,
-    follow: false,
-  },
 };
 
 export default async function HomeEditorPage() {
   const page = await getPageBySlug("home");
 
   if (!page) {
-    return <div>Home page not found. Please run the seed command first.</div>;
+    return <div>Home page not found.</div>;
   }
 
   const defaultValues: HomePageFormValues = {
@@ -38,5 +33,6 @@ export default async function HomeEditorPage() {
     return updatePage("home", data);
   }
 
-  return <HomePageSection defaultValues={defaultValues} onSave={handleSave} />;
+  // PASS pageId HERE
+  return <HomePageSection defaultValues={defaultValues} onSave={handleSave} pageId={page.id} />;
 }
