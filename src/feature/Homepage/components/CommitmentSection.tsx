@@ -1,49 +1,68 @@
-// app/(marketing)/components/commitment/CommitmentSection.tsx
 
-import { Lock, CheckCircle, HeadsetMic } from "@mui/icons-material";
-import { Container, Typography } from "@mui/material";
+
+import { Lock, HeadsetMic, Check, AddRoad, PriceChange } from "@mui/icons-material";
+import { Box, Container } from "@mui/material";
 import FeatureCard from "./FeatureCard";
 import Section from "@/src/components/common/Ui/Section";
 
-export default function CommitmentSection() {
+interface CommitmentSectionProps {
+  customerService?: string | null;
+  fairPrice?: string | null;
+  reliableService?: string | null;
+  secureBooking?: string | null;
+}
+
+export default function CommitmentSection({customerService, fairPrice, reliableService, secureBooking}:CommitmentSectionProps) {
+   const features = [
+    {
+      title: "Secure Booking",
+      description: secureBooking,
+      icon: <Lock sx={{ fontSize: 32, color: "#E7C27D" }} />,
+    },
+    {
+      title: "Reliable Service",
+      description: reliableService,
+      icon: <AddRoad sx={{ fontSize: 32, color: "#E7C27D" }} />,
+    },
+    {
+      title: "Fair Price",
+      description: fairPrice,
+      icon: <PriceChange sx={{ fontSize: 32, color: "#E7C27D" }} />,
+    },
+    {
+      title: "Customer Service",
+      description: customerService,
+      icon: <HeadsetMic sx={{ fontSize: 32, color: "#E7C27D" }} />,
+    },
+  ];
   return (
     <Section>
-      <Container>
+      <Box className="relative max-w-7xl mx-auto z-10">
         {/* Heading */}
-        <Typography
-          variant="h2"
-          component="h2"
-          className="text-center text-[#C8A96A] mb-12"
-        >
-          Our Commitment to Excellence
-        </Typography>
+        <div className="flex items-center justify-center gap-6 mb-16">
+          <div className="hidden md:block h-0.5 w-40 bg-linear-to-r from-transparent via-[#D4AF6A] to-transparent" />
 
-        {/* 3 Column Grid */}
-        <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
-          {/* Vertical Dividers (desktop only) */}
-          <div className="hidden lg:block absolute left-1/3 top-0 bottom-0 w-px bg-[#C8A96A]/20" />
-          <div className="hidden lg:block absolute left-2/3 top-0 bottom-0 w-px bg-[#C8A96A]/20" />
+          <h2 className="text-4xl md:text-5xl text-[#D4AF6A] font-script">
+            Our Commitment to Excellence
+          </h2>
 
-          <FeatureCard
-            icon={<Lock sx={{ fontSize: 36, color: "#C8A96A" }} />}
-            title="Secure Booking"
-            description="When you are willing to know about the services we have, it is necessary to contact us first. This is the ultimate benefit for customers to know about the whole services and process."
-          />
-
-          <FeatureCard
-            icon={<CheckCircle sx={{ fontSize: 36, color: "#C8A96A" }} />}
-            title="Reliable Service"
-            description="When comfort comes after quality, it depends on how one is meeting his necessity. We assure you the most reliable and professional chauffeurs."
-          />
-
-          <FeatureCard
-            icon={<HeadsetMic sx={{ fontSize: 36, color: "#C8A96A" }} />}
-            title="Customer Service"
-            description="Business is not about money. It is about customers and satisfaction. We are committed to delivering excellence every time."
-          />
+          <div className="hidden md:block h-0.5 w-40 bg-linear-to-r from-transparent via-[#D4AF6A] to-transparent" />
         </div>
 
-        </Container>
+        {/* 4 Column Grid */}
+        <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12 text-center">
+          {features.map((item, index) =>
+            item.description ? (
+              <FeatureCard
+                key={index}
+                icon={item.icon}
+                title={item.title}
+                description={item.description}
+              />
+            ) : null
+          )}
+        </div>
+      </Box>
     </Section>
   );
 }

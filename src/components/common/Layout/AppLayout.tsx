@@ -17,7 +17,7 @@ const AppLayout: React.FC<MarketingAppLayoutProps> = ({
       <Navbar />
 
       {/* MAIN CONTENT */}
-      <main className="flex-grow">{children}</main>
+      <main className="grow">{children}</main>
 
       {/* FOOTER */}
       <Footer />

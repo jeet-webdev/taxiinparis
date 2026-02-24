@@ -11,7 +11,7 @@ export default function Section({
   className = "",
 }: SectionProps) {
   return (
-    <section className={`py-28 md:py-8 ${className}`}>
+    <section className={`py-8 md:pt-8 md:pb-2 ${className}`}>
       {children}
     </section>
   );
