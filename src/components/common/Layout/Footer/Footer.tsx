@@ -7,7 +7,7 @@ import Link from "next/link";
 export default function Footer() {
   return (
     <footer className="bg-[#0B0F1A] text-gray-300 pt-14 pb-6 border-t border-white/10">
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
         {/* Logo + Social */}
         <div>
           <h2 className="text-xl font-bold text-[#D4AF6A]">TAXI IN PARIS</h2>
@@ -29,31 +29,21 @@ export default function Footer() {
         <div>
           <h3 className="text-[#D4AF6A] font-semibold mb-4">Navigation</h3>
           <ul className="space-y-2 text-sm">
-            <li className="hover:text-[#D4AF6A] cursor-pointer">About</li>
-            <li className="hover:text-[#D4AF6A] cursor-pointer">Services</li>
             <li className="hover:text-[#D4AF6A] cursor-pointer">
-              Taxi in Paris
-            </li>
-            <li className="hover:text-[#D4AF6A] cursor-pointer">Blog</li>
-            <li className="hover:text-[#D4AF6A] cursor-pointer">Contact Us</li>
-          </ul>
-        </div>
-
-        {/* Services */}
-        <div>
-          <h3 className="text-[#D4AF6A] font-semibold mb-4">Services</h3>
-          <ul className="space-y-2 text-sm">
-            <li className="hover:text-[#D4AF6A] cursor-pointer">
-              Airport Transfers
+              <Link href="/about">About</Link>
             </li>
             <li className="hover:text-[#D4AF6A] cursor-pointer">
-              Private Tours
+              <Link href="/services">Services</Link>
             </li>
-            <li className="hover:text-[#D4AF6A] cursor-pointer">Hourly Hire</li>
             <li className="hover:text-[#D4AF6A] cursor-pointer">
-              Corporate Travel
+              <Link href="/">Taxi in Paris</Link>
             </li>
-            <li className="hover:text-[#D4AF6A] cursor-pointer">City Rides</li>
+            <li className="hover:text-[#D4AF6A] cursor-pointer">
+              <Link href="/blog">Blog</Link>
+            </li>
+            <li className="hover:text-[#D4AF6A] cursor-pointer">
+              <Link href="/contact">Contact Us</Link>
+            </li>
           </ul>
         </div>
 
@@ -128,8 +118,14 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="mt-12 border-t border-white/10 pt-5 text-center text-sm text-gray-500">
-        © 2026 Taxi in Paris. All Rights Reserved | Terms of Use | Privacy
-        Policy
+        © 2026 Taxi in Paris. All Rights Reserved |{" "}
+        <Link className="hover:text-[#D4AF6A] cursor-pointer" href="/terms">
+          Terms of Use
+        </Link>{" "}
+        |{" "}
+        <Link className="hover:text-[#D4AF6A] cursor-pointer" href="/">
+          Privacy Policy
+        </Link>
       </div>
     </footer>
   );
