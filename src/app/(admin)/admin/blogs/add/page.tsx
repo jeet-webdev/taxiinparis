@@ -22,6 +22,7 @@ const emptyDefaults: BlogPagesFormValues = {
   title: "",
   slug: "",
   text: "",
+  image: "",
   metaTitle: "",
   metaDescription: "",
   metaKeywords: "",
@@ -33,5 +34,7 @@ export default function AddBlogPage() {
     return createBlog(data);
   }
 
-  return <BlogForm mode="add" defaultValues={emptyDefaults} onSave={handleSave} />;
+  return (
+    <BlogForm mode="add" defaultValues={emptyDefaults} onSave={handleSave} />
+  );
 }

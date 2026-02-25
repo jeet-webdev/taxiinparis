@@ -14,6 +14,8 @@ import { useTransition } from "react";
 import { BlogPagesFormValues } from "../types/blog.types";
 import Grid from "@mui/material/GridLegacy";
 import RichTextEditor from "@/src/components/common/Ui/Admin/RichTextEditor";
+// Import your server action
+import { uploadBlogImage } from "@/src/actions/blog/uploadBlogImage";
 
 type Props = {
   mode: "add" | "edit";
@@ -22,41 +24,35 @@ type Props = {
   onSave?: (data: BlogPagesFormValues) => Promise<{ success: boolean }>;
 };
 
-export default function BlogForm({ mode, blogId, defaultValues, onSave }: Props) {
+export default function BlogForm({
+  mode,
+  blogId,
+  defaultValues,
+  onSave,
+}: Props) {
   const methods = useForm<BlogPagesFormValues>({
     defaultValues,
     resolver: zodResolver(blogPagesSchema),
   });
 
-  const { control, setValue, handleSubmit } = methods;
+  const { control, handleSubmit } = methods;
   const [isPending, startTransition] = useTransition();
+
+  const isEdit = mode === "edit";
 
   const onSubmit = (data: BlogPagesFormValues) => {
     startTransition(async () => {
       if (!onSave) return;
       const result = await onSave(data);
       if (result.success) {
-        alert(isEdit ? "Blog updated successfully!" : "Blog created successfully!");
+        alert(
+          isEdit ? "Blog updated successfully!" : "Blog created successfully!",
+        );
       }
     });
   };
-  const isEdit = mode === "edit";
 
   return (
-    // <Box p={3}>
-    //   <Typography variant="h5" mb={2}>
-    //     {isEdit ? "Edit Blog" : "Add Blog"}
-    //   </Typography>
-
-    //   <TextField fullWidth label="Title" sx={{ mb: 2 }} />
-    //   <TextField fullWidth label="Slug" sx={{ mb: 2 }} />
-    //   <TextField fullWidth label="Meta Description" sx={{ mb: 2 }} />
-    //   <TextField fullWidth label="Meta Keywords" sx={{ mb: 2 }} />
-
-    //   <Button variant="contained">
-    //     {isEdit ? "Update Blog" : "Create Blog"}
-    //   </Button>
-    // </Box>
     <FormProvider {...methods}>
       <Box
         mb={3}
@@ -68,7 +64,7 @@ export default function BlogForm({ mode, blogId, defaultValues, onSave }: Props)
           {isEdit ? "Edit Blog" : "Add Blog"}
         </Typography>
       </Box>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
           {/* Title */}
           <Grid item xs={12}>
@@ -96,7 +92,7 @@ export default function BlogForm({ mode, blogId, defaultValues, onSave }: Props)
               )}
             />
           </Grid>
- {/* Title */}
+          {/* Slug */}
           <Grid item xs={12}>
             <Typography
               variant="body2"
@@ -122,7 +118,7 @@ export default function BlogForm({ mode, blogId, defaultValues, onSave }: Props)
               )}
             />
           </Grid>
-          {/* Text */}
+          {/* Text Content with Image Upload Logic */}
           <Grid item xs={12}>
             <Typography
               variant="body2"
@@ -144,9 +140,12 @@ export default function BlogForm({ mode, blogId, defaultValues, onSave }: Props)
                     onChange={field.onChange}
                     placeholder="Enter Text..."
                     minHeight={300}
+                    // Pass "0" if blogId is undefined (Add Mode)
+                    blogId={blogId || "0"}
+                    onImageUpload={uploadBlogImage}
                   />
                   {fieldState.error && (
-                    <Typography color="error" variant="body2" mt={1}>
+                    <Typography color="error" variant="body2" sx={{ mt: 1 }}>
                       {fieldState.error.message}
                     </Typography>
                   )}

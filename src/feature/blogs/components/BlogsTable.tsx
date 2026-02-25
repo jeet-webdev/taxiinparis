@@ -50,16 +50,38 @@ export default function BlogsTable({ rows, onDelete }: BlogsTableProps) {
     setOrderBy(property);
   };
 
+  // const sortedRows = React.useMemo(() => {
+  //   return [...rows].sort((a, b) => {
+  //     const valueA = a[orderBy];
+  //     const valueB = b[orderBy];
+
+  //     if (valueA < valueB) return order === "asc" ? -1 : 1;
+  //     if (valueA > valueB) return order === "asc" ? 1 : -1;
+  //     return 0;
+  //   });
+  // }, [order, orderBy]);
+
   const sortedRows = React.useMemo(() => {
     return [...rows].sort((a, b) => {
+      // Access values based on the current orderBy key
       const valueA = a[orderBy];
       const valueB = b[orderBy];
 
-      if (valueA < valueB) return order === "asc" ? -1 : 1;
-      if (valueA > valueB) return order === "asc" ? 1 : -1;
+      // Handle null or undefined cases just in case
+      if (valueA === valueB) return 0;
+      if (valueA === null || valueA === undefined) return 1;
+      if (valueB === null || valueB === undefined) return -1;
+
+      // Standard comparison logic
+      if (valueA < valueB) {
+        return order === "asc" ? -1 : 1;
+      }
+      if (valueA > valueB) {
+        return order === "asc" ? 1 : -1;
+      }
       return 0;
     });
-  }, [order, orderBy]);
+  }, [rows, order, orderBy]); // Added 'rows' to dependencies
 
   const paginatedRows = sortedRows.slice(
     page * rowsPerPage,
