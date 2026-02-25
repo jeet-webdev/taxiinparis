@@ -1,7 +1,7 @@
 export type BlogPagesFormValues = {
   title: string;
   text: string;
-  // imageUpload: string;
+  image?: string | null; // Added image
   slug: string;
   metaTitle: string;
   metaDescription: string;

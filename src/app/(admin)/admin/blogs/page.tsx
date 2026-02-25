@@ -20,6 +20,7 @@ export default async function BlogsPage() {
     id: blog.id,
     title: blog.title,
     slug: blog.slug,
+    image: blog.imageUpload,
     metaDescription: blog.metaDescription ?? "",
     metaKeywords: blog.metaKeywords ?? "",
   }));
@@ -29,5 +30,5 @@ export default async function BlogsPage() {
     return deleteBlog(id);
   }
 
-  return <BlogsTable rows={rows} onDelete={handleDelete} />;
+  return <BlogsTable rows={rows} onDelete={handleDelete}  />;
 }
