@@ -5,6 +5,8 @@ import type { ReactNode } from "react";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import AdminNavbar from "./Header/AdminNavbar";
 import Sidebar from "./Sidebar";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface AdminAppLayoutProps {
   children: ReactNode;
@@ -59,6 +61,7 @@ const AdminAppLayout: React.FC<AdminAppLayoutProps> = ({ children }) => {
           }}
         >
           {children}
+          <ToastContainer position="top-right" />
         </Box>
       </Box>
     </Box>

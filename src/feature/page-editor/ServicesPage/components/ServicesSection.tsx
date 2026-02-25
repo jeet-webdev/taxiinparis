@@ -17,38 +17,70 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { ServicesPageFormValues } from "../types/services.types";
 import { servicesPageSchema } from "../validations/servicesSchema";
 import type { UpdatePageInput } from "@/src/actions/page/updatePage";
+import { uploadPageImage } from "@/src/actions/page/uploadPageImage"; // ✅ Added
+import { toast } from "react-toastify"; // ✅ Added
 
 type Props = {
   defaultValues: ServicesPageFormValues;
   onSave?: (data: UpdatePageInput) => Promise<{ success: boolean }>;
+  pageId: number; // ✅ Added like About section
 };
 
-export default function ServicesSection({ defaultValues, onSave }: Props) {
+export default function ServicesSection({
+  defaultValues,
+  onSave,
+  pageId,
+}: Props) {
   const methods = useForm<ServicesPageFormValues>({
     defaultValues,
     resolver: zodResolver(servicesPageSchema),
   });
 
-  const { control, setValue, handleSubmit } = methods;
+  const { control, handleSubmit } = methods;
   const [isPending, startTransition] = useTransition();
 
   const onSubmit = (data: ServicesPageFormValues) => {
     startTransition(async () => {
       if (!onSave) return;
+
+      // ✅ 1. Keep existing image by default
+      let imagePath: string | null =
+        typeof data.servicesHeaderImage === "string"
+          ? data.servicesHeaderImage
+          : (defaultValues.servicesHeaderImage as string | null);
+
+      // ✅ 2. If new file selected → upload first
+      if (data.servicesHeaderImage instanceof File) {
+        const formData = new FormData();
+        formData.append("image", data.servicesHeaderImage);
+
+        const uploadRes = await uploadPageImage(pageId, formData);
+
+        if (uploadRes?.success) {
+          imagePath = uploadRes.publicPath ?? imagePath;
+        } else {
+          toast.error(uploadRes?.error || "Image upload failed.");
+          return;
+        }
+      }
+
+      // ✅ 3. Save page with correct image path
       const result = await onSave({
         title: data.title,
-        imageUpload: typeof data.servicesHeaderImage === "string" ? data.servicesHeaderImage : null,
+        imageUpload: imagePath,
         content: data.content,
         metaTitle: data.metaTitle,
         metaDescription: data.metaDescription,
         metaKeywords: data.metaKeywords,
         status: data.status,
       });
+
       if (result.success) {
-        alert("Services page updated successfully!");
+        toast.success("Services page updated successfully!");
       }
     });
   };
+
   return (
     <FormProvider {...methods}>
       <Box
@@ -61,7 +93,8 @@ export default function ServicesSection({ defaultValues, onSave }: Props) {
           Edit Services Page
         </Typography>
       </Box>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
+
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
           {/* Header Image */}
           <Grid item xs={6}>
@@ -86,14 +119,7 @@ export default function ServicesSection({ defaultValues, onSave }: Props) {
 
           {/* Title */}
           <Grid item xs={12}>
-            <Typography
-              variant="body2"
-              sx={{
-                fontWeight: 600,
-                mb: 1,
-                color: "text.primary",
-              }}
-            >
+            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
               Title
             </Typography>
             <Controller
@@ -113,14 +139,7 @@ export default function ServicesSection({ defaultValues, onSave }: Props) {
 
           {/* Content */}
           <Grid item xs={12}>
-            <Typography
-              variant="body2"
-              sx={{
-                fontWeight: 600,
-                mb: 1,
-                color: "text.primary",
-              }}
-            >
+            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
               Content
             </Typography>
             <Controller
@@ -146,14 +165,7 @@ export default function ServicesSection({ defaultValues, onSave }: Props) {
 
           {/* Meta Title */}
           <Grid item xs={12}>
-            <Typography
-              variant="body2"
-              sx={{
-                fontWeight: 600,
-                mb: 1,
-                color: "text.primary",
-              }}
-            >
+            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
               Meta Title
             </Typography>
             <Controller
@@ -161,8 +173,8 @@ export default function ServicesSection({ defaultValues, onSave }: Props) {
               control={control}
               render={({ field, fieldState }) => (
                 <TextField
-                  id="services-meta-title"
                   {...field}
+                  id="services-meta-title"
                   fullWidth
                   error={!!fieldState.error}
                   helperText={fieldState.error?.message}
@@ -173,14 +185,7 @@ export default function ServicesSection({ defaultValues, onSave }: Props) {
 
           {/* Meta Description */}
           <Grid item xs={12}>
-            <Typography
-              variant="body2"
-              sx={{
-                fontWeight: 600,
-                mb: 1,
-                color: "text.primary",
-              }}
-            >
+            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
               Meta Description
             </Typography>
             <Controller
@@ -188,8 +193,8 @@ export default function ServicesSection({ defaultValues, onSave }: Props) {
               control={control}
               render={({ field, fieldState }) => (
                 <TextField
-                  id="services-meta-description"
                   {...field}
+                  id="services-meta-description"
                   multiline
                   rows={3}
                   fullWidth
@@ -202,14 +207,7 @@ export default function ServicesSection({ defaultValues, onSave }: Props) {
 
           {/* Meta Keywords */}
           <Grid item xs={12}>
-            <Typography
-              variant="body2"
-              sx={{
-                fontWeight: 600,
-                mb: 1,
-                color: "text.primary",
-              }}
-            >
+            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
               Meta Keywords
             </Typography>
             <Controller
@@ -231,14 +229,7 @@ export default function ServicesSection({ defaultValues, onSave }: Props) {
 
           {/* Status */}
           <Grid item xs={12}>
-            <Typography
-              variant="body2"
-              sx={{
-                fontWeight: 600,
-                mb: 1,
-                color: "text.primary",
-              }}
-            >
+            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
               Status
             </Typography>
             <Controller

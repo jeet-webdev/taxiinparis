@@ -6,7 +6,6 @@ import {
 } from "@/src/actions/page/updatePage";
 import AboutSection from "@/src/feature/page-editor/AboutUs/components/AboutSection";
 import type { AboutPageFormValues } from "@/src/feature/page-editor/AboutUs/types/about.types";
-import PageImageUpload from "../../../../components/common/Ui/Admin/PageImageUpload";
 
 export const metadata: Metadata = {
   title: "Edit About Page | Admin Dashboard",
@@ -41,10 +40,13 @@ export default async function AboutEditorPage() {
 
   return (
     <>
-     
       {/* Image Upload Component */}
-      <PageImageUpload pageId={page.id} />
-      <AboutSection defaultValues={defaultValues} onSave={handleSave} />;
-      </>
-  ) 
+      <AboutSection
+        defaultValues={defaultValues}
+        onSave={handleSave}
+        pageId={page.id}
+      />
+      ;
+    </>
+  );
 }
