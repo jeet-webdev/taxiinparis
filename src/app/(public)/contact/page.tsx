@@ -4,7 +4,6 @@ import { notFound } from "next/navigation";
 import { getPageBySlug } from "@/src/actions/page/getPage";
 import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
 import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
-import DriverConnectWidget from "@/src/components/common/Ui/DriverConnectWidget";
 
 const getContactPage = cache(() => getPageBySlug("contact"));
 const safe = (value?: string | null) => value ?? undefined;
@@ -125,10 +124,12 @@ export default async function ContactPage() {
           {/* Right Side: Fixed Booking Widget */}
           <aside className="w-full lg:w-[420px]">
             <div className="sticky top-24 rounded-2xl overflow-hidden shadow-2xl border border-gray-200 h-[720px] bg-white">
-              <DriverConnectWidget
-                token="00001_2769650_-1157023572_1772012786065"
-                className="w-full h-full"
-              />
+            <iframe
+             src="https://portail.driverconnect.fr/vtc-fils/template?src=se&tkn=00001_2769650_-1157023572_1772012786065"
+            allow="geolocation"
+            title="Booking Widget"
+            className="w-full h-full border-none"
+          />
             </div>
           </aside>
         </div>
