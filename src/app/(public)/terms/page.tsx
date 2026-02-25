@@ -2,14 +2,13 @@ import React, { cache } from "react";
 import { getPageBySlug } from "@/src/actions/page/getPage";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
-import HeroSection from "@/src/components/common/Ui/HeroSection";
 import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
 import Content from "@/src/components/common/Ui/Content";
-const getServicesPage = cache(() => getPageBySlug("services"));
+const getTermsPage = cache(() => getPageBySlug("terms"));
 const safe = (value?: string | null) => value ?? undefined;
 
 export async function generateMetadata(): Promise<Metadata> {
-  const page = await getServicesPage();
+  const page = await getTermsPage();
   const title = page?.metaTitle ?? page?.title ?? undefined;
   const description = safe(page?.metaDescription);
 
@@ -32,8 +31,8 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
-export default async function ServicesPage() {
-  const page = await getServicesPage();
+export default async function TermsPage() {
+  const page = await getTermsPage();
 
   if (!page || page.status === "inactive") {
     notFound();
@@ -41,7 +40,6 @@ export default async function ServicesPage() {
 
   return (
     <>
-      <HeroSection img={page?.imageUpload} />
       <DarkLuxuryBlock>
         <Content data={{ title: page?.title, content: page?.content }} />
       </DarkLuxuryBlock>

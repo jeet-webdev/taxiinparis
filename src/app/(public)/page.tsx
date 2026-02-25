@@ -1,9 +1,10 @@
 import { getPageBySlug } from "@/src/actions/page/getPage";
 import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
+import HeroSection from "@/src/components/common/Ui/HeroSection";
 import CommitmentSection from "@/src/feature/Homepage/components/CommitmentSection";
-import HeroSection from "@/src/feature/Homepage/components/HeroSection";
 import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { cache } from "react";
 
 const getHomePage = cache(() => getPageBySlug("home"));
@@ -38,7 +39,9 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function HomePage() {
   const page = await getHomePage();
-  console.log("Home page data:", page); // Debug log to check the fetched data
+    if (!page || page.status === "inactive") {
+      notFound();
+    }
   return (
     <>
       <HeroSection img={page?.imageUpload} />

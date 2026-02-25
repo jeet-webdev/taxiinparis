@@ -1,9 +1,9 @@
-
-
+'use client';
 import { Lock, HeadsetMic, AddRoad, PriceChange } from "@mui/icons-material";
 import { Box } from "@mui/material";
 import FeatureCard from "./FeatureCard";
 import Section from "@/src/components/common/Ui/Section";
+import { motion, Variants } from "framer-motion";
 
 interface CommitmentSectionProps {
   customerService?: string | null;
@@ -12,8 +12,33 @@ interface CommitmentSectionProps {
   secureBooking?: string | null;
 }
 
-export default function CommitmentSection({customerService, fairPrice, reliableService, secureBooking}:CommitmentSectionProps) {
-   const features = [
+export default function CommitmentSection({
+  customerService,
+  fairPrice,
+  reliableService,
+  secureBooking,
+}: CommitmentSectionProps) {
+  const containerVariants: Variants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.25,
+    },
+  },
+};
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+    },
+  },
+};
+  const features = [
     {
       title: "Secure Booking",
       description: secureBooking,
@@ -39,29 +64,63 @@ export default function CommitmentSection({customerService, fairPrice, reliableS
     <Section>
       <Box className="relative max-w-7xl mx-auto z-10">
         {/* Heading */}
-        <div className="flex items-center justify-center gap-6 mb-16">
-          <div className="hidden md:block h-0.5 w-40 bg-linear-to-r from-transparent via-[#D4AF6A] to-transparent" />
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          transition={{ staggerChildren: 0.2 }}
+          className="flex items-center justify-center gap-6 mb-16"
+        >
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, scaleX: 0 },
+              visible: { opacity: 1, scaleX: 1 },
+            }}
+            transition={{ duration: 0.6 }}
+            className="hidden md:block h-0.5 w-40 bg-linear-to-r from-transparent via-[#D4AF6A] to-transparent origin-left"
+          />
 
-          <h2 className="text-4xl md:text-5xl text-[#D4AF6A] font-script">
+          <motion.h2
+            variants={{
+              hidden: { opacity: 0, y: 40 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            transition={{ duration: 0.8 }}
+            className="text-4xl md:text-5xl text-[#D4AF6A] font-script"
+          >
             Our Commitment to Excellence
-          </h2>
+          </motion.h2>
 
-          <div className="hidden md:block h-0.5 w-40 bg-linear-to-r from-transparent via-[#D4AF6A] to-transparent" />
-        </div>
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, scaleX: 0 },
+              visible: { opacity: 1, scaleX: 1 },
+            }}
+            transition={{ duration: 0.6 }}
+            className="hidden md:block h-0.5 w-40 bg-linear-to-r from-transparent via-[#D4AF6A] to-transparent origin-right"
+          />
+        </motion.div>
 
         {/* 4 Column Grid */}
-        <div className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12 text-center">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12 text-center"
+        >
           {features.map((item, index) =>
             item.description ? (
-              <FeatureCard
-                key={index}
-                icon={item.icon}
-                title={item.title}
-                description={item.description}
-              />
-            ) : null
+              <motion.div key={index} variants={cardVariants}>
+                <FeatureCard
+                  icon={item.icon}
+                  title={item.title}
+                  description={item.description}
+                />
+              </motion.div>
+            ) : null,
           )}
-        </div>
+        </motion.div>
       </Box>
     </Section>
   );

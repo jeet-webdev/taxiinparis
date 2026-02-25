@@ -1,59 +1,60 @@
 // Footer.tsx
 
-import { Facebook, Twitter, Instagram, YouTube } from "@mui/icons-material";
+import { Facebook, Twitter, LinkedIn, Google, Email } from "@mui/icons-material";
 import Image from "next/image";
 import Link from "next/link";
 
+const socialLinks = [
+  { icon: Facebook, url: "https://www.facebook.com/pages/Taxi-in-Paris/1470353126599319", external: true },
+  { icon: Twitter, url: "https://twitter.com/taxiinparis", external: true },
+  { icon: LinkedIn, url: "https://fr.linkedin.com/in/taxiinparis", external: true },
+  { icon: Google, url: "https://plus.google.com/b/105380179107833415631/105380179107833415631/about", external: true },
+  { icon: Email, url: "mailto:taxiinparis1@gmail.com", external: false },
+];
 export default function Footer() {
   return (
     <footer className="bg-[#0B0F1A] text-gray-300 pt-14 pb-6 border-t border-white/10">
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
         {/* Logo + Social */}
         <div>
           <h2 className="text-xl font-bold text-[#D4AF6A]">TAXI IN PARIS</h2>
           <p className="text-sm mt-2 text-gray-400">Premium Transfer Service</p>
 
-          <div className="flex gap-3 mt-5">
-            {[Facebook, Twitter, Instagram, YouTube].map((Icon, i) => (
-              <div
-                key={i}
-                className="w-9 h-9 flex items-center justify-center rounded-full border border-white/20 hover:border-[#D4AF6A] hover:text-[#D4AF6A] transition"
-              >
-                <Icon fontSize="small" />
-              </div>
-            ))}
-          </div>
+         <div className="flex gap-3 mt-5">
+  {socialLinks.map(({ icon: Icon, url, external }, i) => (
+    <Link
+      key={i}
+      href={url}
+      {...(external
+        ? { target: "_blank", rel: "noopener noreferrer" }
+        : {})}
+      className="w-9 h-9 flex items-center justify-center rounded-full border border-white/20 hover:border-[#D4AF6A] hover:text-[#D4AF6A] hover:shadow-[0_0_12px_rgba(212,175,106,0.5)] transition duration-300"
+    >
+      <Icon fontSize="small" />
+    </Link>
+  ))}
+</div>
         </div>
 
         {/* Navigation */}
         <div>
           <h3 className="text-[#D4AF6A] font-semibold mb-4">Navigation</h3>
           <ul className="space-y-2 text-sm">
-            <li className="hover:text-[#D4AF6A] cursor-pointer">About</li>
-            <li className="hover:text-[#D4AF6A] cursor-pointer">Services</li>
             <li className="hover:text-[#D4AF6A] cursor-pointer">
-              Taxi in Paris
-            </li>
-            <li className="hover:text-[#D4AF6A] cursor-pointer">Blog</li>
-            <li className="hover:text-[#D4AF6A] cursor-pointer">Contact Us</li>
-          </ul>
-        </div>
-
-        {/* Services */}
-        <div>
-          <h3 className="text-[#D4AF6A] font-semibold mb-4">Services</h3>
-          <ul className="space-y-2 text-sm">
-            <li className="hover:text-[#D4AF6A] cursor-pointer">
-              Airport Transfers
+              <Link href="/about">About</Link>
             </li>
             <li className="hover:text-[#D4AF6A] cursor-pointer">
-              Private Tours
+              <Link href="/services">Services</Link>
             </li>
-            <li className="hover:text-[#D4AF6A] cursor-pointer">Hourly Hire</li>
             <li className="hover:text-[#D4AF6A] cursor-pointer">
-              Corporate Travel
+              <Link href="/">Taxi in Paris</Link>
             </li>
-            <li className="hover:text-[#D4AF6A] cursor-pointer">City Rides</li>
+            <li className="hover:text-[#D4AF6A] cursor-pointer">
+              <Link href="/blog">Blog</Link>
+            </li>
+            <li className="hover:text-[#D4AF6A] cursor-pointer">
+              <Link href="/contact">Contact Us</Link>
+            </li>
           </ul>
         </div>
 
@@ -128,8 +129,14 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div className="mt-12 border-t border-white/10 pt-5 text-center text-sm text-gray-500">
-        © 2026 Taxi in Paris. All Rights Reserved | Terms of Use | Privacy
-        Policy
+        © 2026 Taxi in Paris. All Rights Reserved |{" "}
+        <Link className="hover:text-[#D4AF6A] cursor-pointer" href="/terms">
+          Terms of Use
+        </Link>{" "}
+        |{" "}
+        <Link className="hover:text-[#D4AF6A] cursor-pointer" href="/">
+          Privacy Policy
+        </Link>
       </div>
     </footer>
   );
