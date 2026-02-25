@@ -58,6 +58,7 @@ export default function HomePageSection({
           imagePath = uploadRes.publicPath;
         } else {
           alert("Image upload failed. Saving other changes...");
+          
         }
       }
 

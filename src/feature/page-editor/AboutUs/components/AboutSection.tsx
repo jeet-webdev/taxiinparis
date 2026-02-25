@@ -17,38 +17,65 @@ import FileUploadField from "@/src/components/common/Ui/Admin/FileUploadField";
 import { aboutPageSchema } from "../validations/aboutSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type { UpdatePageInput } from "@/src/actions/page/updatePage";
+import { uploadPageImage } from "@/src/actions/page/uploadPageImage"; // Ensure this is imported
+import { toast } from "react-toastify";
 
 type Props = {
   defaultValues: AboutPageFormValues;
   onSave?: (data: UpdatePageInput) => Promise<{ success: boolean }>;
+  pageId: number; // Added pageId prop to match HomePage pattern
 };
 
-export default function AboutSection({ defaultValues, onSave }: Props) {
+export default function AboutSection({ defaultValues, onSave, pageId }: Props) {
   const methods = useForm<AboutPageFormValues>({
     defaultValues,
     resolver: zodResolver(aboutPageSchema),
   });
 
-  const { control, setValue, handleSubmit } = methods;
+  const { control, handleSubmit } = methods;
   const [isPending, startTransition] = useTransition();
 
   const onSubmit = (data: AboutPageFormValues) => {
     startTransition(async () => {
       if (!onSave) return;
+
+      // 1. Default to existing image string
+      let imagePath: string | null =
+        typeof data.headerImage === "string"
+          ? data.headerImage
+          : (defaultValues.headerImage as string | null);
+
+      // 2. If a NEW file is selected, upload it first
+      if (data.headerImage instanceof File) {
+        const formData = new FormData();
+        formData.append("image", data.headerImage);
+
+        const uploadRes = await uploadPageImage(pageId, formData);
+
+        if (uploadRes?.success && uploadRes.publicPath) {
+          imagePath = uploadRes.publicPath;
+        } else {
+          alert("Image upload failed. Saving other changes...");
+        }
+      }
+
+      // 3. Save all data (including the new/existing image path)
       const result = await onSave({
         title: data.title,
-        imageUpload: typeof data.headerImage === "string" ? data.headerImage : null,
+        imageUpload: imagePath, // Maps to imageUpload in your action
         content: data.content,
         metaTitle: data.metaTitle,
         metaDescription: data.metaDescription,
         metaKeywords: data.metaKeywords,
         status: data.status,
       });
+
       if (result.success) {
-        alert("About page updated successfully!");
+        toast.success("About page updated successfully!");
       }
     });
   };
+
   return (
     <FormProvider {...methods}>
       <Box
@@ -57,21 +84,20 @@ export default function AboutSection({ defaultValues, onSave }: Props) {
         justifyContent="space-between"
         alignItems="center"
       >
-        <Typography variant="h5" gutterBottom>
-          Edit About Us Page
-        </Typography>
+        <Typography variant="h5">Edit About Us Page</Typography>
       </Box>
-      <form onSubmit={methods.handleSubmit(onSubmit)}>
+
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
           {/* Header Image */}
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <Controller
               name="headerImage"
               control={control}
               render={({ field, fieldState }) => (
                 <FileUploadField
                   label="Header Image"
-                  accept="image/jpeg,image/png,image/webp,image/svg+xml"
+                  accept="image/*"
                   files={field.value instanceof File ? field.value : null}
                   error={!!fieldState.error}
                   errorMessage={fieldState.error?.message}
@@ -86,14 +112,7 @@ export default function AboutSection({ defaultValues, onSave }: Props) {
 
           {/* Title */}
           <Grid item xs={12}>
-            <Typography
-              variant="body2"
-              sx={{
-                fontWeight: 600,
-                mb: 1,
-                color: "text.primary",
-              }}
-            >
+            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
               Title
             </Typography>
             <Controller
@@ -102,7 +121,6 @@ export default function AboutSection({ defaultValues, onSave }: Props) {
               render={({ field, fieldState }) => (
                 <TextField
                   {...field}
-                  id="about-title"
                   fullWidth
                   error={!!fieldState.error}
                   helperText={fieldState.error?.message}
@@ -111,16 +129,9 @@ export default function AboutSection({ defaultValues, onSave }: Props) {
             />
           </Grid>
 
-          {/* Content */}
+          {/* Main Content (Rich Text) */}
           <Grid item xs={12}>
-            <Typography
-              variant="body2"
-              sx={{
-                fontWeight: 600,
-                mb: 1,
-                color: "text.primary",
-              }}
-            >
+            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
               Content
             </Typography>
             <Controller
@@ -132,7 +143,7 @@ export default function AboutSection({ defaultValues, onSave }: Props) {
                     content={field.value}
                     onChange={field.onChange}
                     placeholder="Enter About content..."
-                    minHeight={300}
+                    minHeight={400}
                   />
                   {fieldState.error && (
                     <Typography color="error" variant="body2" mt={1}>
@@ -144,115 +155,54 @@ export default function AboutSection({ defaultValues, onSave }: Props) {
             />
           </Grid>
 
-          {/* Meta Title */}
+          {/* SEO Fields */}
           <Grid item xs={12}>
-            <Typography
-              variant="body2"
-              sx={{
-                fontWeight: 600,
-                mb: 1,
-                color: "text.primary",
-              }}
-            >
+            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
               Meta Title
             </Typography>
-            <Controller
-              name="metaTitle"
-              control={control}
-              render={({ field, fieldState }) => (
-                <TextField
-                  id="about-meta-title"
-                  {...field}
-                  fullWidth
-                  error={!!fieldState.error}
-                  helperText={fieldState.error?.message}
-                />
-              )}
+            <TextField
+              {...methods.register("metaTitle")}
+              fullWidth
+              margin="dense"
             />
           </Grid>
 
-          {/* Meta Description */}
           <Grid item xs={12}>
-            <Typography
-              variant="body2"
-              sx={{
-                fontWeight: 600,
-                mb: 1,
-                color: "text.primary",
-              }}
-            >
+            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
               Meta Description
             </Typography>
-            <Controller
-              name="metaDescription"
-              control={control}
-              render={({ field, fieldState }) => (
-                <TextField
-                  id="about-meta-description"
-                  {...field}
-                  multiline
-                  rows={3}
-                  fullWidth
-                  error={!!fieldState.error}
-                  helperText={fieldState.error?.message}
-                />
-              )}
+            <TextField
+              {...methods.register("metaDescription")}
+              fullWidth
+              multiline
+              rows={3}
+              margin="dense"
             />
           </Grid>
 
-          {/* Meta Keywords */}
           <Grid item xs={12}>
-            <Typography
-              variant="body2"
-              sx={{
-                fontWeight: 600,
-                mb: 1,
-                color: "text.primary",
-              }}
-            >
+            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
               Meta Keywords
             </Typography>
-            <Controller
-              name="metaKeywords"
-              control={control}
-              render={({ field, fieldState }) => (
-                <TextField
-                  {...field}
-                  id="about-meta-keywords"
-                  multiline
-                  rows={2}
-                  fullWidth
-                  error={!!fieldState.error}
-                  helperText={fieldState.error?.message}
-                />
-              )}
+            <TextField
+              {...methods.register("metaKeywords")}
+              fullWidth
+              multiline
+              rows={2}
+              margin="dense"
             />
           </Grid>
 
           {/* Status */}
           <Grid item xs={12}>
-            <Typography
-              variant="body2"
-              sx={{
-                fontWeight: 600,
-                mb: 1,
-                color: "text.primary",
-              }}
-            >
+            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
               Status
             </Typography>
             <Controller
               name="status"
               control={control}
-              render={({ field, fieldState }) => (
-                <TextField
-                  {...field}
-                  select
-                  id="about-status"
-                  fullWidth
-                  error={!!fieldState.error}
-                  helperText={fieldState.error?.message}
-                >
+              render={({ field }) => (
+                <TextField {...field} select fullWidth>
                   <MenuItem value="active">Active</MenuItem>
                   <MenuItem value="inactive">Inactive</MenuItem>
                 </TextField>
@@ -261,11 +211,10 @@ export default function AboutSection({ defaultValues, onSave }: Props) {
           </Grid>
 
           {/* Submit */}
-          <Grid item xs={12} display="flex" justifyContent="flex-end">
+          <Grid item xs={12} display="flex" justifyContent="flex-end" mt={2}>
             <Button
               type="submit"
               variant="contained"
-              color="primary"
               disabled={isPending}
               startIcon={isPending ? <CircularProgress size={20} /> : null}
             >

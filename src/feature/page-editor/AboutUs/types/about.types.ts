@@ -1,8 +1,7 @@
 export type AboutPageFormValues = {
   title: string;
-  headerImage: File | string | null;
+  AboutheaderImage: File | string | null;
   content: string;
-
   metaTitle: string;
   metaDescription: string;
   metaKeywords: string;

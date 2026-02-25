@@ -1,3 +1,4 @@
+"use client";
 import React, { useRef, useMemo } from "react";
 import { Box, Typography, Button, FormHelperText, Paper } from "@mui/material";
 import Image from "next/image";
@@ -90,7 +91,6 @@ const FileUploadField: React.FC<FileUploadFieldProps> = ({
 
       {/* File Input */}
       <Box mt={2}>
-       
         <Paper
           variant="outlined"
           sx={{
