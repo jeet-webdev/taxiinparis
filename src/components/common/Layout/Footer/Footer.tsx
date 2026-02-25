@@ -1,9 +1,16 @@
 // Footer.tsx
 
-import { Facebook, Twitter, Instagram, YouTube } from "@mui/icons-material";
+import { Facebook, Twitter, LinkedIn, Google, Email } from "@mui/icons-material";
 import Image from "next/image";
 import Link from "next/link";
 
+const socialLinks = [
+  { icon: Facebook, url: "https://www.facebook.com/pages/Taxi-in-Paris/1470353126599319", external: true },
+  { icon: Twitter, url: "https://twitter.com/taxiinparis", external: true },
+  { icon: LinkedIn, url: "https://fr.linkedin.com/in/taxiinparis", external: true },
+  { icon: Google, url: "https://plus.google.com/b/105380179107833415631/105380179107833415631/about", external: true },
+  { icon: Email, url: "mailto:taxiinparis1@gmail.com", external: false },
+];
 export default function Footer() {
   return (
     <footer className="bg-[#0B0F1A] text-gray-300 pt-14 pb-6 border-t border-white/10">
@@ -13,16 +20,20 @@ export default function Footer() {
           <h2 className="text-xl font-bold text-[#D4AF6A]">TAXI IN PARIS</h2>
           <p className="text-sm mt-2 text-gray-400">Premium Transfer Service</p>
 
-          <div className="flex gap-3 mt-5">
-            {[Facebook, Twitter, Instagram, YouTube].map((Icon, i) => (
-              <div
-                key={i}
-                className="w-9 h-9 flex items-center justify-center rounded-full border border-white/20 hover:border-[#D4AF6A] hover:text-[#D4AF6A] transition"
-              >
-                <Icon fontSize="small" />
-              </div>
-            ))}
-          </div>
+         <div className="flex gap-3 mt-5">
+  {socialLinks.map(({ icon: Icon, url, external }, i) => (
+    <Link
+      key={i}
+      href={url}
+      {...(external
+        ? { target: "_blank", rel: "noopener noreferrer" }
+        : {})}
+      className="w-9 h-9 flex items-center justify-center rounded-full border border-white/20 hover:border-[#D4AF6A] hover:text-[#D4AF6A] hover:shadow-[0_0_12px_rgba(212,175,106,0.5)] transition duration-300"
+    >
+      <Icon fontSize="small" />
+    </Link>
+  ))}
+</div>
         </div>
 
         {/* Navigation */}

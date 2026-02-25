@@ -36,7 +36,7 @@ export default function Content({ data: { title, content } }: ContentProps) {
             whileInView={{ width: "120px" }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="h-[1px] bg-[#D4AF6A] mx-auto mb-1"
+            className="h-px bg-[#D4AF6A] mx-auto mb-4"
           />
         )}
 
@@ -50,7 +50,6 @@ export default function Content({ data: { title, content } }: ContentProps) {
             className="
               text-gray-300
               leading-relaxed
-
               [&_h2]:text-3xl
               [&_h2]:font-serif
               [&_h2]:text-[#D4AF6A]
@@ -59,7 +58,6 @@ export default function Content({ data: { title, content } }: ContentProps) {
               [&_h2]:border-b
               [&_h2]:border-[#D4AF6A]/30
               [&_h2]:pb-3
-
               [&_p]:mb-6
               [&_strong]:text-[#D4AF6A]
               [&_a]:text-[#D4AF6A]
