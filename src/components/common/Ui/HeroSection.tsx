@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Script from "next/script";
 
 interface HeroSectionProps {
   img?: string | null;
@@ -9,6 +10,7 @@ export default function HeroSection({ img }: HeroSectionProps) {
       {/* Background Image */}
       <Image
         src={img ?? "/assets/images/hero-img.jpeg"}
+        
         alt="Luxury Car"
         fill
         priority

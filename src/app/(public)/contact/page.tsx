@@ -1,8 +1,47 @@
-import React from 'react';
+import React, { cache } from "react";
+import { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { getPageBySlug } from "@/src/actions/page/getPage";
 import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
-import DarkLuxuryBlock from '@/src/components/common/Ui/DarkLuxuryBlock';
+import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
+import DriverConnectWidget from "@/src/components/common/Ui/DriverConnectWidget";
 
-export default function ContactPage() {
+const getContactPage = cache(() => getPageBySlug("contact"));
+const safe = (value?: string | null) => value ?? undefined;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getContactPage();
+  const title = page?.metaTitle ?? page?.title ?? "Contact Us";
+  const description =
+    safe(page?.metaDescription) ??
+    "Contact Taxi in Paris to book a private chauffeur, request a quote, or ask questions about our services.";
+
+  return {
+    title,
+    description,
+    keywords: safe(page?.metaKeywords),
+
+    openGraph: {
+      title,
+      description,
+      type: "website",
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+  };
+}
+
+export default async function ContactPage() {
+  const page = await getContactPage();
+
+  if (page && page.status === "inactive") {
+    notFound();
+  }
+
   return (
     <main className="min-h-screen bg-white text-gray-800">
       
@@ -86,10 +125,9 @@ export default function ContactPage() {
           {/* Right Side: Fixed Booking Widget */}
           <aside className="w-full lg:w-[420px]">
             <div className="sticky top-24 rounded-2xl overflow-hidden shadow-2xl border border-gray-200 h-[720px] bg-white">
-              <iframe
-                src="https://portail.driverconnect.fr/vtc-fils/template?src=se&tkn=00001_3739617_-1157023572_1769256160266"
-                className="w-full h-full border-none"
-                title="Booking Widget"
+              <DriverConnectWidget
+                token="00001_2769650_-1157023572_1772012786065"
+                className="w-full h-full"
               />
             </div>
           </aside>

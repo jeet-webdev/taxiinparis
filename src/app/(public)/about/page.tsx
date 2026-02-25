@@ -35,12 +35,14 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function about() {
   const page = await getAboutPage();
+
+  console.log("about page", page)
     if (!page || page.status === "inactive") {
       notFound();
     }
   return (
     <>
-  <HeroSection img={page?.imageUpload} />
+  <HeroSection img={page?.imageUpload || undefined} />
     <DarkLuxuryBlock>
       <Content data={{ title: page?.title, content: page?.content }} />
     </DarkLuxuryBlock>

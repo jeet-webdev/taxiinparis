@@ -34,6 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function ServicesPage() {
   const page = await getServicesPage();
+    console.log(page?.imageUpload)
 
   if (!page || page.status === "inactive") {
     notFound();
@@ -41,7 +42,7 @@ export default async function ServicesPage() {
 
   return (
     <>
-      <HeroSection img={page?.imageUpload} />
+      <HeroSection img={page?.imageUpload || undefined} />
       <DarkLuxuryBlock>
         <Content data={{ title: page?.title, content: page?.content }} />
       </DarkLuxuryBlock>
