@@ -2,6 +2,7 @@
 
 import { uploadPageImage } from "@/src/actions/page/uploadPageImage";
 import { useTransition } from "react";
+import { toast } from "react-toastify";
 
 export default function PageImageUpload({ pageId }: { pageId: number }) {
   const [isPending, startTransition] = useTransition();
@@ -9,10 +10,11 @@ export default function PageImageUpload({ pageId }: { pageId: number }) {
   async function handleUpload(formData: FormData) {
     try {
       await uploadPageImage(pageId, formData);
-      alert("Image uploaded successfully");
+
+      toast.success("Image uploaded successfully");
     } catch (error) {
       console.error(error);
-      alert("Upload failed");
+      toast.error("Image upload failed!");
     }
   }
 

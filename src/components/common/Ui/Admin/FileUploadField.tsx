@@ -8,8 +8,9 @@ type UploadedFile = {
   name: string;
   url: string;
 };
+type FileValue = File | UploadedFile | string;
 
-type FileValue = File | UploadedFile;
+// type FileValue = File | UploadedFile;
 
 interface FileUploadFieldProps {
   label: string;
@@ -34,7 +35,9 @@ const FileUploadField: React.FC<FileUploadFieldProps> = ({
 
   const previewUrl = useMemo(() => {
     if (!files) return existingFileUrl ?? null;
-
+    if (typeof files === "string") {
+      return files;
+    }
     if (files instanceof File) {
       return URL.createObjectURL(files);
     }

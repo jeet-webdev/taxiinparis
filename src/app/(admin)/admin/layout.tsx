@@ -35,9 +35,7 @@ export default async function AdminLayout({
 
   return (
     <MuiProvider>
-      <AdminAppLayout>
-        {children}
-      </AdminAppLayout>
+      <AdminAppLayout>{children}</AdminAppLayout>
     </MuiProvider>
   );
 }

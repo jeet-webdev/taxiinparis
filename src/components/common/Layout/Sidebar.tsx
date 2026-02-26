@@ -18,6 +18,9 @@ import { useRouter, usePathname } from "next/navigation";
 import { GridCloseIcon } from "@mui/x-data-grid";
 import Collapse from "@mui/material/Collapse";
 import { RiPagesLine } from "react-icons/ri";
+import { TbLayoutNavbarCollapseFilled } from "react-icons/tb";
+import { TbLayoutBottombarCollapseFilled } from "react-icons/tb";
+
 import { MdCreditScore } from "react-icons/md";
 interface SidebarProps {
   open: boolean;
@@ -29,6 +32,11 @@ export const SIDEBAR_MENU = [
   {
     section: "",
     items: [
+      {
+        name: "Header",
+        link: "/admin/header-editor",
+        icon: <TbLayoutNavbarCollapseFilled size={20} />,
+      },
       {
         name: "Blogs",
         link: "/admin/blogs",
@@ -43,6 +51,12 @@ export const SIDEBAR_MENU = [
           { name: "Services Page", link: "/admin/services-editor" },
           { name: "Terms Page", link: "/admin/terms-editor" },
         ],
+      },
+
+      {
+        name: "Footer",
+        link: "/admin/footer-editor",
+        icon: <TbLayoutBottombarCollapseFilled size={20} />,
       },
     ],
   },
@@ -59,7 +73,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose, variant }) => {
   const navbarHeight = 64;
 
   return (
-        <Drawer
+    <Drawer
       variant={variant}
       open={open}
       onClose={onClose}
@@ -78,7 +92,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose, variant }) => {
           background: "#F8F9FC",
           borderRight: "1px solid #E6E8F0",
           px: 1,
-           borderTop: "2px solid #E6E8F0",
+          borderTop: "2px solid #E6E8F0",
           overflowX: "hidden",
         },
       }}
@@ -159,8 +173,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose, variant }) => {
                     <Collapse in={isOpen && open}>
                       <List disablePadding>
                         {item.children.map((child) => {
-                          const isChildActive =
-                            pathname === child.link;
+                          const isChildActive = pathname === child.link;
 
                           return (
                             <ListItemButton
@@ -186,9 +199,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose, variant }) => {
                                 primary={child.name}
                                 primaryTypographyProps={{
                                   fontSize: 14,
-                                  fontWeight: isChildActive
-                                    ? 600
-                                    : 400,
+                                  fontWeight: isChildActive ? 600 : 400,
                                 }}
                               />
                             </ListItemButton>
@@ -202,16 +213,14 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose, variant }) => {
 
               const button = (
                 <ListItemButton
-                key={item.link}
+                  key={item.link}
                   onClick={() => router.push(item.link!)}
                   sx={{
                     borderRadius: 2,
                     mb: 0.5,
                     px: 2,
                     py: 1,
-                    backgroundColor: isActive
-                      ? "#E6E9FF"
-                      : "transparent",
+                    backgroundColor: isActive ? "#E6E9FF" : "transparent",
                     borderLeft: isActive
                       ? "3px solid #F4C430"
                       : "3px solid transparent",

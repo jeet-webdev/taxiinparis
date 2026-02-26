@@ -16,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { TermsPageFormValues } from "../types/terms.types";
 import { termsPageSchema } from "../validations/termsSchema";
 import type { UpdatePageInput } from "@/src/actions/page/updatePage";
+import { toast } from "react-toastify";
 
 type Props = {
   defaultValues: TermsPageFormValues;
@@ -43,7 +44,7 @@ export default function TermsSection({ defaultValues, onSave }: Props) {
         status: data.status,
       });
       if (result.success) {
-        alert("Terms page updated successfully!");
+        toast.success("Terms page updated successfully!");
       }
     });
   };

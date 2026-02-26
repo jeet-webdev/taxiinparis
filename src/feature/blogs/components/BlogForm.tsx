@@ -16,6 +16,7 @@ import Grid from "@mui/material/GridLegacy";
 import RichTextEditor from "@/src/components/common/Ui/Admin/RichTextEditor";
 // Import your server action
 import { uploadBlogImage } from "@/src/actions/blog/uploadBlogImage";
+import { toast } from "react-toastify";
 
 type Props = {
   mode: "add" | "edit";
@@ -45,7 +46,7 @@ export default function BlogForm({
       if (!onSave) return;
       const result = await onSave(data);
       if (result.success) {
-        alert(
+        toast.success(
           isEdit ? "Blog updated successfully!" : "Blog created successfully!",
         );
       }
