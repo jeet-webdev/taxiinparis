@@ -18,6 +18,7 @@ import { HomePageFormValues } from "../types/home.types";
 import { homePageSchema } from "../validations/homeSchema";
 import type { UpdatePageInput } from "@/src/actions/page/updatePage";
 import { uploadPageImage } from "@/src/actions/page/uploadPageImage";
+import { toast } from "react-toastify";
 
 type Props = {
   defaultValues: HomePageFormValues;
@@ -57,7 +58,8 @@ export default function HomePageSection({
         if (uploadRes?.success && uploadRes.publicPath) {
           imagePath = uploadRes.publicPath;
         } else {
-          alert("Image upload failed. Saving other changes...");
+          toast.error("Image upload failed. Saving other changes...");
+         
           
         }
       }
@@ -77,7 +79,7 @@ export default function HomePageSection({
       });
 
       if (result.success) {
-        alert("Home page updated successfully!");
+        toast.success("Home page updated successfully!");
       }
     });
   };
@@ -96,7 +98,7 @@ export default function HomePageSection({
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            <Controller
+            {/* <Controller
               name="homeHeaderImage"
               control={control}
               render={({ field, fieldState }) => (
@@ -112,7 +114,25 @@ export default function HomePageSection({
                   }}
                 />
               )}
-            />
+            /> */}
+            <Controller
+  name="homeHeaderImage"
+  control={control}
+  render={({ field, fieldState }) => (
+    <FileUploadField
+      label="Header Image"
+      accept="image/*"
+      // FIX: Pass the value if it's a File OR a string (URL)
+      files={field.value || null} 
+      error={!!fieldState.error}
+      errorMessage={fieldState.error?.message}
+      onChange={(files) => {
+        const file = Array.isArray(files) ? files[0] : files;
+        field.onChange(file ?? null);
+      }}
+    />
+  )}
+/>
           </Grid>
 
           <Grid item xs={12}>

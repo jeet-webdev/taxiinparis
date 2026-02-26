@@ -1,11 +1,11 @@
-import React from 'react';
-import { notFound } from 'next/navigation';
-import Image from 'next/image';
+import React from "react";
+import { notFound } from "next/navigation";
+import Image from "next/image";
 import Link from "next/link";
-import { getBlogByTitle } from '@/src/actions/blog/getBlogs';
+import { getBlogByTitle } from "@/src/actions/blog/getBlogs";
 import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
-import DarkLuxuryBlock from '@/src/components/common/Ui/DarkLuxuryBlock';
-import HeroSection from '@/src/components/common/Ui/HeroSection';
+import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
+import HeroSection from "@/src/components/common/Ui/HeroSection";
 interface Props {
   params: Promise<{ title: string }>; // In Next.js 15, params is a Promise
 }
@@ -22,7 +22,10 @@ function formatDate(value: Date | string | null | undefined) {
 }
 
 function stripHtml(html: string) {
-  return html.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim();
+  return html
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 }
 
 function getReadingTimeMinutes(text: string) {
@@ -46,7 +49,7 @@ export default async function SingleBlogPage({ params }: Props) {
   return (
     <main className="min-h-screen bg-[#0A0F1C]">
       <DarkLuxuryBlock>
-    <HeroSection img={blog?.imageUpload || undefined} />
+        <HeroSection />
 
         {/* --- ARTICLE CONTENT SECTION --- */}
         <section className="py-14 md:py-18">

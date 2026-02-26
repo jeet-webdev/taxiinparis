@@ -55,7 +55,7 @@ export default function AboutSection({ defaultValues, onSave, pageId }: Props) {
         if (uploadRes?.success && uploadRes.publicPath) {
           imagePath = uploadRes.publicPath;
         } else {
-          alert("Image upload failed. Saving other changes...");
+        toast.error("Image upload failed. Saving other changes...");
         }
       }
 

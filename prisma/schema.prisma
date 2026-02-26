@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -14,27 +8,23 @@ datasource db {
 }
 
 model Page {
-  id               Int      @id @default(autoincrement())
-  pageName         String?  @map("page_name") @db.VarChar(50)
-  title            String   @db.VarChar(255)
-  slug             String   @unique @db.VarChar(255) // Combined 'slag' and 'page_name' logic
-  // Content Fields
-  content          String?  @db.Text
-  text             String?  @db.Text
-  imageUpload      String?  @map("imageupload") @db.VarChar(255)
-  // Service Highlights (from page_editor)
-  secureBooking    String?  @map("secure_booking") @db.Text
-  reliableService  String?  @map("reliable_service") @db.Text
-  customerService  String?  @map("customer_service") @db.Text
-  fairPrice        String?  @map("fair_price") @db.Text
-  // SEO Metadata
-  metaTitle        String?  @map("meta_title") @db.VarChar(255)
-  metaDescription  String?  @map("meta_description") @db.Text
-  metaKeywords     String?  @map("meta_keywords") @db.Text
-  // Management
-  status           String   @default("active") @db.VarChar(255)
-  updatedAt        DateTime @updatedAt @default(now()) @map("updated_at")
- 
+  id              Int      @id @default(autoincrement())
+  pageName        String?  @map("page_name") @db.VarChar(50)
+  title           String   @db.VarChar(255)
+  slug            String   @unique @db.VarChar(255)
+  content         String?
+  text            String?
+  imageUpload     String?  @map("imageupload") @db.VarChar(255)
+  secureBooking   String?  @map("secure_booking")
+  reliableService String?  @map("reliable_service")
+  customerService String?  @map("customer_service")
+  fairPrice       String?  @map("fair_price")
+  metaTitle       String?  @map("meta_title") @db.VarChar(255)
+  metaDescription String?  @map("meta_description")
+  metaKeywords    String?  @map("meta_keywords")
+  status          String   @default("active") @db.VarChar(255)
+  updatedAt       DateTime @default(now()) @updatedAt @map("updated_at")
+
   @@map("pages")
 }
 
@@ -42,24 +32,16 @@ model Blog {
   id              Int      @id @default(autoincrement())
   title           String   @db.VarChar(255)
   slug            String   @unique @db.VarChar(255)
-  text            String?  @db.Text
+  text            String?
   imageUpload     String?  @map("image_upload") @db.VarChar(255)
   metaTitle       String?  @map("meta_title") @db.VarChar(255)
-  metaDescription String?  @map("meta_description") @db.Text
-  metaKeywords    String?  @map("meta_keywords") @db.Text
+  metaDescription String?  @map("meta_description")
+  metaKeywords    String?  @map("meta_keywords")
   status          String   @default("active") @db.VarChar(20)
   createdAt       DateTime @default(now()) @map("created_at")
-  updatedAt       DateTime @updatedAt @default(now()) @map("updated_at")
+  updatedAt       DateTime @default(now()) @updatedAt @map("updated_at")
 
   @@map("blogs")
-}
-
-// Additional models for user management and authentication
-// Roles for access control
-enum Role {
-  ADMIN
-  EDITOR
-  USER
 }
 
 model Account {
@@ -67,24 +49,52 @@ model Account {
   email     String    @unique
   password  String
   role      Role      @default(USER)
-
-  sessions  Session[]   // 🔁 reverse relation
-
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  sessions  Session[]
 
   @@index([role])
 }
 
 model Session {
-  id        String    @id @default(uuid())
-
+  id        String   @id @default(uuid())
   accountId String
-  account   Account   @relation(fields: [accountId], references: [id], onDelete: Cascade)
-
   expiresAt DateTime
-  createdAt DateTime  @default(now())
+  createdAt DateTime @default(now())
+  account   Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
 
   @@index([accountId])
   @@index([expiresAt])
 }
+
+model Footer {
+  id            Int      @id @default(autoincrement())
+  
+  // Basic Info
+  title         String?
+  tagline       String?
+  copyrightText String?
+
+  // Contact Info
+  email         String?
+  phone         String?
+  address       String?
+
+ 
+  socialLinks   Json?   // [{ platform: "facebook", url: "..." }]
+  navLinks      Json?   // [{ label: "About", url: "/about" }]
+  appLinks      Json?   // [{ platform: "googlePlay", url: "..." }]
+  paymentLinks  Json?   // [{ name: "Visa", imageUrl: "..." }]
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+
+
+enum Role {
+  ADMIN
+  EDITOR
+  USER
+}
+
