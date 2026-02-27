@@ -11,7 +11,7 @@ declare global {
       translate: {
         TranslateElement: new (
           options: { pageLanguage: string; autoDisplay?: boolean },
-          elementId: string
+          elementId: string,
         ) => void;
       };
     };
@@ -27,27 +27,29 @@ const languages = [
   { code: "it", flag: "/assets/flags/Italiano.png" },
   { code: "pl", flag: "/assets/flags/Polski.png" },
   { code: "zh-CN", flag: "/assets/flags/cn.png" },
+  { code: "ja", flag: "/assets/flags/japan.png" },
+  { code: "ar", flag: "/assets/flags/saudi-arabia.png" },
 ];
 
 export default function LanguageDropdown() {
   const [open, setOpen] = useState(false);
-const [currentLang, setCurrentLang] = useState("en");
+  const [currentLang, setCurrentLang] = useState("en");
 
   useEffect(() => {
-  window.googleTranslateElementInit = function () {
-    if (window.google?.translate?.TranslateElement) {
-      new window.google.translate.TranslateElement(
-        { pageLanguage: "en", autoDisplay: false },
-        "google_translate_element"
-      );
-    }
-  };
-}, []);
+    window.googleTranslateElementInit = function () {
+      if (window.google?.translate?.TranslateElement) {
+        new window.google.translate.TranslateElement(
+          { pageLanguage: "en", autoDisplay: false },
+          "google_translate_element",
+        );
+      }
+    };
+  }, []);
 
   const setLanguage = (lang: string, flag: string) => {
     const interval = setInterval(() => {
       const select = document.querySelector(
-        ".goog-te-combo"
+        ".goog-te-combo",
       ) as HTMLSelectElement | null;
 
       if (select) {
@@ -70,10 +72,12 @@ const [currentLang, setCurrentLang] = useState("en");
           className=" overflow-hidden border border-white/20"
         >
           <Image
-            
-  src={languages.find(l => l.code === currentLang)?.flag || "/assets/flags/usa.png"}
+            src={
+              languages.find((l) => l.code === currentLang)?.flag ||
+              "/assets/flags/usa.png"
+            }
             alt="language"
-            width={40}
+            width={30}
             height={40}
             className="object-cover"
           />
@@ -83,22 +87,22 @@ const [currentLang, setCurrentLang] = useState("en");
         {open && (
           <div className="absolute right-0 mt-2 bg-black/80 backdrop-blur-md rounded-2xl shadow-xl p-2 space-y-0.5 w-14">
             {languages
-  .filter((lang) => lang.code !== currentLang)
-  .map((lang) => (
-              <button
-                key={lang.code}
-                onClick={() => setLanguage(lang.code, lang.flag)}
-                className="w-10 h-10 overflow-hidden hover:scale-110 transition"
-              >
-                <Image
-                  src={lang.flag}
-                  alt={lang.code}
-                  width={40}
-                  height={40}
-                  className="object-cover"
-                />
-              </button>
-            ))}
+              .filter((lang) => lang.code !== currentLang)
+              .map((lang) => (
+                <button
+                  key={lang.code}
+                  onClick={() => setLanguage(lang.code, lang.flag)}
+                  className="w-10 h-10 overflow-hidden hover:scale-110 transition"
+                >
+                  <Image
+                    src={lang.flag}
+                    alt={lang.code}
+                    width={30}
+                    height={40}
+                    className="object-cover mx-auto"
+                  />
+                </button>
+              ))}
           </div>
         )}
       </div>
