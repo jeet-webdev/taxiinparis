@@ -63,16 +63,15 @@ export default function Navbar() {
             href="/"
             className="group col-start-2 justify-self-center md:col-start-auto md:justify-self-start flex items-center gap-3"
           >
-            <span className="relative flex items-center justify-center h-12 w-12">
-              <span className="absolute inset-0 rounded-full bg-[#D4AF6A]/25 blur-md transition-opacity group-hover:opacity-100 opacity-80" />
-              <span className="relative flex items-center justify-center h-12 w-12 rounded-full bg-[#0A0F1C] ring-1 ring-[#D4AF6A]/80 shadow-[0_0_28px_rgba(212,175,106,0.35)] transition-transform group-hover:scale-[1.03]">
+            <span className="relative flex items-center justify-center">
+              <span className="relative flex items-center justify-center">
                 <Image
-                  src="/assets/images/logo.png"
+                  src="/assets/images/parislogos.png"
                   alt="Paris Black Car logo"
-                  width={44}
-                  height={44}
+                  width={120}
+                  height={120}
                   priority
-                  className="drop-shadow-[0_0_10px_rgba(212,175,106,0.4)]"
+                  className=""
                 />
               </span>
             </span>
