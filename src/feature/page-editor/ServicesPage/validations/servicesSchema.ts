@@ -3,7 +3,7 @@ import { z } from "zod";
 export const servicesPageSchema = z.object({
   title: z.string(),
   servicesHeaderImage: z
-    .union([z.instanceof(File), z.string(), z.null(), z.undefined()])
+    .union([z.instanceof(File), z.string().url("Invalid image URL")])
     .nullable()
     .refine(
       (value) => {
