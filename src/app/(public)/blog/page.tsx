@@ -2,10 +2,24 @@ import React from "react";
 import { getBlogPage } from "@/src/actions/blog/getBlogs";
 import Link from "next/link";
 import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
+import { Metadata } from "next";
+
 
 interface Props {
   searchParams: Promise<{ page?: string }>;
 }
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Blogs | Taxi in paris",
+    description:
+      "Read the latest blogs, articles, and updates from our website. Stay informed with industry insights and news.",
+    keywords: [
+      "blogs",
+      "articles",
+    ],
+  };
+}
+
 
 export default async function BlogPage({ searchParams }: Props) {
   const resolvedParams = await searchParams;

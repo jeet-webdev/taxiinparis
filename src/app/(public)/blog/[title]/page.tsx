@@ -6,6 +6,49 @@ import { getBlogByTitle } from "@/src/actions/blog/getBlogs";
 import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
 import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
 import HeroSection from "@/src/components/common/Ui/HeroSection";
+import { Metadata } from "next";
+
+
+export async function generateMetadata(
+  { params }: Props
+): Promise<Metadata> {
+  const { title } = await params;
+  const blog = await getBlogByTitle(title);
+
+  if (!blog) {
+    return {
+      title: "Blog Not Found",
+      description: "The requested blog could not be found.",
+    };
+  }
+
+  const cleanDescription =
+    blog.metaDescription ||
+    stripHtml(blog.text || "").slice(0, 160);
+
+  const keywordsArray =
+    blog.metaKeywords?.split(",").map((k) => k.trim()) || [];
+
+  return {
+    title: blog.metaTitle || blog.title,
+    description: cleanDescription,
+    keywords: keywordsArray,
+
+    openGraph: {
+      title: blog.metaTitle || blog.title,
+      description: cleanDescription,
+      type: "article",
+      publishedTime: blog.createdAt?.toISOString(),
+      modifiedTime: blog.updatedAt?.toISOString(),
+    },
+
+    twitter: {
+      card: "summary_large_image",
+      title: blog.metaTitle || blog.title,
+      description: cleanDescription,
+    },
+  };
+}
 interface Props {
   params: Promise<{ title: string }>; // In Next.js 15, params is a Promise
 }
@@ -34,7 +77,7 @@ function getReadingTimeMinutes(text: string) {
 }
 
 export default async function SingleBlogPage({ params }: Props) {
-  // 1. Resolve params and fetch blog data
+  
   const { title } = await params;
   const blog = await getBlogByTitle(title);
 

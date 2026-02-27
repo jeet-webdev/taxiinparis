@@ -39,14 +39,20 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function HomePage() {
   const page = await getHomePage();
-    if (!page || page.status === "inactive") {
-      notFound();
-    }
+  if (!page || page.status === "inactive") {
+    notFound();
+  }
   return (
     <>
       <HeroSection img={page?.imageUpload} />
       <DarkLuxuryBlock>
-        <CommitmentSection customerService={page?.customerService} fairPrice={page?.fairPrice} reliableService={page?.reliableService} secureBooking={page?.secureBooking} />
+        <CommitmentSection
+          title={page?.title}
+          customerService={page?.customerService}
+          fairPrice={page?.fairPrice}
+          reliableService={page?.reliableService}
+          secureBooking={page?.secureBooking}
+        />
         <TestimonialsSection />
       </DarkLuxuryBlock>
     </>

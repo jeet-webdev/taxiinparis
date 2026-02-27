@@ -34,7 +34,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function ServicesPage() {
   const page = await getServicesPage();
-    console.log(page?.imageUpload)
+  console.log(page?.imageUpload);
 
   if (!page || page.status === "inactive") {
     notFound();

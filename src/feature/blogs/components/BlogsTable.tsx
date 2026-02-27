@@ -1,5 +1,5 @@
 "use client";
-
+import Link from "next/link";
 import * as React from "react";
 import {
   Box,
@@ -41,7 +41,7 @@ export default function BlogsTable({ rows, onDelete }: BlogsTableProps) {
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [selectedRowId, setSelectedRowId] = React.useState<number | null>(null);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
+  const [selectedRow, setSelectedRow] = React.useState<BlogRow | null>(null);
   const router = useRouter();
 
   const handleSort = (property: keyof BlogRow) => {
@@ -49,17 +49,6 @@ export default function BlogsTable({ rows, onDelete }: BlogsTableProps) {
     setOrder(isAsc ? "desc" : "asc");
     setOrderBy(property);
   };
-
-  // const sortedRows = React.useMemo(() => {
-  //   return [...rows].sort((a, b) => {
-  //     const valueA = a[orderBy];
-  //     const valueB = b[orderBy];
-
-  //     if (valueA < valueB) return order === "asc" ? -1 : 1;
-  //     if (valueA > valueB) return order === "asc" ? 1 : -1;
-  //     return 0;
-  //   });
-  // }, [order, orderBy]);
 
   const sortedRows = React.useMemo(() => {
     return [...rows].sort((a, b) => {
@@ -202,7 +191,7 @@ export default function BlogsTable({ rows, onDelete }: BlogsTableProps) {
                       size="small"
                       onClick={(e) => {
                         setAnchorEl(e.currentTarget);
-                        setSelectedRowId(row.id);
+                        setSelectedRow(row);
                       }}
                     >
                       Action
@@ -264,20 +253,33 @@ export default function BlogsTable({ rows, onDelete }: BlogsTableProps) {
       >
         <MenuItem
           onClick={() => {
-            if (selectedRowId) {
-              router.push(`/admin/blogs/edit/${selectedRowId}`);
+            if (selectedRow) {
+              router.push(`/admin/blogs/edit/${selectedRow.id}`);
             }
             setAnchorEl(null);
           }}
         >
           Edit
         </MenuItem>
-        <MenuItem onClick={() => setAnchorEl(null)}>View</MenuItem>
+        <MenuItem
+          component={Link}
+          href={selectedRow ? `/blog/${selectedRow.title}` : "#"}
+          onClick={() => setAnchorEl(null)}
+        >
+          View
+        </MenuItem>
+        {/* <MenuItem
+          component={Link}
+          href={`/blog/${encodeURIComponent(BlogsTableProps.title)}`}
+          onClick={() => setAnchorEl(null)}
+        >
+          View
+        </MenuItem> */}
         <MenuItem onClick={() => setAnchorEl(null)}>Block</MenuItem>
         <MenuItem
           onClick={async () => {
-            if (selectedRowId && onDelete) {
-              await onDelete(selectedRowId);
+            if (selectedRow && onDelete) {
+              await onDelete(selectedRow.id);
             }
             setAnchorEl(null);
           }}

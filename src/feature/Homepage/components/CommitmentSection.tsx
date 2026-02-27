@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import { Lock, HeadsetMic, AddRoad, PriceChange } from "@mui/icons-material";
 import { Box } from "@mui/material";
 import FeatureCard from "./FeatureCard";
@@ -6,6 +6,7 @@ import Section from "@/src/components/common/Ui/Section";
 import { motion, Variants } from "framer-motion";
 
 interface CommitmentSectionProps {
+  title?: string | null;
   customerService?: string | null;
   fairPrice?: string | null;
   reliableService?: string | null;
@@ -13,31 +14,32 @@ interface CommitmentSectionProps {
 }
 
 export default function CommitmentSection({
+  title,
   customerService,
   fairPrice,
   reliableService,
   secureBooking,
 }: CommitmentSectionProps) {
   const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.25,
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: 0.25,
+      },
     },
-  },
-};
+  };
 
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 50 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-      ease: "easeOut",
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
     },
-  },
-};
+  };
   const features = [
     {
       title: "Secure Booking",
@@ -88,7 +90,7 @@ const cardVariants: Variants = {
             transition={{ duration: 0.8 }}
             className="text-4xl md:text-5xl text-[#D4AF6A] font-script"
           >
-            Our Commitment to Excellence
+            {title || " Our Commitment to Excellence "}
           </motion.h2>
 
           <motion.div
