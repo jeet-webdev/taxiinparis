@@ -66,7 +66,7 @@ export default function Navbar() {
             <span className="relative flex items-center justify-center">
               <span className="relative flex items-center justify-center">
                 <Image
-                  src="/assets/images/logo.png"
+                  src="/assets/images/parislogos.png"
                   alt="Paris Black Car logo"
                   width={120}
                   height={120}
