@@ -19,23 +19,30 @@ export interface FooterData {
 export interface NavLink {
   label: string;
   url: string;
+  showInNav?: boolean;
 }
 
 export interface SocialLink {
-  platform: "facebook" | "twitter" | "linkedin" | "google" | "email";
+  platform:
+    | "facebook"
+    | "twitter"
+    | "linkedin"
+    | "google"
+    | "email"
+    | "instagram"
+    | "tiktok"
+    | "youtube";
   url: string;
 }
 
 export interface AppLink {
-  platform: 'google_play' | 'app_store';
-  
+  platform: "google_play" | "app_store";
   url: string;
   isVisible: boolean;
 }
 
 export interface PaymentLink {
-  method: 'visa' | 'mastercard' | 'amex';
-  url: string;
+  method: "visa" | "mastercard" | "amex" | "paypal" | "applepay" | "gpay";
   isVisible: boolean;
 }
 
