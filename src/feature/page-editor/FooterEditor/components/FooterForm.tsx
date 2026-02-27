@@ -5,7 +5,30 @@ import { FooterData, NavLink, SocialLink } from "../types/footer.types";
 import { saveFooterData } from "@/src/app/(admin)/admin/footer-editor/actions";
 import { toast } from "react-toastify";
 import { Add, Delete, Link as LinkIcon, Share } from "@mui/icons-material";
+import Image from "next/image";
+const SOCIAL_PLATFORMS: SocialLink["platform"][] = [
+  "facebook",
+  "twitter",
+  "linkedin",
+  "google",
+  "email",
+  "instagram",
+  "tiktok",
+  "youtube",
+];
+const APP_ICONS = {
+  google_play: "/assets/images/google-play-store.png",
+  app_store: "/assets/images/app-store-1.png",
+};
 
+const PAYMENT_ICONS = {
+  visa: "/assets/images/visa.svg",
+  mastercard: "/assets/images/mastercard.svg",
+  amex: "/assets/images/amex.svg",
+  paypal: "/assets/images/paypal.svg",
+  applepay: "/assets/images/applepay.svg",
+  gpay: "/assets/images/gpay.svg",
+};
 export default function FooterForm({
   initialData,
 }: {
@@ -19,25 +42,26 @@ export default function FooterForm({
       copyrightText: "© 2026 Taxi in Paris. All Rights Reserved",
       email: "info@taxiinparis.com",
       phone: "+33 1 45 66 88 12",
-      navLinks: [{ label: "About", url: "/about" }],
+      navLinks: [
+        { label: "Home", url: "/" },
+        { label: "About Us", url: "/about" },
+        { label: "Services", url: "/services" },
+        { label: "Blog", url: "/blog" },
+        { label: "Contact Us", url: "/contact" },
+      ],
       socialLinks: [],
-      appLinks: [],
-      paymentLinks: [],
+
+      appLinks: [
+        { platform: "app_store", url: "", isVisible: true },
+        { platform: "google_play", url: "", isVisible: true },
+      ],
+      paymentLinks: [
+        { method: "visa", isVisible: true },
+        { method: "mastercard", isVisible: true },
+        { method: "amex", isVisible: true },
+      ],
     },
   );
-
-  // --- Helpers ---
-  const addNavLink = () => {
-    setFormData({
-      ...formData,
-      navLinks: [...formData.navLinks, { label: "", url: "" }],
-    });
-  };
-
-  const removeNavLink = (index: number) => {
-    const updatedLinks = formData.navLinks.filter((_, i) => i !== index);
-    setFormData({ ...formData, navLinks: updatedLinks });
-  };
 
   const updateNavLink = (
     index: number,
@@ -50,9 +74,22 @@ export default function FooterForm({
   };
 
   const addSocialLink = () => {
+    const usedPlatforms = formData.socialLinks.map((s) => s.platform);
+    const availablePlatform = SOCIAL_PLATFORMS.find(
+      (platform) => !usedPlatforms.includes(platform),
+    );
+
+    if (!availablePlatform) {
+      toast.info("All social platforms already added.");
+      return;
+    }
+
     setFormData({
       ...formData,
-      socialLinks: [...formData.socialLinks, { platform: "facebook", url: "" }],
+      socialLinks: [
+        ...formData.socialLinks,
+        { platform: availablePlatform, url: "" },
+      ],
     });
   };
 
@@ -109,7 +146,9 @@ export default function FooterForm({
             />
           </div>
           <div>
-            <label className="text-sm font-medium text-gray-700">Tagline</label>
+            <label className="text-sm font-medium text-gray-700">
+              Subheading
+            </label>
             <input
               className="w-full p-2 border rounded mt-1 text-gray-900"
               value={formData.tagline}
@@ -167,124 +206,217 @@ export default function FooterForm({
       <section className="space-y-4 border-t pt-6">
         <div className="flex items-center justify-between border-b pb-2">
           <h3 className="font-semibold text-lg text-gray-800 flex items-center gap-2">
-            <LinkIcon className="text-[#D4AF6A]" /> Navigation Links
+            <LinkIcon className="text-[#D4AF6A]" /> Navigation
           </h3>
-          <button
-            type="button"
-            onClick={addNavLink}
-            className="flex items-center gap-1 text-sm bg-green-50 text-green-700 px-3 py-1 rounded-md border border-green-200 hover:bg-green-100 transition"
-          >
-            <Add fontSize="small" /> Add Link
-          </button>
         </div>
+
         <div className="grid grid-cols-1 gap-4">
           {formData.navLinks.map((link, index) => (
             <div
               key={index}
-              className="flex flex-wrap md:flex-nowrap items-end gap-3 bg-gray-400/5 p-4 rounded-lg border"
+              className="flex flex-wrap md:flex-nowrap items-end gap-3 bg-gray-50 p-4 rounded-lg border"
             >
-              <div className="flex-1">
+              {/* Label - Editable */}
+              <div className="flex-[2]">
                 <label className="text-xs font-bold text-gray-500 uppercase">
-                  Link Label
+                  Name
                 </label>
                 <input
-                  className="w-full p-2 border rounded mt-1 text-sm"
+                  className="w-full p-2 border rounded mt-1 text-sm focus:ring-1 focus:ring-[#D4AF6A] outline-none"
+                  placeholder="Enter link name..."
                   value={link.label}
                   onChange={(e) =>
                     updateNavLink(index, "label", e.target.value)
                   }
                 />
               </div>
-              <div className="flex-[2]">
-                <label className="text-xs font-bold text-gray-500 uppercase">
-                  URL / Path
+
+              <div className="flex-1">
+                <label className="text-xs font-bold text-gray-400 uppercase">
+                  Path
                 </label>
-                <input
-                  className="w-full p-2 border rounded mt-1 text-sm"
-                  value={link.url}
-                  onChange={(e) => updateNavLink(index, "url", e.target.value)}
-                />
+                <div className="w-full p-2 bg-gray-100 border rounded mt-1 text-sm text-gray-500 font-mono">
+                  {link.url}
+                </div>
               </div>
-              <button
-                type="button"
-                onClick={() => removeNavLink(index)}
-                className="text-red-600 p-2"
-              >
-                <Delete fontSize="small" />
-              </button>
             </div>
           ))}
         </div>
       </section>
 
       {/* Social Links */}
+
       <section className="space-y-4 border-t pt-6">
         <div className="flex items-center justify-between border-b pb-2">
           <h3 className="font-semibold text-lg text-gray-800 flex items-center gap-2">
             <Share className="text-[#D4AF6A]" /> Social Media Links
           </h3>
+
           <button
             type="button"
             onClick={addSocialLink}
-            className="flex items-center gap-1 text-sm bg-green-50 text-green-700 px-3 py-1 rounded-md border border-green-200 hover:bg-green-100 transition"
+            disabled={formData.socialLinks.length >= SOCIAL_PLATFORMS.length}
+            className="flex items-center gap-1 text-sm bg-green-50 text-green-700 px-3 py-1 rounded-md border border-green-200 hover:bg-green-100 transition disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Add fontSize="small" /> Add Social Icon
           </button>
         </div>
+
+        {formData.socialLinks.length === 0 && (
+          <p className="text-sm text-gray-400">No social links added yet.</p>
+        )}
+
         <div className="grid grid-cols-1 gap-4">
-          {formData.socialLinks.map((social, index) => (
+          {formData.socialLinks.map((social, index) => {
+            const selectedPlatforms = formData.socialLinks.map(
+              (s) => s.platform,
+            );
+
+            return (
+              <div
+                key={index}
+                className="flex flex-wrap md:flex-nowrap items-end gap-3 bg-gray-50 p-4 rounded-lg border"
+              >
+                {/* Platform Select */}
+                <div className="flex-1">
+                  <label className="text-xs font-bold text-gray-500 uppercase">
+                    Platform
+                  </label>
+
+                  <select
+                    className="w-full p-2 border rounded mt-1 text-sm"
+                    value={social.platform}
+                    onChange={(e) =>
+                      updateSocialLink(
+                        index,
+                        "platform",
+                        e.target.value as SocialLink["platform"],
+                      )
+                    }
+                  >
+                    {SOCIAL_PLATFORMS.filter(
+                      (platform) =>
+                        !selectedPlatforms.includes(platform) ||
+                        platform === social.platform,
+                    ).map((platform) => (
+                      <option key={platform} value={platform}>
+                        {platform.charAt(0).toUpperCase() + platform.slice(1)}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* URL Input */}
+                <div className="flex-[2]">
+                  <label className="text-xs font-bold text-gray-500 uppercase">
+                    Profile URL
+                  </label>
+                  <input
+                    type="url"
+                    placeholder="https://example.com/profile"
+                    className="w-full p-2 border rounded mt-1 text-sm"
+                    value={social.url}
+                    onChange={(e) =>
+                      updateSocialLink(index, "url", e.target.value)
+                    }
+                  />
+                </div>
+
+                {/* Delete Button */}
+                <button
+                  type="button"
+                  onClick={() => removeSocialLink(index)}
+                  className="text-red-600 p-2 hover:bg-red-50 rounded-md transition"
+                >
+                  <Delete fontSize="small" />
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="grid grid-cols-1 md:grid-cols-2 gap-8 border-t pt-6">
+        {/* App Links Column */}
+        <div className="space-y-4">
+          <h4 className="text-xs font-bold text-gray-400 uppercase">
+            Mobile Store Badges
+          </h4>
+          {formData.appLinks.map((link, index) => (
             <div
               key={index}
-              className="flex flex-wrap md:flex-nowrap items-end gap-3 bg-gray-50 p-4 rounded-lg border"
+              className="flex items-center gap-3 bg-gray-50 p-3 rounded-lg border"
             >
+              <Image
+                src={APP_ICONS[link.platform]}
+                alt={link.platform}
+                width={48} // Matches w-12 (12 * 4px)
+                height={48} // Matches h-12
+                className="object-contain"
+              />
               <div className="flex-1">
-                <label className="text-xs font-bold text-gray-500 uppercase">
-                  Platform
-                </label>
-                {/* <select
-                  className="w-full p-2 border rounded mt-1 text-sm"
-                  value={social.platform}
-                  onChange={(e) =>
-                    updateSocialLink(index, "platform", e.target.value as any)
-                  }
-                > */}
-                <select
-                  className="w-full p-2 border rounded mt-1 text-sm"
-                  value={social.platform}
-                  onChange={(e) =>
-                    updateSocialLink(
-                      index,
-                      "platform",
-                      e.target.value as SocialLink["platform"], // Cast to the specific union type
-                    )
-                  }
-                >
-                  <option value="facebook">Facebook</option>
-                  <option value="twitter">Twitter</option>
-                  <option value="linkedin">LinkedIn</option>
-                  <option value="google">Google</option>
-                  <option value="email">Email</option>
-                </select>
-              </div>
-              <div className="flex-[2]">
-                <label className="text-xs font-bold text-gray-500 uppercase">
-                  Profile URL
-                </label>
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-xs font-bold text-gray-600 uppercase">
+                    {link.platform.replace("_", " ")}
+                  </span>
+                  <input
+                    type="checkbox"
+                    checked={link.isVisible}
+                    onChange={(e) => {
+                      const updated = [...formData.appLinks];
+                      updated[index].isVisible = e.target.checked;
+                      setFormData({ ...formData, appLinks: updated });
+                    }}
+                  />
+                </div>
                 <input
-                  className="w-full p-2 border rounded mt-1 text-sm"
-                  value={social.url}
-                  onChange={(e) =>
-                    updateSocialLink(index, "url", e.target.value)
-                  }
+                  className="w-full p-1 border rounded text-xs"
+                  value={link.url}
+                  placeholder="Store URL"
+                  onChange={(e) => {
+                    const updated = [...formData.appLinks];
+                    updated[index].url = e.target.value;
+                    setFormData({ ...formData, appLinks: updated });
+                  }}
                 />
               </div>
-              <button
-                type="button"
-                onClick={() => removeSocialLink(index)}
-                className="text-red-600 p-2"
-              >
-                <Delete fontSize="small" />
-              </button>
+            </div>
+          ))}
+        </div>
+
+        {/* Payment Links Column */}
+        <div className="space-y-4">
+          <h4 className="text-xs font-bold text-gray-400 uppercase">
+            Payment Provider Icons
+          </h4>
+          {formData.paymentLinks.map((link, index) => (
+            <div
+              key={index}
+              className="flex items-center gap-3 bg-gray-50 p-3 rounded-lg border"
+            >
+              <Image
+                src={PAYMENT_ICONS[link.method]}
+                alt={link.method}
+                width={48}
+                height={48}
+                className="object-contain"
+              />
+              <div className="flex-1">
+                <div className="flex justify-between items-center mb-1">
+                  <span className="text-xs font-bold text-gray-600 uppercase">
+                    {link.method}
+                  </span>
+                  <input
+                    type="checkbox"
+                    checked={link.isVisible}
+                    onChange={(e) => {
+                      const updated = [...formData.paymentLinks];
+                      updated[index].isVisible = e.target.checked;
+                      setFormData({ ...formData, paymentLinks: updated });
+                    }}
+                  />
+                </div>
+              </div>
             </div>
           ))}
         </div>

@@ -1,71 +1,41 @@
 import { z } from "zod";
 
 export const homePageSchema = z.object({
-  title: z
-    .string()
-    .min(3, "Title must be at least 3 characters")
-    .max(150, "Title must be under 150 characters"),
+  title: z.string(),
+  homeHeaderImage: z
+    .union([z.instanceof(File), z.string().url("Invalid image URL")])
+    .nullable()
+    .refine(
+      (value) => {
+        if (value instanceof File) {
+          return [
+            "image/jpeg",
+            "image/png",
+            "image/webp",
+            "image/svg+xml",
+          ].includes(value.type);
+        }
+        return true;
+      },
+      { message: "Invalid image format" },
+    )
+    .refine(
+      (value) => {
+        if (value instanceof File) {
+          return value.size <= 5 * 1024 * 1024;
+        }
+        return true;
+      },
+      { message: "Image must be less than 5MB" },
+    ),
 
-homeHeaderImage: z
-  .union([
-    z.instanceof(File),
-    z.string().url("Invalid image URL"),
-  ])
-  .nullable()
-  .refine(
-    (value) => {
-      if (value instanceof File) {
-        return [
-          "image/jpeg",
-          "image/png",
-          "image/webp",
-          "image/svg+xml",
-        ].includes(value.type);
-      }
-      return true;
-    },
-    { message: "Invalid image format" }
-  )
-  .refine(
-    (value) => {
-      if (value instanceof File) {
-        return value.size <= 5 * 1024 * 1024;
-      }
-      return true;
-    },
-    { message: "Image must be less than 5MB" }
-  ),
-
-  secureBooking: z
-    .string()
-    .min(20, "Secure booking must be at least 20 characters"),
-
-  reliableServices: z
-    .string()
-    .min(20, "Reliable services must be at least 20 characters"),
-
-  customerServices: z
-    .string()
-    .min(20, "Customer services must be at least 20 characters"),
-
-  fairPrice: z
-    .string()
-    .min(20, "Fair price must be at least 20 characters"),
-
-  metaTitle: z
-    .string()
-    .min(3, "Meta title is required")
-    .max(60, "Meta title should be under 60 characters"),
-
-  metaDescription: z
-    .string()
-    .min(10, "Meta description is required")
-    .max(160, "Meta description should be under 160 characters"),
-
-  metaKeywords: z
-    .string()
-    .min(3, "Meta keywords are required"),
-
+  secureBooking: z.string(),
+  reliableServices: z.string(),
+  customerServices: z.string(),
+  fairPrice: z.string(),
+  metaTitle: z.string(),
+  metaDescription: z.string(),
+  metaKeywords: z.string(),
   status: z.enum(["active", "inactive"]),
 });
 
