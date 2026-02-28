@@ -2,6 +2,7 @@ import { getPageBySlug } from "@/src/actions/page/getPage";
 import Content from "@/src/components/common/Ui/Content";
 import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
 import HeroSection from "@/src/components/common/Ui/HeroSection";
+import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
@@ -45,6 +46,7 @@ export default async function about() {
       <HeroSection img={page?.imageUpload || undefined} />
       <DarkLuxuryBlock>
         <Content data={{ title: page?.title, content: page?.content }} />
+        <TestimonialsSection />
       </DarkLuxuryBlock>
     </>
   );

@@ -3,10 +3,12 @@ import { z } from "zod";
 export const homePageSchema = z.object({
   title: z.string(),
   homeHeaderImage: z
-    .union([z.instanceof(File), z.string().url("Invalid image URL")])
+    .union([z.instanceof(File), z.string()])
+    .optional()
     .nullable()
     .refine(
       (value) => {
+        if (!value) return true;
         if (value instanceof File) {
           return [
             "image/jpeg",
@@ -21,6 +23,7 @@ export const homePageSchema = z.object({
     )
     .refine(
       (value) => {
+        if (!value) return true;
         if (value instanceof File) {
           return value.size <= 5 * 1024 * 1024;
         }
@@ -39,4 +42,5 @@ export const homePageSchema = z.object({
   status: z.enum(["active", "inactive"]),
 });
 
-export type HomePageSchemaType = z.infer<typeof homePageSchema>;
+
+export type HomePageFormValues = z.infer<typeof homePageSchema>;

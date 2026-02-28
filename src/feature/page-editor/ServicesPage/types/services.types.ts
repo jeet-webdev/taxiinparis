@@ -6,5 +6,5 @@ export type ServicesPageFormValues = {
   metaTitle: string;
   metaDescription: string;
   metaKeywords: string;
-status: "active" | "inactive";
+  status: "active" | "inactive";
 };

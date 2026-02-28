@@ -9,6 +9,7 @@ import {
   Typography,
   Box,
 } from "@mui/material";
+import { SubmitHandler } from "react-hook-form";
 import Grid from "@mui/material/GridLegacy";
 import RichTextEditor from "@/src/components/common/Ui/Admin/RichTextEditor";
 import { useTransition } from "react";
@@ -34,22 +35,108 @@ export default function HomePageSection({
   const methods = useForm<HomePageFormValues>({
     defaultValues,
     resolver: zodResolver(homePageSchema),
+    // This mode is optional but recommended for better UX
+    mode: "onChange",
   });
 
   const { control, handleSubmit } = methods;
   const [isPending, startTransition] = useTransition();
 
-  const onSubmit = (data: HomePageFormValues) => {
+  // const onSubmit = (data: HomePageFormValues) => {
+  //   startTransition(async () => {
+  //     if (!onSave) return;
+
+  //     // Default to existing image string
+  //     let imagePath: string | null =
+  //       typeof data.homeHeaderImage === "string"
+  //         ? data.homeHeaderImage
+  //         : (defaultValues.homeHeaderImage as string | null);
+
+  //     // 1. If a NEW file is selected, upload it first
+  //     if (data.homeHeaderImage instanceof File) {
+  //       const formData = new FormData();
+  //       formData.append("image", data.homeHeaderImage);
+
+  //       const uploadRes = await uploadPageImage(pageId, formData);
+  //       if (uploadRes?.success && uploadRes.publicPath) {
+  //         imagePath = uploadRes.publicPath;
+  //       } else {
+  //         toast.error("Image upload failed. Saving other changes...");
+  //       }
+  //     }
+
+  //     // 2. Save all data (including the new image path)
+  //     const result = await onSave({
+  //       title: data.title,
+  //       imageUpload: imagePath,
+  //       secureBooking: data.secureBooking,
+  //       reliableService: data.reliableServices,
+  //       customerService: data.customerServices,
+  //       fairPrice: data.fairPrice,
+  //       metaTitle: data.metaTitle,
+  //       metaDescription: data.metaDescription,
+  //       metaKeywords: data.metaKeywords,
+  //       status: data.status,
+  //     });
+
+  //     if (result.success) {
+  //       toast.success("Home page updated successfully!");
+  //     }
+  //   });
+  // };
+  // const onSubmit: SubmitHandler<HomePageFormValues> = (data) => {
+  //   startTransition(async () => {
+  //     if (!onSave) return;
+
+  //     // Handle the image path logic
+  //     let imagePath: string | null = null;
+
+  //     if (typeof data.homeHeaderImage === "string") {
+  //       imagePath = data.homeHeaderImage;
+  //     } else if (data.homeHeaderImage instanceof File) {
+  //       const formData = new FormData();
+  //       formData.append("image", data.homeHeaderImage);
+
+  //       const uploadRes = await uploadPageImage(pageId, formData);
+  //       if (uploadRes?.success && uploadRes.publicPath) {
+  //         imagePath = uploadRes.publicPath;
+  //       } else {
+  //         toast.error("Image upload failed.");
+  //         return; // Stop if upload is required, or continue if you want to save anyway
+  //       }
+  //     } else {
+  //       // If it's null or undefined, and you want to keep the old image:
+  //       imagePath = (defaultValues.homeHeaderImage as string) || null;
+  //     }
+
+  //     const result = await onSave({
+  //       ...data, // Spreading data helps if keys match perfectly
+  //       // imageUpload: imagePath,
+  //       title: data.title,
+  //       imageUpload: imagePath,
+  //       secureBooking: data.secureBooking,
+  //       reliableService: data.reliableServices,
+  //       customerService: data.customerServices,
+  //       fairPrice: data.fairPrice,
+  //       metaTitle: data.metaTitle,
+  //       metaDescription: data.metaDescription,
+  //       metaKeywords: data.metaKeywords,
+  //       status: data.status,
+  //     });
+
+  //     if (result.success) {
+  //       toast.success("Home page updated successfully!");
+  //     }
+  //   });
+  // };
+
+  const onSubmit: SubmitHandler<HomePageFormValues> = (data) => {
     startTransition(async () => {
       if (!onSave) return;
 
-      // Default to existing image string
-      let imagePath: string | null =
-        typeof data.homeHeaderImage === "string"
-          ? data.homeHeaderImage
-          : (defaultValues.homeHeaderImage as string | null);
+      let imagePath: string | undefined = undefined;
 
-      // 1. If a NEW file is selected, upload it first
+      // 1. Check if a NEW file was uploaded
       if (data.homeHeaderImage instanceof File) {
         const formData = new FormData();
         formData.append("image", data.homeHeaderImage);
@@ -58,14 +145,21 @@ export default function HomePageSection({
         if (uploadRes?.success && uploadRes.publicPath) {
           imagePath = uploadRes.publicPath;
         } else {
-          toast.error("Image upload failed. Saving other changes...");
-         
-          
+          toast.error("Image upload failed.");
+          return;
         }
       }
+      // 2. If it's a string, it's the existing URL; we don't need to "re-upload"
+      else if (typeof data.homeHeaderImage === "string") {
+        imagePath = data.homeHeaderImage;
+      }
+      // 3. If it's null/undefined, we keep the default value to avoid overwriting with null
+      else {
+        imagePath = (defaultValues.homeHeaderImage as string) || undefined;
+      }
 
-      // 2. Save all data (including the new image path)
       const result = await onSave({
+        ...data,
         title: data.title,
         imageUpload: imagePath,
         secureBooking: data.secureBooking,
@@ -83,7 +177,6 @@ export default function HomePageSection({
       }
     });
   };
-
   return (
     <FormProvider {...methods}>
       <Box
@@ -116,23 +209,23 @@ export default function HomePageSection({
               )}
             /> */}
             <Controller
-  name="homeHeaderImage"
-  control={control}
-  render={({ field, fieldState }) => (
-    <FileUploadField
-      label="Header Image"
-      accept="image/*"
-      // FIX: Pass the value if it's a File OR a string (URL)
-      files={field.value || null} 
-      error={!!fieldState.error}
-      errorMessage={fieldState.error?.message}
-      onChange={(files) => {
-        const file = Array.isArray(files) ? files[0] : files;
-        field.onChange(file ?? null);
-      }}
-    />
-  )}
-/>
+              name="homeHeaderImage"
+              control={control}
+              render={({ field, fieldState }) => (
+                <FileUploadField
+                  label="Header Image"
+                  accept="image/*"
+                  // FIX: Pass the value if it's a File OR a string (URL)
+                  files={field.value || null}
+                  error={!!fieldState.error}
+                  errorMessage={fieldState.error?.message}
+                  onChange={(files) => {
+                    const file = Array.isArray(files) ? files[0] : files;
+                    field.onChange(file ?? null);
+                  }}
+                />
+              )}
+            />
           </Grid>
 
           <Grid item xs={12}>

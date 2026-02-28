@@ -77,7 +77,7 @@ export default function LanguageDropdown() {
               "/assets/flags/usa.png"
             }
             alt="language"
-            width={40}
+            width={30}
             height={40}
             className="object-cover"
           />
@@ -97,9 +97,9 @@ export default function LanguageDropdown() {
                   <Image
                     src={lang.flag}
                     alt={lang.code}
-                    width={40}
+                    width={30}
                     height={40}
-                    className="object-cover"
+                    className="object-cover mx-auto"
                   />
                 </button>
               ))}

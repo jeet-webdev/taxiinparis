@@ -1,4 +1,5 @@
 import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
+import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
 import type { Metadata } from "next";
 import Link from "next/link";
 
@@ -48,6 +49,7 @@ export default function MaintenancePage() {
           </p>
         </div>
       </section>
+        <TestimonialsSection />
     </DarkLuxuryBlock>
   );
 }

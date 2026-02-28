@@ -22,13 +22,14 @@ const APP_ICONS = {
 };
 
 const PAYMENT_ICONS = {
-  visa: "/assets/images/visa.svg",
-  mastercard: "/assets/images/mastercard.svg",
-  amex: "/assets/images/amex.svg",
-  paypal: "/assets/images/paypal.svg",
+  visa: "/assets/images/visacard.svg",
+  mastercard: "/assets/images/mastercard1.svg",
+  amex: "/assets/images/amex-3.svg",
+  paypal: "/assets/images/paypal3.svg",
   applepay: "/assets/images/applepay.svg",
   gpay: "/assets/images/gpay.svg",
 };
+
 export default function FooterForm({
   initialData,
 }: {
@@ -359,7 +360,7 @@ export default function FooterForm({
                   <span className="text-xs font-bold text-gray-600 uppercase">
                     {link.platform.replace("_", " ")}
                   </span>
-                  <input
+                  {/* <input
                     type="checkbox"
                     checked={link.isVisible}
                     onChange={(e) => {
@@ -367,7 +368,7 @@ export default function FooterForm({
                       updated[index].isVisible = e.target.checked;
                       setFormData({ ...formData, appLinks: updated });
                     }}
-                  />
+                  /> */}
                 </div>
                 <input
                   className="w-full p-1 border rounded text-xs"

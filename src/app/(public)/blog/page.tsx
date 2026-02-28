@@ -3,7 +3,7 @@ import { getBlogPage } from "@/src/actions/blog/getBlogs";
 import Link from "next/link";
 import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
 import { Metadata } from "next";
-
+import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
 
 interface Props {
   searchParams: Promise<{ page?: string }>;
@@ -13,13 +13,9 @@ export async function generateMetadata(): Promise<Metadata> {
     title: "Blogs | Taxi in paris",
     description:
       "Read the latest blogs, articles, and updates from our website. Stay informed with industry insights and news.",
-    keywords: [
-      "blogs",
-      "articles",
-    ],
+    keywords: ["blogs", "articles"],
   };
 }
-
 
 export default async function BlogPage({ searchParams }: Props) {
   const resolvedParams = await searchParams;
@@ -32,7 +28,7 @@ export default async function BlogPage({ searchParams }: Props) {
   );
 
   return (
-    <main className="min-h-screen pb-20 bg-[#292d37]">
+    <main className="min-h-screen  bg-[#292d37]">
       <DarkLuxuryBlock>
         <section className="py-16 border-b border-amber-500">
           <div className="text-center px-6">
@@ -91,6 +87,7 @@ export default async function BlogPage({ searchParams }: Props) {
             </div>
           )}
         </section>
+        <TestimonialsSection />
       </DarkLuxuryBlock>
     </main>
   );

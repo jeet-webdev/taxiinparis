@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
 import Content from "@/src/components/common/Ui/Content";
+import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
 const getTermsPage = cache(() => getPageBySlug("terms"));
 const safe = (value?: string | null) => value ?? undefined;
 
@@ -42,6 +43,7 @@ export default async function TermsPage() {
     <>
       <DarkLuxuryBlock>
         <Content data={{ title: page?.title, content: page?.content }} />
+          <TestimonialsSection />
       </DarkLuxuryBlock>
     </>
   );
