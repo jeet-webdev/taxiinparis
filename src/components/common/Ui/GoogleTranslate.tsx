@@ -85,7 +85,7 @@ export default function LanguageDropdown() {
 
         {/* Dropdown */}
         {open && (
-          <div className="absolute right-0 mt-2 bg-black/80 backdrop-blur-md rounded-2xl shadow-xl p-2 space-y-0.5 w-14">
+          <div className="absolute right-0 mt-2 bg-[#00000050] rounded-2xl shadow-xl p-2 space-y-0.5 w-14">
             {languages
               .filter((lang) => lang.code !== currentLang)
               .map((lang) => (
