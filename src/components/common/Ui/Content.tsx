@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Section from "@/src/components/common/Ui/Section";
 import Image from "next/image";
 import Link from "next/link";
+import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
 
 interface ContentProps {
   data: {
@@ -70,8 +71,9 @@ export default function Content({ data: { title, content } }: ContentProps) {
           />
         )}
       </div>
+    
 
-      <div className="mt-2 flex justify-center gap-6">
+      {/* <div className="mt-2 flex justify-center gap-6">
         <Link
           href="https://play.google.com/store/apps/details?id=com.vtcParis"
           target="_blank"
@@ -96,7 +98,7 @@ export default function Content({ data: { title, content } }: ContentProps) {
             height={55}
           />
         </Link>
-      </div>
+      </div> */}
     </Section>
   );
 }

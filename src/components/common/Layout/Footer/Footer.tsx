@@ -23,11 +23,11 @@ const APP_ICONS = {
 };
 
 const PAYMENT_ICONS = {
-  visa: "/assets/images/visa.svg",
-  mastercard: "/assets/images/mastercard.svg",
-  amex: "/assets/images/amex.svg",
-  paypal: "/assets/images/paypal.svg",
-  applepay: "/assets/images/applepay.svg",
+  visa: "/assets/images/visacard.svg",
+  mastercard: "/assets/images/mastercard1.svg",
+  amex: "/assets/images/amex-3.svg",
+  paypal: "/assets/images/paypal3.svg",
+  applepay: "/assets/images/applepay1.svg",
   gpay: "/assets/images/gpay.svg",
 };
 
@@ -74,7 +74,8 @@ export default async function Footer() {
           <h2 className="text-xl font-bold text-[#D4AF6A]">{data.title}</h2>
           <p className="text-sm mt-2 text-gray-400">{data.tagline}</p>
 
-          <div className="grid grid-cols-5 gap-3 mt-5">
+          {/* Changed grid to flex and added a small gap */}
+          <div className="flex items-center  gap-2 mt-5">
             {Array.from(
               new Map(
                 socialLinks.map((item) => [item.platform, item]),
@@ -107,7 +108,9 @@ export default async function Footer() {
               .filter((link) => link.showInNav !== false)
               .map((link, i) => (
                 <li key={i}>
-                  <Link href={link.url}>{link.label}</Link>
+                  <Link className="hover:text-[#D4AF6A]" href={link.url}>
+                    {link.label}
+                  </Link>
                 </li>
               ))}
           </ul>
@@ -147,7 +150,7 @@ export default async function Footer() {
           </h3>
 
           {/* App Store Badges */}
-          <div className="flex flex-col gap-2 mb-5">
+          {/* <div className="flex flex-col gap-2 mb-5">
             {appLinks
               .filter((app) => app.isVisible) // Fixes isVisible error
               .map((app, i) => (
@@ -161,7 +164,7 @@ export default async function Footer() {
                   />
                 </Link>
               ))}
-          </div>
+          </div> */}
 
           {/* Payment Icons */}
           <div className="flex items-center gap-3">
@@ -175,8 +178,8 @@ export default async function Footer() {
                   <Image
                     src={PAYMENT_ICONS[payment.method]}
                     alt={payment.method}
-                    width={30}
-                    height={20}
+                    width={40}
+                    height={30}
                     className="object-contain"
                   />
                 </div>

@@ -1,7 +1,6 @@
 "use client";
 
-import { Controller, useForm, FormProvider } from "react-hook-form";
-import {
+import { Controller, useForm, FormProvider, SubmitHandler } from "react-hook-form";import {
   Button,
   CircularProgress,
   TextField,
@@ -35,47 +34,94 @@ export default function AboutSection({ defaultValues, onSave, pageId }: Props) {
   const { control, handleSubmit } = methods;
   const [isPending, startTransition] = useTransition();
 
-  const onSubmit = (data: AboutPageFormValues) => {
-    startTransition(async () => {
-      if (!onSave) return;
+  // const onSubmit = (data: AboutPageFormValues) => {
+  //   startTransition(async () => {
+  //     if (!onSave) return;
 
-      // 1. Default to existing image string
-      let imagePath: string | null =
-        typeof data.headerImage === "string"
-          ? data.headerImage
-          : (defaultValues.headerImage as string | null);
+  //     // 1. Default to existing image string
+  //     let imagePath: string | null =
+  //       typeof data.headerImage === "string"
+  //         ? data.headerImage
+  //         : (defaultValues.headerImage as string | null);
 
-      // 2. If a NEW file is selected, upload it first
-      if (data.headerImage instanceof File) {
-        const formData = new FormData();
-        formData.append("image", data.headerImage);
+  //     // 2. If a NEW file is selected, upload it first
+  //     if (data.headerImage instanceof File) {
+  //       const formData = new FormData();
+  //       formData.append("image", data.headerImage);
 
-        const uploadRes = await uploadPageImage(pageId, formData);
+  //       const uploadRes = await uploadPageImage(pageId, formData);
 
-        if (uploadRes?.success && uploadRes.publicPath) {
-          imagePath = uploadRes.publicPath;
-        } else {
-        toast.error("Image upload failed. Saving other changes...");
-        }
+  //       if (uploadRes?.success && uploadRes.publicPath) {
+  //         imagePath = uploadRes.publicPath;
+  //       } else {
+  //       toast.error("Image upload failed. Saving other changes...");
+  //       }
+  //     }
+
+  //     // 3. Save all data (including the new/existing image path)
+  //     const result = await onSave({
+  //       title: data.title,
+  //       imageUpload: imagePath, // Maps to imageUpload in your action
+  //       content: data.content,
+  //       metaTitle: data.metaTitle,
+  //       metaDescription: data.metaDescription,
+  //       metaKeywords: data.metaKeywords,
+  //       status: data.status,
+  //     });
+
+  //     if (result.success) {
+  //       toast.success("About page updated successfully!");
+  //     }
+  //   });
+  // };
+const onSubmit: SubmitHandler<AboutPageFormValues> = (data) => {
+  startTransition(async () => {
+    if (!onSave) return;
+
+    // Use undefined as a starting point to avoid accidental nulls
+    let imagePath: string | undefined = undefined;
+
+    // 1. If the value is a NEW File object, upload it
+    if (data.headerImage instanceof File) {
+      const formData = new FormData();
+      formData.append("image", data.headerImage);
+
+      const uploadRes = await uploadPageImage(pageId, formData);
+      if (uploadRes?.success && uploadRes.publicPath) {
+        imagePath = uploadRes.publicPath;
+      } else {
+        toast.error("Image upload failed. Please try again.");
+        return; // Stop execution if upload fails to prevent saving partial data
       }
+    } 
+    // 2. If it's a string, the admin kept the existing image (URL)
+    else if (typeof data.headerImage === "string") {
+      imagePath = data.headerImage;
+    } 
+    // 3. If it's null/undefined (no image selected and no existing image), 
+    // fallback to the default value to preserve what's in the database
+    else {
+      imagePath = (defaultValues.headerImage as string) || undefined;
+    }
 
-      // 3. Save all data (including the new/existing image path)
-      const result = await onSave({
-        title: data.title,
-        imageUpload: imagePath, // Maps to imageUpload in your action
-        content: data.content,
-        metaTitle: data.metaTitle,
-        metaDescription: data.metaDescription,
-        metaKeywords: data.metaKeywords,
-        status: data.status,
-      });
-
-      if (result.success) {
-        toast.success("About page updated successfully!");
-      }
+    // 4. Save all data
+    const result = await onSave({
+      title: data.title,
+      imageUpload: imagePath, // Sends the new URL, the old URL, or undefined
+      content: data.content,
+      metaTitle: data.metaTitle,
+      metaDescription: data.metaDescription,
+      metaKeywords: data.metaKeywords,
+      status: data.status,
     });
-  };
 
+    if (result.success) {
+      toast.success("About page updated successfully!");
+    } else {
+      toast.error("Failed to update About page.");
+    }
+  });
+};
   return (
     <FormProvider {...methods}>
       <Box
