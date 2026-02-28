@@ -204,7 +204,7 @@ export default function FooterForm({
       </div>
 
       {/* Navigation Links */}
-      <section className="space-y-4 border-t pt-6">
+     {/* <section className="space-y-4 border-t pt-6">
         <div className="flex items-center justify-between border-b pb-2">
           <h3 className="font-semibold text-lg text-gray-800 flex items-center gap-2">
             <LinkIcon className="text-[#D4AF6A]" /> Navigation
@@ -217,7 +217,7 @@ export default function FooterForm({
               key={index}
               className="flex flex-wrap md:flex-nowrap items-end gap-3 bg-gray-50 p-4 rounded-lg border"
             >
-              {/* Label - Editable */}
+              
               <div className="flex-[2]">
                 <label className="text-xs font-bold text-gray-500 uppercase">
                   Name
@@ -243,7 +243,7 @@ export default function FooterForm({
             </div>
           ))}
         </div>
-      </section>
+      </section> */}
 
       {/* Social Links */}
 

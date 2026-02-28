@@ -105,7 +105,8 @@ export default function ServicesSection({
                 <FileUploadField
                   label="Header Image"
                   accept="image/jpeg,image/png,image/webp,image/svg+xml"
-                  files={field.value instanceof File ? field.value : null}
+                  // files={field.value instanceof File ? field.value : null}
+                  files={field.value}
                   error={!!fieldState.error}
                   errorMessage={fieldState.error?.message}
                   onChange={(files) => {
