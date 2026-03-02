@@ -32,11 +32,11 @@ export default async function BlogPage({ searchParams }: Props) {
       <DarkLuxuryBlock>
         <section className="py-16 border-b border-amber-500">
           <div className="text-center px-6">
-            <h1 className="text-4xl md:text-5xl font-light text-amber-500 mb-4 tracking-tight">
+            <h1 className="text-4xl md:text-5xl font-light text-[#d4af6a] mb-4 tracking-tight">
               Our Blogs
             </h1>
-            <div className="h-1 w-24 bg-amber-500 mx-auto relative">
-              <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-amber-500 rotate-45" />
+            <div className="h-1 w-24 bg-[#d4af6a] mx-auto relative">
+              <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-[#d4af6a] rotate-45" />
             </div>
           </div>
         </section>

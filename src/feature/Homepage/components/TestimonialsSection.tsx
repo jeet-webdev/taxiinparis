@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { prisma } from "@/src/lib/prisma";
-import TestimonialCard from "./TestimonialCard";
+// import TestimonialCard from "./TestimonialCard";
 import { Container } from "@mui/material";
 import Section from "@/src/components/common/Ui/Section";
 import Link from "next/link";
@@ -21,18 +21,6 @@ export default async function TestimonialsSection() {
     <Section>
       <Container className="relative z-10 py-2 text-center">
         <div className="h-0.5 w-full bg-linear-to-r from-transparent via-[#D4AF6A] to-transparent mb-8" />
-        {/* <div className="flex items-center justify-center gap-6 mb-8">
-          <div className="hidden md:block h-0.5 w-40 bg-linear-to-r from-transparent via-[#D4AF6A] to-transparent" />
-          <h2 className="text-4xl md:text-[42px] text-white">Testimonials</h2>
-          <div className="hidden md:block h-0.5 w-40 bg-linear-to-r from-transparent via-[#D4AF6A] to-transparent" />
-        </div> */}
-
-        {/* Testimonial Card */}
-        {/* <TestimonialCard
-          quote="Excellent service, always right on time. I traveled with my parents (two old persons), and used the service three times during a week in Paris. The driver always placed all the luggage in and out and helped them with the doors."
-          author="Jose Coll C"
-        /> */}
-
         {/* App Badges */}
         <div className="mt-8 flex justify-center gap-6">
           {visibleLinks.map((app, index) => {
@@ -49,7 +37,6 @@ export default async function TestimonialsSection() {
                 </Link>
               );
             }
-
             if (app.platform === "app_store") {
               return (
                 <Link key={index} href={app.url} target="_blank">

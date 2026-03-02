@@ -8,32 +8,27 @@ datasource db {
 }
 
 model Page {
-  id              Int      @id @default(autoincrement())
-  pageName        String?  @map("page_name") @db.VarChar(50)
-  title           String   @db.VarChar(255)
-  slug            String   @unique @db.VarChar(255)
-  content         String?
-  text            String?
-  imageUpload     String?  @map("imageupload") @db.VarChar(255)
-imageAlt        String? @map("imagealt") @db.VarChar(255)
-
-  secureBookingTitle String?  @map("secure_booking_title")
-  secureBooking   String?  @map("secure_booking")
-
-  reliableServiceTitle    String?  @map("reliable_service_title")
-  reliableService String?  @map("reliable_service")
-
-  customerServiceTitle    String?  @map("customer_service_title")
-  customerService String?  @map("customer_service")
-
-  fairPriceTitle          String?  @map("fair_price_title")
-  fairPrice       String?  @map("fair_price")
-
-  metaTitle       String?  @map("meta_title") @db.VarChar(255)
-  metaDescription String?  @map("meta_description")
-  metaKeywords    String?  @map("meta_keywords")
-  status          String   @default("active") @db.VarChar(255)
-  updatedAt       DateTime @default(now()) @updatedAt @map("updated_at")
+  id                   Int      @id @default(autoincrement())
+  pageName             String?  @map("page_name") @db.VarChar(50)
+  title                String   @db.VarChar(255)
+  slug                 String   @unique @db.VarChar(255)
+  content              String?
+  text                 String?
+  imageUpload          String?  @map("imageupload") @db.VarChar(255)
+  secureBooking        String?  @map("secure_booking")
+  reliableService      String?  @map("reliable_service")
+  customerService      String?  @map("customer_service")
+  fairPrice            String?  @map("fair_price")
+  metaTitle            String?  @map("meta_title") @db.VarChar(255)
+  metaDescription      String?  @map("meta_description")
+  metaKeywords         String?  @map("meta_keywords")
+  status               String   @default("active") @db.VarChar(255)
+  updatedAt            DateTime @default(now()) @updatedAt @map("updated_at")
+  customerServiceTitle String?  @map("customer_service_title")
+  fairPriceTitle       String?  @map("fair_price_title")
+  reliableServiceTitle String?  @map("reliable_service_title")
+  secureBookingTitle   String?  @map("secure_booking_title")
+  imageAlt             String?  @map("imagealt") @db.VarChar(255)
 
   @@map("pages")
 }
@@ -89,11 +84,10 @@ model Footer {
   navLinks      Json?
   appLinks      Json?
   paymentLinks  Json?
-  logoUrl       String?
-  logoAlt       String?  
-
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+  logoAlt       String?
+  logoUrl       String?
 }
 
 enum Role {
