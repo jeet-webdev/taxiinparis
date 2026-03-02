@@ -1,15 +1,42 @@
 "use client";
 
 import React, { useActionState, useState } from "react";
-import PhoneInput from "react-phone-number-input";
-import "react-phone-number-input/style.css";
+import PhoneInput, {
+  getCountries,
+  getCountryCallingCode,
+} from "react-phone-number-input";
+import en from "react-phone-number-input/locale/en.json";
+import flags from "react-phone-number-input/flags";
 import { sendContactEmail, FormState } from "@/src/actions/contactAction";
+import FlagSelect from "./FlagSelect";
+import PhoneField from "./PhoneField";
 
 const initialState: FormState = {
   error: null,
   success: false,
 };
 
+function FlagOnlyCountrySelect({
+  value,
+  onChange,
+}: {
+  value?: string;
+  onChange: (value?: string) => void;
+}) {
+  return (
+    <select
+      value={value}
+      onChange={(e) => onChange(e.target.value || undefined)}
+      className="bg-transparent outline-none cursor-pointer w-[70px]"
+    >
+      {getCountries().map((country) => (
+        <option key={country} value={country}>
+          {country}
+        </option>
+      ))}
+    </select>
+  );
+}
 export default function ContactForm() {
   const [state, formAction, isPending] = useActionState(
     sendContactEmail,
@@ -70,73 +97,7 @@ export default function ContactForm() {
         </div>
         <div className="space-y-2">
           <label className="text-sm font-semibold text-[#d4af6a]">Phone</label>
-          <div className="luxury-phone-input">
-            <style>{`
-  /* Container styling */
-  .PhoneInput {
-    border: 1px solid #d1d5db;
-    border-radius: 0.375rem;
-    background: white;
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-  }
-
-  /* Flag container styling */
-  .PhoneInputCountry {
-    padding: 0 10px;
-    border-right: 1px solid #d1d5db;
-    background: #f9fafb;
-    height: 45px;
-    display: flex;
-    align-items: center;
-  }
-
-  /* Hide dropdown arrow */
-  .PhoneInputCountrySelectArrow {
-    display: none;
-  }
-
-  /* 🔥 Hide country names in dropdown */
-  .PhoneInputCountrySelect option {
-    font-size: 0;
-  }
-
-  /* Make dropdown width small */
-  .PhoneInputCountrySelect {
-    width: 60px !important;
-  }
-
-  /* Focus styling */
-  .PhoneInput:focus-within {
-    border-color: #d4af6a;
-    box-shadow: 0 0 0 1px #d4af6a;
-  }
-
-  /* Remove input border */
-  .PhoneInputInput {
-    border: none !important;
-    padding: 10px !important;
-  }
-`}</style>
-
-            <PhoneInput
-              international
-              defaultCountry="FR"
-              displayInitialCountryNames={false} // THIS HIDES THE COUNTRY NAMES
-              value={phoneValue}
-              onChange={setPhoneValue}
-              inputComponent={(
-                props: React.InputHTMLAttributes<HTMLInputElement>,
-              ) => (
-                <input
-                  {...props}
-                  name="phone"
-                  className="w-full outline-none bg-transparent"
-                />
-              )}
-            />
-          </div>
+      <PhoneField/>
         </div>
       </div>
 
