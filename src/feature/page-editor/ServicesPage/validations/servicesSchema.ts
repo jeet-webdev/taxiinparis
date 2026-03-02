@@ -28,7 +28,7 @@ export const servicesPageSchema = z.object({
       },
       { message: "Image must be less than 5MB" },
     ),
-
+  imageAlt: z.string().optional(),
   content: z.string(),
   metaTitle: z.string(),
   metaDescription: z.string(),

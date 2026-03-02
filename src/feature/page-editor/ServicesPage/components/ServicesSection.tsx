@@ -68,6 +68,7 @@ export default function ServicesSection({
       const result = await onSave({
         title: data.title,
         imageUpload: imagePath,
+        imageAlt: data.imageAlt,
         content: data.content,
         metaTitle: data.metaTitle,
         metaDescription: data.metaDescription,
@@ -113,6 +114,24 @@ export default function ServicesSection({
                     const file = Array.isArray(files) ? files[0] : files;
                     field.onChange(file ?? null);
                   }}
+                />
+              )}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
+              Image Alt Text
+            </Typography>
+            <Controller
+              name="imageAlt"
+              control={control}
+              render={({ field, fieldState }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  placeholder="Enter Service image description for SEO"
+                  error={!!fieldState.error}
+                  helperText={fieldState.error?.message}
                 />
               )}
             />

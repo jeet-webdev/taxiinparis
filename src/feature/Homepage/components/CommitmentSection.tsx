@@ -7,14 +7,24 @@ import { motion, Variants } from "framer-motion";
 
 interface CommitmentSectionProps {
   title?: string | null;
-  customerService?: string | null;
-  fairPrice?: string | null;
-  reliableService?: string | null;
+  secureBookingTitle?: string | null;
+  reliableServiceTitle?: string | null;
+  fairPriceTitle?: string | null;
+  customerServiceTitle?: string | null;
+
   secureBooking?: string | null;
+  reliableService?: string | null;
+  fairPrice?: string | null;
+  customerService?: string | null;
 }
 
 export default function CommitmentSection({
   title,
+  secureBookingTitle,
+  reliableServiceTitle,
+  fairPriceTitle,
+  customerServiceTitle,
+
   customerService,
   fairPrice,
   reliableService,
@@ -42,22 +52,22 @@ export default function CommitmentSection({
   };
   const features = [
     {
-      title: "Secure Booking",
+      title: secureBookingTitle || "Secure Booking",
       description: secureBooking,
       icon: <Lock sx={{ fontSize: 32, color: "#E7C27D" }} />,
     },
     {
-      title: "Reliable Service",
+      title: reliableServiceTitle || "Reliable 1 Service",
       description: reliableService,
       icon: <AddRoad sx={{ fontSize: 32, color: "#E7C27D" }} />,
     },
     {
-      title: "Fair Price",
+      title: fairPriceTitle || "Fair Price",
       description: fairPrice,
       icon: <PriceChange sx={{ fontSize: 32, color: "#E7C27D" }} />,
     },
     {
-      title: "Customer Service",
+      title: customerServiceTitle || "Customer Service",
       description: customerService,
       icon: <HeadsetMic sx={{ fontSize: 32, color: "#E7C27D" }} />,
     },

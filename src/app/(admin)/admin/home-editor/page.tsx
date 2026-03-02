@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { getPageBySlug } from "@/src/actions/page/getPage";
-import { updatePage, type UpdatePageInput } from "@/src/actions/page/updatePage";
+import {
+  updatePage,
+  type UpdatePageInput,
+} from "@/src/actions/page/updatePage";
 import HomePageSection from "@/src/feature/page-editor/HomePage/components/HomeSection";
 import type { HomePageFormValues } from "@/src/feature/page-editor/HomePage/types/home.types";
 
@@ -18,7 +21,12 @@ export default async function HomeEditorPage() {
   const defaultValues: HomePageFormValues = {
     title: page.title,
     homeHeaderImage: page.imageUpload ?? null,
+    imageAlt: page.imageAlt ?? "",
     secureBooking: page.secureBooking ?? "",
+    secureBookingTitle: page.secureBookingTitle ?? "",
+    customerServiceTitle: page.customerServiceTitle ?? "",
+    fairPriceTitle: page.fairPriceTitle ?? "",
+    reliableServiceTitle: page.reliableServiceTitle ?? "",
     reliableServices: page.reliableService ?? "",
     customerServices: page.customerService ?? "",
     fairPrice: page.fairPrice ?? "",
@@ -34,5 +42,11 @@ export default async function HomeEditorPage() {
   }
 
   // PASS pageId HERE
-  return <HomePageSection defaultValues={defaultValues} onSave={handleSave} pageId={page.id} />;
+  return (
+    <HomePageSection
+      defaultValues={defaultValues}
+      onSave={handleSave}
+      pageId={page.id}
+    />
+  );
 }

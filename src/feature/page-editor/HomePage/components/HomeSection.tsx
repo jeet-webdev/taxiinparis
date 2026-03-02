@@ -9,6 +9,7 @@ import {
   Typography,
   Box,
 } from "@mui/material";
+import { Lock, HeadsetMic, AddRoad, PriceChange } from "@mui/icons-material";
 import { SubmitHandler } from "react-hook-form";
 import Grid from "@mui/material/GridLegacy";
 import RichTextEditor from "@/src/components/common/Ui/Admin/RichTextEditor";
@@ -41,95 +42,6 @@ export default function HomePageSection({
 
   const { control, handleSubmit } = methods;
   const [isPending, startTransition] = useTransition();
-
-  // const onSubmit = (data: HomePageFormValues) => {
-  //   startTransition(async () => {
-  //     if (!onSave) return;
-
-  //     // Default to existing image string
-  //     let imagePath: string | null =
-  //       typeof data.homeHeaderImage === "string"
-  //         ? data.homeHeaderImage
-  //         : (defaultValues.homeHeaderImage as string | null);
-
-  //     // 1. If a NEW file is selected, upload it first
-  //     if (data.homeHeaderImage instanceof File) {
-  //       const formData = new FormData();
-  //       formData.append("image", data.homeHeaderImage);
-
-  //       const uploadRes = await uploadPageImage(pageId, formData);
-  //       if (uploadRes?.success && uploadRes.publicPath) {
-  //         imagePath = uploadRes.publicPath;
-  //       } else {
-  //         toast.error("Image upload failed. Saving other changes...");
-  //       }
-  //     }
-
-  //     // 2. Save all data (including the new image path)
-  //     const result = await onSave({
-  //       title: data.title,
-  //       imageUpload: imagePath,
-  //       secureBooking: data.secureBooking,
-  //       reliableService: data.reliableServices,
-  //       customerService: data.customerServices,
-  //       fairPrice: data.fairPrice,
-  //       metaTitle: data.metaTitle,
-  //       metaDescription: data.metaDescription,
-  //       metaKeywords: data.metaKeywords,
-  //       status: data.status,
-  //     });
-
-  //     if (result.success) {
-  //       toast.success("Home page updated successfully!");
-  //     }
-  //   });
-  // };
-  // const onSubmit: SubmitHandler<HomePageFormValues> = (data) => {
-  //   startTransition(async () => {
-  //     if (!onSave) return;
-
-  //     // Handle the image path logic
-  //     let imagePath: string | null = null;
-
-  //     if (typeof data.homeHeaderImage === "string") {
-  //       imagePath = data.homeHeaderImage;
-  //     } else if (data.homeHeaderImage instanceof File) {
-  //       const formData = new FormData();
-  //       formData.append("image", data.homeHeaderImage);
-
-  //       const uploadRes = await uploadPageImage(pageId, formData);
-  //       if (uploadRes?.success && uploadRes.publicPath) {
-  //         imagePath = uploadRes.publicPath;
-  //       } else {
-  //         toast.error("Image upload failed.");
-  //         return; // Stop if upload is required, or continue if you want to save anyway
-  //       }
-  //     } else {
-  //       // If it's null or undefined, and you want to keep the old image:
-  //       imagePath = (defaultValues.homeHeaderImage as string) || null;
-  //     }
-
-  //     const result = await onSave({
-  //       ...data, // Spreading data helps if keys match perfectly
-  //       // imageUpload: imagePath,
-  //       title: data.title,
-  //       imageUpload: imagePath,
-  //       secureBooking: data.secureBooking,
-  //       reliableService: data.reliableServices,
-  //       customerService: data.customerServices,
-  //       fairPrice: data.fairPrice,
-  //       metaTitle: data.metaTitle,
-  //       metaDescription: data.metaDescription,
-  //       metaKeywords: data.metaKeywords,
-  //       status: data.status,
-  //     });
-
-  //     if (result.success) {
-  //       toast.success("Home page updated successfully!");
-  //     }
-  //   });
-  // };
-
   const onSubmit: SubmitHandler<HomePageFormValues> = (data) => {
     startTransition(async () => {
       if (!onSave) return;
@@ -162,8 +74,13 @@ export default function HomePageSection({
         ...data,
         title: data.title,
         imageUpload: imagePath,
+        imageAlt: data.imageAlt,
         secureBooking: data.secureBooking,
         reliableService: data.reliableServices,
+        secureBookingTitle: data.secureBookingTitle,
+        reliableServiceTitle: data.reliableServiceTitle,
+        customerServiceTitle: data.customerServiceTitle,
+        fairPriceTitle: data.fairPriceTitle,
         customerService: data.customerServices,
         fairPrice: data.fairPrice,
         metaTitle: data.metaTitle,
@@ -191,23 +108,6 @@ export default function HomePageSection({
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
           <Grid item xs={12}>
-            {/* <Controller
-              name="homeHeaderImage"
-              control={control}
-              render={({ field, fieldState }) => (
-                <FileUploadField
-                  label="Header Image"
-                  accept="image/*"
-                  files={field.value instanceof File ? field.value : null}
-                  error={!!fieldState.error}
-                  errorMessage={fieldState.error?.message}
-                  onChange={(files) => {
-                    const file = Array.isArray(files) ? files[0] : files;
-                    field.onChange(file ?? null);
-                  }}
-                />
-              )}
-            /> */}
             <Controller
               name="homeHeaderImage"
               control={control}
@@ -227,7 +127,23 @@ export default function HomePageSection({
               )}
             />
           </Grid>
-
+          <Grid item xs={12}>
+            <Controller
+              name="imageAlt"
+              control={control}
+              render={({ field, fieldState }) => (
+                <TextField
+                  {...field}
+                  value={field.value ?? ""}
+                  fullWidth
+                  label="Image Alt Text"
+                  placeholder="Enter image alt text"
+                  error={!!fieldState.error}
+                  helperText={fieldState.error?.message}
+                />
+              )}
+            />
+          </Grid>
           <Grid item xs={12}>
             <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
               Title
@@ -248,9 +164,24 @@ export default function HomePageSection({
 
           {/* Repeat this pattern for RichTextEditors (secureBooking, reliableServices, etc.) */}
           <Grid item xs={12}>
-            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
-              Secure Booking
-            </Typography>
+            <Box display="flex" alignItems="center" gap={1} mt={2} mb={1}>
+              <Lock sx={{ fontSize: 32, color: "#E7C27D" }} />
+
+              <Controller
+                name="secureBookingTitle"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <TextField
+                    {...field}
+                    fullWidth
+                    // sx={{ mb: 2, mt: 4 }}
+                    placeholder="Enter secure Booking Title"
+                    error={!!fieldState.error}
+                    helperText={fieldState.error?.message}
+                  />
+                )}
+              />
+            </Box>
             <Controller
               name="secureBooking"
               control={control}
@@ -266,16 +197,23 @@ export default function HomePageSection({
 
           {/* Reliable Service */}
           <Grid item xs={12}>
-            <Typography
-              variant="body2"
-              sx={{
-                fontWeight: 600,
-                mb: 1,
-                color: "text.primary",
-              }}
-            >
-              Reliable Service
-            </Typography>
+            <Box display="flex" alignItems="center" gap={1} mt={2} mb={1}>
+              <AddRoad sx={{ fontSize: 32, color: "#E7C27D" }} />
+              <Controller
+                name="reliableServiceTitle"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <TextField
+                    {...field}
+                    fullWidth
+                    // sx={{ mb: 2, mt: 4 }}
+                    placeholder="Enter Reliable Service Title"
+                    error={!!fieldState.error}
+                    helperText={fieldState.error?.message}
+                  />
+                )}
+              />
+            </Box>
             <Controller
               name="reliableServices"
               control={control}
@@ -299,16 +237,23 @@ export default function HomePageSection({
 
           {/* Customer Service */}
           <Grid item xs={12}>
-            <Typography
-              variant="body2"
-              sx={{
-                fontWeight: 600,
-                mb: 1,
-                color: "text.primary",
-              }}
-            >
-              Customer Service
-            </Typography>
+            <Box display="flex" alignItems="center" gap={1} mt={2} mb={1}>
+              <HeadsetMic sx={{ fontSize: 32, color: "#E7C27D" }} />
+              <Controller
+                name="customerServiceTitle"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <TextField
+                    {...field}
+                    fullWidth
+                    // sx={{ mb: 2, mt: 4 }}
+                    placeholder="Enter customer Services Title"
+                    error={!!fieldState.error}
+                    helperText={fieldState.error?.message}
+                  />
+                )}
+              />
+            </Box>
             <Controller
               name="customerServices"
               control={control}
@@ -332,16 +277,23 @@ export default function HomePageSection({
 
           {/* Fair Price */}
           <Grid item xs={12}>
-            <Typography
-              variant="body2"
-              sx={{
-                fontWeight: 600,
-                mb: 1,
-                color: "text.primary",
-              }}
-            >
-              Fair Price
-            </Typography>
+            <Box display="flex" alignItems="center" gap={1} mt={2} mb={1}>
+              <PriceChange sx={{ fontSize: 32, color: "#E7C27D" }} />
+              <Controller
+                name="fairPriceTitle"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <TextField
+                    {...field}
+                    fullWidth
+                    // sx={{ mb: 2, mt: 4 }}
+                    placeholder="Enter fair Price Title"
+                    error={!!fieldState.error}
+                    helperText={fieldState.error?.message}
+                  />
+                )}
+              />
+            </Box>
             <Controller
               name="fairPrice"
               control={control}

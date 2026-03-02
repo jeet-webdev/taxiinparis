@@ -2,11 +2,13 @@ import {
   Facebook,
   Twitter,
   LinkedIn,
-  Google,
+  Pinterest,
   Email,
   Instagram,
   YouTube,
 } from "@mui/icons-material";
+import XIcon from "@mui/icons-material/X";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/src/lib/prisma";
@@ -48,8 +50,10 @@ const iconMap: Record<string, React.ElementType> = {
   facebook: Facebook,
   twitter: Twitter,
   linkedin: LinkedIn,
-  google: Google,
+  pinterest: Pinterest,
+  x: XIcon,
   email: Email,
+  whatsapp: WhatsAppIcon,
   instagram: Instagram,
   youtube: YouTube,
 };
@@ -148,23 +152,6 @@ export default async function Footer() {
           <h3 className="text-[#D4AF6A] font-semibold mb-4">
             Method Of Payment
           </h3>
-
-          {/* App Store Badges */}
-          {/* <div className="flex flex-col gap-2 mb-5">
-            {appLinks
-              .filter((app) => app.isVisible) // Fixes isVisible error
-              .map((app, i) => (
-                <Link key={i} href={app.url || "#"} target="_blank">
-                  <Image
-                    src={APP_ICONS[app.platform] || APP_ICONS.google_play}
-                    alt={app.platform}
-                    width={130}
-                    height={45}
-                    className="hover:scale-105 transition cursor-pointer"
-                  />
-                </Link>
-              ))}
-          </div> */}
 
           {/* Payment Icons */}
           <div className="flex items-center gap-3">

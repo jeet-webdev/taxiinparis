@@ -15,10 +15,20 @@ model Page {
   content         String?
   text            String?
   imageUpload     String?  @map("imageupload") @db.VarChar(255)
+imageAlt        String? @map("imagealt") @db.VarChar(255)
+
+  secureBookingTitle String?  @map("secure_booking_title")
   secureBooking   String?  @map("secure_booking")
+
+  reliableServiceTitle    String?  @map("reliable_service_title")
   reliableService String?  @map("reliable_service")
+
+  customerServiceTitle    String?  @map("customer_service_title")
   customerService String?  @map("customer_service")
+
+  fairPriceTitle          String?  @map("fair_price_title")
   fairPrice       String?  @map("fair_price")
+
   metaTitle       String?  @map("meta_title") @db.VarChar(255)
   metaDescription String?  @map("meta_description")
   metaKeywords    String?  @map("meta_keywords")

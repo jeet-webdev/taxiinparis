@@ -28,7 +28,7 @@ import { toast } from "react-toastify";
 type Props = {
   defaultValues: AboutPageFormValues;
   onSave?: (data: UpdatePageInput) => Promise<{ success: boolean }>;
-  pageId: number; // Added pageId prop to match HomePage pattern
+  pageId: number;
 };
 
 export default function AboutSection({ defaultValues, onSave, pageId }: Props) {
@@ -40,46 +40,6 @@ export default function AboutSection({ defaultValues, onSave, pageId }: Props) {
   const { control, handleSubmit } = methods;
   const [isPending, startTransition] = useTransition();
 
-  // const onSubmit = (data: AboutPageFormValues) => {
-  //   startTransition(async () => {
-  //     if (!onSave) return;
-
-  //     // 1. Default to existing image string
-  //     let imagePath: string | null =
-  //       typeof data.headerImage === "string"
-  //         ? data.headerImage
-  //         : (defaultValues.headerImage as string | null);
-
-  //     // 2. If a NEW file is selected, upload it first
-  //     if (data.headerImage instanceof File) {
-  //       const formData = new FormData();
-  //       formData.append("image", data.headerImage);
-
-  //       const uploadRes = await uploadPageImage(pageId, formData);
-
-  //       if (uploadRes?.success && uploadRes.publicPath) {
-  //         imagePath = uploadRes.publicPath;
-  //       } else {
-  //       toast.error("Image upload failed. Saving other changes...");
-  //       }
-  //     }
-
-  //     // 3. Save all data (including the new/existing image path)
-  //     const result = await onSave({
-  //       title: data.title,
-  //       imageUpload: imagePath, // Maps to imageUpload in your action
-  //       content: data.content,
-  //       metaTitle: data.metaTitle,
-  //       metaDescription: data.metaDescription,
-  //       metaKeywords: data.metaKeywords,
-  //       status: data.status,
-  //     });
-
-  //     if (result.success) {
-  //       toast.success("About page updated successfully!");
-  //     }
-  //   });
-  // };
   const onSubmit: SubmitHandler<AboutPageFormValues> = (data) => {
     startTransition(async () => {
       if (!onSave) return;
@@ -99,14 +59,9 @@ export default function AboutSection({ defaultValues, onSave, pageId }: Props) {
           toast.error("Image upload failed. Please try again.");
           return; // Stop execution if upload fails to prevent saving partial data
         }
-      }
-      // 2. If it's a string, the admin kept the existing image (URL)
-      else if (typeof data.headerImage === "string") {
+      } else if (typeof data.headerImage === "string") {
         imagePath = data.headerImage;
-      }
-      // 3. If it's null/undefined (no image selected and no existing image),
-      // fallback to the default value to preserve what's in the database
-      else {
+      } else {
         imagePath = (defaultValues.headerImage as string) || undefined;
       }
 
@@ -114,6 +69,7 @@ export default function AboutSection({ defaultValues, onSave, pageId }: Props) {
       const result = await onSave({
         title: data.title,
         imageUpload: imagePath, // Sends the new URL, the old URL, or undefined
+        imageAlt: data.imageAlt,
         content: data.content,
         metaTitle: data.metaTitle,
         metaDescription: data.metaDescription,
@@ -150,7 +106,7 @@ export default function AboutSection({ defaultValues, onSave, pageId }: Props) {
                 <FileUploadField
                   label="Header Image"
                   accept="image/*"
-                  files={field.value}
+                  files={field.value || null}
                   // files={field.value instanceof File ? field.value : null}
                   error={!!fieldState.error}
                   errorMessage={fieldState.error?.message}
@@ -158,6 +114,25 @@ export default function AboutSection({ defaultValues, onSave, pageId }: Props) {
                     const file = Array.isArray(files) ? files[0] : files;
                     field.onChange(file ?? null);
                   }}
+                />
+              )}
+            />
+          </Grid>
+          {/* Image Alt Text */}
+          <Grid item xs={12}>
+            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
+              Image Alt Text
+            </Typography>
+            <Controller
+              name="imageAlt"
+              control={control}
+              render={({ field, fieldState }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  placeholder="Enter image description for SEO"
+                  error={!!fieldState.error}
+                  helperText={fieldState.error?.message}
                 />
               )}
             />

@@ -28,6 +28,7 @@ export default async function ServiceEditorPage() {
   const defaultValues: ServicesPageFormValues = {
     title: page.title,
     servicesHeaderImage: page.imageUpload ?? null,
+    imageAlt: page.imageAlt ?? "",
     content: page.content ?? "",
     metaTitle: page.metaTitle ?? "",
     metaDescription: page.metaDescription ?? "",
