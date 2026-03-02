@@ -25,9 +25,10 @@ export interface NavLink {
 export interface SocialLink {
   platform:
     | "facebook"
-    | "twitter"
+    | "x"
+    | "whatsapp"
     | "linkedin"
-    | "google"
+    | "pinterest"
     | "email"
     | "instagram"
     | "tiktok"

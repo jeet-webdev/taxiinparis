@@ -3,14 +3,15 @@ import Script from "next/script";
 
 interface HeroSectionProps {
   img?: string | null;
+  alt?: string | null;
 }
-export default function HeroSection({ img }: HeroSectionProps) {
+export default function HeroSection({ img ,alt }: HeroSectionProps) {
   return (
     <section className="relative min-h-screen w-full">
       {/* Background Image */}
       <Image
         src={img ?? "/assets/images/hero-img.jpeg"}
-        alt="Luxury Car"
+        alt={alt || "Luxury Car"}
         fill
         priority
         className="

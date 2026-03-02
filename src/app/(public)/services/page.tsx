@@ -43,10 +43,10 @@ export default async function ServicesPage() {
 
   return (
     <>
-      <HeroSection img={page?.imageUpload || undefined} />
+      <HeroSection img={page?.imageUpload || undefined} alt={page?.imageAlt} />
       <DarkLuxuryBlock>
         <Content data={{ title: page?.title, content: page?.content }} />
-          <TestimonialsSection />
+        <TestimonialsSection />
       </DarkLuxuryBlock>
     </>
   );

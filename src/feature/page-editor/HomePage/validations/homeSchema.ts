@@ -31,9 +31,13 @@ export const homePageSchema = z.object({
       },
       { message: "Image must be less than 5MB" },
     ),
-
+  imageAlt: z.string().min(0).optional(),
+  secureBookingTitle: z.string(),
   secureBooking: z.string(),
   reliableServices: z.string(),
+  reliableServiceTitle: z.string(),
+  customerServiceTitle: z.string(),
+  fairPriceTitle: z.string(),
   customerServices: z.string(),
   fairPrice: z.string(),
   metaTitle: z.string(),
@@ -41,6 +45,5 @@ export const homePageSchema = z.object({
   metaKeywords: z.string(),
   status: z.enum(["active", "inactive"]),
 });
-
 
 export type HomePageFormValues = z.infer<typeof homePageSchema>;

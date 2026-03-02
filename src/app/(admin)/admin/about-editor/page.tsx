@@ -26,6 +26,7 @@ export default async function AboutEditorPage() {
   const defaultValues: AboutPageFormValues = {
     title: page.title,
     headerImage: page.imageUpload ?? null,
+    imageAlt:page.imageAlt ?? "",
     content: page.content ?? "",
     metaTitle: page.metaTitle ?? "",
     metaDescription: page.metaDescription ?? "",
