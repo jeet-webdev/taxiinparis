@@ -4,6 +4,8 @@ import { notFound } from "next/navigation";
 import { getPageBySlug } from "@/src/actions/page/getPage";
 import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
 import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
+// import ContactForm from "@/src/feature/Contact/ContactForm";
+import ContactForm from "@/src/feature/Contact/ContactForm";
 
 const getContactPage = cache(() => getPageBySlug("contact"));
 const safe = (value?: string | null) => value ?? undefined;
@@ -45,7 +47,7 @@ export default async function ContactPage() {
     <main className="min-h-screen bg-white text-gray-800">
       <DarkLuxuryBlock>
         {/* Page Header */}
-        <section className="bg-[#292d37] py-12">
+        <section className=" py-12">
           <div className="text-center px-6">
             <h1 className="text-5xl font-light text-[#d4af6a] mb-4 tracking-tight">
               Contact Us
@@ -72,7 +74,7 @@ export default async function ContactPage() {
               </div>
 
               {/* Contact Form matching image_bb6a96.jpg */}
-              <form className="space-y-6">
+              {/* <form className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <label className="text-sm font-semibold text-[#d4af6a]">
@@ -135,8 +137,7 @@ export default async function ContactPage() {
                   />
                 </div>
 
-                {/* Math Solver/Bot Verification as seen in image_bb6a96.jpg */}
-                <div className="max-w-[200px] space-y-2">
+               <div className="max-w-[200px] space-y-2">
                   <label className="text-sm font-semibold text-[#d4af6a] italic">
                     Solve: 4 + 7 = ?
                   </label>
@@ -154,7 +155,8 @@ export default async function ContactPage() {
                     Send
                   </button>
                 </div>
-              </form>
+              </form> */}
+              <ContactForm />
             </div>
 
             {/* Right Side: Fixed Booking Widget */}
