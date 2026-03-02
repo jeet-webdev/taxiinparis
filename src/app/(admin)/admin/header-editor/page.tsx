@@ -2,7 +2,7 @@ import { getHeaderData } from "./actions";
 import HeaderForm from "@/src/feature/page-editor/HeaderEditor/component/HeaderForm";
 import { NavLink } from "@/src/feature/page-editor/HeaderEditor/types/header.types";
 
-export default async function HeaderEditorTest() {
+export default async function HeaderEditor() {
   const data = await getHeaderData();
 
   // ✅ TS 5 Safe Casting for Navigation
@@ -15,7 +15,6 @@ export default async function HeaderEditorTest() {
     <div className="p-10 space-y-6">
       <div className="flex flex-col gap-2">
         <h1 className="text-2xl font-bold text-slate-800">Header Editor</h1>
-       
       </div>
 
       {/* ADD THESE PROPS: 
