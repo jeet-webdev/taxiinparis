@@ -7,7 +7,10 @@ export const aboutPageSchema = z.object({
     .max(150, "Title must be under 150 characters"),
 
   headerImage: z
-    .union([z.instanceof(File), z.string().url("Invalid image URL")])
+    // .union([z.instanceof(File), z.string().url("Invalid image URL")])
+    // .nullable()
+    .union([z.instanceof(File), z.string()])
+    .optional()
     .nullable()
     .refine(
       (value) => {
@@ -32,7 +35,7 @@ export const aboutPageSchema = z.object({
       },
       { message: "Image must be less than 5MB" },
     ),
-
+  imageAlt: z.string(),
   content: z.string(),
 
   metaTitle: z.string(),

@@ -43,7 +43,7 @@ export default async function about() {
   }
   return (
     <>
-      <HeroSection img={page?.imageUpload || undefined} />
+      <HeroSection img={page?.imageUpload || undefined} alt={page.imageAlt} />
       <DarkLuxuryBlock>
         <Content data={{ title: page?.title, content: page?.content }} />
         <TestimonialsSection />

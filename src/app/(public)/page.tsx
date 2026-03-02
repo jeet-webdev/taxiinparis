@@ -44,10 +44,14 @@ export default async function HomePage() {
   }
   return (
     <>
-      <HeroSection img={page?.imageUpload} />
+      <HeroSection img={page?.imageUpload} alt={page.imageAlt} />
       <DarkLuxuryBlock>
         <CommitmentSection
           title={page?.title}
+          reliableServiceTitle={page?.reliableServiceTitle}
+          customerServiceTitle={page?.customerServiceTitle}
+          secureBookingTitle={page?.secureBookingTitle}
+          fairPriceTitle={page?.fairPriceTitle}
           customerService={page?.customerService}
           fairPrice={page?.fairPrice}
           reliableService={page?.reliableService}

@@ -6,15 +6,17 @@ import { saveFooterData } from "@/src/app/(admin)/admin/footer-editor/actions";
 import { toast } from "react-toastify";
 import { Add, Delete, Link as LinkIcon, Share } from "@mui/icons-material";
 import Image from "next/image";
+
 const SOCIAL_PLATFORMS: SocialLink["platform"][] = [
   "facebook",
-  "twitter",
+  "x",
   "linkedin",
-  "google",
+  "pinterest",
   "email",
   "instagram",
   "tiktok",
   "youtube",
+  "whatsapp",
 ];
 const APP_ICONS = {
   google_play: "/assets/images/google-play-store.png",
@@ -74,17 +76,40 @@ export default function FooterForm({
     setFormData({ ...formData, navLinks: updatedLinks });
   };
 
+  // const addSocialLink = () => {
+  //   const usedPlatforms = formData.socialLinks.map((s) => s.platform);
+  //   const availablePlatform = SOCIAL_PLATFORMS.find(
+  //     (platform) => !usedPlatforms.includes(platform),
+  //   );
+
+  //   if (!availablePlatform) {
+  //     toast.info("All social platforms already added.");
+  //     return;
+  //   }
+
+  //   setFormData({
+  //     ...formData,
+  //     socialLinks: [
+  //       ...formData.socialLinks,
+  //       { platform: availablePlatform, url: "" },
+  //     ],
+  //   });
+  // };
   const addSocialLink = () => {
+    // 1. Find which platforms are already in use
     const usedPlatforms = formData.socialLinks.map((s) => s.platform);
+
+    // 2. Find the first platform from our list that isn't used yet
     const availablePlatform = SOCIAL_PLATFORMS.find(
       (platform) => !usedPlatforms.includes(platform),
     );
 
     if (!availablePlatform) {
-      toast.info("All social platforms already added.");
+      toast.info("All available social platforms have been added.");
       return;
     }
 
+    // 3. Append the new link to the state
     setFormData({
       ...formData,
       socialLinks: [
@@ -94,21 +119,36 @@ export default function FooterForm({
     });
   };
 
-  const removeSocialLink = (index: number) => {
-    const updatedLinks = formData.socialLinks.filter((_, i) => i !== index);
-    setFormData({ ...formData, socialLinks: updatedLinks });
-  };
-
-  // Fixed Generics to prevent the "any" error while keeping logic flat
   const updateSocialLink = <K extends keyof SocialLink>(
     index: number,
     field: K,
     value: SocialLink[K],
   ) => {
     const updatedLinks = [...formData.socialLinks];
-    updatedLinks[index] = { ...updatedLinks[index], [field]: value };
+
+    // Update the specific field (platform or url) for the item at 'index'
+    updatedLinks[index] = {
+      ...updatedLinks[index],
+      [field]: value,
+    };
+
     setFormData({ ...formData, socialLinks: updatedLinks });
   };
+  const removeSocialLink = (index: number) => {
+    const updatedLinks = formData.socialLinks.filter((_, i) => i !== index);
+    setFormData({ ...formData, socialLinks: updatedLinks });
+  };
+
+  // Fixed Generics to prevent the "any" error while keeping logic flat
+  // const updateSocialLink = <K extends keyof SocialLink>(
+  //   index: number,
+  //   field: K,
+  //   value: SocialLink[K],
+  // ) => {
+  //   const updatedLinks = [...formData.socialLinks];
+  //   updatedLinks[index] = { ...updatedLinks[index], [field]: value };
+  //   setFormData({ ...formData, socialLinks: updatedLinks });
+  // };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -203,50 +243,7 @@ export default function FooterForm({
         </section>
       </div>
 
-      {/* Navigation Links */}
-     {/* <section className="space-y-4 border-t pt-6">
-        <div className="flex items-center justify-between border-b pb-2">
-          <h3 className="font-semibold text-lg text-gray-800 flex items-center gap-2">
-            <LinkIcon className="text-[#D4AF6A]" /> Navigation
-          </h3>
-        </div>
-
-        <div className="grid grid-cols-1 gap-4">
-          {formData.navLinks.map((link, index) => (
-            <div
-              key={index}
-              className="flex flex-wrap md:flex-nowrap items-end gap-3 bg-gray-50 p-4 rounded-lg border"
-            >
-              
-              <div className="flex-[2]">
-                <label className="text-xs font-bold text-gray-500 uppercase">
-                  Name
-                </label>
-                <input
-                  className="w-full p-2 border rounded mt-1 text-sm focus:ring-1 focus:ring-[#D4AF6A] outline-none"
-                  placeholder="Enter link name..."
-                  value={link.label}
-                  onChange={(e) =>
-                    updateNavLink(index, "label", e.target.value)
-                  }
-                />
-              </div>
-
-              <div className="flex-1">
-                <label className="text-xs font-bold text-gray-400 uppercase">
-                  Path
-                </label>
-                <div className="w-full p-2 bg-gray-100 border rounded mt-1 text-sm text-gray-500 font-mono">
-                  {link.url}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section> */}
-
       {/* Social Links */}
-
       <section className="space-y-4 border-t pt-6">
         <div className="flex items-center justify-between border-b pb-2">
           <h3 className="font-semibold text-lg text-gray-800 flex items-center gap-2">
