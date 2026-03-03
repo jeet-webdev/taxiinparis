@@ -263,7 +263,7 @@ export default function BlogsTable({ rows, onDelete }: BlogsTableProps) {
         </MenuItem>
         <MenuItem
           component={Link}
-          href={selectedRow ? `/blog/${selectedRow.title}` : "#"}
+          href={selectedRow ? `/blog/${selectedRow.slug}` : "#"}
           target="_blank"
           onClick={() => setAnchorEl(null)}
         >

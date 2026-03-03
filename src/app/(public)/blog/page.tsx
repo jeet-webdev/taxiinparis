@@ -57,7 +57,7 @@ export default async function BlogPage({ searchParams }: Props) {
                     {blog.title}
                   </h2>
                   <Link
-                    href={`/blog/${encodeURIComponent(blog.title)}`}
+                    href={`/blog/${blog.slug}`}
                     className="text-amber-500 font-medium text-sm flex items-center gap-1 group-hover:gap-2 uppercase tracking-wider"
                   >
                     Read More <span>→</span>

@@ -1,19 +1,21 @@
 import React from "react";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
-import { getBlogByTitle } from "@/src/actions/blog/getBlogs";
+import { getBlogBySlug } from "@/src/actions/blog/getBlogs";
 import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
 import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
 import HeroSection from "@/src/components/common/Ui/HeroSection";
 import { Metadata } from "next";
 
+interface Props {
+  params: Promise<{ slug: string }>; // Next.js 15
+}
 
-export async function generateMetadata(
-  { params }: Props
-): Promise<Metadata> {
-  const { title } = await params;
-  const blog = await getBlogByTitle(title);
+/* ---------------- METADATA ---------------- */
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const blog = await getBlogBySlug(slug);
 
   if (!blog) {
     return {
@@ -23,8 +25,7 @@ export async function generateMetadata(
   }
 
   const cleanDescription =
-    blog.metaDescription ||
-    stripHtml(blog.text || "").slice(0, 160);
+    blog.metaDescription || stripHtml(blog.text || "").slice(0, 160);
 
   const keywordsArray =
     blog.metaKeywords?.split(",").map((k) => k.trim()) || [];
@@ -49,14 +50,14 @@ export async function generateMetadata(
     },
   };
 }
-interface Props {
-  params: Promise<{ title: string }>; // In Next.js 15, params is a Promise
-}
+
+/* ---------------- HELPERS ---------------- */
 
 function formatDate(value: Date | string | null | undefined) {
   if (!value) return null;
   const date = typeof value === "string" ? new Date(value) : value;
   if (Number.isNaN(date.getTime())) return null;
+
   return new Intl.DateTimeFormat("en-US", {
     year: "numeric",
     month: "short",
@@ -76,10 +77,11 @@ function getReadingTimeMinutes(text: string) {
   return Math.max(1, Math.round(words / 220));
 }
 
+/* ---------------- PAGE ---------------- */
+
 export default async function SingleBlogPage({ params }: Props) {
-  
-  const { title } = await params;
-  const blog = await getBlogByTitle(title);
+  const { slug } = await params;
+  const blog = await getBlogBySlug(slug);
 
   if (!blog) {
     notFound();
@@ -151,6 +153,7 @@ export default async function SingleBlogPage({ params }: Props) {
               >
                 Book now
               </Link>
+
               <Link
                 href="/blog"
                 className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-7 py-3 text-sm font-semibold text-white hover:bg-white/10 transition"

@@ -21,7 +21,6 @@ export default async function TestimonialsSection() {
     <Section>
       <Container className="relative z-10 py-2 text-center">
         <div className="h-0.5 w-full bg-linear-to-r from-transparent via-[#D4AF6A] to-transparent mb-8" />
-        {/* App Badges */}
         <div className="mt-8 flex justify-center gap-6">
           {visibleLinks.map((app, index) => {
             if (app.platform === "google_play") {

@@ -11,6 +11,17 @@ export async function getBlogs() {
 export async function getBlogById(id: number) {
   return prisma.blog.findUnique({ where: { id } });
 }
+export async function getBlogBySlug(slug: string) {
+  return prisma.blog.findFirst({
+    where: {
+      slug: {
+        equals: slug,
+        mode: "insensitive",
+      },
+      status: "active", 
+    },
+  });
+}
 
 export async function getBlogByTitle(title: string) {
   // Decode the URL title (e.g., "Paris%20City" -> "Paris City")

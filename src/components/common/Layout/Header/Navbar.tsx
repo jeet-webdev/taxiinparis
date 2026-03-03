@@ -1,53 +1,112 @@
+
+"use client";
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { prisma } from "@/src/lib/prisma";
 import { NavLink } from "@/src/feature/page-editor/HeaderEditor/types/header.types";
 import LanguageDropdown from "../../Ui/GoogleTranslate";
 
-export default async function Navbar() {
-  const footer = await prisma.footer.findFirst();
+// React Icons
+import { HiMenuAlt3 } from "react-icons/hi";
+import { IoClose } from "react-icons/io5";
 
+// --- 1. Define the Interface to fix the "any" error ---
+interface FooterData {
+  logoUrl?: string | null;
+  logoAlt?: string | null;
+  navLinks?: NavLink[] | unknown; // Matches your Prisma JSON structure
+}
+
+interface NavbarProps {
+  footerData: FooterData | null;
+}
+
+export default function Navbar({ footerData }: NavbarProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  // --- 2. Logic to parse the links safely ---
   const navLinks: NavLink[] =
-    footer && Array.isArray(footer.navLinks)
-      ? (footer.navLinks as unknown as NavLink[])
+    footerData && Array.isArray(footerData.navLinks)
+      ? (footerData.navLinks as NavLink[])
       : [];
 
   const visibleLinks = navLinks.filter((link) => link.showInNav);
 
-  // Fallback logo if none is uploaded in the admin
-  const displayLogo = footer?.logoUrl || "/assets/images/parislogos.png";
-  const displayAlt = footer?.logoAlt || "Paris Limo Logo";
+  const displayLogo = footerData?.logoUrl || "/assets/images/parislogos.png";
+  const displayAlt = footerData?.logoAlt || "Paris Limo Logo";
+
+  // Prevent background scroll when menu is open
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? "hidden" : "unset";
+  }, [isOpen]);
 
   return (
-    <header className="relative z-50 bg-linear-to-b from-[#0A0F1C] to-[#0A0F1C]/95">
-      <nav className="max-w-7xl mx-auto px-6 py-5">
-        <div className="flex justify-between items-center">
-          <Link href="/" className="flex items-center">
-            <Image
-              src={displayLogo} // Dynamic path from Database
-              alt={displayAlt} // Dynamic Alt text from Database
-              width={120}
-              height={120}
-              className="object-contain" // Ensures logo doesn't stretch
-              priority
-            />
-          </Link>
+    <header className="relative z-[100] bg-[#0A0F1C] ">
+      <nav className="max-w-7xl mx-auto px-4 py-4 md:px-6">
+        {/* Main Navbar Row */}
+        <div className="flex justify-between items-center gap-4">
+          {/* 1. Hamburger (Left on mobile) */}
+          <div className="flex-1 md:hidden">
+            <button
+              className="text-[#D4AF6A] p-2 transition-transform active:scale-90"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              {isOpen ? <IoClose size={32} /> : <HiMenuAlt3 size={32} />}
+            </button>
+          </div>
+          {/* 2. Logo (Center on mobile, Left on desktop) */}
+          <div className="flex-[2] md:flex-none flex justify-center  md:justify-start">
+            <Link href="/" onClick={() => setIsOpen(false)}>
+              <Image
+                src={displayLogo}
+                alt={displayAlt}
+                width={120}
+                height={120}
+                className="object-contain w-[90px] md:w-[130px]"
+                priority
+              />
+            </Link>
+          </div>
+          {/* 3. Desktop Navigation (Hidden on mobile) */}
 
-          <ul className="hidden md:flex gap-10 text-lg">
+          <ul className="hidden md:flex absolute left-1/2 -translate-x-1/2 gap-10">
             {visibleLinks.map((item) => (
               <li key={item.url}>
                 <Link
                   href={item.url}
-                  className="text-[#D4AF6A] hover:text-[#E6C27A]"
+                  className="text-[#D4AF6A] hover:text-[#E6C27A] transition-colors text-sm uppercase tracking-[0.2em]"
                 >
                   {item.label}
                 </Link>
               </li>
             ))}
           </ul>
-          <div className="justify-self-end md:justify-self-auto">
+          {/* 4. Language & Client Space (Right side) */}
+          <div className="flex-1 flex justify-end items-center gap-4">
             <LanguageDropdown />
           </div>
+        </div>
+
+        {/* --- Mobile Full-Screen Overlay --- */}
+        <div
+          className={`fixed inset-0 top-[80px] bg-[#0A0F1C] z-[90] transition-all duration-300 ease-in-out ${
+            isOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full"
+          } md:hidden`}
+        >
+          <ul className="flex flex-col items-center pt-10 gap-8">
+            {visibleLinks.map((item) => (
+              <li key={item.url} className="w-full text-center">
+                <Link
+                  href={item.url}
+                  onClick={() => setIsOpen(false)}
+                  className="text-2xl text-[#D4AF6A] font-light uppercase tracking-[0.2em] block py-4 active:bg-white/5"
+                >
+                  {item.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
         </div>
       </nav>
     </header>
