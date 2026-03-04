@@ -32,6 +32,9 @@ export default async function EditBlogPage({ params }: Props) {
   const defaultValues: BlogPagesFormValues = {
     title: blog.title,
     slug: blog.slug,
+    image: blog.imageUpload ?? null,
+    bannerImage: blog.bannerImage ?? null,
+    bannerAlt: blog.bannerAlt ?? "",
     text: blog.text ?? "",
     metaTitle: blog.metaTitle ?? "",
     metaDescription: blog.metaDescription ?? "",
