@@ -20,6 +20,7 @@ import Collapse from "@mui/material/Collapse";
 import { RiPagesLine } from "react-icons/ri";
 import { TbLayoutNavbarCollapseFilled } from "react-icons/tb";
 import { TbLayoutBottombarCollapseFilled } from "react-icons/tb";
+import { MdFeaturedPlayList } from "react-icons/md";
 
 import { MdCreditScore } from "react-icons/md";
 interface SidebarProps {
@@ -51,6 +52,12 @@ export const SIDEBAR_MENU = [
           { name: "Services Page", link: "/admin/services-editor" },
           { name: "Terms Page", link: "/admin/terms-editor" },
         ],
+      },
+
+      {
+        name: "Features",
+        link: "/admin/features-editor",
+        icon: <MdFeaturedPlayList size={20} />,
       },
 
       {
@@ -234,7 +241,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose, variant }) => {
                       minWidth: 0,
                       mr: open ? 2 : 0,
                       justifyContent: "center",
-                      color: isActive ? "#4F46E5" : "inherit",
+                      color: isActive ? "#D4AF6A" : "inherit", ///
                     }}
                   >
                     {item.icon}
