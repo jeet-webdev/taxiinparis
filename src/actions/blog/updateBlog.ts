@@ -17,6 +17,9 @@ export async function updateBlog(id: number, raw: BlogPagesFormValues) {
       metaTitle: data.metaTitle,
       metaDescription: data.metaDescription,
       metaKeywords: data.metaKeywords,
+      imageUpload: data.image,
+      bannerImage: data.bannerImage,
+      bannerAlt: data.bannerAlt,
     },
   });
 

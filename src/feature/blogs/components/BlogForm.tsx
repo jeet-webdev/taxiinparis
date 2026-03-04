@@ -6,17 +6,19 @@ import {
   CircularProgress,
   TextField,
   Typography,
+  Stack,
 } from "@mui/material";
 import { blogPagesSchema } from "../validations/blogSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, FormProvider, useForm } from "react-hook-form";
-import { useTransition } from "react";
+import { useTransition, useState } from "react"; // Added useState for preview
 import { BlogPagesFormValues } from "../types/blog.types";
 import Grid from "@mui/material/GridLegacy";
 import RichTextEditor from "@/src/components/common/Ui/Admin/RichTextEditor";
-// Import your server action
 import { uploadBlogImage } from "@/src/actions/blog/uploadBlogImage";
 import { toast } from "react-toastify";
+import Image from "next/image"; // For preview
+import { uploadBlogBannerImage } from "@/src/actions/blog/uploadBlogBannerImage";
 
 type Props = {
   mode: "add" | "edit";
@@ -36,21 +38,69 @@ export default function BlogForm({
     resolver: zodResolver(blogPagesSchema),
   });
 
-  const { control, handleSubmit } = methods;
+  const { control, handleSubmit, setValue, watch } = methods;
   const [isPending, startTransition] = useTransition();
+
+  // Watch for existing image in edit mode
+  const currentBanner = watch("bannerImage");
+  const [preview, setPreview] = useState<string | null>(
+    typeof currentBanner === "string" ? currentBanner : null,
+  );
 
   const isEdit = mode === "edit";
 
   const onSubmit = (data: BlogPagesFormValues) => {
     startTransition(async () => {
-      if (!onSave) return;
-      const result = await onSave(data);
-      if (result.success) {
-        toast.success(
-          isEdit ? "Blog updated successfully!" : "Blog created successfully!",
-        );
+      try {
+        if (!onSave) return;
+
+        let bannerUrl = data.bannerImage;
+
+        // 1. If bannerImage is a File object, upload it first
+        if (data.bannerImage instanceof File) {
+          const formData = new FormData();
+          formData.append("image", data.bannerImage);
+
+          const uploadResult = await uploadBlogBannerImage(blogId, formData);
+
+          if (!uploadResult.success) {
+            toast.error(uploadResult.error || "Failed to upload banner");
+            return;
+          }
+
+          bannerUrl = uploadResult.publicPath;
+        }
+
+        // 2. Prepare final data with the uploaded string path
+        const finalData = {
+          ...data,
+          bannerImage: bannerUrl,
+          bannerAlt: data.bannerAlt,
+        };
+
+        const result = await onSave(finalData);
+
+        if (result.success) {
+          toast.success(
+            isEdit
+              ? "Blog updated successfully!"
+              : "Blog created successfully!",
+          );
+        }
+      } catch (error) {
+        toast.error("An unexpected error occurred");
+        console.error(error);
       }
     });
+
+    //   if (!onSave) return;
+    //   const result = await onSave(data);
+    //   if (result.success) {
+    //     toast.success(
+    //       isEdit ? "Blog updated successfully!" : "Blog created successfully!",
+    //     );
+    //   }
+    // });
   };
 
   return (
@@ -67,6 +117,166 @@ export default function BlogForm({
       </Box>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
+          {/* Banner Image Upload */}
+          {/* <Grid item xs={12} md={6}>
+            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
+              Banner Image
+            </Typography>
+            <Controller
+              name="bannerImage"
+              control={control}
+              render={({ fieldState }) => (
+                <Box>
+                  <Button
+                    variant="outlined"
+                    component="label"
+                    fullWidth
+                    sx={{ height: "56px" }}
+                  >
+                    {preview ? "Change Banner" : "Upload Banner"}
+                    <input
+                      type="file"
+                      hidden
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          setValue("bannerImage", file, {
+                            shouldValidate: true,
+                          });
+                          setPreview(URL.createObjectURL(file));
+                        }
+                      }}
+                    />
+                  </Button>
+                  {preview && (
+                    <Box
+                      mt={2}
+                      sx={{ position: "relative", width: "100%", height: 160 }}
+                    >
+                      <Image
+                        height={300}
+                        width={200}
+                        src={preview}
+                        alt="Preview"
+                        style={{
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          borderRadius: "4px",
+                        }}
+                      />
+                    </Box>
+                  )}
+                  {fieldState.error && (
+                    <Typography color="error" variant="caption">
+                      {fieldState.error.message}
+                    </Typography>
+                  )}
+                </Box>
+              )}
+            />
+          </Grid> */}
+
+          {/* Banner Alt Text */}
+          {/* <Grid item xs={12} md={6}>
+            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
+              Banner Alt Text
+            </Typography>
+            <Controller
+              name="bannerAlt" // Changed from banner_alt
+              control={control}
+              render={({ field, fieldState }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  placeholder="Image description for SEO"
+                  error={!!fieldState.error}
+                  helperText={fieldState.error?.message}
+                />
+              )}
+            />
+          </Grid> */}
+          {/* Banner Upload Section */}
+          {/* Banner Image Upload */}
+          <Grid item xs={12} md={6}>
+            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
+              Banner Image
+            </Typography>
+
+            <Controller
+              name="bannerImage"
+              control={control}
+              render={({ field, fieldState }) => (
+                <Box>
+                  <Button
+                    variant="outlined"
+                    component="label"
+                    fullWidth
+                    sx={{ height: "56px" }}
+                  >
+                    {preview ? "Change Banner" : "Upload Banner"}
+                    <input
+                      type="file"
+                      hidden
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          field.onChange(file); // IMPORTANT
+                          setPreview(URL.createObjectURL(file));
+                        }
+                      }}
+                    />
+                  </Button>
+
+                  {preview && (
+                    <Box
+                      mt={2}
+                      sx={{ position: "relative", width: "100%", height: 180 }}
+                    >
+                      <Image
+                        src={preview}
+                        alt="Banner Preview"
+                        fill
+                        style={{
+                          objectFit: "cover",
+                          borderRadius: "6px",
+                        }}
+                      />
+                    </Box>
+                  )}
+
+                  {fieldState.error && (
+                    <Typography color="error" variant="caption">
+                      {fieldState.error.message}
+                    </Typography>
+                  )}
+                </Box>
+              )}
+            />
+          </Grid>
+
+          {/* Banner Alt Text */}
+          <Grid item xs={12} md={6}>
+            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
+              Banner Alt Text
+            </Typography>
+
+            <Controller
+              name="bannerAlt"
+              control={control}
+              render={({ field, fieldState }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  placeholder="Image description for SEO"
+                  error={!!fieldState.error}
+                  helperText={fieldState.error?.message}
+                />
+              )}
+            />
+          </Grid>
           {/* Title */}
           <Grid item xs={12}>
             <Typography

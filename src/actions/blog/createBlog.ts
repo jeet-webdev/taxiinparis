@@ -44,6 +44,8 @@ export async function createBlog(raw: BlogPagesFormValues) {
         metaTitle: data.metaTitle || null,
         metaDescription: data.metaDescription || null,
         metaKeywords: data.metaKeywords || null,
+        bannerImage: data.bannerImage || null,
+        bannerAlt: data.bannerAlt || null,
         // FIX: 'image' must be the URL string returned from your upload function
         // Ensure 'image' is the correct column name in your schema.prisma
         imageUpload: data.image || null,

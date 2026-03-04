@@ -1,15 +1,24 @@
 // ResizableImage.tsx - Custom TipTap extension for resizable images
 
-import { Node, mergeAttributes } from '@tiptap/core';
-import { ReactNodeViewRenderer, NodeViewWrapper, type NodeViewProps } from '@tiptap/react';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Box } from '@mui/material';
+import { Node, mergeAttributes } from "@tiptap/core";
+import {
+  ReactNodeViewRenderer,
+  NodeViewWrapper,
+  type NodeViewProps,
+} from "@tiptap/react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { Box } from "@mui/material";
+import Image from "next/image";
 
 // Extend TipTap commands
-declare module '@tiptap/core' {
+declare module "@tiptap/core" {
   interface Commands<ReturnType> {
     resizableImage: {
-      setResizableImage: (options: { src: string; alt?: string; title?: string }) => ReturnType;
+      setResizableImage: (options: {
+        src: string;
+        alt?: string;
+        title?: string;
+      }) => ReturnType;
     };
   }
 }
@@ -31,7 +40,8 @@ const ResizableImageComponent: React.FC<NodeViewProps> = ({
   const title = node.attrs.title as string | undefined;
   const width = node.attrs.width as number | undefined;
   const height = node.attrs.height as number | undefined;
-  const alignment = (node.attrs.alignment as 'left' | 'center' | 'right') || 'center';
+  const alignment =
+    (node.attrs.alignment as "left" | "center" | "right") || "center";
 
   const handleMouseDown = useCallback(
     (e: React.MouseEvent, direction: string) => {
@@ -51,7 +61,7 @@ const ResizableImageComponent: React.FC<NodeViewProps> = ({
         height: rect.height,
       };
     },
-    []
+    [],
   );
 
   const handleMouseMove = useCallback(
@@ -65,16 +75,16 @@ const ResizableImageComponent: React.FC<NodeViewProps> = ({
       let newHeight = startPos.current.height;
 
       // Calculate new dimensions based on resize direction
-      if (resizeDirection.includes('e')) {
+      if (resizeDirection.includes("e")) {
         newWidth = Math.max(50, startPos.current.width + deltaX);
       }
-      if (resizeDirection.includes('w')) {
+      if (resizeDirection.includes("w")) {
         newWidth = Math.max(50, startPos.current.width - deltaX);
       }
-      if (resizeDirection.includes('s')) {
+      if (resizeDirection.includes("s")) {
         newHeight = Math.max(50, startPos.current.height + deltaY);
       }
-      if (resizeDirection.includes('n')) {
+      if (resizeDirection.includes("n")) {
         newHeight = Math.max(50, startPos.current.height - deltaY);
       }
 
@@ -93,7 +103,7 @@ const ResizableImageComponent: React.FC<NodeViewProps> = ({
         height: Math.round(newHeight),
       });
     },
-    [isResizing, resizeDirection, updateAttributes]
+    [isResizing, resizeDirection, updateAttributes],
   );
 
   const handleMouseUp = useCallback(() => {
@@ -103,28 +113,28 @@ const ResizableImageComponent: React.FC<NodeViewProps> = ({
 
   useEffect(() => {
     if (isResizing) {
-      document.addEventListener('mousemove', handleMouseMove);
-      document.addEventListener('mouseup', handleMouseUp);
+      document.addEventListener("mousemove", handleMouseMove);
+      document.addEventListener("mouseup", handleMouseUp);
     }
 
     return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
+      document.removeEventListener("mousemove", handleMouseMove);
+      document.removeEventListener("mouseup", handleMouseUp);
     };
   }, [isResizing, handleMouseMove, handleMouseUp]);
 
-  const handleAlignmentChange = (newAlignment: 'left' | 'center' | 'right') => {
+  const handleAlignmentChange = (newAlignment: "left" | "center" | "right") => {
     updateAttributes({ alignment: newAlignment });
   };
 
   const getJustifyContent = () => {
     switch (alignment) {
-      case 'left':
-        return 'flex-start';
-      case 'right':
-        return 'flex-end';
+      case "left":
+        return "flex-start";
+      case "right":
+        return "flex-end";
       default:
-        return 'center';
+        return "center";
     }
   };
 
@@ -133,19 +143,19 @@ const ResizableImageComponent: React.FC<NodeViewProps> = ({
       <Box
         ref={containerRef}
         sx={{
-          display: 'flex',
+          display: "flex",
           justifyContent: getJustifyContent(),
           my: 2,
-          position: 'relative',
+          position: "relative",
         }}
       >
         <Box
           sx={{
-            position: 'relative',
-            display: 'inline-block',
+            position: "relative",
+            display: "inline-block",
             lineHeight: 0,
-            outline: selected ? '2px solid' : 'none',
-            outlineColor: 'primary.main',
+            outline: selected ? "2px solid" : "none",
+            outlineColor: "primary.main",
             outlineOffset: 2,
             borderRadius: 1,
           }}
@@ -153,13 +163,13 @@ const ResizableImageComponent: React.FC<NodeViewProps> = ({
           <img
             ref={imgRef}
             src={src}
-            alt={alt || ''}
-            title={title || ''}
+            alt={alt || ""}
+            title={title || ""}
             style={{
-              width: width ? `${width}px` : 'auto',
-              height: height ? `${height}px` : 'auto',
-              maxWidth: '100%',
-              display: 'block',
+              width: width ? `${width}px` : "auto",
+              height: height ? `${height}px` : "auto",
+              maxWidth: "100%",
+              display: "block",
               borderRadius: 4,
             }}
             draggable={false}
@@ -183,35 +193,35 @@ const ResizableImageComponent: React.FC<NodeViewProps> = ({
               {/* Alignment buttons */}
               <Box
                 sx={{
-                  position: 'absolute',
+                  position: "absolute",
                   bottom: -40,
-                  left: '50%',
-                  transform: 'translateX(-50%)',
-                  display: 'flex',
+                  left: "50%",
+                  transform: "translateX(-50%)",
+                  display: "flex",
                   gap: 0.5,
-                  bgcolor: 'background.paper',
+                  bgcolor: "background.paper",
                   borderRadius: 1,
                   boxShadow: 2,
                   p: 0.5,
                 }}
               >
                 <AlignButton
-                  active={alignment === 'left'}
-                  onClick={() => handleAlignmentChange('left')}
+                  active={alignment === "left"}
+                  onClick={() => handleAlignmentChange("left")}
                   title="Align Left"
                 >
                   ◀
                 </AlignButton>
                 <AlignButton
-                  active={alignment === 'center'}
-                  onClick={() => handleAlignmentChange('center')}
+                  active={alignment === "center"}
+                  onClick={() => handleAlignmentChange("center")}
                   title="Center"
                 >
                   ●
                 </AlignButton>
                 <AlignButton
-                  active={alignment === 'right'}
-                  onClick={() => handleAlignmentChange('right')}
+                  active={alignment === "right"}
+                  onClick={() => handleAlignmentChange("right")}
                   title="Align Right"
                 >
                   ▶
@@ -231,35 +241,62 @@ interface ResizeHandleProps {
   onMouseDown: (e: React.MouseEvent, direction: string) => void;
 }
 
-const ResizeHandle: React.FC<ResizeHandleProps> = ({ position, onMouseDown }) => {
+const ResizeHandle: React.FC<ResizeHandleProps> = ({
+  position,
+  onMouseDown,
+}) => {
   const getPositionStyles = (): React.CSSProperties => {
     const base: React.CSSProperties = {
-      position: 'absolute',
+      position: "absolute",
       width: position.length === 1 ? 8 : 10,
       height: position.length === 1 ? 8 : 10,
-      backgroundColor: '#1976d2',
-      border: '2px solid white',
-      borderRadius: position.length === 2 ? '50%' : 2,
+      backgroundColor: "#1976d2",
+      border: "2px solid white",
+      borderRadius: position.length === 2 ? "50%" : 2,
       zIndex: 10,
     };
 
     switch (position) {
-      case 'nw':
-        return { ...base, top: -5, left: -5, cursor: 'nw-resize' };
-      case 'ne':
-        return { ...base, top: -5, right: -5, cursor: 'ne-resize' };
-      case 'sw':
-        return { ...base, bottom: -5, left: -5, cursor: 'sw-resize' };
-      case 'se':
-        return { ...base, bottom: -5, right: -5, cursor: 'se-resize' };
-      case 'n':
-        return { ...base, top: -4, left: '50%', transform: 'translateX(-50%)', cursor: 'n-resize' };
-      case 's':
-        return { ...base, bottom: -4, left: '50%', transform: 'translateX(-50%)', cursor: 's-resize' };
-      case 'e':
-        return { ...base, right: -4, top: '50%', transform: 'translateY(-50%)', cursor: 'e-resize' };
-      case 'w':
-        return { ...base, left: -4, top: '50%', transform: 'translateY(-50%)', cursor: 'w-resize' };
+      case "nw":
+        return { ...base, top: -5, left: -5, cursor: "nw-resize" };
+      case "ne":
+        return { ...base, top: -5, right: -5, cursor: "ne-resize" };
+      case "sw":
+        return { ...base, bottom: -5, left: -5, cursor: "sw-resize" };
+      case "se":
+        return { ...base, bottom: -5, right: -5, cursor: "se-resize" };
+      case "n":
+        return {
+          ...base,
+          top: -4,
+          left: "50%",
+          transform: "translateX(-50%)",
+          cursor: "n-resize",
+        };
+      case "s":
+        return {
+          ...base,
+          bottom: -4,
+          left: "50%",
+          transform: "translateX(-50%)",
+          cursor: "s-resize",
+        };
+      case "e":
+        return {
+          ...base,
+          right: -4,
+          top: "50%",
+          transform: "translateY(-50%)",
+          cursor: "e-resize",
+        };
+      case "w":
+        return {
+          ...base,
+          left: -4,
+          top: "50%",
+          transform: "translateY(-50%)",
+          cursor: "w-resize",
+        };
       default:
         return base;
     }
@@ -281,7 +318,12 @@ interface AlignButtonProps {
   children: React.ReactNode;
 }
 
-const AlignButton: React.FC<AlignButtonProps> = ({ active, onClick, title, children }) => (
+const AlignButton: React.FC<AlignButtonProps> = ({
+  active,
+  onClick,
+  title,
+  children,
+}) => (
   <button
     type="button"
     title={title}
@@ -289,14 +331,14 @@ const AlignButton: React.FC<AlignButtonProps> = ({ active, onClick, title, child
     style={{
       width: 28,
       height: 28,
-      border: 'none',
+      border: "none",
       borderRadius: 4,
-      backgroundColor: active ? '#1976d2' : 'transparent',
-      color: active ? 'white' : '#666',
-      cursor: 'pointer',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+      backgroundColor: active ? "#1976d2" : "transparent",
+      color: active ? "white" : "#666",
+      cursor: "pointer",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
       fontSize: 12,
     }}
   >
@@ -306,9 +348,9 @@ const AlignButton: React.FC<AlignButtonProps> = ({ active, onClick, title, child
 
 // TipTap Extension
 export const ResizableImage = Node.create({
-  name: 'resizableImage',
+  name: "resizableImage",
 
-  group: 'block',
+  group: "block",
 
   atom: true,
 
@@ -330,7 +372,7 @@ export const ResizableImage = Node.create({
         default: null,
       },
       alignment: {
-        default: 'center',
+        default: "center",
       },
     };
   },
@@ -338,30 +380,33 @@ export const ResizableImage = Node.create({
   parseHTML() {
     return [
       {
-        tag: 'img[src]',
+        tag: "img[src]",
       },
     ];
   },
 
   renderHTML({ HTMLAttributes }) {
     const { alignment, width, height, ...rest } = HTMLAttributes;
-    
+
     // Create wrapper div for alignment
     const wrapperStyle = `display: flex; justify-content: ${
-      alignment === 'left' ? 'flex-start' : 
-      alignment === 'right' ? 'flex-end' : 'center'
+      alignment === "left"
+        ? "flex-start"
+        : alignment === "right"
+          ? "flex-end"
+          : "center"
     }; margin: 1em 0;`;
-    
-    const imgStyle = `${width ? `width: ${width}px;` : ''} ${height ? `height: ${height}px;` : ''} max-width: 100%; border-radius: 4px;`;
-    
+
+    const imgStyle = `${width ? `width: ${width}px;` : ""} ${height ? `height: ${height}px;` : ""} max-width: 100%; border-radius: 4px;`;
+
     return [
-      'div',
-      { 
+      "div",
+      {
         style: wrapperStyle,
-        'data-type': 'resizableImage',
-        'data-alignment': alignment || 'center',
+        "data-type": "resizableImage",
+        "data-alignment": alignment || "center",
       },
-      ['img', mergeAttributes(rest, { style: imgStyle })]
+      ["img", mergeAttributes(rest, { style: imgStyle })],
     ];
   },
 

@@ -98,7 +98,7 @@ export default function CommitmentSection({
               visible: { opacity: 1, y: 0 },
             }}
             transition={{ duration: 0.8 }}
-            className="text-4xl md:text-5xl text-[#D4AF6A] font-script"
+            className="w-full text-center text-4xl md:text-5xl text-[#D4AF6A] font-script leading-snug break-words px-4"
           >
             {title || " Our Commitment to Excellence "}
           </motion.h2>
