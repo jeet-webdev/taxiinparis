@@ -86,6 +86,7 @@ export default async function SingleBlogPage({ params }: Props) {
   if (!blog) {
     notFound();
   }
+  console.log("Banner:", blog.bannerImage);
 
   const publishedDate = formatDate(blog.createdAt);
   const updatedDate = formatDate(blog.updatedAt);
@@ -94,7 +95,7 @@ export default async function SingleBlogPage({ params }: Props) {
   return (
     <main className="min-h-screen bg-[#0A0F1C]">
       <DarkLuxuryBlock>
-        <HeroSection />
+        <HeroSection img={blog.bannerImage} alt={blog.bannerAlt} />
 
         {/* --- ARTICLE CONTENT SECTION --- */}
         <section className="py-14 md:py-18">
@@ -119,6 +120,15 @@ export default async function SingleBlogPage({ params }: Props) {
               className="
                 text-gray-300
                 leading-relaxed
+                 [&_h1]:text-4xl
+                [&_h1]:font-serif
+                [&_h1]:text-[#D4AF6A]
+                [&_h1]:mt-12
+                [&_h1]:mb-6
+                [&_h1]:border-b
+                [&_h1]:border-[#D4AF6A]/30
+                [&_h1]:pb-3
+
                 [&_h2]:text-3xl
                 [&_h2]:font-serif
                 [&_h2]:text-[#D4AF6A]
@@ -132,6 +142,22 @@ export default async function SingleBlogPage({ params }: Props) {
                 [&_h3]:text-[#D4AF6A]
                 [&_h3]:mt-10
                 [&_h3]:mb-4
+
+                 [&_h4]:text-xl
+  [&_h4]:font-semibold
+  [&_h4]:mt-8
+  [&_h4]:mb-3
+
+  [&_h5]:text-lg
+  [&_h5]:font-medium
+  [&_h5]:mt-6
+  [&_h5]:mb-2
+
+  [&_h6]:text-base
+  [&_h6]:font-medium
+  [&_h6]:mt-6
+  [&_h6]:mb-2
+  [&_h6]:text-gray-400
                 [&_p]:mb-6
                 [&_strong]:text-[#D4AF6A]
                 [&_a]:text-[#D4AF6A]

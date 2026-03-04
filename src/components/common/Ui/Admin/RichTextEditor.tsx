@@ -55,6 +55,10 @@ import {
   CloudUpload as UploadIcon,
 } from "@mui/icons-material";
 import ResizableImage from "./ResizableImage";
+import Looks3Icon from "@mui/icons-material/Looks3";
+import Looks4Icon from "@mui/icons-material/Looks4";
+import Looks5Icon from "@mui/icons-material/Looks5";
+import Looks6Icon from "@mui/icons-material/Looks6";
 
 // --- TYPES ---
 interface RichTextEditorProps {
@@ -334,6 +338,42 @@ const MenuBar: React.FC<MenuBarProps> = ({ editor, blogId, onImageUpload }) => {
         >
           <LooksTwoIcon fontSize="small" />
         </MenuButton>
+        <MenuButton
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 3 }).run()
+          }
+          isActive={editor.isActive("heading", { level: 3 })}
+          tooltip="H3"
+        >
+          <Looks3Icon fontSize="small" />
+        </MenuButton>
+        <MenuButton
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 4 }).run()
+          }
+          isActive={editor.isActive("heading", { level: 4 })}
+          tooltip="4"
+        >
+          <Looks4Icon fontSize="small" />
+        </MenuButton>
+        <MenuButton
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 5 }).run()
+          }
+          isActive={editor.isActive("heading", { level: 5 })}
+          tooltip="5"
+        >
+          <Looks5Icon fontSize="small" />
+        </MenuButton>
+        <MenuButton
+          onClick={() =>
+            editor.chain().focus().toggleHeading({ level: 6 }).run()
+          }
+          isActive={editor.isActive("heading", { level: 6 })}
+          tooltip="6"
+        >
+          <Looks6Icon fontSize="small" />
+        </MenuButton>
         <Divider orientation="vertical" flexItem />
         <MenuButton
           onClick={() => editor.chain().focus().setTextAlign("left").run()}
@@ -480,7 +520,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
 
   const editor = useEditor({
     extensions: [
-      StarterKit.configure({ heading: { levels: [1, 2, 3] } }),
+      StarterKit.configure({ heading: { levels: [1, 2, 3, 4, 5, 6] } }),
       Underline,
       Link.configure({ openOnClick: false }),
       ResizableImage,

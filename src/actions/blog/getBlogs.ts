@@ -18,7 +18,7 @@ export async function getBlogBySlug(slug: string) {
         equals: slug,
         mode: "insensitive",
       },
-      status: "active", 
+      // status: "active",
     },
   });
 }

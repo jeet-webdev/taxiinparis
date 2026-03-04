@@ -202,7 +202,6 @@ export default function BlogsTable({ rows, onDelete }: BlogsTableProps) {
             </TableBody>
           </Table>
         </TableContainer>
-
         {/* Pagination Bottom */}
         <TablePagination
           component="div"

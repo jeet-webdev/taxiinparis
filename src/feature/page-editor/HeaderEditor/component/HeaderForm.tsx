@@ -111,11 +111,11 @@ export default function HeaderForm({
 
   return (
     <div className="max-w-5xl mx-auto pb-12 px-6">
-      <div className="mb-10 pt-6 border-b border-slate-100 pb-6 text-left">
+      {/* <div className="mb-10 pt-6 border-b border-slate-100 pb-6 text-left">
         <h1 className="text-2xl font-bold text-slate-800 tracking-tight">
           Header & Footer Settings
         </h1>
-      </div>
+      </div> */}
 
       <div className="space-y-12">
         {/* Section: Logo Upload */}
@@ -201,6 +201,11 @@ export default function HeaderForm({
             </div>
           </div>
         </section>
+        <div className="mt-10 ">
+          <h1 className="text-2xl font-bold text-slate-800 tracking-tight">
+            Header & Footer Settings
+          </h1>
+        </div>
 
         {/* Navigation Sections */}
         <section>
