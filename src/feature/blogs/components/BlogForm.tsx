@@ -105,185 +105,117 @@ export default function BlogForm({
 
   return (
     <FormProvider {...methods}>
-      <Box
-        mb={3}
-        display="flex"
-        justifyContent="space-between"
-        alignItems="center"
-      >
+      <Box mb={3} display="flex" justifyContent="row" alignItems="center">
         <Typography variant="h5" mb={2}>
           {isEdit ? "Edit Blog" : "Add Blog"}
         </Typography>
       </Box>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Grid container spacing={2}>
+        <Grid>
           {/* Banner Image Upload */}
-          {/* <Grid item xs={12} md={6}>
-            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
-              Banner Image
-            </Typography>
-            <Controller
-              name="bannerImage"
-              control={control}
-              render={({ fieldState }) => (
-                <Box>
-                  <Button
-                    variant="outlined"
-                    component="label"
-                    fullWidth
-                    sx={{ height: "56px" }}
-                  >
-                    {preview ? "Change Banner" : "Upload Banner"}
-                    <input
-                      type="file"
-                      hidden
-                      accept="image/*"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) {
-                          setValue("bannerImage", file, {
-                            shouldValidate: true,
-                          });
-                          setPreview(URL.createObjectURL(file));
-                        }
-                      }}
-                    />
-                  </Button>
-                  {preview && (
-                    <Box
-                      mt={2}
-                      sx={{ position: "relative", width: "100%", height: 160 }}
+          <Grid item xs={12} md={6}>
+            <Box
+              sx={{
+                border: "1px solid #e0e0e0",
+                borderRadius: 2,
+                p: 3,
+                mb: 4,
+                width: "100%",
+                maxWidth: 800,
+                mx: "auto", // centers horizontally
+                backgroundColor: "#fff",
+                boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+              }}
+            >
+              <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
+                Banner Image
+              </Typography>
+
+              <Controller
+                name="bannerImage"
+                control={control}
+                render={({ field, fieldState }) => (
+                  <Box>
+                    <Button
+                      variant="outlined"
+                      component="label"
+                      fullWidth
+                      sx={{ height: "56px" }}
                     >
-                      <Image
-                        height={300}
-                        width={200}
-                        src={preview}
-                        alt="Preview"
-                        style={{
+                      {preview ? "Change Banner" : "Upload Banner"}
+                      <input
+                        type="file"
+                        hidden
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            field.onChange(file); // IMPORTANT
+                            setPreview(URL.createObjectURL(file));
+                          }
+                        }}
+                      />
+                    </Button>
+
+                    {preview && (
+                      <Box
+                        mt={2}
+                        sx={{
+                          position: "relative",
                           width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                          borderRadius: "4px",
+                          height: 180,
                         }}
-                      />
-                    </Box>
-                  )}
-                  {fieldState.error && (
-                    <Typography color="error" variant="caption">
-                      {fieldState.error.message}
-                    </Typography>
-                  )}
-                </Box>
-              )}
-            />
-          </Grid> */}
+                      >
+                        <Image
+                          src={preview}
+                          alt="Banner Preview"
+                          fill
+                          style={{
+                            objectFit: "cover",
+                            borderRadius: "6px",
+                          }}
+                        />
+                      </Box>
+                    )}
 
-          {/* Banner Alt Text */}
-          {/* <Grid item xs={12} md={6}>
-            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
-              Banner Alt Text
-            </Typography>
-            <Controller
-              name="bannerAlt" // Changed from banner_alt
-              control={control}
-              render={({ field, fieldState }) => (
-                <TextField
-                  {...field}
-                  fullWidth
-                  placeholder="Image description for SEO"
-                  error={!!fieldState.error}
-                  helperText={fieldState.error?.message}
-                />
-              )}
-            />
-          </Grid> */}
-          {/* Banner Upload Section */}
-          {/* Banner Image Upload */}
-          <Grid item xs={12} md={6}>
-            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
-              Banner Image
-            </Typography>
+                    {fieldState.error && (
+                      <Typography color="error" variant="caption">
+                        {fieldState.error.message}
+                      </Typography>
+                    )}
+                  </Box>
+                )}
+              />
+              {/* Banner Alt Text */}
+              <Grid item xs={12} md={6} mt={2}>
+                <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
+                  Banner Alt Text
+                </Typography>
 
-            <Controller
-              name="bannerImage"
-              control={control}
-              render={({ field, fieldState }) => (
-                <Box>
-                  <Button
-                    variant="outlined"
-                    component="label"
-                    fullWidth
-                    sx={{ height: "56px" }}
-                  >
-                    {preview ? "Change Banner" : "Upload Banner"}
-                    <input
-                      type="file"
-                      hidden
-                      accept="image/*"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) {
-                          field.onChange(file); // IMPORTANT
-                          setPreview(URL.createObjectURL(file));
-                        }
-                      }}
+                <Controller
+                  name="bannerAlt"
+                  control={control}
+                  render={({ field, fieldState }) => (
+                    <TextField
+                      {...field}
+                      fullWidth
+                      placeholder="Image description for SEO"
+                      error={!!fieldState.error}
+                      helperText={fieldState.error?.message}
                     />
-                  </Button>
-
-                  {preview && (
-                    <Box
-                      mt={2}
-                      sx={{ position: "relative", width: "100%", height: 180 }}
-                    >
-                      <Image
-                        src={preview}
-                        alt="Banner Preview"
-                        fill
-                        style={{
-                          objectFit: "cover",
-                          borderRadius: "6px",
-                        }}
-                      />
-                    </Box>
                   )}
-
-                  {fieldState.error && (
-                    <Typography color="error" variant="caption">
-                      {fieldState.error.message}
-                    </Typography>
-                  )}
-                </Box>
-              )}
-            />
-          </Grid>
-
-          {/* Banner Alt Text */}
-          <Grid item xs={12} md={6}>
-            <Typography variant="body2" sx={{ fontWeight: 600, mb: 1 }}>
-              Banner Alt Text
-            </Typography>
-
-            <Controller
-              name="bannerAlt"
-              control={control}
-              render={({ field, fieldState }) => (
-                <TextField
-                  {...field}
-                  fullWidth
-                  placeholder="Image description for SEO"
-                  error={!!fieldState.error}
-                  helperText={fieldState.error?.message}
                 />
-              )}
-            />
+              </Grid>
+            </Box>
           </Grid>
+
           {/* Title */}
           <Grid item xs={12}>
             <Typography
               variant="body2"
               sx={{
                 fontWeight: 600,
-                mb: 1,
+                mt: 2,
                 color: "text.primary",
               }}
             >
@@ -309,7 +241,7 @@ export default function BlogForm({
               variant="body2"
               sx={{
                 fontWeight: 600,
-                mb: 1,
+                mt: 2,
                 color: "text.primary",
               }}
             >
@@ -335,7 +267,7 @@ export default function BlogForm({
               variant="body2"
               sx={{
                 fontWeight: 600,
-                mb: 1,
+                mt: 2,
                 color: "text.primary",
               }}
             >
@@ -371,7 +303,7 @@ export default function BlogForm({
               variant="body2"
               sx={{
                 fontWeight: 600,
-                mb: 1,
+                mt: 2,
                 color: "text.primary",
               }}
             >
@@ -398,7 +330,7 @@ export default function BlogForm({
               variant="body2"
               sx={{
                 fontWeight: 600,
-                mb: 1,
+                mt: 2,
                 color: "text.primary",
               }}
             >
@@ -427,7 +359,7 @@ export default function BlogForm({
               variant="body2"
               sx={{
                 fontWeight: 600,
-                mb: 1,
+                mt: 2,
                 color: "text.primary",
               }}
             >
@@ -451,7 +383,7 @@ export default function BlogForm({
           </Grid>
 
           {/* Submit */}
-          <Grid item xs={12} display="flex" justifyContent="flex-end">
+          <Grid item xs={12} mt={2} display="flex" justifyContent="flex-start">
             <Button
               type="submit"
               variant="contained"

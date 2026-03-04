@@ -4,6 +4,7 @@ import Link from "next/link";
 import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
 import { Metadata } from "next";
 import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
+import Image from "next/image";
 
 interface Props {
   searchParams: Promise<{ page?: string }>;
@@ -11,6 +12,7 @@ interface Props {
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: "Blogs | Taxi in paris",
+
     description:
       "Read the latest blogs, articles, and updates from our website. Stay informed with industry insights and news.",
     keywords: ["blogs", "articles"],
@@ -32,7 +34,7 @@ export default async function BlogPage({ searchParams }: Props) {
       <DarkLuxuryBlock>
         <section className="py-16 border-b border-amber-500">
           <div className="text-center px-6">
-            <h1 className="text-4xl md:text-5xl font-light text-[#d4af6a] mb-4 tracking-tight">
+            <h1 className="text-4xl md:text-5xl font-light text-[#d4af6a] mb-2 tracking-tight">
               Our Blogs
             </h1>
             <div className="h-1 w-24 bg-[#d4af6a] mx-auto relative">
@@ -48,42 +50,58 @@ export default async function BlogPage({ searchParams }: Props) {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {blogs.map((blog) => (
-                <div
-                  key={blog.id}
-                  className="group bg-white p-10 rounded-2xl border border-gray-100 shadow-sm hover:shadow-2xl hover:border-amber-400 transition-all duration-300 flex flex-col justify-between min-h-[280px]"
-                >
-                  <h2 className="text-xl font-medium text-gray-700 group-hover:text-gray-900 transition-colors">
-                    {blog.title}
-                  </h2>
-                  <Link
-                    href={`/blog/${blog.slug}`}
-                    className="text-amber-500 font-medium text-sm flex items-center gap-1 group-hover:gap-2 uppercase tracking-wider"
-                  >
-                    Read More <span>→</span>
-                  </Link>
-                </div>
-              ))}
-            </div>
-          )}
+              {blogs.map((blog) => {
+                const previewText =
+                  blog.text?.replace(/<[^>]*>/g, "").slice(0, 120) + "...";
 
-          {totalCount > limit && (
-            <div className="mt-16 flex justify-center items-center gap-2">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map(
-                (pageNum) => (
+                // 👇 Extract first image from HTML
+                const firstImageMatch = blog.text?.match(
+                  /<img[^>]+src="([^">]+)"/,
+                );
+                const firstImage = firstImageMatch?.[1];
+
+                return (
                   <Link
-                    key={pageNum}
-                    href={`/blog?page=${pageNum}`}
-                    className={`w-10 h-10 rounded flex items-center justify-center font-medium transition-all ${
-                      currentPage === pageNum
-                        ? "bg-amber-500 text-white"
-                        : "bg-gray-700 border-gray-200 text-gray-600 hover:bg-gray-50"
-                    }`}
+                    key={blog.id}
+                    href={`/blog/${blog.slug}`}
+                    className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-amber-400 flex flex-col h-full"
                   >
-                    {pageNum}
+                    {/* IMAGE */}
+                    <div className="relative w-full aspect-[4/3] overflow-hidden">
+                      {firstImage ? (
+                        <Image
+                          src={firstImage}
+                          alt={blog.title}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          sizes="(max-width: 768px) 100vw,
+                       (max-width: 1024px) 50vw,
+                       33vw"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-500">
+                          No Image
+                        </div>
+                      )}
+                    </div>
+
+                    {/* CONTENT */}
+                    <div className="p-6 flex flex-col flex-grow">
+                      <h2 className="text-lg font-semibold text-gray-800 group-hover:text-black transition mb-3 line-clamp-2">
+                        {blog.title}
+                      </h2>
+
+                      <p className="text-gray-500 text-sm flex-grow line-clamp-3">
+                        {previewText}
+                      </p>
+
+                      <span className="mt-4 text-amber-500 font-medium text-sm uppercase tracking-wider">
+                        Read More →
+                      </span>
+                    </div>
                   </Link>
-                ),
-              )}
+                );
+              })}
             </div>
           )}
         </section>

@@ -39,14 +39,14 @@ model Blog {
   slug            String   @unique @db.VarChar(255)
   text            String?
   imageUpload     String?  @map("image_upload") @db.VarChar(255)
-  bannerImage    String?  @map("banner_upload") @db.VarChar(255)
-  bannerAlt       String?  @map("banner_alt") @db.VarChar(255)   
   metaTitle       String?  @map("meta_title") @db.VarChar(255)
   metaDescription String?  @map("meta_description")
   metaKeywords    String?  @map("meta_keywords")
   status          String   @default("active") @db.VarChar(20)
   createdAt       DateTime @default(now()) @map("created_at")
   updatedAt       DateTime @default(now()) @updatedAt @map("updated_at")
+  bannerAlt       String?  @map("banner_alt") @db.VarChar(255)
+  bannerImage     String?  @map("banner_upload") @db.VarChar(255)
 
   @@map("blogs")
 }
