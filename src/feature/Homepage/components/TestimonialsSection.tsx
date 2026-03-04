@@ -6,6 +6,7 @@ import { prisma } from "@/src/lib/prisma";
 import { Container } from "@mui/material";
 import Section from "@/src/components/common/Ui/Section";
 import Link from "next/link";
+import WhyChooseUsSection from "@/src/app/(public)/features/page";
 type AppLink = {
   url: string;
   platform: "google_play" | "app_store";
@@ -58,6 +59,7 @@ export default async function TestimonialsSection() {
           +33 1 76 44 33 00
         </div> */}
       </Container>
+      <WhyChooseUsSection />
     </Section>
   );
 }
