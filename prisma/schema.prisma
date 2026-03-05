@@ -24,15 +24,15 @@ model Page {
   metaKeywords         String?  @map("meta_keywords")
   status               String   @default("active") @db.VarChar(255)
   updatedAt            DateTime @default(now()) @updatedAt @map("updated_at")
-  secureBookingIcon     String?
-  reliableServiceIcon   String?
-  customerServiceIcon   String?
-  fairPriceIcon         String?
   customerServiceTitle String?  @map("customer_service_title")
   fairPriceTitle       String?  @map("fair_price_title")
   reliableServiceTitle String?  @map("reliable_service_title")
   secureBookingTitle   String?  @map("secure_booking_title")
   imageAlt             String?  @map("imagealt") @db.VarChar(255)
+  customerServiceIcon  String?
+  fairPriceIcon        String?
+  reliableServiceIcon  String?
+  secureBookingIcon    String?
 
   @@map("pages")
 }
@@ -104,6 +104,7 @@ model Feature {
   createdAt   DateTime @default(now()) @map("created_at")
   mainTitle   Json?
   buttonText  String?  @default("Book Now") @db.VarChar(50)
+  buttonLink  String?  @default("https://portail.driverconnect.fr/vtc-fils/template?DS=1&tkn=00001_3739617_-1157023572_1769256160266")
 
   @@map("features")
 }

@@ -11,6 +11,7 @@ export interface FeatureItem {
   description: string;
   iconType: string;
   buttonText: string | null; // Added field
+  buttonLink: string | null;
   createdAt: Date;
 }
 

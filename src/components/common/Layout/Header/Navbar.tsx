@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -61,9 +60,9 @@ export default function Navbar({ footerData }: NavbarProps) {
               <Image
                 src={displayLogo}
                 alt={displayAlt}
-                width={120}
-                height={120}
-                className="object-contain w-[90px] md:w-[130px]"
+                width={60}
+                height={90}
+                className="object-contain w-[70px] md:w-[90px]"
                 priority
               />
             </Link>
