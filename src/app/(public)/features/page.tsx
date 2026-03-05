@@ -208,6 +208,7 @@
 //     </section>
 //   );
 // }
+
 import { prisma } from "@/src/lib/prisma";
 import Link from "next/link";
 import {
@@ -244,6 +245,7 @@ export const dynamic = "force-dynamic";
 export default async function WhyChooseUsSection() {
   const features = await prisma.feature.findMany({
     orderBy: { createdAt: "asc" },
+    take: 6,
   });
 
   // Default fallback link if one isn't provided in DB
@@ -265,8 +267,7 @@ export default async function WhyChooseUsSection() {
 
       case "PersonIcon":
         return <PersonIcon sx={style} />;
-      case "DirectionsCarIcon":
-        return <DirectionsCarIcon sx={style} />;
+
       case "AccessTimeIcon":
         return <AccessTimeIcon sx={style} />;
       case "FlightIcon":
