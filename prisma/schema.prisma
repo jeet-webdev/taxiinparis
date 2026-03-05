@@ -24,6 +24,10 @@ model Page {
   metaKeywords         String?  @map("meta_keywords")
   status               String   @default("active") @db.VarChar(255)
   updatedAt            DateTime @default(now()) @updatedAt @map("updated_at")
+  secureBookingIcon     String?
+  reliableServiceIcon   String?
+  customerServiceIcon   String?
+  fairPriceIcon         String?
   customerServiceTitle String?  @map("customer_service_title")
   fairPriceTitle       String?  @map("fair_price_title")
   reliableServiceTitle String?  @map("reliable_service_title")
@@ -91,17 +95,19 @@ model Footer {
   logoAlt       String?
   logoUrl       String?
 }
+
 model Feature {
   id          Int      @id @default(autoincrement())
-  mainTitle   Json?  
   title       String   @db.VarChar(255)
-  description String   @db.Text
-  buttonText  String?  @default("Book Now") @db.VarChar(50)
+  description String
   iconType    String   @map("icon_type") @db.VarChar(100)
   createdAt   DateTime @default(now()) @map("created_at")
+  mainTitle   Json?
+  buttonText  String?  @default("Book Now") @db.VarChar(50)
 
   @@map("features")
 }
+
 enum Role {
   ADMIN
   EDITOR

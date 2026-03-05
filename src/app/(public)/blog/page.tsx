@@ -31,7 +31,7 @@ export default async function BlogPage({ searchParams }: Props) {
   return (
     <main className="min-h-screen bg-[#292d37]">
       <DarkLuxuryBlock>
-        <section className="py-16 border-b border-amber-500">
+        <section className="py-16 ">
           <div className="text-center px-6">
             <h1 className="text-4xl md:text-5xl font-light text-[#d4af6a] mb-2 tracking-tight">
               Our Blogs

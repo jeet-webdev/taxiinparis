@@ -38,6 +38,12 @@ export const homePageSchema = z.object({
   reliableServiceTitle: z.string(),
   customerServiceTitle: z.string(),
   fairPriceTitle: z.string(),
+
+  secureBookingIcon: z.string().optional(),
+  reliableServiceIcon: z.string().optional(),
+  customerServiceIcon: z.string().optional(),
+  fairPriceIcon: z.string().optional(),
+
   customerServices: z.string(),
   fairPrice: z.string(),
   metaTitle: z.string(),
