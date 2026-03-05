@@ -24,7 +24,7 @@ export default function Content({ data: { title, content } }: ContentProps) {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="text-4xl md:text-5xl text-center mb-6 font-script text-[#D4AF6A]"
+            className="text-4xl md:text-4xl text-center mb-6  text-[#D4AF6A]"
           >
             {title}
           </motion.h1>
@@ -71,34 +71,6 @@ export default function Content({ data: { title, content } }: ContentProps) {
           />
         )}
       </div>
-    
-
-      {/* <div className="mt-2 flex justify-center gap-6">
-        <Link
-          href="https://play.google.com/store/apps/details?id=com.vtcParis"
-          target="_blank"
-        >
-          <Image
-            src="/assets/images/google-play-store.png"
-            alt="Google Play"
-            width={170}
-            className="transition-transform duration-300 hover:scale-105 cursor-pointer"
-            height={55}
-          />
-        </Link>
-        <Link
-          href="https://portail.driverconnect.fr/vtc-fils/template?act=storeIos&site=00001_3987058_-1157023572_1730893992059&app=CL&soc=Chauffeur_priv"
-          target="_blank"
-        >
-          <Image
-            src="/assets/images/app-store-1.png"
-            alt="App Store"
-            width={170}
-            className="transition-transform duration-300 hover:scale-105 cursor-pointer"
-            height={55}
-          />
-        </Link>
-      </div> */}
     </Section>
   );
 }

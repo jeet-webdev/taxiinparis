@@ -45,7 +45,7 @@ export default async function WhyChooseUsSection() {
 
   // --- ADDED THIS LINE BELOW ---
   const renderIcon = (type: string) => {
-    const style = { fontSize: 40, color: "#ea580c" };
+    const style = { fontSize: 40, color: "#D4AF6A" };
 
     switch (type) {
       case "PersonIcon":
@@ -96,9 +96,47 @@ export default async function WhyChooseUsSection() {
   };
 
   return (
-    <section className="py-20 ">
+    // <section className="py-20 ">
+    //   <div className="max-w-7xl mx-auto px-6">
+    //     <h2 className="text-4xl font-serif text-center mb-16 font-bold text-[#D4AF6A] leading-tight">
+    //       {displayHeading}
+    //     </h2>
+
+    //     <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+    //       {features.map((item: FeatureItem) => (
+    //         <div
+    //           key={item.id}
+    //           className="bg-[#fcfcfc] p-10 rounded-2xl text-center border border-gray-100 shadow-sm flex flex-col h-full"
+    //         >
+    //           <div className="w-20 h-20 bg-[#fff4e5]  rounded-full flex items-center justify-center mx-auto mb-8">
+    //             {renderIcon(item.iconType)}
+    //           </div>
+    //           <h3 className="text-2xl font-bold mb-4 text-gray-800">
+    //             {item.title}
+    //           </h3>
+    //           <p className="text-gray-600 leading-relaxed mb-8 flex-grow">
+    //             {item.description}
+    //           </p>
+
+    //           <Link
+    //             href={SHARED_LINK}
+    //             className="inline-block w-full bg-[#D4AF6A] text-white font-bold py-3 rounded-lg hover:bg-[#927237] transition-colors uppercase tracking-wide text-sm"
+    //           >
+    //             {item.buttonText || "Book Now"}
+    //           </Link>
+    //         </div>
+    //       ))}
+    //     </div>
+    //   </div>
+    // </section>
+
+    <section className="py-24">
       <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-4xl font-serif text-center mb-16 font-bold text-[#D4AF6A] leading-tight">
+        <h2
+          className="text-4xl md:text-5xl font-serif text-center mb-20 font-semibold tracking-wide 
+bg-gradient-to-r from-[#D4AF6A] via-[#F5E6C4] to-[#D4AF6A] 
+bg-clip-text text-transparent"
+        >
           {displayHeading}
         </h2>
 
@@ -106,21 +144,60 @@ export default async function WhyChooseUsSection() {
           {features.map((item: FeatureItem) => (
             <div
               key={item.id}
-              className="bg-[#fcfcfc] p-10 rounded-2xl text-center border border-gray-100 shadow-sm flex flex-col h-full"
+              className="
+bg-white/5
+backdrop-blur-lg
+p-10
+rounded-2xl
+text-center
+border border-[#D4AF6A]/20
+shadow-[0_15px_40px_rgba(0,0,0,0.6)]
+flex flex-col h-full
+transition-all duration-500
+hover:-translate-y-2
+hover:border-[#D4AF6A]
+"
             >
-              <div className="w-20 h-20 bg-[#FFF5ED] rounded-full flex items-center justify-center mx-auto mb-8">
+              <div
+                className="
+w-20 h-20
+bg-[#D4AF6A]/10
+border border-[#D4AF6A]/30
+rounded-full
+flex items-center justify-center
+mx-auto mb-8
+"
+              >
                 {renderIcon(item.iconType)}
               </div>
-              <h3 className="text-2xl font-bold mb-4 text-gray-800">
+              <h3 className="text-2xl font-semibold mb-4 text-white">
                 {item.title}
               </h3>
-              <p className="text-gray-600 leading-relaxed mb-8 flex-grow">
+              <p className="text-gray-300 leading-relaxed mb-8 flex-grow">
                 {item.description}
               </p>
 
               <Link
                 href={SHARED_LINK}
-                className="inline-block w-full bg-[#D4AF6A] text-white font-bold py-3 rounded-lg hover:bg-[#927237] transition-colors uppercase tracking-wide text-sm"
+                className="
+inline-block
+w-full
+py-3
+rounded-lg
+font-semibold
+tracking-wide
+text-black
+bg-gradient-to-r
+from-[#D4AF6A]
+to-[#B8964F]
+hover:from-[#E6C27A]
+hover:to-[#C9A45D]
+transition-all
+duration-300
+uppercase
+text-sm
+shadow-lg
+"
               >
                 {item.buttonText || "Book Now"}
               </Link>

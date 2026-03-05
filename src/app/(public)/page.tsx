@@ -56,6 +56,10 @@ export default async function HomePage() {
           fairPrice={page?.fairPrice}
           reliableService={page?.reliableService}
           secureBooking={page?.secureBooking}
+          secureBookingIcon={page.secureBookingIcon}
+          reliableServiceIcon={page.reliableServiceIcon}
+          fairPriceIcon={page.fairPriceIcon}
+          customerServiceIcon={page.customerServiceIcon}
         />
         <TestimonialsSection />
       </DarkLuxuryBlock>

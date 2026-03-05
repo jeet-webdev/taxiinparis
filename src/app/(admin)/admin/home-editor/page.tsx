@@ -6,7 +6,7 @@ import {
 } from "@/src/actions/page/updatePage";
 import HomePageSection from "@/src/feature/page-editor/HomePage/components/HomeSection";
 import type { HomePageFormValues } from "@/src/feature/page-editor/HomePage/types/home.types";
-
+import { Controller, useForm, FormProvider, Path } from "react-hook-form";
 export const metadata: Metadata = {
   title: "Edit Home Page | Admin Dashboard",
 };
@@ -30,6 +30,10 @@ export default async function HomeEditorPage() {
     reliableServices: page.reliableService ?? "",
     customerServices: page.customerService ?? "",
     fairPrice: page.fairPrice ?? "",
+    secureBookingIcon: page.secureBookingIcon ?? "",
+    reliableServiceIcon: page.reliableServiceIcon ?? "",
+    customerServiceIcon: page.customerServiceIcon ?? "",
+    fairPriceIcon: page.fairPriceIcon ?? "",
     metaTitle: page.metaTitle ?? "",
     metaDescription: page.metaDescription ?? "",
     metaKeywords: page.metaKeywords ?? "",

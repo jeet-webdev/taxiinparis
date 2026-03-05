@@ -1,6 +1,6 @@
 "use client";
-
-import { Controller, useForm, FormProvider } from "react-hook-form";
+import { useEffect } from "react";
+import { Controller, useForm, FormProvider, Path } from "react-hook-form";
 import {
   Button,
   CircularProgress,
@@ -9,8 +9,9 @@ import {
   Typography,
   Box,
 } from "@mui/material";
-import { Lock, HeadsetMic, AddRoad, PriceChange } from "@mui/icons-material";
+// import { Lock, HeadsetMic, AddRoad, PriceChange } from "@mui/icons-material";
 import { SubmitHandler } from "react-hook-form";
+
 import Grid from "@mui/material/GridLegacy";
 import RichTextEditor from "@/src/components/common/Ui/Admin/RichTextEditor";
 import { useTransition } from "react";
@@ -21,7 +22,10 @@ import { homePageSchema } from "../validations/homeSchema";
 import type { UpdatePageInput } from "@/src/actions/page/updatePage";
 import { uploadPageImage } from "@/src/actions/page/uploadPageImage";
 import { toast } from "react-toastify";
-
+import {
+  ICON_OPTIONS,
+  getIconComponent,
+} from "@/src/components/common/utils/iconMap";
 type Props = {
   defaultValues: HomePageFormValues;
   onSave?: (data: UpdatePageInput) => Promise<{ success: boolean }>;
@@ -34,21 +38,28 @@ export default function HomePageSection({
   pageId,
 }: Props) {
   const methods = useForm<HomePageFormValues>({
-    defaultValues,
+    defaultValues: {
+      ...defaultValues,
+    },
     resolver: zodResolver(homePageSchema),
-    // This mode is optional but recommended for better UX
     mode: "onChange",
   });
+  const { control, handleSubmit, reset } = methods;
 
-  const { control, handleSubmit } = methods;
+  useEffect(() => {
+    if (defaultValues) {
+      reset(defaultValues);
+    }
+  }, [defaultValues, reset]);
+  // const { control, handleSubmit, watch } = methods;
   const [isPending, startTransition] = useTransition();
+
   const onSubmit: SubmitHandler<HomePageFormValues> = (data) => {
     startTransition(async () => {
       if (!onSave) return;
 
       let imagePath: string | undefined = undefined;
 
-      // 1. Check if a NEW file was uploaded
       if (data.homeHeaderImage instanceof File) {
         const formData = new FormData();
         formData.append("image", data.homeHeaderImage);
@@ -60,13 +71,9 @@ export default function HomePageSection({
           toast.error("Image upload failed.");
           return;
         }
-      }
-      // 2. If it's a string, it's the existing URL; we don't need to "re-upload"
-      else if (typeof data.homeHeaderImage === "string") {
+      } else if (typeof data.homeHeaderImage === "string") {
         imagePath = data.homeHeaderImage;
-      }
-      // 3. If it's null/undefined, we keep the default value to avoid overwriting with null
-      else {
+      } else {
         imagePath = (defaultValues.homeHeaderImage as string) || undefined;
       }
 
@@ -77,6 +84,10 @@ export default function HomePageSection({
         imageAlt: data.imageAlt,
         secureBooking: data.secureBooking,
         reliableService: data.reliableServices,
+        secureBookingIcon: data.secureBookingIcon,
+        reliableServiceIcon: data.reliableServiceIcon,
+        customerServiceIcon: data.customerServiceIcon,
+        fairPriceIcon: data.fairPriceIcon,
         secureBookingTitle: data.secureBookingTitle,
         reliableServiceTitle: data.reliableServiceTitle,
         customerServiceTitle: data.customerServiceTitle,
@@ -94,6 +105,37 @@ export default function HomePageSection({
       }
     });
   };
+  const IconTitleRow = ({
+    name,
+    iconName,
+    placeholder,
+  }: {
+    name: Path<HomePageFormValues>;
+    iconName: string;
+    placeholder: string;
+  }) => {
+    const IconComponent = getIconComponent(iconName);
+    return (
+      <Box display="flex" alignItems="center" gap={1} mt={2} mb={1}>
+        <IconComponent sx={{ fontSize: 32, color: "#E7C27D" }} />
+        <Controller
+          name={name}
+          control={control}
+          render={({ field, fieldState }) => (
+            <TextField
+              {...field}
+              value={field.value ?? ""}
+              fullWidth
+              placeholder={placeholder}
+              error={!!fieldState.error}
+              helperText={fieldState.error?.message}
+            />
+          )}
+        />
+      </Box>
+    );
+  };
+
   return (
     <FormProvider {...methods}>
       <Box
@@ -115,7 +157,6 @@ export default function HomePageSection({
                 <FileUploadField
                   label="Header Image"
                   accept="image/*"
-                  // FIX: Pass the value if it's a File OR a string (URL)
                   files={field.value || null}
                   error={!!fieldState.error}
                   errorMessage={fieldState.error?.message}
@@ -156,17 +197,35 @@ export default function HomePageSection({
                   {...field}
                   fullWidth
                   error={!!fieldState.error}
-                  helperText={fieldState.error?.message}
+                  helperText={fieldState.error?.message?.toString() || ""}
                 />
               )}
             />
           </Grid>
 
-          {/* Repeat this pattern for RichTextEditors (secureBooking, reliableServices, etc.) */}
           <Grid item xs={12}>
-            <Box display="flex" alignItems="center" gap={1} mt={2} mb={1}>
-              <Lock sx={{ fontSize: 32, color: "#E7C27D" }} />
+            <Controller
+              name="secureBookingIcon"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  value={field.value ?? ""}
+                  select
+                  label="Icon"
+                  size="small"
+                  sx={{ width: "120px" }}
+                >
+                  {ICON_OPTIONS.map((opt) => (
+                    <MenuItem key={opt.value} value={opt.value}>
+                      {opt.icon}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
+            />
 
+            <Box display="flex" alignItems="center" gap={1} mt={2} mb={1}>
               <Controller
                 name="secureBookingTitle"
                 control={control}
@@ -197,8 +256,29 @@ export default function HomePageSection({
 
           {/* Reliable Service */}
           <Grid item xs={12}>
+            <Controller
+              name="reliableServiceIcon"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  value={field.value ?? ""}
+                  onChange={(e) => field.onChange(e.target.value)}
+                  select
+                  label="Icon"
+                  size="small"
+                  sx={{ width: "100px" }}
+                >
+                  {ICON_OPTIONS.map((opt) => (
+                    <MenuItem key={opt.value} value={opt.value}>
+                      {opt.icon}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
+            />
+
             <Box display="flex" alignItems="center" gap={1} mt={2} mb={1}>
-              <AddRoad sx={{ fontSize: 32, color: "#E7C27D" }} />
               <Controller
                 name="reliableServiceTitle"
                 control={control}
@@ -237,8 +317,29 @@ export default function HomePageSection({
 
           {/* Customer Service */}
           <Grid item xs={12}>
+            <Controller
+              name="customerServiceIcon"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  value={field.value ?? ""}
+                  onChange={(e) => field.onChange(e.target.value)}
+                  select
+                  label="Icon"
+                  size="small"
+                  sx={{ width: "100px" }}
+                >
+                  {ICON_OPTIONS.map((opt) => (
+                    <MenuItem key={opt.value} value={opt.value}>
+                      {opt.icon}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
+            />
+
             <Box display="flex" alignItems="center" gap={1} mt={2} mb={1}>
-              <HeadsetMic sx={{ fontSize: 32, color: "#E7C27D" }} />
               <Controller
                 name="customerServiceTitle"
                 control={control}
@@ -277,8 +378,29 @@ export default function HomePageSection({
 
           {/* Fair Price */}
           <Grid item xs={12}>
+            <Controller
+              name="fairPriceIcon"
+              control={control}
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  select
+                  value={field.value ?? ""}
+                  onChange={(e) => field.onChange(e.target.value)}
+                  label="Icon"
+                  size="small"
+                  sx={{ width: "100px" }}
+                >
+                  {ICON_OPTIONS.map((opt) => (
+                    <MenuItem key={opt.value} value={opt.value}>
+                      {opt.icon}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              )}
+            />
+
             <Box display="flex" alignItems="center" gap={1} mt={2} mb={1}>
-              <PriceChange sx={{ fontSize: 32, color: "#E7C27D" }} />
               <Controller
                 name="fairPriceTitle"
                 control={control}
