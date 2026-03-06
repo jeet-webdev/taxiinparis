@@ -1,4 +1,5 @@
 import AppLayout from "@/src/components/common/Layout/AppLayout";
+import TawkTo from "@/src/components/common/Layout/TawkTo";
 
 export default function PublicLayout({
   children,
@@ -8,6 +9,7 @@ export default function PublicLayout({
   return (
     <AppLayout>
       {children}
+      <TawkTo />
     </AppLayout>
   );
 }
