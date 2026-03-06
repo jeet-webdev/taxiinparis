@@ -7,7 +7,8 @@ import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsS
 import Image from "next/image";
 // import BlogPagination from "@/src/feature/Blog/components/BlogPagination";
 import BlogPagination from "@/src/feature/blogs/components/BlogPagination";
-
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 interface Props {
   searchParams: Promise<{ page?: string }>;
 }

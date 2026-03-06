@@ -7,7 +7,8 @@ import Content from "@/src/components/common/Ui/Content";
 import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
 const getTermsPage = cache(() => getPageBySlug("terms"));
 const safe = (value?: string | null) => value ?? undefined;
-
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getTermsPage();
   const title = page?.metaTitle ?? page?.title ?? undefined;

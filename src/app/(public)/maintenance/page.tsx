@@ -2,7 +2,8 @@ import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
 import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
 import type { Metadata } from "next";
 import Link from "next/link";
-
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 export const metadata: Metadata = {
   title: "Maintenance | Paris Black Car",
   description:

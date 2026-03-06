@@ -6,7 +6,8 @@ import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsS
 import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
 // import ContactForm from "@/src/feature/Contact/ContactForm";
 import ContactForm from "@/src/feature/Contact/ContactForm";
-
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
 const getContactPage = cache(() => getPageBySlug("contact"));
 const safe = (value?: string | null) => value ?? undefined;
 
