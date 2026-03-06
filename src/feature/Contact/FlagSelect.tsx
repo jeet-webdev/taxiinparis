@@ -135,10 +135,10 @@ export default function FlagSelect({ value, onChange }: Props) {
 
       {/* Dropdown */}
       {isOpen && (
-        <div className="absolute top-full left-[-8px] z-50 bg-white/95 border border-gray-200 rounded-lg shadow-xl w-20 max-h-80 flex flex-col">
+        <div className="absolute top-full left-[-8px] z-50 bg-white/95 border border-gray-200 rounded-lg shadow-xl w-15 max-h-80 flex flex-col">
           {/* <div className="absolute top-full left-0 z-50 bg-white border border-gray-200 rounded-lg shadow-xl w-36 max-h-56 flex flex-col"> */}
           {/* Search */}
-          <div className="p-1.5 border-b">
+          {/* <div className="p-1.5 border-b">
             <input
               type="text"
               placeholder="Search..."
@@ -147,10 +147,10 @@ export default function FlagSelect({ value, onChange }: Props) {
               className=" w-full text-[#000] px-2 py-1 text-xs border rounded outline-none focus:ring-1 focus:ring-amber-500"
               autoFocus
             />
-          </div>
+          </div> */}
 
           {/* Options - flag only */}
-          <div className="overflow-y-auto flex-1">
+          <div className="overflow-y-auto flex-1 scrollbar-hide [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             {filtered.map((country) => {
               const CountryFlag = flags[country];
               return (
