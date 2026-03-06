@@ -216,7 +216,11 @@ export default function ContactForm() {
         <div className="space-y-2">
           <label className="text-sm font-semibold text-[#d4af6a]">Phone</label>
           <PhoneField />
-          {fe?.phone && <p className="text-amber-500 text-xs">{fe.phone[0]}</p>}
+          {fe?.phone && (
+            <p className="text-amber-500 focus:ring-amber-500  text-xs">
+              {fe.phone[0]}
+            </p>
+          )}
         </div>
       </div>
 
@@ -244,7 +248,7 @@ export default function ContactForm() {
           name="captcha"
           type="text"
           placeholder="Answer"
-          className={`w-full p-2.5 border rounded outline-none focus:ring-1 focus:ring-red-500 transition-all ${fe?.captcha ? "border-amber-500" : "border-gray-300"}`}
+          className={`w-full p-2.5 border rounded outline-none focus:ring-1 focus:ring-amber-500 transition-all ${fe?.captcha ? "border-amber-500" : "border-gray-300"}`}
         />
         {fe?.captcha && (
           <p className="text-amber-500 text-xs">{fe.captcha[0]}</p>

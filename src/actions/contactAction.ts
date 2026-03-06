@@ -8,7 +8,8 @@ const ContactSchema = z.object({
   name: z.string().min(2, "Name is required"),
   surname: z.string().min(2, "Surname is required"),
   email: z.string().email("Please enter a valid email address"),
-  phone: z.string().optional(),
+  // phone: z.string().optional(),
+  phone: z.string().min(6, "Phone number is required"),
   message: z.string().min(10, "Message must be at least 10 characters"),
   captcha: z.string().refine((val) => val === "11", {
     message: "Incorrect math answer",
@@ -36,7 +37,6 @@ export async function sendContactEmail(
   const rawData = Object.fromEntries(formData.entries());
   const validatedFields = ContactSchema.safeParse(rawData);
 
- 
   if (!validatedFields.success) {
     return {
       error: "Please check your inputs.",
@@ -66,7 +66,7 @@ export async function sendContactEmail(
       from: `"Luxury Limo Paris" <${process.env.SMTP_USER}>`,
       to: process.env.SITE_CONTACT_EMAIL,
       replyTo: email,
-      subject: "Message from Luxury Limo Paris", 
+      subject: "Message from Luxury Limo Paris",
       text: body,
     });
 

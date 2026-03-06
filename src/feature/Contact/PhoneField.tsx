@@ -67,7 +67,7 @@ export default function PhoneField() {
     <div className="w-full border border-gray-300 rounded focus-within:ring-1 focus-within:ring-amber-500 transition-all">
       <div className="flex items-center">
         {/* Flag */}
-        <div className="w-[60px] flex justify-center border-r border-gray-300">
+        <div className="flex justify-center border-r border-gray-300">
           <FlagSelect value={country} onChange={handleCountryChange} />
         </div>
 
