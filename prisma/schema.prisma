@@ -105,6 +105,7 @@ model Feature {
   mainTitle   Json?
   buttonText  String?  @default("Book Now") @db.VarChar(50)
   buttonLink  String?  @default("https://portail.driverconnect.fr/vtc-fils/template?DS=1&tkn=00001_3739617_-1157023572_1769256160266")
+  openInNewTab Boolean @default(false)
 
   @@map("features")
 }

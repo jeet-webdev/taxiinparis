@@ -1,7 +1,3 @@
-// export interface PaymentLink {
-//   name: string;
-//   imageUrl: string;
-// }
 
 export interface FooterData {
   id?: number;
@@ -10,6 +6,7 @@ export interface FooterData {
   copyrightText: string;
   email: string;
   phone: string;
+  address: string;
   navLinks: NavLink[];
   socialLinks: SocialLink[];
   appLinks: AppLink[];

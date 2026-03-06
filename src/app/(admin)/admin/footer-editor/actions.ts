@@ -18,6 +18,7 @@ export async function saveFooterData(data: FooterData) {
       tagline: data.tagline,
       email: data.email,
       phone: data.phone,
+      address: data.address,
       copyrightText: data.copyrightText,
       socialLinks: data.socialLinks as unknown as Prisma.InputJsonValue,
       navLinks: data.navLinks as unknown as Prisma.InputJsonValue,

@@ -13,6 +13,7 @@ export const FeatureSchema = z.object({
   description: z.string().min(1, "Description is required"),
   iconType: z.string().min(1, "Icon type is required"),
   buttonText: z.string().optional(),
+  openInNewTab: z.boolean().optional(),
   buttonLink: z
     .string()
     .url("Must be a valid URL")

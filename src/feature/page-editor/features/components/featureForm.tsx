@@ -23,6 +23,7 @@ export function FeatureForm({
       const result = await saveFeatureAction(formData);
       if (result?.success) {
         setEditingItem(null);
+        setOpenInNewTab(false);
         formRef.current?.reset();
       } else if (result?.error) {
         alert(result.error);
@@ -41,9 +42,12 @@ export function FeatureForm({
   };
   const handleEdit = (item: FeatureItem) => {
     setEditingItem(item);
+    setOpenInNewTab(item.openInNewTab ?? false);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
-
+  const [openInNewTab, setOpenInNewTab] = useState<boolean>(
+    editingItem?.openInNewTab ?? false,
+  );
   return (
     <div className="space-y-10">
       <form
@@ -158,6 +162,35 @@ export function FeatureForm({
               className="w-full p-3 border rounded-lg border-orange-100 bg-orange-50 focus:ring-2 focus:ring-orange-500"
               placeholder="https://portail.driverconnect.fr/vtc-fils/template?DS=1&tkn=00001_3739617_-1157023572_1769256160266"
             />
+          </div>
+          {/* Open in New Tab Toggle */}
+          <div className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg border">
+            <input
+              type="hidden"
+              name="openInNewTab"
+              value={openInNewTab ? "true" : "false"}
+            />
+            <button
+              type="button"
+              onClick={() => setOpenInNewTab(!openInNewTab)}
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 ${
+                openInNewTab ? "bg-[#D4AF6A]" : "bg-gray-300"
+              }`}
+            >
+              <span
+                className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform duration-300 ${
+                  openInNewTab ? "translate-x-6" : "translate-x-1"
+                }`}
+              />
+            </button>
+            <div>
+              <p className="text-sm font-bold text-gray-700">Open in New Tab</p>
+              <p className="text-xs text-gray-400">
+                {openInNewTab
+                  ? "Link opens in a new tab"
+                  : "Link opens in same tab"}
+              </p>
+            </div>
           </div>
         </div>
 

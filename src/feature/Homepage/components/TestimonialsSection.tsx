@@ -20,6 +20,7 @@ export default async function TestimonialsSection() {
   const visibleLinks = appLinks.filter((app) => app.isVisible);
   return (
     <Section>
+      <WhyChooseUsSection />
       <Container className="relative z-10 py-2 text-center">
         <div className="h-0.5 w-full bg-linear-to-r from-transparent via-[#D4AF6A] to-transparent mb-8" />
         <div className="mt-8 flex justify-center gap-6">
@@ -59,7 +60,6 @@ export default async function TestimonialsSection() {
           +33 1 76 44 33 00
         </div> */}
       </Container>
-      <WhyChooseUsSection />
     </Section>
   );
 }

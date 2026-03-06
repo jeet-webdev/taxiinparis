@@ -7,6 +7,8 @@ import {
   Instagram,
   YouTube,
 } from "@mui/icons-material";
+import MarkEmailReadIcon from "@mui/icons-material/MarkEmailRead";
+import CallIcon from "@mui/icons-material/Call";
 import XIcon from "@mui/icons-material/X";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import Image from "next/image";
@@ -17,6 +19,7 @@ import {
   SocialLink,
   NavLink,
 } from "@/src/feature/page-editor/FooterEditor/types/footer.types";
+import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
 
 // Static asset mapping for icons
 const APP_ICONS = {
@@ -72,14 +75,15 @@ export default async function Footer() {
 
   return (
     <footer className="bg-[#0B0F1A] text-gray-300 pt-14 pb-6 border-t border-white/10">
-      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+      <div className="max-w-7xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 text-center md:text-left">
         {/* Logo & Socials */}
         <div>
           <h2 className="text-xl font-bold text-[#D4AF6A]">{data.title}</h2>
           <p className="text-sm mt-2 text-gray-400">{data.tagline}</p>
 
           {/* Changed grid to flex and added a small gap */}
-          <div className="flex items-center  gap-2 mt-5">
+
+          <div className="flex flex-row justify-center md:justify-start gap-2 mt-5">
             {Array.from(
               new Map(
                 socialLinks.map((item) => [item.platform, item]),
@@ -95,7 +99,7 @@ export default async function Footer() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 flex items-center justify-center rounded-full border border-white/20 hover:border-[#D4AF6A] hover:text-[#D4AF6A] transition duration-300"
+                  className="w-9 h-9 flex  items-center  justify-center rounded-full border border-white/20 hover:border-[#D4AF6A] hover:text-[#D4AF6A] transition duration-300"
                 >
                   <Icon fontSize="small" />
                 </Link>
@@ -106,7 +110,7 @@ export default async function Footer() {
 
         {/* Navigation */}
         <div>
-          <h3 className="text-[#D4AF6A] font-semibold mb-4">Navigation</h3>
+          <h3 className="text-[#D4AF6A] font-semibold mb-4">Quick Links</h3>
           <ul className="space-y-2 text-sm">
             {navLinks
               .filter((link) => link.showInNav !== false)
@@ -123,9 +127,11 @@ export default async function Footer() {
         {/* Reach Us */}
         <div>
           <h3 className="text-[#D4AF6A] font-semibold mb-4">Reach Us</h3>
-          <ul className="space-y-2 text-sm text-gray-400">
+
+          <ul className="space-y-2 text-sm  text-gray-400">
             {data.email && (
-              <li>
+              <li className="gap-2">
+                <MarkEmailReadIcon className="text-[#D4AF6A] me-2" />
                 <a
                   href={`mailto:${data.email}`}
                   className="hover:text-[#D4AF6A] transition-colors"
@@ -135,13 +141,20 @@ export default async function Footer() {
               </li>
             )}
             {data.phone && (
-              <li>
+              <li className="gap-2">
+                <CallIcon className="text-[#D4AF6A] me-2" />
                 <a
                   href={`tel:${data.phone}`}
                   className="hover:text-[#D4AF6A] transition-colors"
                 >
                   {data.phone}
                 </a>
+              </li>
+            )}
+            {data.address && (
+              <li className="gap-2">
+                <AccessTimeFilledIcon className="text-[#D4AF6A] me-2" />
+                <span>{data.address}</span>
               </li>
             )}
           </ul>
@@ -154,9 +167,9 @@ export default async function Footer() {
           </h3>
 
           {/* Payment Icons */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center   gap-3  justify-center md:justify-start">
             {paymentLinks
-              .filter((p) => p.isVisible) // Only show if enabled in admin
+              .filter((p) => p.isVisible)
               .map((payment, i) => (
                 <div
                   key={i}
@@ -176,12 +189,12 @@ export default async function Footer() {
       </div>
 
       {/* Copyright Footer */}
-      <div className="mt-12 border-t border-white/10 pt-5 text-center text-sm text-gray-500">
+      <div className="mt-12 border-t border-white/10 pt-5 text-center text-sm text-gray-500 flex flex-col md:flex-row items-center justify-center gap-1 md:gap-0">
         <span>{data.copyrightText}</span>
 
         {termsLink && (
           <>
-            <span className="mx-2">|</span>
+            <span className="hidden md:inline mx-2">|</span>
             <a href={termsLink.url} className="hover:text-[#D4AF6A] transition">
               {termsLink.label}
             </a>
