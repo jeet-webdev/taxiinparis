@@ -45,6 +45,7 @@ export default function FooterForm({
       copyrightText: "© 2026 Taxi in Paris. All Rights Reserved",
       email: "info@taxiinparis.com",
       phone: "+33 1 45 66 88 12",
+      address: "Paris France",
       navLinks: [
         { label: "Home", url: "/" },
         { label: "About Us", url: "/about" },
@@ -139,17 +140,6 @@ export default function FooterForm({
     setFormData({ ...formData, socialLinks: updatedLinks });
   };
 
-  // Fixed Generics to prevent the "any" error while keeping logic flat
-  // const updateSocialLink = <K extends keyof SocialLink>(
-  //   index: number,
-  //   field: K,
-  //   value: SocialLink[K],
-  // ) => {
-  //   const updatedLinks = [...formData.socialLinks];
-  //   updatedLinks[index] = { ...updatedLinks[index], [field]: value };
-  //   setFormData({ ...formData, socialLinks: updatedLinks });
-  // };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsPending(true);
@@ -207,6 +197,21 @@ export default function FooterForm({
               value={formData.copyrightText}
               onChange={(e) =>
                 setFormData({ ...formData, copyrightText: e.target.value })
+              }
+            />
+          </div>
+          <div>
+            <label className="text-sm font-medium text-gray-700">
+              {" "}
+              Service
+            </label>
+            <textarea
+              className="w-full p-2 border rounded mt-1 text-gray-900 text-sm"
+              rows={3}
+              value={formData.address}
+              placeholder="123 Street, City, Country"
+              onChange={(e) =>
+                setFormData({ ...formData, address: e.target.value })
               }
             />
           </div>

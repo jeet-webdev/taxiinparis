@@ -1,5 +1,3 @@
-
-
 "use server";
 
 import { prisma } from "@/src/lib/prisma";
@@ -22,7 +20,7 @@ export async function saveFeatureAction(formData: FormData) {
         error: "Title, description, and icon are required.",
       };
     }
-
+    const openInNewTab = formData.get("openInNewTab") === "true";
     // Prepare data object
     // Note: We use JSON structure for mainTitle based on your schema
     const data = {
@@ -32,6 +30,7 @@ export async function saveFeatureAction(formData: FormData) {
       buttonText: buttonText || "Book Now",
       buttonLink: buttonLink || null,
       mainTitle: mainTitleRaw ? { text: mainTitleRaw } : undefined,
+      openInNewTab,
     };
 
     if (id && id.trim() !== "") {

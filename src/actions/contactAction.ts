@@ -18,6 +18,14 @@ const ContactSchema = z.object({
 export type FormState = {
   error: string | null;
   success: boolean;
+  fieldErrors?: {
+    name?: string[];
+    surname?: string[];
+    email?: string[];
+    phone?: string[];
+    message?: string[];
+    captcha?: string[];
+  };
 };
 
 export async function sendContactEmail(
@@ -28,11 +36,13 @@ export async function sendContactEmail(
   const rawData = Object.fromEntries(formData.entries());
   const validatedFields = ContactSchema.safeParse(rawData);
 
+ 
   if (!validatedFields.success) {
-    const errorMessage =
-      validatedFields.error.flatten().formErrors[0] ||
-      "Please check your inputs.";
-    return { error: errorMessage, success: false };
+    return {
+      error: "Please check your inputs.",
+      success: false,
+      fieldErrors: validatedFields.error.flatten().fieldErrors,
+    };
   }
 
   const { name, surname, email, phone, message } = validatedFields.data;
@@ -56,7 +66,7 @@ export async function sendContactEmail(
       from: `"Luxury Limo Paris" <${process.env.SMTP_USER}>`,
       to: process.env.SITE_CONTACT_EMAIL,
       replyTo: email,
-      subject: "Message from Luxury Limo Paris", // Exact subject from your image
+      subject: "Message from Luxury Limo Paris", 
       text: body,
     });
 

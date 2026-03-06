@@ -12,6 +12,7 @@ export interface FeatureItem {
   iconType: string;
   buttonText: string | null; // Added field
   buttonLink: string | null;
+  openInNewTab: boolean;
   createdAt: Date;
 }
 
