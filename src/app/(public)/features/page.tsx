@@ -30,10 +30,12 @@ import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 export default async function WhyChooseUsSection() {
-  const features = await prisma.feature.findMany({
-    orderBy: { createdAt: "asc" },
-    take: 6,
-  });
+  const features = (
+    await prisma.feature.findMany({
+      orderBy: { id: "desc" },
+      take: 6,
+    })
+  ).reverse();
 
   // Default fallback link if one isn't provided in DB
   const FALLBACK_LINK =
