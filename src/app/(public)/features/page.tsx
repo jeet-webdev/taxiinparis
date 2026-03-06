@@ -28,10 +28,10 @@ import LocalTaxiIcon from "@mui/icons-material/LocalTaxi";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
 
 export const dynamic = "force-dynamic";
-
+export const revalidate = 0;
 export default async function WhyChooseUsSection() {
   const features = await prisma.feature.findMany({
-    orderBy: { createdAt: "asc" },
+    orderBy: { id: "asc" },
     take: 6,
   });
 

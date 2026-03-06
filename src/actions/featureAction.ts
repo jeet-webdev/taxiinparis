@@ -65,7 +65,7 @@ export async function deleteFeatureAction(id: number) {
       where: { id: Number(id) },
     });
 
-    revalidatePath("/admin/feature-editor");
+    revalidatePath("/admin/features-editor");
     revalidatePath("/");
 
     return { success: true };

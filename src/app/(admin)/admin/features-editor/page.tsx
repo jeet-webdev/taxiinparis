@@ -1,8 +1,10 @@
 import { prisma } from "@/src/lib/prisma";
 import { FeatureForm } from "@/src/feature/page-editor/features/components/featureForm";
-
+export const dynamic = "force-dynamic"; // ✅ add this
+export const revalidate = 0;
 export default async function FeatureEditorPage() {
-  // Fetch initial data to pass to the client component
+  // Fetch initial data to pass to the client
+
   const features = await prisma.feature.findMany({
     orderBy: { createdAt: "desc" },
   });
