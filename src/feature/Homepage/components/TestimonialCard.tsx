@@ -48,8 +48,8 @@ async function getReviews(): Promise<GoogleReview[]> {
   const allReviews = (data.result?.reviews || []) as GoogleReview[];
 
   // This filters the results to ONLY include 5-star ratings
-  // const fiveStarOnly = allReviews.filter((r) => r.rating === 5);
-  const fiveStarOnly = allReviews.filter((r) => r.rating >= 1);
+  const fiveStarOnly = allReviews.filter((r) => r.rating === 5);
+  // const fiveStarOnly = allReviews.filter((r) => r.rating >= 1);
   return fiveStarOnly.slice(0, 5);
 }
 
