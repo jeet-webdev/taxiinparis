@@ -59,6 +59,11 @@ export const SIDEBAR_MENU = [
         link: "/admin/features-editor",
         icon: <MdFeaturedPlayList size={20} />,
       },
+      {
+        name: "Category",
+        link: "/admin/categories",
+        icon: <MdFeaturedPlayList size={20} />,
+      },
 
       {
         name: "Footer",

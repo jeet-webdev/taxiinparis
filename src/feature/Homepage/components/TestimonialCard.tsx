@@ -1,78 +1,129 @@
-"use client";
-import { Star } from "@mui/icons-material";
+import Image from "next/image";
+import React from "react";
 
-interface TestimonialCardProps {
-  quote: string;
-  author: string;
-  rating?: number;
+interface GoogleReview {
+  author_name: string;
+  profile_photo_url: string;
+  rating: number;
+  text: string;
+  relative_time_description: string;
 }
 
-export default function TestimonialCard({
-  quote,
-  author,
-  rating = 5,
-}: TestimonialCardProps) {
-  return (
-    <figure
-      className="
-        max-w-5xl
-        mx-auto
-        px-6
-        md:px-12
-        text-left
-        text-white
-      "
-    >
-      {/* Quote + Text Row */}
-      <div className="flex items-start gap-4">
-        
-        {/* Decorative Quote Mark */}
-        <span
-          className="
-            text-6xl
-            md:text-7xl
-            text-[#D4AF6A]
-            leading-none
-            mt-2
-          "
-          aria-hidden="true"
-        >
-          “
-        </span>
+const StarRating = ({ rating }: { rating: number }) => (
+  <div className="text-sm  font-semibold">
+    <span className="text-[#D4AF6A] ">{"★".repeat(rating)}</span>
+    <span className="text-[#D4AF6A] ml-1">5/5</span>
+  </div>
+);
 
-        {/* Quote Text */}
-        <blockquote
-          className="
-            text-base
-            md:text-lg
-            lg:text-xl
-            leading-relaxed
-            text-gray-200
-            font-light
-          "
-        >
-          {quote}
-        </blockquote>
+// async function getReviews(): Promise<GoogleReview[]> {
+//   const apiKey = process.env.GOOGLE_PLACES_API_KEY;
+//   const placeId = "ChIJm_rvs3hm5kcRtcMPDil_et4";
+
+//   const res = await fetch(
+//     `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews&key=${apiKey}`,
+//     { next: { revalidate: 3600 } },
+//   );
+
+//   const data = await res.json();
+//   const reviews = (data.result?.reviews || []) as GoogleReview[];
+
+//   // Filter 4+ star, shuffle, and take 6 to fill two rows of 3
+//   return reviews
+//     .filter((r) => r.rating >= 4)
+//     .sort(() => 0.5 - Math.random())
+//     .slice(0, 6);
+// }
+async function getReviews(): Promise<GoogleReview[]> {
+  const apiKey = process.env.GOOGLE_PLACES_API_KEY;
+  const placeId = "ChIJm_rvs3hm5kcRtcMPDil_et4";
+
+  // Google only returns up to 5 reviews in a single Place Details request.
+  const res = await fetch(
+    `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&fields=reviews&key=${apiKey}`,
+    { next: { revalidate: 3600 } },
+  );
+
+  const data = await res.json();
+  const allReviews = (data.result?.reviews || []) as GoogleReview[];
+
+  // This filters the results to ONLY include 5-star ratings
+  // const fiveStarOnly = allReviews.filter((r) => r.rating === 5);
+  const fiveStarOnly = allReviews.filter((r) => r.rating >= 1);
+  return fiveStarOnly.slice(0, 5);
+}
+
+export default async function TestimonialCard() {
+  const reviews = await getReviews();
+
+  return (
+    <section className="relative py-20 px-6 overflow-hidden">
+      {/* Background Image Layer */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/assets/images/pexels-jarod.jpg" // REPLACE with your image in public folder
+          alt="Background"
+          fill
+          className="object-cover"
+          priority
+        />
+        {/* Dark overlay for readability */}
+        <div className="absolute inset-0 bg-black/70" />
       </div>
 
-      {/* Author + Stars */}
-      <figcaption className="mt-3 ml-11 flex items-center gap-3">
-        <span className="text-[#D4AF6A] font-semibold text-lg">
-          {author}
-        </span>
-
-        <div className="flex items-center gap-1">
-          {Array.from({ length: rating }).map((_, index) => (
-            <Star
-              key={index}
-              sx={{
-                fontSize: 18,
-                color: "#D4AF6A",
-              }}
-            />
-          ))}
+      {/* Content Layer */}
+      <div className="relative z-10 max-w-6xl mx-auto text-center">
+        <div className="mb-16">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
+            Trusted by Travelers in{" "}
+            <span className="text-[#D4AF6A]">Paris</span>
+          </h2>
+          <div className="flex items-center justify-center gap-2 text-white font-medium">
+            <span>4.0</span>
+            <span className="text-[#D4AF6A]">★★★★☆</span>
+            <span>based on 56 verified Google reviews</span>
+          </div>
         </div>
-      </figcaption>
-    </figure>
+        <div className="px-4 md:px-12">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {reviews.map((review, i) => (
+              <div
+                key={i}
+                className="bg-white/95 backdrop-blur-sm p-6 rounded-2xl border border-white/10 text-left shadow-lg hover:shadow-xl transition-all duration-300"
+              >
+                <div className="flex items-center gap-4 mb-4">
+                  <Image
+                    src={review.profile_photo_url}
+                    alt={review.author_name}
+                    height={48}
+                    width={48}
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                  <div>
+                    <h4 className="font-bold text-gray-900">
+                      {review.author_name}
+                    </h4>
+                    <StarRating rating={review.rating} />
+                  </div>
+                </div>
+                <p className="text-gray-700 text-sm leading-relaxed line-clamp-4 italic">
+                  {review.text}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="mt-16 flex items-center justify-center">
+          <a
+            href="https://www.google.com/maps/place/?q=place_id:ChIJm_rvs3hm5kcRtcMPDil_et4"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-8 py-3 bg-[#D4AF6A] text-white font-semibold rounded-full hover:bg-black transition-all duration-300 hover:scale-105 shadow-lg"
+          >
+            View All Reviews on Google
+          </a>
+        </div>
+      </div>
+    </section>
   );
 }

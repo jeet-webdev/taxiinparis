@@ -6,6 +6,7 @@ import HeroSection from "@/src/components/common/Ui/HeroSection";
 import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
 import Content from "@/src/components/common/Ui/Content";
 import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
+import TestimonialCard from "@/src/feature/Homepage/components/TestimonialCard";
 const getServicesPage = cache(() => getPageBySlug("services"));
 const safe = (value?: string | null) => value ?? undefined;
 export const dynamic = "force-dynamic";
@@ -43,6 +44,7 @@ export default async function ServicesPage() {
   return (
     <>
       <HeroSection img={page?.imageUpload || undefined} alt={page?.imageAlt} />
+      <TestimonialCard />
       <DarkLuxuryBlock>
         <Content data={{ title: page?.title, content: page?.content }} />
         <TestimonialsSection />

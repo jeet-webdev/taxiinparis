@@ -2,6 +2,7 @@ import { getPageBySlug } from "@/src/actions/page/getPage";
 import Content from "@/src/components/common/Ui/Content";
 import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
 import HeroSection from "@/src/components/common/Ui/HeroSection";
+import TestimonialCard from "@/src/feature/Homepage/components/TestimonialCard";
 import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -43,6 +44,7 @@ export default async function about() {
   return (
     <>
       <HeroSection img={page?.imageUpload || undefined} alt={page.imageAlt} />
+      <TestimonialCard />
       <DarkLuxuryBlock>
         <Content data={{ title: page?.title, content: page?.content }} />
         <TestimonialsSection />
