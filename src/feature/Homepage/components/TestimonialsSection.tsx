@@ -7,6 +7,7 @@ import { Container } from "@mui/material";
 import Section from "@/src/components/common/Ui/Section";
 import Link from "next/link";
 import WhyChooseUsSection from "@/src/app/(public)/features/page";
+import TestimonialCard from "./TestimonialCard";
 type AppLink = {
   url: string;
   platform: "google_play" | "app_store";
@@ -21,6 +22,7 @@ export default async function TestimonialsSection() {
   return (
     <Section>
       <WhyChooseUsSection />
+   
       <Container className="relative z-10 py-2 text-center">
         <div className="h-0.5 w-full bg-linear-to-r from-transparent via-[#D4AF6A] to-transparent mb-8" />
         <div className="mt-8 flex justify-center gap-6">
@@ -55,6 +57,7 @@ export default async function TestimonialsSection() {
             return null;
           })}
         </div>
+
         {/* Phone */}
         {/* <div className="mt-0.5 text-[#D4AF6A] text-2xl font-semibold tracking-widest">
           +33 1 76 44 33 00

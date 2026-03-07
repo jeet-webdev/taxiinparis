@@ -97,17 +97,50 @@ model Footer {
 }
 
 model Feature {
-  id          Int      @id @default(autoincrement())
-  title       String   @db.VarChar(255)
-  description String
-  iconType    String   @map("icon_type") @db.VarChar(100)
-  createdAt   DateTime @default(now()) @map("created_at")
-  mainTitle   Json?
-  buttonText  String?  @default("Book Now") @db.VarChar(50)
-  buttonLink  String?  @default("https://portail.driverconnect.fr/vtc-fils/template?DS=1&tkn=00001_3739617_-1157023572_1769256160266")
-  openInNewTab Boolean @default(false)
+  id           Int      @id @default(autoincrement())
+  title        String   @db.VarChar(255)
+  description  String
+  iconType     String   @map("icon_type") @db.VarChar(100)
+  createdAt    DateTime @default(now()) @map("created_at")
+  mainTitle    Json?
+  buttonText   String?  @default("Book Now") @db.VarChar(50)
+  buttonLink   String?  @default("https://portail.driverconnect.fr/vtc-fils/template?DS=1&tkn=00001_3739617_-1157023572_1769256160266")
+  openInNewTab Boolean  @default(false)
 
   @@map("features")
+}
+
+model Category {
+  id            Int            @id @default(autoincrement())
+  name          String         @db.VarChar(150)
+  slug          String         @unique @db.VarChar(150)
+  createdAt     DateTime       @default(now()) @map("created_at")
+
+  categoryPages CategoryPage[]
+
+  @@map("categories")
+}
+
+model CategoryPage {
+  id              Int      @id @default(autoincrement())
+  title           String   @db.VarChar(255)
+  slug            String   @unique @db.VarChar(255)
+  categoryId      Int      @map("category_id")
+
+  imageUpload     String?  @map("image_upload") @db.VarChar(255)
+  imageAlt        String?  @map("image_alt") @db.VarChar(255)
+
+  metaTitle       String?  @map("meta_title") @db.VarChar(255)
+  metaDescription String?  @map("meta_description")
+  metaKeywords    String?  @map("meta_keywords")
+
+  content         Json?
+  createdAt       DateTime @default(now()) @map("created_at")
+
+  category        Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  @@index([categoryId])
+  @@map("category_pages")
 }
 
 enum Role {
