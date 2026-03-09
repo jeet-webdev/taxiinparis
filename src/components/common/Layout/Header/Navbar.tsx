@@ -32,13 +32,16 @@ export default function Navbar({ footerData }: NavbarProps) {
 
   const visibleLinks = navLinks.filter((link) => link.showInNav);
 
-  const displayLogo = footerData?.logoUrl || "/assets/images/parislogos.png";
+  const displayLogo = footerData?.logoUrl || "/assets/pc_logo_llp.png";
   const displayAlt = footerData?.logoAlt || "Paris Limo Logo";
 
   // Prevent background scroll when menu is open
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "unset";
   }, [isOpen]);
+  const fallbackLogo = "/assets/mobile_logo_llp.png";
+
+  const [logoSrc, setLogoSrc] = useState(displayLogo || fallbackLogo);
 
   return (
     <header className="relative z-[100] bg-[#0A0F1C] ">
@@ -57,13 +60,22 @@ export default function Navbar({ footerData }: NavbarProps) {
           {/* 2. Logo (Center on mobile, Left on desktop) */}
           <div className="flex-[2] md:flex-none flex justify-center  md:justify-start">
             <Link href="/" onClick={() => setIsOpen(false)}>
-              <Image
+              {/* <Image
                 src={displayLogo}
                 alt={displayAlt}
                 width={60}
                 height={90}
                 className="object-contain w-[70px] md:w-[90px]"
                 priority
+              /> */}
+              <Image
+                src={logoSrc}
+                alt={displayAlt}
+                width={60}
+                height={90}
+                className="object-contain w-[70px] md:w-[90px]"
+                priority
+                onError={() => setLogoSrc(fallbackLogo)}
               />
             </Link>
           </div>
