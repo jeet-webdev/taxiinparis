@@ -101,49 +101,94 @@ export default async function WhyChooseUsSection() {
   };
 
   return (
-    <section className="py-24">
-      {" "}
-      {/* Added dark bg for your transparent cards */}
-      <div className="max-w-7xl mx-auto px-6">
-        <h2 className="text-4xl md:text-5xl font-serif text-center mb-20 font-semibold tracking-wide bg-gradient-to-r from-[#D4AF6A] via-[#F5E6C4] to-[#D4AF6A] bg-clip-text text-transparent">
-          {displayHeading}
-        </h2>
+    <>
+      {/* <section className="py-24">
+        {" "}
+      
+        <div className="max-w-7xl mx-auto px-6">
+          <h2 className="text-4xl md:text-5xl font-serif text-center mb-20 font-semibold tracking-wide bg-gradient-to-r from-[#D4AF6A] via-[#F5E6C4] to-[#D4AF6A] bg-clip-text text-transparent">
+            {displayHeading}
+          </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {features.map((item: FeatureItem) => (
-            <div
-              key={item.id}
-              className="bg-white/5 backdrop-blur-lg p-10 rounded-2xl text-center border border-[#D4AF6A]/20 shadow-[0_15px_40px_rgba(0,0,0,0.6)] flex flex-col h-full transition-all duration-500 hover:-translate-y-2 hover:border-[#D4AF6A]"
-            >
-              <div className="w-20 h-20 bg-[#D4AF6A]/10 border border-[#D4AF6A]/30 rounded-full flex items-center justify-center mx-auto mb-8">
-                {renderIcon(item.iconType)}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {features.map((item: FeatureItem) => (
+              <div
+                key={item.id}
+                className="bg-white/5 backdrop-blur-lg p-10 rounded-2xl text-center border border-[#D4AF6A]/20 shadow-[0_15px_40px_rgba(0,0,0,0.6)] flex flex-col h-full transition-all duration-500 hover:-translate-y-2 hover:border-[#D4AF6A]"
+              >
+                <div className="w-20 h-20 bg-[#D4AF6A]/10 border border-[#D4AF6A]/30 rounded-full flex items-center justify-center mx-auto mb-8">
+                  {renderIcon(item.iconType)}
+                </div>
+                <h3 className="text-2xl font-semibold mb-4 text-white">
+                  {item.title}
+                </h3>
+                <p className="text-gray-300 leading-relaxed mb-8 flex-grow">
+                  {item.description}
+                </p>
+
+                <Link
+                  href={item.buttonLink || FALLBACK_LINK}
+                  target={item.openInNewTab ? "_blank" : "_self"}
+                  rel={item.openInNewTab ? "noopener noreferrer" : undefined}
+                  className="inline-block w-full py-3 rounded-lg font-semibold tracking-wide text-black bg-gradient-to-r from-[#D4AF6A] to-[#B8964F] hover:from-[#E6C27A] hover:to-[#C9A45D] transition-all duration-300 uppercase text-sm shadow-lg"
+                >
+                  {item.buttonText || "Book Now"}
+                </Link>
               </div>
-              <h3 className="text-2xl font-semibold mb-4 text-white">
-                {item.title}
-              </h3>
-              <p className="text-gray-300 leading-relaxed mb-8 flex-grow">
-                {item.description}
-              </p>
-
-              {/* <Link
-                href={item.buttonLink || FALLBACK_LINK} // DYNAMIC LINK USED HERE
-                className="inline-block w-full py-3 rounded-lg font-semibold tracking-wide text-black bg-gradient-to-r from-[#D4AF6A] to-[#B8964F] hover:from-[#E6C27A] hover:to-[#C9A45D] transition-all duration-300 uppercase text-sm shadow-lg"
-              >
-                {item.buttonText || "Book Now"}
-              </Link> */}
-
-              <Link
-                href={item.buttonLink || FALLBACK_LINK}
-                target={item.openInNewTab ? "_blank" : "_self"}
-                rel={item.openInNewTab ? "noopener noreferrer" : undefined}
-                className="inline-block w-full py-3 rounded-lg font-semibold tracking-wide text-black bg-gradient-to-r from-[#D4AF6A] to-[#B8964F] hover:from-[#E6C27A] hover:to-[#C9A45D] transition-all duration-300 uppercase text-sm shadow-lg"
-              >
-                {item.buttonText || "Book Now"}
-              </Link>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section> */}
+      <section className="py-24">
+        <div className="max-w-7xl mx-auto px-6">
+          <h2 className="text-4xl md:text-5xl font-serif text-center mb-20 font-semibold tracking-wide bg-linear-to-r from-[#D4AF6A] via-[#F5E6C4] to-[#D4AF6A] bg-clip-text text-transparent">
+            {displayHeading}
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {features.map((item: FeatureItem) => (
+              <div
+                key={item.id}
+                className="p-10 rounded-2xl text-center border border-[#D4AF6A]/20 flex flex-col h-full transition-all duration-500 hover:-translate-y-2 hover:border-[#D4AF6A] backdrop-blur-lg"
+                style={{
+                  background: "rgba(10,10,10,0.78)",
+                  boxShadow:
+                    "0 30px 70px rgba(0,0,0,0.75), 0 0 30px rgba(198,168,91,0.15)",
+                }}
+              >
+                <div className="w-20 h-20 bg-[#D4AF6A]/10 border border-[#D4AF6A]/30 rounded-full flex items-center justify-center mx-auto mb-8">
+                  {renderIcon(item.iconType)}
+                </div>
+
+                <h3
+                  className="text-2xl font-semibold mb-4 text-white"
+                  style={{ letterSpacing: "-0.02em" }}
+                >
+                  {item.title}
+                </h3>
+
+                <p className="text-gray-300 leading-relaxed mb-8 flex grow">
+                  {item.description}
+                </p>
+
+                <Link
+                  href={item.buttonLink || FALLBACK_LINK}
+                  target={item.openInNewTab ? "_blank" : "_self"}
+                  rel={item.openInNewTab ? "noopener noreferrer" : undefined}
+                  className="inline-block w-full py-3 rounded-lg font-semibold tracking-wide text-black uppercase text-sm transition-all duration-300 shadow-lg"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, #d4b96f 0%, #bfa14d 100%)",
+                    filter: "saturate(0.9)",
+                  }}
+                >
+                  {item.buttonText || "Book Now"}
+                </Link>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
