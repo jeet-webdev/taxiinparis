@@ -1,4 +1,3 @@
-
 export interface FooterData {
   id?: number;
   title: string;
@@ -17,6 +16,8 @@ export interface NavLink {
   label: string;
   url: string;
   showInNav?: boolean;
+  type?: "regular" | "category"; // Must be here
+  categoryName?: string;
 }
 
 export interface SocialLink {
