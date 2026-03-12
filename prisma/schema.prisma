@@ -115,7 +115,6 @@ model Category {
   name          String         @db.VarChar(150)
   slug          String         @unique @db.VarChar(150)
   createdAt     DateTime       @default(now()) @map("created_at")
-
   categoryPages CategoryPage[]
 
   @@map("categories")
@@ -126,17 +125,13 @@ model CategoryPage {
   title           String   @db.VarChar(255)
   slug            String   @unique @db.VarChar(255)
   categoryId      Int      @map("category_id")
-
   imageUpload     String?  @map("image_upload") @db.VarChar(255)
   imageAlt        String?  @map("image_alt") @db.VarChar(255)
-
   metaTitle       String?  @map("meta_title") @db.VarChar(255)
   metaDescription String?  @map("meta_description")
   metaKeywords    String?  @map("meta_keywords")
-
   content         Json?
   createdAt       DateTime @default(now()) @map("created_at")
-
   category        Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   @@index([categoryId])
