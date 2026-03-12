@@ -24,13 +24,15 @@
 // };
 
 // export default AppLayout;
+
 import React from "react";
 import type { ReactNode } from "react";
 import { prisma } from "@/src/lib/prisma";
 
 import Navbar from "./Header/Navbar";
 import Footer from "./Footer/Footer";
-
+export const revalidate = 0;
+export const dynamic = "force-dynamic";
 interface MarketingAppLayoutProps {
   children: ReactNode;
 }
@@ -38,6 +40,7 @@ interface MarketingAppLayoutProps {
 // This is your Server Component
 export default async function AppLayout({ children }: MarketingAppLayoutProps) {
   // 1. Fetch data from Prisma on the server
+
   const [footerData, dbCategories] = await Promise.all([
     prisma.footer.findFirst(),
     prisma.category.findMany({
