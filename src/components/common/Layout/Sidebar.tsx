@@ -51,6 +51,7 @@ export const SIDEBAR_MENU = [
           { name: "About Us Page", link: "/admin/about-editor" },
           { name: "Services Page", link: "/admin/services-editor" },
           { name: "Terms Page", link: "/admin/terms-editor" },
+          { name: "Privacy Page", link: "/admin/privacy-editor" },
         ],
       },
 

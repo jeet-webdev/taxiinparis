@@ -24,7 +24,22 @@ export default function HeaderForm({
   initialLogoUrl,
   initialLogoAlt,
 }: Props) {
-  const [navLinks, setNavLinks] = useState<NavLink[]>(initialData);
+  // const [navLinks, setNavLinks] = useState<NavLink[]>(initialData);
+  const [navLinks, setNavLinks] = useState<NavLink[]>(() => {
+    const hasPrivacy = initialData.some((link) => link.url === "/privacy");
+
+    if (!hasPrivacy) {
+      return [
+        ...initialData,
+        {
+          url: "/privacy",
+          label: "Privacy Policy",
+          showInNav: false, // Match the NavLink interface requirement
+        },
+      ];
+    }
+    return initialData;
+  });
   const [logoAlt, setLogoAlt] = useState(initialLogoAlt || "");
   const [logoPreview, setLogoPreview] = useState<string | null>(
     initialLogoUrl || null,
@@ -33,9 +48,15 @@ export default function HeaderForm({
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const mainNav = navLinks.filter((link) => link.url !== "/terms");
-  const footerOnly = navLinks.filter((link) => link.url === "/terms");
+  // const mainNav = navLinks.filter((link) => link.url !== "/terms");
+  // const footerOnly = navLinks.filter((link) => link.url === "/terms");
+  const mainNav = navLinks.filter(
+    (link) => link.url !== "/terms" && link.url !== "/privacy",
+  );
 
+  const footerOnly = navLinks.filter(
+    (link) => link.url === "/terms" || link.url === "/privacy",
+  );
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Facebook,
   Twitter,
@@ -226,7 +226,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                     <li key={idx}>
                       <Link
                         className="text-gray-400 hover:text-[#D4AF6A] transition-colors"
-                        href={`/${category.slug}/${page.slug}`}
+                        href={`/category/${category.slug}/${page.slug}`}
                       >
                         {page.title}
                       </Link>

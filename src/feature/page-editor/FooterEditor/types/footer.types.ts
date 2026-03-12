@@ -44,9 +44,3 @@ export interface PaymentLink {
   method: "visa" | "mastercard" | "amex" | "paypal" | "applepay" | "gpay";
   isVisible: boolean;
 }
-
-// export interface FooterData {
-//   // ... your existing fields
-//   appLinks: AppLink[];
-//   paymentLinks: PaymentLink[];
-// }
