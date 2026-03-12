@@ -38,7 +38,16 @@ interface MarketingAppLayoutProps {
 // This is your Server Component
 export default async function AppLayout({ children }: MarketingAppLayoutProps) {
   // 1. Fetch data from Prisma on the server
-  const footerData = await prisma.footer.findFirst();
+  const [footerData, dbCategories] = await Promise.all([
+    prisma.footer.findFirst(),
+    prisma.category.findMany({
+      include: {
+        categoryPages: {
+          select: { title: true, slug: true },
+        },
+      },
+    }),
+  ]);
 
   return (
     <div className="flex flex-col min-h-screen bg-[#0B0F1A] text-white">
@@ -49,7 +58,7 @@ export default async function AppLayout({ children }: MarketingAppLayoutProps) {
       <main className="grow">{children}</main>
 
       {/* FOOTER */}
-      <Footer />
+      <Footer footerData={footerData} dbCategories={dbCategories} />
     </div>
   );
 }
