@@ -133,122 +133,167 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
 
   return (
     <footer className="bg-[#0B0F1A] text-gray-300 pt-16 pb-8 border-t border-white/10">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="flex flex-col lg:flex-row gap-12 text-left">
-          <div className="lg:w-[350px] flex-shrink-0 flex flex-col gap-6">
-            <div>
-              <h4 className="text-2xl pt-10 font-bold text-[#D4AF6A] mb-3">
-                {footerData.title}
-              </h4>
-              <p className="text-sm text-gray-400 leading-relaxed mb-6">
-                {footerData.tagline}
-              </p>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-7 gap-10">
+          {/* LEFT */}
+          <div className="lg:col-span-2">
+            <div className="grid grid-cols-2 lg:grid-cols-1 gap-4">
+              <div>
+                <h4 className="text-2xl pt-0 lg:pt-10 font-bold text-[#D4AF6A] mb-3">
+                  {footerData.title}
+                </h4>
 
-              <div className="mb-10">
-                <Link href="/">
-                  <div className=" relative  bg-transparent flex items-center justify-center overflow-hidden">
-                    <FooterLogo
-                      logoUrl={footerData.logoUrl}
-                      logoAlt={footerData.logoAlt}
-                    />
-                  </div>
-                </Link>
-              </div>
+                <p className="text-sm text-gray-400 leading-relaxed mb-6">
+                  {footerData.tagline}
+                </p>
 
-              <ul className="space-y-4 text-sm">
-                {footerData.email && (
-                  <li className="flex items-center gap-3">
-                    <MarkEmailReadIcon
-                      className="text-[#D4AF6A]"
-                      sx={{ fontSize: 20 }}
-                    />
-                    <a
-                      href={`mailto:${footerData.email}`}
-                      className="text-gray-400 hover:text-[#D4AF6A] transition-colors"
-                    >
-                      {footerData.email}
-                    </a>
-                  </li>
-                )}
-                {footerData.phone && (
-                  <li className="flex items-center gap-3">
-                    <CallIcon
-                      className="text-[#D4AF6A]"
-                      sx={{ fontSize: 20 }}
-                    />
-                    <a
-                      href={`tel:${footerData.phone}`}
-                      className="text-gray-400 hover:text-[#D4AF6A] transition-colors"
-                    >
-                      {footerData.phone}
-                    </a>
-                  </li>
-                )}
-                {footerData.address && (
-                  <li className="flex items-start gap-3">
-                    <AccessTimeFilledIcon
-                      className="text-[#D4AF6A] mt-0.5"
-                      sx={{ fontSize: 20 }}
-                    />
-                    <span className="text-gray-400">{footerData.address}</span>
-                  </li>
-                )}
-              </ul>
-            </div>
-          </div>
+                <div className="mb-8">
+                  <Link href="/">
+                    <div className="relative flex items-center">
+                      <FooterLogo
+                        logoUrl={footerData.logoUrl}
+                        logoAlt={footerData.logoAlt}
+                      />
+                    </div>
+                  </Link>
+                </div>
 
-          <div className="flex-grow grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-            <div>
-              <h3 className="text-[#D4AF6A] font-semibold pt-10 mb-6 text-sm uppercase tracking-widest">
-                Quick Links
-              </h3>
-              <ul className="space-y-3 text-sm">
-                {quickLinks.map((link, i) => (
-                  <li key={i}>
-                    <Link
-                      className="hover:text-[#D4AF6A] transition-colors"
-                      href={link.url}
-                    >
-                      {link.label}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {dbCategories.map((category) => (
-              <div key={category.id}>
-                <h3 className="text-[#D4AF6A] pt-10 font-semibold mb-6 text-sm uppercase tracking-widest">
-                  {category.name}
-                </h3>
                 <ul className="space-y-3 text-sm">
-                  {category.categoryPages.map((page, idx) => (
-                    <li key={idx}>
-                      <Link
-                        className="text-gray-400 hover:text-[#D4AF6A] transition-colors"
-                        href={`/category/${category.slug}/${page.slug}`}
+                  {footerData.email && (
+                    <li className="flex items-center gap-3">
+                      <MarkEmailReadIcon
+                        className="text-[#D4AF6A]"
+                        sx={{ fontSize: 20 }}
+                      />
+                      <a
+                        href={`mailto:${footerData.email}`}
+                        className="text-gray-400 hover:text-[#D4AF6A]"
                       >
-                        {page.title}
+                        {footerData.email}
+                      </a>
+                    </li>
+                  )}
+
+                  {footerData.phone && (
+                    <li className="flex items-center gap-3">
+                      <CallIcon
+                        className="text-[#D4AF6A]"
+                        sx={{ fontSize: 20 }}
+                      />
+                      <a
+                        href={`tel:${footerData.phone}`}
+                        className="text-gray-400 hover:text-[#D4AF6A]"
+                      >
+                        {footerData.phone}
+                      </a>
+                    </li>
+                  )}
+
+                  {footerData.address && (
+                    <li className="flex items-start gap-3">
+                      <AccessTimeFilledIcon
+                        className="text-[#D4AF6A] mt-1"
+                        sx={{ fontSize: 20 }}
+                      />
+                      <span className="text-gray-400">
+                        {footerData.address}
+                      </span>
+                    </li>
+                  )}
+                </ul>
+              </div>
+              {/* Quick Links */}
+              <div className="block sm:hidden">
+                <h3 className="text-[#D4AF6A] pt-2 lg:pt-10 font-semibold mb-4 text-sm uppercase tracking-widest">
+                  Quick Links
+                </h3>
+
+                <ul className="space-y-2 text-sm">
+                  {quickLinks.map((link, i) => (
+                    <li key={i}>
+                      <Link
+                        href={link.url}
+                        className="text-gray-400 hover:text-[#D4AF6A]"
+                      >
+                        {link.label}
                       </Link>
                     </li>
                   ))}
                 </ul>
               </div>
-            ))}
+            </div>
+          </div>
+
+          {/* RIGHT */}
+          <div className="lg:col-span-5">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+              {/* Quick Links */}
+              <div className="hidden sm:block">
+                <h3 className="text-[#D4AF6A] pt-2 lg:pt-10 font-semibold mb-4 text-sm uppercase tracking-widest">
+                  Quick Links
+                </h3>
+
+                <ul className="space-y-2 text-sm">
+                  {quickLinks.map((link, i) => (
+                    <li key={i}>
+                      <Link
+                        href={link.url}
+                        className="text-gray-400 hover:text-[#D4AF6A]"
+                      >
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Categories */}
+              {dbCategories.map((category) => (
+                <div key={category.id}>
+                  <h3 className="text-[#D4AF6A] pt-2 lg:pt-10 font-semibold mb-4 text-sm uppercase tracking-widest">
+                    {category.name}
+                  </h3>
+
+                  <ul className="space-y-2 text-sm">
+                    {category.categoryPages.map((page, idx) => (
+                      <li key={idx}>
+                        <Link
+                          href={`/category/${category.slug}/${page.slug}`}
+                          className="text-gray-400 hover:text-[#D4AF6A]"
+                        >
+                          {page.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-
-        <div className="mt-16 pt-8 mb-16 border-t border-white/10 flex flex-row items-center gap-8">
-          <div className="flex gap-3 items-center">
+        <div
+          className="my-8 lg:my-16 pt-8  border-t border-white/10 
+flex flex-col lg:flex-row 
+items-center justify-between 
+gap-6 lg:gap-8 text-center lg:text-left"
+        >
+          {/* SOCIAL */}
+          <div className="flex gap-3 items-center justify-center order-1 lg:order-1">
             {socialLinks.map((social, i) => {
               const Icon = iconMap[social.platform];
+
               return Icon ? (
                 <Link
                   key={i}
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 flex items-center justify-center rounded-full border border-white/20 text-gray-400 hover:border-[#D4AF6A] hover:text-[#D4AF6A] transition-all duration-300"
+                  className="w-9 h-9 flex items-center justify-center 
+          rounded-full border border-white/20 
+          text-gray-400 
+          hover:border-[#D4AF6A] 
+          hover:text-[#D4AF6A] 
+          transition-all duration-300"
                 >
                   <Icon sx={{ fontSize: 18 }} />
                 </Link>
@@ -256,11 +301,14 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
             })}
           </div>
 
-          <div className="flex flex-wrap justify-center gap-2 text-sm text-gray-500">
+          {/* COPYRIGHT */}
+          <div className="flex flex-wrap justify-center gap-2 text-sm text-gray-500 order-3 lg:order-2">
             <span>{footerData.copyrightText}</span>
+
             {termsLink && (
               <>
                 <span className="hidden md:inline mx-1">|</span>
+
                 <Link
                   href={termsLink.url}
                   className="hover:text-[#D4AF6A] transition-colors"
@@ -271,7 +319,8 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
             )}
           </div>
 
-          <div className="flex items-center gap-4">
+          {/* PAYMENTS */}
+          <div className="flex flex-wrap items-center justify-center gap-4 order-2 lg:order-3">
             {paymentLinks
               .filter((p) => p.isVisible)
               .map((p, i) => (
@@ -281,7 +330,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                   alt={p.method}
                   width={40}
                   height={25}
-                  className="object-contain "
+                  className="object-contain"
                 />
               ))}
           </div>

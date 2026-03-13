@@ -140,7 +140,7 @@ export default async function WhyChooseUsSection() {
         </div>
       </section> */}
       <section className="py-24">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-0 sm:px-6">
           <h2 className="text-4xl md:text-5xl font-serif text-center mb-20 font-semibold tracking-wide bg-linear-to-r from-[#D4AF6A] via-[#F5E6C4] to-[#D4AF6A] bg-clip-text text-transparent">
             {displayHeading}
           </h2>
