@@ -129,7 +129,10 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
     (l) => l.type !== "category" && l.showInNav !== false,
   );
 
-  const termsLink = navLinks.find((link) => link.showInNav === false);
+  // const termsLink = navLinks.find((link) => link.showInNav === false);
+  // const privacyLink = navLinks.find((link) => link.showInNav === false);
+  const termsLink = navLinks.find((link) => link.url === "/terms");
+  const privacyLink = navLinks.find((link) => link.url === "/privacy");
 
   return (
     <footer className="bg-[#0B0F1A] text-gray-300 pt-16 pb-8 border-t border-white/10">
@@ -305,6 +308,18 @@ gap-6 lg:gap-8 text-center lg:text-left"
           <div className="flex flex-wrap justify-center gap-2 text-sm text-gray-500 order-3 lg:order-2">
             <span>{footerData.copyrightText}</span>
 
+            {privacyLink && (
+              <>
+                <span className="hidden md:inline mx-1">|</span>
+
+                <Link
+                  href={privacyLink.url}
+                  className="hover:text-[#D4AF6A] transition-colors"
+                >
+                  {privacyLink.label}
+                </Link>
+              </>
+            )}
             {termsLink && (
               <>
                 <span className="hidden md:inline mx-1">|</span>

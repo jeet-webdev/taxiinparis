@@ -18,6 +18,13 @@ export default async function CategoriesPage() {
     name: cat.name,
     slug: cat.slug,
     createdAt: cat.createdAt,
+    pages: cat.categoryPages.map((p) => ({
+      // ← ADD THIS
+      id: p.id,
+      title: p.title,
+      slug: p.slug,
+      metaTitle: p.metaTitle ?? "",
+    })),
   }));
 
   async function handleDelete(id: number) {
