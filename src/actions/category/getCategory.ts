@@ -20,6 +20,9 @@ import { prisma } from "@/src/lib/prisma";
 export async function getCategories() {
   // Directly call prisma.category. Do not await the prisma object itself.
   return await prisma.category.findMany({
+    include: {
+      categoryPages: true, // ← ADD THIS
+    },
     orderBy: { createdAt: "desc" },
   });
 }

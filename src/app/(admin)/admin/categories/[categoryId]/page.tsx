@@ -1,7 +1,11 @@
 import { prisma } from "@/src/lib/prisma"; // Adjust import path
 import { notFound } from "next/navigation";
 
-export default async function CategoryDetailPage({ params }: { params: { categoryId: string } }) {
+export default async function CategoryDetailPage({
+  params,
+}: {
+  params: { categoryId: string };
+}) {
   const categoryId = parseInt(params.categoryId);
 
   // THIS IS WHERE THE QUERY GOES
