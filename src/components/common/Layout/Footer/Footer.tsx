@@ -1,6 +1,6 @@
+
 "use client";
 
-import React, { useState, useEffect } from "react";
 import {
   Facebook,
   Twitter,
@@ -9,9 +9,9 @@ import {
   Email,
   Instagram,
   YouTube,
+  LocationCity,
 } from "@mui/icons-material";
 import MarkEmailReadIcon from "@mui/icons-material/MarkEmailRead";
-import CallIcon from "@mui/icons-material/Call";
 import XIcon from "@mui/icons-material/X";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import AccessTimeFilledIcon from "@mui/icons-material/AccessTimeFilled";
@@ -84,37 +84,34 @@ function FooterLogo({
   const desktopFallback = "/assets/bg-luxury-limo.png";
   const mobileFallback = "/assets/bgmobile_logo_llp.png";
 
-  // 1. Initialize state. We still need this to handle the "onError" switch.
-  const [imgSrc, setImgSrc] = useState(logoUrl || "");
-
-  // 2. REMOVE THE useEffect ENTIRELY.
-  // We handle the update by using a 'key' on the Image component below.
-
-  if (!logoUrl || logoUrl.trim() === "") {
-    return (
-      <span className="text-5xl font-black text-white italic tracking-tighter">
-        TP
-      </span>
-    );
-  }
-
-  const handleError = () => {
-    if (typeof window !== "undefined") {
-      const isMobile = window.innerWidth < 768;
-      setImgSrc(isMobile ? mobileFallback : desktopFallback);
-    }
-  };
+  const src = logoUrl && logoUrl.trim() !== "" ? logoUrl : desktopFallback;
 
   return (
-    <Image
-      key={logoUrl} // 3. ADD THIS: When logoUrl changes, React resets this component
-      src={imgSrc}
-      alt={logoAlt || "Footer Logo"}
-      width={120}
-      height={120}
-      className="object-contain"
-      onError={handleError}
-    />
+    <>
+      {/* Desktop */}
+      <Image
+        src={src}
+        alt={logoAlt || "Footer Logo"}
+        width={120}
+        height={120}
+        className="hidden md:block object-contain"
+        onError={(e: any) => {
+          e.currentTarget.src = desktopFallback;
+        }}
+      />
+
+      {/* Mobile */}
+      <Image
+        src={logoUrl || mobileFallback}
+        alt={logoAlt || "Footer Logo"}
+        width={120}
+        height={120}
+        className="block md:hidden object-contain"
+        onError={(e: any) => {
+          e.currentTarget.src = mobileFallback;
+        }}
+      />
+    </>
   );
 }
 export default function Footer({ footerData, dbCategories }: FooterProps) {
@@ -129,30 +126,26 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
     (l) => l.type !== "category" && l.showInNav !== false,
   );
 
-  // const termsLink = navLinks.find((link) => link.showInNav === false);
-  // const privacyLink = navLinks.find((link) => link.showInNav === false);
+  const firstCategory = dbCategories[0] || null;
+
+  const otherCategories = dbCategories.slice(1);
+
   const termsLink = navLinks.find((link) => link.url === "/terms");
   const privacyLink = navLinks.find((link) => link.url === "/privacy");
 
   return (
     <footer className="bg-[#0B0F1A] text-gray-300 pt-16 pb-8 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-7 gap-10">
+       <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 items-stretch">
           {/* LEFT */}
-          <div className="lg:col-span-2">
-            <div className="grid grid-cols-2 lg:grid-cols-1 gap-4">
-              <div>
-                <h4 className="text-2xl pt-0 lg:pt-10 font-bold text-[#D4AF6A] mb-3">
-                  {footerData.title}
-                </h4>
-
-                <p className="text-sm text-gray-400 leading-relaxed mb-6">
-                  {footerData.tagline}
-                </p>
-
-                <div className="mb-8">
+          <div className="col-span-2 lg:col-span-1">
+            <div className="grid grid-cols-2 lg:grid-cols-1 gap-6 ">
+              {/* TOP */}
+              <div className="max-w-xs">
+                {/* Logo */}
+                <div className="mb-3">
                   <Link href="/">
-                    <div className="relative flex items-center">
+                    <div className="flex items-center">
                       <FooterLogo
                         logoUrl={footerData.logoUrl}
                         logoAlt={footerData.logoAlt}
@@ -161,62 +154,92 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                   </Link>
                 </div>
 
+                {/* Title */}
+                <h4 className="text-lg font-semibold text-[#D4AF6A] mb-2">
+                  {footerData.title}
+                </h4>
+
+                {/* Tagline */}
+                <p className="text-sm text-white font-semibold leading-relaxed mb-4">
+                  {footerData.tagline}
+                </p>
+
+                {/* Info list */}
                 <ul className="space-y-3 text-sm">
                   {footerData.email && (
-                    <li className="flex items-center gap-3">
+                    <li className="flex items-center font-bold gap-3 text-[#999]">
                       <MarkEmailReadIcon
-                        className="text-[#D4AF6A]"
-                        sx={{ fontSize: 20 }}
+                        className="text-white"
+                        sx={{ fontSize: 15 }}
                       />
-                      <a
-                        href={`mailto:${footerData.email}`}
-                        className="text-gray-400 hover:text-[#D4AF6A]"
-                      >
+                      <span className="text-xs hover:text-[#f4b400]">
                         {footerData.email}
-                      </a>
-                    </li>
-                  )}
-
-                  {footerData.phone && (
-                    <li className="flex items-center gap-3">
-                      <CallIcon
-                        className="text-[#D4AF6A]"
-                        sx={{ fontSize: 20 }}
-                      />
-                      <a
-                        href={`tel:${footerData.phone}`}
-                        className="text-gray-400 hover:text-[#D4AF6A]"
-                      >
-                        {footerData.phone}
-                      </a>
+                      </span>
                     </li>
                   )}
 
                   {footerData.address && (
-                    <li className="flex items-start gap-3">
-                      <AccessTimeFilledIcon
-                        className="text-[#D4AF6A] mt-1"
-                        sx={{ fontSize: 20 }}
+                    <li className="flex items-center gap-3 text-white">
+                      <LocationCity
+                        className="text-white"
+                        sx={{ fontSize: 15 }}
                       />
-                      <span className="text-gray-400">
-                        {footerData.address}
+                      <span className="text-[15px] hover:text-[#f4b400]">
+                        Paris, France
+                      </span>
+                    </li>
+                  )}
+
+                  {footerData.phone && (
+                    <li className="flex items-center gap-3 text-white">
+                      <AccessTimeFilledIcon
+                        className="text-white"
+                        sx={{ fontSize: 15 }}
+                      />
+                      <span className="text-[15px] hover:text-[#f4b400]">
+                        24/7 Service Available
                       </span>
                     </li>
                   )}
                 </ul>
               </div>
+
+              {/* BOTTOM dynamic category */}
+              <div className="hidden sm:block">
+                {firstCategory && (
+                  <div className="mt-2">
+                    <h3 className="text-white font-semibold mb-4 text-sm uppercase tracking-widest">
+                      {firstCategory.name}
+                    </h3>
+
+                    <ul className="space-y-2 text-xs">
+                      {firstCategory.categoryPages.map((page, idx) => (
+                        <li key={idx}>
+                          <Link
+                            href={`/category/${firstCategory.slug}/${page.slug}`}
+                            className="text-[#999] font-bold hover:text-[#f4b400]"
+                          >
+                            {page.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+
               {/* Quick Links */}
-              <div className="block sm:hidden">
-                <h3 className="text-[#D4AF6A] pt-2 lg:pt-10 font-semibold mb-4 text-sm uppercase tracking-widest">
+              <div className="block lg:hidden ml-8 sm:ml:0 min-w-0">
+                <h3 className="text-white pt-2 lg:pt-8 font-semibold mb-4 text-sm uppercase tracking-widest">
                   Quick Links
                 </h3>
 
-                <ul className="space-y-2 text-sm">
+                <ul className="space-y-2 text-xs">
                   {quickLinks.map((link, i) => (
                     <li key={i}>
                       <Link
                         href={link.url}
-                        className="text-gray-400 hover:text-[#D4AF6A]"
+                        className="text-[#999] font-bold hover:text-[#f4b400]"
                       >
                         {link.label}
                       </Link>
@@ -226,22 +249,21 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
               </div>
             </div>
           </div>
-
           {/* RIGHT */}
-          <div className="lg:col-span-5">
-            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+       <div className="col-span-2 lg:col-span-3">
+           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Quick Links */}
               <div className="hidden sm:block">
-                <h3 className="text-[#D4AF6A] pt-2 lg:pt-10 font-semibold mb-4 text-sm uppercase tracking-widest">
+                <h3 className="text-white pt-2 lg:pt-8 font-semibold mb-4 text-sm uppercase tracking-widest">
                   Quick Links
                 </h3>
 
-                <ul className="space-y-2 text-sm">
+                <ul className="space-y-2 text-xs">
                   {quickLinks.map((link, i) => (
                     <li key={i}>
                       <Link
                         href={link.url}
-                        className="text-gray-400 hover:text-[#D4AF6A]"
+                        className="text-[#999] font-bold hover:text-[#f4b400]"
                       >
                         {link.label}
                       </Link>
@@ -249,20 +271,41 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                   ))}
                 </ul>
               </div>
+              <div className=" sm:hidden block">
+                {firstCategory && (
+                  <div className="mt-2">
+                    <h3 className="text-white font-semibold mb-4 text-sm uppercase tracking-widest">
+                      {firstCategory.name}
+                    </h3>
 
+                    <ul className="space-y-2 text-xs">
+                      {firstCategory.categoryPages.map((page, idx) => (
+                        <li key={idx}>
+                          <Link
+                            href={`/category/${firstCategory.slug}/${page.slug}`}
+                            className="text-[#999] font-bold hover:text-[#f4b400]"
+                          >
+                            {page.title}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
               {/* Categories */}
-              {dbCategories.map((category) => (
-                <div key={category.id}>
-                  <h3 className="text-[#D4AF6A] pt-2 lg:pt-10 font-semibold mb-4 text-sm uppercase tracking-widest">
+              {otherCategories.map((category) => (
+               <div key={category.id} className="min-w-0">
+                  <h3 className="text-white pt-2 lg:pt-8 font-semibold mb-4 text-sm uppercase tracking-widest">
                     {category.name}
                   </h3>
 
-                  <ul className="space-y-2 text-sm">
+                  <ul className="space-y-2 text-xs">
                     {category.categoryPages.map((page, idx) => (
                       <li key={idx}>
                         <Link
                           href={`/category/${category.slug}/${page.slug}`}
-                          className="text-gray-400 hover:text-[#D4AF6A]"
+                          className="text-[#999] font-bold hover:text-[#f4b400]"
                         >
                           {page.title}
                         </Link>
@@ -275,7 +318,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
           </div>
         </div>
         <div
-          className="my-8 lg:my-16 pt-8  border-t border-white/10 
+          className="mt-8 lg:mt-16 pt-8  border-t border-white/10 
 flex flex-col lg:flex-row 
 items-center justify-between 
 gap-6 lg:gap-8 text-center lg:text-left"
