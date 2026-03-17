@@ -87,78 +87,76 @@ export default function CommitmentSection({
   ];
 
   return (
-    <>
-      <Section>
-        <Box className="relative max-w-7xl mx-auto z-10">
-          {/* Heading Section */}
+    <Section>
+      <Box className="relative max-w-7xl mx-auto z-10 sm:px-6">
+        {/* Heading Section */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          transition={{ staggerChildren: 0.2 }}
+          className="flex items-center justify-center gap-6 mb-16"
+        >
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            transition={{ staggerChildren: 0.2 }}
-            className="flex items-center justify-center gap-6 mb-16"
+            variants={{
+              hidden: { opacity: 0, scaleX: 0 },
+              visible: { opacity: 1, scaleX: 1 },
+            }}
+            transition={{ duration: 0.6 }}
+            className="hidden md:block h-0.5 w-40 bg-linear-to-r from-transparent via-[#D4AF6A] to-transparent origin-left"
+          />
+
+          <motion.h2
+            variants={{
+              hidden: { opacity: 0, y: 40 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            transition={{ duration: 0.8 }}
+            className="w-full text-center text-3xl md:text-4xl font-semibold tracking-wide bg-gradient-to-r from-[#D4AF6A] via-[#e2c47c] to-[#D4AF6A] bg-clip-text text-transparent px-4 relative drop-shadow-[0_2px_8px_rgba(212,175,106,0.4)]"
           >
-            <motion.div
-              variants={{
-                hidden: { opacity: 0, scaleX: 0 },
-                visible: { opacity: 1, scaleX: 1 },
-              }}
-              transition={{ duration: 0.6 }}
-              className="hidden md:block h-0.5 w-40 bg-linear-to-r from-transparent via-[#D4AF6A] to-transparent origin-left"
-            />
+            {title || "Our Commitment to Excellence"}
+          </motion.h2>
 
-            <motion.h2
-              variants={{
-                hidden: { opacity: 0, y: 40 },
-                visible: { opacity: 1, y: 0 },
-              }}
-              transition={{ duration: 0.8 }}
-              className="w-full text-center text-3xl md:text-4xl font-semibold tracking-wide bg-gradient-to-r from-[#D4AF6A] via-[#e2c47c] to-[#D4AF6A] bg-clip-text text-transparent px-4 relative drop-shadow-[0_2px_8px_rgba(212,175,106,0.4)]"
-            >
-              {title || "Our Commitment to Excellence"}
-            </motion.h2>
-
-            <motion.div
-              variants={{
-                hidden: { opacity: 0, scaleX: 0 },
-                visible: { opacity: 1, scaleX: 1 },
-              }}
-              transition={{ duration: 0.6 }}
-              className="hidden md:block h-0.5 w-40 bg-linear-to-r from-transparent via-[#D4AF6A] to-transparent origin-right"
-            />
-          </motion.div>
-
-          {/* Features Grid */}
           <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12 text-center"
-          >
-            {features.map((item, index) => {
-              // Only render if there is a description
-              if (!item.description) return null;
+            variants={{
+              hidden: { opacity: 0, scaleX: 0 },
+              visible: { opacity: 1, scaleX: 1 },
+            }}
+            transition={{ duration: 0.6 }}
+            className="hidden md:block h-0.5 w-40 bg-linear-to-r from-transparent via-[#D4AF6A] to-transparent origin-right"
+          />
+        </motion.div>
 
-              // Dynamically get the Icon Component based on the string name
-              const IconComponent = getIconComponent(item.iconName);
+        {/* Features Grid */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12 text-center"
+        >
+          {features.map((item, index) => {
+            // Only render if there is a description
+            if (!item.description) return null;
 
-              return (
-                <motion.div key={index} variants={cardVariants}>
-                  <FeatureCard
-                    // Pass the actual component with styles
-                    icon={
-                      <IconComponent sx={{ fontSize: 30, color: "#D4AF6A" }} />
-                    }
-                    title={item.title}
-                    description={item.description}
-                  />
-                </motion.div>
-              );
-            })}
-          </motion.div>
-        </Box>
-      </Section>
-    </>
+            // Dynamically get the Icon Component based on the string name
+            const IconComponent = getIconComponent(item.iconName);
+
+            return (
+              <motion.div key={index} variants={cardVariants}>
+                <FeatureCard
+                  // Pass the actual component with styles
+                  icon={
+                    <IconComponent sx={{ fontSize: 30, color: "#D4AF6A" }} />
+                  }
+                  title={item.title}
+                  description={item.description}
+                />
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      </Box>
+    </Section>
   );
 }

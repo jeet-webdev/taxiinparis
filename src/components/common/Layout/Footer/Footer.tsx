@@ -1,4 +1,3 @@
-
 "use client";
 
 import {
@@ -92,8 +91,8 @@ function FooterLogo({
       <Image
         src={src}
         alt={logoAlt || "Footer Logo"}
-        width={120}
-        height={120}
+        width={200}
+        height={160}
         className="hidden md:block object-contain"
         onError={(e: any) => {
           e.currentTarget.src = desktopFallback;
@@ -104,8 +103,8 @@ function FooterLogo({
       <Image
         src={logoUrl || mobileFallback}
         alt={logoAlt || "Footer Logo"}
-        width={120}
-        height={120}
+        width={90}
+        height={90}
         className="block md:hidden object-contain"
         onError={(e: any) => {
           e.currentTarget.src = mobileFallback;
@@ -135,15 +134,16 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
 
   return (
     <footer className="bg-[#0B0F1A] text-gray-300 pt-16 pb-8 border-t border-white/10">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-       <div className="grid grid-cols-2 lg:grid-cols-4 gap-10 items-stretch">
+    <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
+       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-12">
           {/* LEFT */}
-          <div className="col-span-2 lg:col-span-1">
-            <div className="grid grid-cols-2 lg:grid-cols-1 gap-6 ">
+      <div className="">
+           <div className="w-full lg:w-auto grid grid-cols-2 lg:grid-cols-1 gap-6 mb-6 lg:mb-0">
+              {/* <div className="grid grid-cols-2 lg:grid-cols-1 gap-6 "> */}
               {/* TOP */}
-              <div className="max-w-xs">
+              <div >
                 {/* Logo */}
-                <div className="mb-3">
+                <div className="lg:mb-3">
                   <Link href="/">
                     <div className="flex items-center">
                       <FooterLogo
@@ -155,7 +155,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                 </div>
 
                 {/* Title */}
-                <h4 className="text-lg font-semibold text-[#D4AF6A] mb-2">
+                <h4 className="text-base lg:text-lg font-semibold text-[#D4AF6A] lg:mb-2">
                   {footerData.title}
                 </h4>
 
@@ -167,7 +167,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                 {/* Info list */}
                 <ul className="space-y-3 text-sm">
                   {footerData.email && (
-                    <li className="flex items-center font-bold gap-3 text-[#999]">
+                   <li className="flex flex-col sm:flex-row sm:items-center font-bold gap-1 sm:gap-3 text-[#999]">
                       <MarkEmailReadIcon
                         className="text-white"
                         sx={{ fontSize: 15 }}
@@ -205,14 +205,14 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
               </div>
 
               {/* BOTTOM dynamic category */}
-              <div className="hidden sm:block">
+              <div className="hidden lg:block">
                 {firstCategory && (
                   <div className="mt-2">
-                    <h3 className="text-white font-semibold mb-4 text-sm uppercase tracking-widest">
+                    <h3 className="text-white font-semibold mb-6 text-sm">
                       {firstCategory.name}
                     </h3>
 
-                    <ul className="space-y-2 text-xs">
+                    <ul className="space-y-3 text-xs">
                       {firstCategory.categoryPages.map((page, idx) => (
                         <li key={idx}>
                           <Link
@@ -229,12 +229,12 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
               </div>
 
               {/* Quick Links */}
-              <div className="block lg:hidden ml-8 sm:ml:0 min-w-0">
-                <h3 className="text-white pt-2 lg:pt-8 font-semibold mb-4 text-sm uppercase tracking-widest">
+              <div className="block lg:hidden ml-8 sm:ml:0 min-w-0 lg:mt-0 mt-6">
+                <h3 className="text-white pt-2 lg:pt-4 font-semibold mb-6 text-base ">
                   Quick Links
                 </h3>
 
-                <ul className="space-y-2 text-xs">
+                <ul className="space-y-3 text-xs">
                   {quickLinks.map((link, i) => (
                     <li key={i}>
                       <Link
@@ -247,18 +247,20 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                   ))}
                 </ul>
               </div>
+              {/* </div> */}
             </div>
           </div>
+
           {/* RIGHT */}
-       <div className="col-span-2 lg:col-span-3">
-           <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="col-span-2  lg:col-span-3">
+           <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
               {/* Quick Links */}
-              <div className="hidden sm:block">
-                <h3 className="text-white pt-2 lg:pt-8 font-semibold mb-4 text-sm uppercase tracking-widest">
+              <div className="hidden lg:block">
+                <h3 className="text-white pt-2 lg:pt-4 font-semibold mb-6 text-sm uppercase tracking-widest">
                   Quick Links
                 </h3>
 
-                <ul className="space-y-2 text-xs">
+                <ul className="space-y-3 text-xs">
                   {quickLinks.map((link, i) => (
                     <li key={i}>
                       <Link
@@ -271,10 +273,10 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                   ))}
                 </ul>
               </div>
-              <div className=" sm:hidden block">
+              <div className=" lg:hidden ">
                 {firstCategory && (
                   <div className="mt-2">
-                    <h3 className="text-white font-semibold mb-4 text-sm uppercase tracking-widest">
+                    <h3 className="text-white font-semibold mb-4 text-sm uppercase ">
                       {firstCategory.name}
                     </h3>
 
@@ -295,12 +297,12 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
               </div>
               {/* Categories */}
               {otherCategories.map((category) => (
-               <div key={category.id} className="min-w-0">
-                  <h3 className="text-white pt-2 lg:pt-8 font-semibold mb-4 text-sm uppercase tracking-widest">
+                <div key={category.id} className="min-w-0">
+                  <h3 className="text-white pt-2 lg:pt-4 font-semibold mb-6 text-base ">
                     {category.name}
                   </h3>
 
-                  <ul className="space-y-2 text-xs">
+                  <ul className="space-y-3 text-xs">
                     {category.categoryPages.map((page, idx) => (
                       <li key={idx}>
                         <Link
@@ -318,7 +320,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
           </div>
         </div>
         <div
-          className="mt-8 lg:mt-16 pt-8  border-t border-white/10 
+          className="mt-4 lg:mt-16 pt-4  border-t border-white/10 
 flex flex-col lg:flex-row 
 items-center justify-between 
 gap-6 lg:gap-8 text-center lg:text-left"
@@ -348,12 +350,12 @@ gap-6 lg:gap-8 text-center lg:text-left"
           </div>
 
           {/* COPYRIGHT */}
-          <div className="flex flex-wrap justify-center gap-2 text-sm text-gray-500 order-3 lg:order-2">
+          <div className="flex flex-wrap justify-center gap-2 text-xs text-[#a1a1a1] order-3 lg:order-2">
             <span>{footerData.copyrightText}</span>
 
             {privacyLink && (
               <>
-                <span className="hidden md:inline mx-1">|</span>
+                <span className="hidden lg:inline mx-1">|</span>
 
                 <Link
                   href={privacyLink.url}
@@ -365,7 +367,7 @@ gap-6 lg:gap-8 text-center lg:text-left"
             )}
             {termsLink && (
               <>
-                <span className="hidden md:inline mx-1">|</span>
+                <span className="hidden lg:inline mx-1">|</span>
 
                 <Link
                   href={termsLink.url}

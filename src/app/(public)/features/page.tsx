@@ -101,51 +101,13 @@ export default async function WhyChooseUsSection() {
   };
 
   return (
-    <>
-      {/* <section className="py-24">
-        {" "}
-      
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-4xl md:text-5xl font-serif text-center mb-20 font-semibold tracking-wide bg-gradient-to-r from-[#D4AF6A] via-[#F5E6C4] to-[#D4AF6A] bg-clip-text text-transparent">
-            {displayHeading}
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {features.map((item: FeatureItem) => (
-              <div
-                key={item.id}
-                className="bg-white/5 backdrop-blur-lg p-10 rounded-2xl text-center border border-[#D4AF6A]/20 shadow-[0_15px_40px_rgba(0,0,0,0.6)] flex flex-col h-full transition-all duration-500 hover:-translate-y-2 hover:border-[#D4AF6A]"
-              >
-                <div className="w-20 h-20 bg-[#D4AF6A]/10 border border-[#D4AF6A]/30 rounded-full flex items-center justify-center mx-auto mb-8">
-                  {renderIcon(item.iconType)}
-                </div>
-                <h3 className="text-2xl font-semibold mb-4 text-white">
-                  {item.title}
-                </h3>
-                <p className="text-gray-300 leading-relaxed mb-8 flex-grow">
-                  {item.description}
-                </p>
-
-                <Link
-                  href={item.buttonLink || FALLBACK_LINK}
-                  target={item.openInNewTab ? "_blank" : "_self"}
-                  rel={item.openInNewTab ? "noopener noreferrer" : undefined}
-                  className="inline-block w-full py-3 rounded-lg font-semibold tracking-wide text-black bg-gradient-to-r from-[#D4AF6A] to-[#B8964F] hover:from-[#E6C27A] hover:to-[#C9A45D] transition-all duration-300 uppercase text-sm shadow-lg"
-                >
-                  {item.buttonText || "Book Now"}
-                </Link>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section> */}
-      <section className="py-24">
+    <section className="py-24">
         <div className="max-w-7xl mx-auto px-0 sm:px-6">
           <h2 className="text-4xl md:text-5xl font-serif text-center mb-20 font-semibold tracking-wide bg-linear-to-r from-[#D4AF6A] via-[#F5E6C4] to-[#D4AF6A] bg-clip-text text-transparent">
             {displayHeading}
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {features.map((item: FeatureItem) => (
               <div
                 key={item.id}
@@ -189,6 +151,5 @@ export default async function WhyChooseUsSection() {
           </div>
         </div>
       </section>
-    </>
   );
 }

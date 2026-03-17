@@ -38,100 +38,11 @@ export default function Navbar({ footerData }: NavbarProps) {
   }, [isOpen]);
 
   return (
-    // <header className="relative z-[100] bg-[#0A0F1C]">
-    //   <nav className="max-w-7xl mx-auto px-4 py-4 md:px-6">
-    //     <div className="flex  gap-10 items-center">
-    //       {/* Hamburger (Left on mobile) */}
-    //       <div className="flex-1 md:hidden">
-    //         <button
-    //           className="text-[#D4AF6A] p-2"
-    //           onClick={() => setIsOpen(!isOpen)}
-    //         >
-    //           {isOpen ? <IoClose size={32} /> : <HiMenuAlt3 size={32} />}
-    //         </button>
-    //       </div>
-
-    //       {/* Logo Section */}
-    //       <div className="flex-[2] md:flex-none flex justify-center md:justify-start">
-    //         <Link href="/" onClick={() => setIsOpen(false)}>
-    //           {/* Desktop Logo */}
-    //           <div className="hidden md:block">
-    //             <Image
-    //               src={footerData?.logoUrl || desktopFallback}
-    //               alt={footerData?.logoAlt || "Desktop Logo"}
-    //               width={90}
-    //               height={90}
-    //               className="object-contain"
-    //               onError={(e) => {
-    //                 e.currentTarget.src = desktopFallback;
-    //               }}
-    //             />
-    //           </div>
-    //           {/* Mobile Logo */}
-    //           <div className="md:hidden">
-    //             <Image
-    //               src={
-    //                 footerData?.mobileLogoUrl ||
-    //                 footerData?.logoUrl ||
-    //                 mobileFallback
-    //               }
-    //               alt={footerData?.logoAlt || "Mobile Logo"}
-    //               width={70}
-    //               height={70}
-    //               className="object-contain"
-    //               onError={(e) => {
-    //                 e.currentTarget.src = mobileFallback;
-    //               }}
-    //             />
-    //           </div>
-    //         </Link>
-    //       </div>
-
-    //       {/* Desktop Nav */}
-    //       <ul className="hidden md:flex gap-10">
-    //         {visibleLinks.map((item) => (
-    //           <li key={item.url}>
-    //             <Link
-    //               href={item.url}
-    //               className="text-[#D4AF6A] uppercase tracking-[0.2em]"
-    //             >
-    //               {item.label}
-    //             </Link>
-    //           </li>
-    //         ))}
-    //       </ul>
-
-    //       <div className="flex-1 flex justify-end items-center gap-4">
-    //         <LanguageDropdown />
-    //       </div>
-    //     </div>
-
-    //     <div
-    //       className={`fixed inset-0 top-[80px] bg-[#0A0F1C] z-[90] transition-all duration-300 ease-in-out ${
-    //         isOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full"
-    //       } md:hidden`}
-    //     >
-    //       <ul className="flex flex-col items-center pt-10 gap-8">
-    //         {visibleLinks.map((item) => (
-    //           <li key={item.url} className="w-full text-center">
-    //             <Link
-    //               href={item.url}
-    //               onClick={() => setIsOpen(false)}
-    //               className="text-2xl text-[#D4AF6A] font-light uppercase tracking-[0.2em] block py-4 active:bg-white/5"
-    //             >
-    //               {item.label}
-    //             </Link>
-    //           </li>
-    //         ))}
-    //       </ul>
-    //     </div>
-    //   </nav>
-    // </header>
     <header className="relative z-[100] bg-[#0A0F1C]">
       <nav className="max-w-7xl mx-auto px-4 py-4 md:px-6">
         <div className="flex items-center justify-between">
           {/* Hamburger (Left on mobile only) */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <button
               className="text-[#D4AF6A] p-2"
               onClick={() => setIsOpen(!isOpen)}
@@ -144,7 +55,7 @@ export default function Navbar({ footerData }: NavbarProps) {
           <div className="flex justify-center md:justify-start">
             <Link href="/" onClick={() => setIsOpen(false)}>
               {/* Desktop Logo */}
-              <div className="hidden md:block">
+              <div className="hidden lg:block">
                 <Image
                   src={footerData?.logoUrl || desktopFallback}
                   alt={footerData?.logoAlt || "Desktop Logo"}
@@ -157,7 +68,7 @@ export default function Navbar({ footerData }: NavbarProps) {
                 />
               </div>
               {/* Mobile Logo */}
-              <div className="md:hidden">
+              <div className="lg:hidden">
                 <Image
                   src={
                     footerData?.mobileLogoUrl ||
@@ -177,7 +88,7 @@ export default function Navbar({ footerData }: NavbarProps) {
           </div>
 
           {/* Desktop Nav - Centered */}
-          <ul className="hidden md:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
+          <ul className="hidden lg:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
             {visibleLinks.map((item) => (
               <li key={item.url}>
                 <Link
@@ -200,7 +111,7 @@ export default function Navbar({ footerData }: NavbarProps) {
         <div
           className={`fixed inset-0 top-[80px] bg-[#0A0F1C] z-[90] transition-all duration-300 ease-in-out ${
             isOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full"
-          } md:hidden`}
+          } lg:hidden`}
         >
           <ul className="flex flex-col items-center pt-10 gap-8">
             {visibleLinks.map((item) => (

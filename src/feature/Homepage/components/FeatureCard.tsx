@@ -12,7 +12,7 @@ export default function FeatureCard({
   icon,
   title,
   description,
-}: FeatureCardProps) {
+}: Readonly<FeatureCardProps>) {
   const [expanded, setExpanded] = useState(false);
 
   // Remove HTML tags for length check

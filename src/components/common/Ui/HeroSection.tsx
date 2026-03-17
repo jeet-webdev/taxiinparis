@@ -5,7 +5,7 @@ interface HeroSectionProps {
   img?: string | null;
   alt?: string | null;
 }
-export default function HeroSection({ img ,alt }: HeroSectionProps) {
+export default function HeroSection({ img, alt }: HeroSectionProps) {
   return (
     <section className="relative min-h-screen w-full">
       {/* Background Image */}
@@ -22,7 +22,7 @@ export default function HeroSection({ img ,alt }: HeroSectionProps) {
       />
 
       {/* Content Container */}
-      <div className="relative z-10 max-w-7xl mx-auto min-h-screen flex flex-col md:flex-row items-center justify-end px-4 md:px-6 py-6 md:py-10">
+      <div className="relative z-10 max-w-7xl mx-auto min-h-screen flex flex-col md:flex-row items-center justify-center md:justify-end px-0 md:px-6 py-0 md:py-10">
         <div
           className="
   w-full md:w-[375px] h-[710px]
