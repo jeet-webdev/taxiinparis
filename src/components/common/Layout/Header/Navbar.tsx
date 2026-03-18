@@ -61,12 +61,15 @@ export default function Navbar({ footerData }: NavbarProps) {
                   alt={footerData?.logoAlt || "Desktop Logo"}
                   width={150}
                   height={110}
+                  unoptimized
+                  priority
                   className="object-contain pt-2 pb-2"
                   onError={(e) => {
                     e.currentTarget.src = desktopFallback;
                   }}
                 />
               </div>
+
               {/* Mobile Logo */}
               <div className="md:hidden">
                 <Image
@@ -77,6 +80,8 @@ export default function Navbar({ footerData }: NavbarProps) {
                   }
                   alt={footerData?.logoAlt || "Mobile Logo"}
                   width={70}
+                  priority
+                  unoptimized
                   height={70}
                   className="object-contain m-4"
                   onError={(e) => {
