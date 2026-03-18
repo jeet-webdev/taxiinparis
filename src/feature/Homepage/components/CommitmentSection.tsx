@@ -40,7 +40,7 @@ export default function CommitmentSection({
   reliableServiceIcon,
   fairPriceIcon,
   customerServiceIcon,
-}: CommitmentSectionProps) {
+}: Readonly<CommitmentSectionProps>) {
   const containerVariants: Variants = {
     hidden: {},
     visible: {
@@ -138,6 +138,7 @@ export default function CommitmentSection({
           {features.map((item, index) => {
             // Only render if there is a description
             if (!item.description) return null;
+            
 
             // Dynamically get the Icon Component based on the string name
             const IconComponent = getIconComponent(item.iconName);
