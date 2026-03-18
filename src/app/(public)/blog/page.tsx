@@ -50,7 +50,7 @@ export default async function BlogPage({ searchParams }: Props) {
             </div>
           ) : (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 {blogs.map((blog) => {
                   const previewText =
                     blog.text?.replace(/<[^>]*>/g, "").slice(0, 120) + "...";

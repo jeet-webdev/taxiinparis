@@ -101,10 +101,10 @@ function FooterLogo({
 
       {/* Mobile */}
       <Image
-        src={ mobileFallback}
+        src={mobileFallback}
         alt={logoAlt || "Footer Logo"}
-        width={90}
-        height={90}
+        width={50}
+        height={50}
         className="block md:hidden object-contain"
         onError={(e: any) => {
           e.currentTarget.src = mobileFallback;
@@ -133,8 +133,8 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
   const privacyLink = navLinks.find((link) => link.url === "/privacy");
 
   return (
-    <footer className="bg-[#0B0F1A] text-gray-300 pt-16 pb-8 border-t border-white/10">
-      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
+    <footer className="bg-[#0B0F1A] text-gray-300 pt-16 pb-8 border-t border-white/10 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl w-full mx-auto px-0 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
           {/* LEFT */}
           <div className="">
@@ -143,9 +143,9 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
               {/* TOP */}
               <div>
                 {/* Logo */}
-                <div className="md:mb-3">
+                <div className="mb-3">
                   <Link href="/">
-                    <div className="flex items-center">
+                    <div className="flex lg:justify-start justify-center items-center">
                       <FooterLogo
                         logoUrl={footerData.logoUrl}
                         logoAlt={footerData.logoAlt}

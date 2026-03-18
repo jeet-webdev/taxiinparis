@@ -37,7 +37,7 @@ export default function Navbar({ footerData }: NavbarProps) {
   }, [isOpen]);
 
   return (
-    <header className="relative z-[100] bg-[#0A0F1C]">
+    <header className="relative z-[100] bg-[#0B0F1A]">
       <nav className="max-w-7xl mx-auto px-4 py-4 md:px-6">
         <div className="flex items-center justify-between">
           {/* Hamburger (Left on mobile only) */}
@@ -74,11 +74,11 @@ export default function Navbar({ footerData }: NavbarProps) {
                 <Image
                   src={footerData?.mobileLogoUrl || mobileFallback}
                   alt={footerData?.logoAlt || "Mobile Logo"}
-                  width={70}
-                  height={70}
+                  width={50}
+                  height={50}
                   priority
                   unoptimized
-                  className="object-contain m-4"
+                  className="object-contain "
                   onError={(e) => {
                     e.currentTarget.src = mobileFallback;
                   }}
