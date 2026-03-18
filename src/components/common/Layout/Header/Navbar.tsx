@@ -80,9 +80,9 @@ export default function Navbar({ footerData }: NavbarProps) {
                   }
                   alt={footerData?.logoAlt || "Mobile Logo"}
                   width={70}
+                  height={70}
                   priority
                   unoptimized
-                  height={70}
                   className="object-contain m-4"
                   onError={(e) => {
                     e.currentTarget.src = mobileFallback;
