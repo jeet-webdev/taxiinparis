@@ -101,7 +101,7 @@ function FooterLogo({
 
       {/* Mobile */}
       <Image
-        src={logoUrl || mobileFallback}
+        src={ mobileFallback}
         alt={logoAlt || "Footer Logo"}
         width={90}
         height={90}

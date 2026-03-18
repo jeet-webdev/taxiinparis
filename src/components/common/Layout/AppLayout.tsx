@@ -51,7 +51,6 @@ export default async function AppLayout({ children }: MarketingAppLayoutProps) {
       },
     }),
   ]);
-console.log("Footer Data in Navbar:", footerData)
   return (
     <div className="flex flex-col min-h-screen bg-[#0B0F1A] text-white">
       {/* 2. Pass the server data into the Client Navbar */}

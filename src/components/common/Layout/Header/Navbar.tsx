@@ -21,7 +21,6 @@ interface NavbarProps {
 
 export default function Navbar({ footerData }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
-
   // Fallbacks
   const desktopFallback = "/assets/bg-luxury-limo.png";
   const mobileFallback = "/assets/bgmobile_logo_llp.png";
@@ -73,11 +72,7 @@ export default function Navbar({ footerData }: NavbarProps) {
               {/* Mobile Logo */}
               <div className="md:hidden">
                 <Image
-                  src={
-                    footerData?.mobileLogoUrl ||
-                    footerData?.logoUrl ||
-                    mobileFallback
-                  }
+                  src={footerData?.mobileLogoUrl || mobileFallback}
                   alt={footerData?.logoAlt || "Mobile Logo"}
                   width={70}
                   height={70}
