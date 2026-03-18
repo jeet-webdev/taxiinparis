@@ -107,23 +107,23 @@ export default async function WhyChooseUsSection() {
             {displayHeading}
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-8">
             {features.map((item: FeatureItem) => (
               <div
                 key={item.id}
-                className="p-10 rounded-2xl text-center border border-[#D4AF6A]/20 flex flex-col h-full transition-all duration-500 hover:-translate-y-2 hover:border-[#D4AF6A] backdrop-blur-lg"
+                className="p-4 lg:p-10 rounded-2xl text-center border border-[#D4AF6A]/20 flex flex-col h-full transition-all duration-500 hover:-translate-y-2 hover:border-[#D4AF6A] backdrop-blur-lg"
                 style={{
                   background: "rgba(10,10,10,0.78)",
                   boxShadow:
                     "0 30px 70px rgba(0,0,0,0.75), 0 0 30px rgba(198,168,91,0.15)",
                 }}
               >
-                <div className="w-20 h-20 bg-[#D4AF6A]/10 border border-[#D4AF6A]/30 rounded-full flex items-center justify-center mx-auto mb-8">
+                <div className="w-16 h-16 lg:w-20 lg:h-20 bg-[#D4AF6A]/10 border border-[#D4AF6A]/30 rounded-full flex items-center justify-center mx-auto mb-4 lg:mb-8">
                   {renderIcon(item.iconType)}
                 </div>
 
                 <h3
-                  className="text-2xl font-semibold mb-4 text-white"
+                  className="lg:text-2xl text-xl font-semibold mb-4 text-white"
                   style={{ letterSpacing: "-0.02em" }}
                 >
                   {item.title}

@@ -26,7 +26,7 @@ export default function HeroSection({ img, alt }: HeroSectionProps) {
         <div
           className="
   w-full md:w-[375px] h-[710px]
-  rounded-[12px]
+  rounded-xl
   taxi-calculator
 "
         >
@@ -34,7 +34,7 @@ export default function HeroSection({ img, alt }: HeroSectionProps) {
             src="https://portail.driverconnect.fr/vtc-fils/template?src=se&tkn=00001_2769650_-1157023572_1772012786065"
             allow="geolocation"
             title="Booking Widget"
-            className="w-full md:w-[375px] h-[710px] border-none rounded-[12px]"
+            className="w-full md:w-[375px] h-[710px] border-none rounded-xl"
           />
         </div>
       </div>
