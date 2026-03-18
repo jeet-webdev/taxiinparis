@@ -134,16 +134,16 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
 
   return (
     <footer className="bg-[#0B0F1A] text-gray-300 pt-16 pb-8 border-t border-white/10">
-    <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
-       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 lg:gap-12">
+      <div className="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
           {/* LEFT */}
-      <div className="">
-           <div className="w-full lg:w-auto grid grid-cols-2 lg:grid-cols-1 gap-6 mb-6 lg:mb-0">
+          <div className="">
+            <div className="w-full lg:w-auto grid grid-cols-2 md:grid-cols-1 gap-6 mb-6 lg:mb-0">
               {/* <div className="grid grid-cols-2 lg:grid-cols-1 gap-6 "> */}
               {/* TOP */}
-              <div >
+              <div>
                 {/* Logo */}
-                <div className="lg:mb-3">
+                <div className="md:mb-3">
                   <Link href="/">
                     <div className="flex items-center">
                       <FooterLogo
@@ -155,7 +155,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                 </div>
 
                 {/* Title */}
-                <h4 className="text-base lg:text-lg font-semibold text-[#D4AF6A] lg:mb-2">
+                <h4 className="text-base md:text-lg font-semibold text-[#D4AF6A] md:mb-2">
                   {footerData.title}
                 </h4>
 
@@ -167,7 +167,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                 {/* Info list */}
                 <ul className="space-y-3 text-sm">
                   {footerData.email && (
-                   <li className="flex flex-col sm:flex-row sm:items-center font-bold gap-1 sm:gap-3 text-[#999]">
+                    <li className="flex flex-col sm:flex-row sm:items-center font-bold gap-1 sm:gap-3 text-[#999]">
                       <MarkEmailReadIcon
                         className="text-white"
                         sx={{ fontSize: 15 }}
@@ -205,7 +205,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
               </div>
 
               {/* BOTTOM dynamic category */}
-              <div className="hidden lg:block">
+              <div className="hidden md:block">
                 {firstCategory && (
                   <div className="mt-2">
                     <h3 className="text-white font-semibold mb-6 text-sm">
@@ -229,7 +229,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
               </div>
 
               {/* Quick Links */}
-              <div className="block lg:hidden ml-8 sm:ml:0 min-w-0 lg:mt-0 mt-6">
+              <div className="block md:hidden ml-8 sm:ml:0 min-w-0 md:mt-0 mt-6">
                 <h3 className="text-white pt-2 lg:pt-4 font-semibold mb-6 text-base ">
                   Quick Links
                 </h3>
@@ -252,11 +252,11 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
           </div>
 
           {/* RIGHT */}
-          <div className="col-span-2  lg:col-span-3">
-           <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="col-span-2  md:col-span-3">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
               {/* Quick Links */}
-              <div className="hidden lg:block">
-                <h3 className="text-white pt-2 lg:pt-4 font-semibold mb-6 text-sm uppercase tracking-widest">
+              <div className="hidden md:block">
+                <h3 className="text-white pt-2 md:pt-4 font-semibold mb-6 text-sm ">
                   Quick Links
                 </h3>
 
@@ -273,10 +273,10 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                   ))}
                 </ul>
               </div>
-              <div className=" lg:hidden ">
+              <div className=" md:hidden ">
                 {firstCategory && (
                   <div className="mt-2">
-                    <h3 className="text-white font-semibold mb-4 text-sm uppercase ">
+                    <h3 className="text-white font-semibold mb-4 text-sm  ">
                       {firstCategory.name}
                     </h3>
 

@@ -42,7 +42,7 @@ export default function Navbar({ footerData }: NavbarProps) {
       <nav className="max-w-7xl mx-auto px-4 py-4 md:px-6">
         <div className="flex items-center justify-between">
           {/* Hamburger (Left on mobile only) */}
-          <div className="lg:hidden">
+          <div className="md:hidden">
             <button
               className="text-[#D4AF6A] p-2"
               onClick={() => setIsOpen(!isOpen)}
@@ -55,7 +55,7 @@ export default function Navbar({ footerData }: NavbarProps) {
           <div className="flex justify-center md:justify-start">
             <Link href="/" onClick={() => setIsOpen(false)}>
               {/* Desktop Logo */}
-              <div className="hidden lg:block">
+              <div className="hidden md:block">
                 <Image
                   src={footerData?.logoUrl || desktopFallback}
                   alt={footerData?.logoAlt || "Desktop Logo"}
@@ -68,7 +68,7 @@ export default function Navbar({ footerData }: NavbarProps) {
                 />
               </div>
               {/* Mobile Logo */}
-              <div className="lg:hidden">
+              <div className="md:hidden">
                 <Image
                   src={
                     footerData?.mobileLogoUrl ||
@@ -88,12 +88,12 @@ export default function Navbar({ footerData }: NavbarProps) {
           </div>
 
           {/* Desktop Nav - Centered */}
-          <ul className="hidden lg:flex items-center gap-10 absolute left-1/2 -translate-x-1/2">
+          <ul className="hidden md:flex items-center gap-16 md:gap-8 absolute left-1/2 -translate-x-1/2">
             {visibleLinks.map((item) => (
               <li key={item.url}>
                 <Link
                   href={item.url}
-                  className="text-[#D4AF6A] uppercase tracking-[0.2em] text-sm hover:text-white transition-colors"
+                  className="text-[#D4AF6A] text-base hover:text-white transition-colors"
                 >
                   {item.label}
                 </Link>
@@ -119,7 +119,7 @@ export default function Navbar({ footerData }: NavbarProps) {
                 <Link
                   href={item.url}
                   onClick={() => setIsOpen(false)}
-                  className="text-2xl text-[#D4AF6A] font-light uppercase tracking-[0.2em] block py-4 active:bg-white/5"
+                  className="text-2xl text-[#D4AF6A] font-light tracking-[0.2em] block py-4 active:bg-white/5"
                 >
                   {item.label}
                 </Link>
