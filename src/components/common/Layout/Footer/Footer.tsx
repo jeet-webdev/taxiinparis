@@ -382,7 +382,7 @@ gap-6 lg:gap-8 text-center lg:text-left"
                 <span className="hidden lg:inline mx-1">|</span>
 
                 <Link
-                  href="/sitemap-page"
+                  href="/sitemap"
                   className="hover:text-[#D4AF6A] transition-colors"
                 >
                   Sitemap
