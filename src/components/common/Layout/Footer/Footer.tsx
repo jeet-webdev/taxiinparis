@@ -377,6 +377,18 @@ gap-6 lg:gap-8 text-center lg:text-left"
                 </Link>
               </>
             )}
+            
+              
+                <span className="hidden lg:inline mx-1">|</span>
+
+                <Link
+                  href="/sitemap-page"
+                  className="hover:text-[#D4AF6A] transition-colors"
+                >
+                  Sitemap
+                </Link>
+              
+          
           </div>
 
           {/* PAYMENTS */}
