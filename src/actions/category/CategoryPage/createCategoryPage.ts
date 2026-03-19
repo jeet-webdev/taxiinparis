@@ -1,60 +1,5 @@
-// "use server";
 
-// import { prisma } from "@/src/lib/prisma";
-// // import { Prisma } from "@prisma/client";
-// import { Prisma } from "@/src/generated/prisma/client";
 
-// type PageState = {
-//   success: boolean;
-//   message: string;
-// };
-
-// export async function createCategoryPage(
-//   categoryId: number,
-//   prevState: PageState,
-//   formData: FormData,
-// ): Promise<PageState> {
-//   try {
-//     const keywords = formData.get("metaKeywords") as string;
-
-//     const keywordArray = keywords
-//       ? keywords.split(",").map((k) => k.trim())
-//       : [];
-
-//     const contentText = formData.get("content") as string;
-
-//     await prisma.categoryPage.create({
-//       data: {
-//         title: formData.get("title") as string,
-//         slug: formData.get("slug") as string,
-//         imageUpload: formData.get("imageUpload") as string,
-//         imageAlt: formData.get("imageAlt") as string,
-//         metaTitle: formData.get("metaTitle") as string,
-//         metaDescription: formData.get("metaDescription") as string,
-
-//         metaKeywords: JSON.stringify(keywordArray),
-
-//         content: contentText
-//           ? ({ body: contentText } as Prisma.InputJsonValue)
-//           : Prisma.JsonNull,
-
-//         categoryId,
-//       },
-//     });
-
-//     return {
-//       success: true,
-//       message: "Page created successfully",
-//     };
-//   } catch (error) {
-//     console.error(error);
-
-//     return {
-//       success: false,
-//       message: "Failed to create page",
-//     };
-//   }
-// }
 "use server";
 
 import { prisma } from "@/src/lib/prisma";
@@ -73,13 +18,31 @@ export async function createCategoryPage(
 ): Promise<PageState> {
   try {
     const keywords = formData.get("metaKeywords") as string | null;
-
-    // Fixed syntax error: Combined the ternary logic properly
     const keywordArray = keywords
       ? keywords.split(",").map((k) => k.trim())
       : [];
 
     const contentText = formData.get("content") as string | null;
+
+    // Build content as InputJsonValue | typeof Prisma.JsonNull
+    // ✅ Use undefined instead of Prisma.JsonNull to avoid the JsonNullClass error
+    let contentValue: Prisma.InputJsonValue | undefined = undefined;
+
+    if (contentText) {
+      try {
+        // contentText is '{"type":"doc","content":"<html>","updatedAt":"..."}'
+        // Parse and store the object directly — no double-wrapping
+        const parsed = JSON.parse(contentText) as Prisma.InputJsonValue;
+        contentValue = parsed;
+      } catch {
+        // contentText was raw HTML — wrap in the standard shape
+        contentValue = {
+          type: "doc",
+          content: contentText,
+          updatedAt: new Date().toISOString(),
+        };
+      }
+    }
 
     await prisma.categoryPage.create({
       data: {
@@ -90,25 +53,18 @@ export async function createCategoryPage(
         metaTitle: (formData.get("metaTitle") as string) || null,
         metaDescription: (formData.get("metaDescription") as string) || null,
         metaKeywords: JSON.stringify(keywordArray),
-        content: contentText
-          ? ({ body: contentText } as Prisma.InputJsonValue)
-          : Prisma.JsonNull,
-        categoryId: Number(categoryId), // Ensure ID is a number
+        // ✅ Prisma treats undefined on a Json field as DbNull (no value),
+        // which avoids the JsonNullClass type mismatch entirely
+        ...(contentValue !== undefined && { content: contentValue }),
+        categoryId: Number(categoryId),
       },
     });
 
-    // This forces Next.js to refresh the data on the categories page
-    revalidatePath("/admin");
+    revalidatePath("/admin/categories");
 
-    return {
-      success: true,
-      message: "Page created successfully",
-    };
+    return { success: true, message: "Page created successfully" };
   } catch (error) {
     console.error("Database Error:", error);
-    return {
-      success: false,
-      message: "Failed to create page",
-    };
+    return { success: false, message: "Failed to create page" };
   }
 }

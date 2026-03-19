@@ -98,17 +98,25 @@ model Footer {
 
 model Feature {
   id           Int      @id @default(autoincrement())
+  
+  // Category label (e.g., "DINING", "SPA", "WELLNESS")
+  category     String?  @db.VarChar(100)
+  
+  imageUrl     String?  @map("image_url") @db.VarChar(500)
+  imageAlt     String?  @map("image_alt") @db.VarChar(255)
   title        String   @db.VarChar(255)
   description  String
-  iconType     String   @map("icon_type") @db.VarChar(100)
+  buttonText   String?  @default("Explore") @db.VarChar(100)
+  buttonLink   String?  @db.VarChar(500)
+  openInNewTab Boolean  @default(false) @map("open_in_new_tab")
+  sortOrder    Int      @default(0) @map("sort_order")
+  isActive     Boolean  @default(true) @map("is_active")
   createdAt    DateTime @default(now()) @map("created_at")
-  mainTitle    Json?
-  buttonText   String?  @default("Book Now") @db.VarChar(50)
-  buttonLink   String?  @default("https://portail.driverconnect.fr/vtc-fils/template?DS=1&tkn=00001_3739617_-1157023572_1769256160266")
-  openInNewTab Boolean  @default(false)
+  updatedAt    DateTime @updatedAt @default(now()) @map("updated_at")
 
   @@map("features")
 }
+
 
 model Category {
   id            Int            @id @default(autoincrement())

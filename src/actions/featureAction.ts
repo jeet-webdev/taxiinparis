@@ -1,52 +1,59 @@
 "use server";
-
 import { prisma } from "@/src/lib/prisma";
 import { revalidatePath } from "next/cache";
+
+import { featureSchema } from "../feature/page-editor/features/validation/feature.schema";
 
 export async function saveFeatureAction(formData: FormData) {
   try {
     const id = formData.get("id") as string;
-    const title = formData.get("title") as string;
-    const description = formData.get("description") as string;
-    const iconType = formData.get("iconType") as string;
-    const buttonText = formData.get("buttonText") as string;
-    const buttonLink = formData.get("buttonLink") as string; // Correctly extract link
-    const mainTitleRaw = formData.get("mainTitle") as string;
 
-    // Validation
-    if (!title || !description || !iconType) {
+    // Parse raw form values
+    const raw = {
+      category: (formData.get("category") as string) || undefined,
+      imageUrl: (formData.get("imageUrl") as string) || undefined,
+      imageAlt: (formData.get("imageAlt") as string) || undefined,
+      title: formData.get("title") as string,
+      description: formData.get("description") as string,
+      buttonText: (formData.get("buttonText") as string) || undefined,
+      buttonLink: (formData.get("buttonLink") as string) || undefined,
+      openInNewTab: formData.get("openInNewTab") === "true",
+      sortOrder: Number(formData.get("sortOrder") ?? 0),
+      isActive: formData.get("isActive") !== "false", // defaults true
+    };
+
+    // Zod validation
+    const parsed = featureSchema.safeParse(raw);
+    if (!parsed.success) {
+      const firstError = parsed.error.issues[0];
       return {
         success: false,
-        error: "Title, description, and icon are required.",
+        error: firstError?.message ?? "Validation failed.",
       };
     }
-    const openInNewTab = formData.get("openInNewTab") === "true";
-    // Prepare data object
-    // Note: We use JSON structure for mainTitle based on your schema
+
     const data = {
-      title,
-      description,
-      iconType,
-      buttonText: buttonText || "Book Now",
-      buttonLink: buttonLink || null,
-      mainTitle: mainTitleRaw ? { text: mainTitleRaw } : undefined,
-      openInNewTab,
+      category: parsed.data.category || null,
+      imageUrl: parsed.data.imageUrl || null,
+      imageAlt: parsed.data.imageAlt || null,
+      title: parsed.data.title,
+      description: parsed.data.description,
+      buttonText: parsed.data.buttonText || "Explore",
+      buttonLink: parsed.data.buttonLink || null,
+      openInNewTab: parsed.data.openInNewTab,
+      sortOrder: parsed.data.sortOrder,
+      isActive: parsed.data.isActive,
     };
 
     if (id && id.trim() !== "") {
-      // --- UPDATE LOGIC ---
       await prisma.feature.update({
         where: { id: parseInt(id) },
-        data: data,
+        data,
       });
     } else {
-      // --- CREATE LOGIC ---
-      await prisma.feature.create({
-        data: data,
-      });
+      await prisma.feature.create({ data });
     }
 
-    // Trigger UI updates
     revalidatePath("/admin/feature-editor");
     revalidatePath("/");
 
@@ -65,7 +72,7 @@ export async function deleteFeatureAction(id: number) {
       where: { id: Number(id) },
     });
 
-    revalidatePath("/admin/features-editor");
+    revalidatePath("/admin/feature-editor");
     revalidatePath("/");
 
     return { success: true };

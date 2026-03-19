@@ -2,6 +2,8 @@ import CategoriesTable from "@/src/feature/categories/component/CategoriesTable"
 import type { CategoryRow } from "@/src/feature/categories/component/CategoriesTable";
 import { getCategories } from "@/src/actions/category/getCategory";
 import { deleteCategory } from "@/src/actions/category/deleteCategory";
+import { deletePageFromCategory } from "@/src/actions/category/CategoryPage/deleteCategoryPage";
+// import { deletePageFromCategory } from "@/src/actions/category/deleteCategoryPage";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -31,6 +33,17 @@ export default async function CategoriesPage() {
     "use server";
     return deleteCategory(id);
   }
+  async function handleDeletePage(pageId: number, categoryId: number) {
+    // ← add
+    "use server";
+    return deletePageFromCategory(pageId, categoryId);
+  }
 
-  return <CategoriesTable rows={rows} onDelete={handleDelete} />;
+  return (
+    <CategoriesTable
+      rows={rows}
+      onDelete={handleDelete}
+      onDeletePage={handleDeletePage}
+    />
+  );
 }
