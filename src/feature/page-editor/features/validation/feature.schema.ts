@@ -1,22 +1,62 @@
+// src/feature/page-editor/features/validation/feature.schema.ts
 import { z } from "zod";
 
-// Define a more specific schema for the JSON object
-const MainTitleObjectSchema = z.object({
-  text: z.string(),
-});
+export const featureSchema = z.object({
+  // Optional string fields — accept empty string or valid string
+  category: z
+    .string()
+    .max(100, "Category must be 100 characters or less")
+    .optional()
+    .or(z.literal("")),
 
-export const FeatureSchema = z.object({
-  // Accept either a direct string or the specific object { text: string }
-  mainTitle: z.union([z.string(), MainTitleObjectSchema]).optional(),
+  imageUrl: z
+    .string()
+    .url("Must be a valid URL (e.g. https://example.com/image.jpg)")
+    .max(500, "Image URL must be 500 characters or less")
+    .optional()
+    .or(z.literal("")),
 
-  title: z.string().min(1, "Title is required").max(255),
-  description: z.string().min(1, "Description is required"),
-  iconType: z.string().min(1, "Icon type is required"),
-  buttonText: z.string().optional(),
-  openInNewTab: z.boolean().optional(),
+  imageAlt: z
+    .string()
+    .max(255, "Alt text must be 255 characters or less")
+    .optional()
+    .or(z.literal("")),
+
+  buttonText: z
+    .string()
+    .max(100, "Button text must be 100 characters or less")
+    .optional()
+    .or(z.literal("")),
+
   buttonLink: z
     .string()
-    .url("Must be a valid URL")
-    .or(z.literal(""))
-    .optional(), // Validates URL format
+    .url("Must be a valid URL (e.g. https://example.com)")
+    .max(500, "Link must be 500 characters or less")
+    .optional()
+    .or(z.literal("")),
+
+  // Required string fields
+  title: z
+    .string()
+    .min(1, "Title is required")
+    .max(255, "Title must be 255 characters or less"),
+
+  description: z
+    .string()
+    .min(1, "Description is required")
+    .max(1000, "Description must be 1000 characters or less"),
+
+  // Boolean fields — explicitly required (no .default())
+  // Defaults are handled in useForm defaultValues instead
+  openInNewTab: z.boolean(),
+
+  isActive: z.boolean(),
+
+  // Number field — explicitly required (no .default())
+  sortOrder: z
+    .number({ error: "Sort order must be a number" })
+    .int("Sort order must be a whole number")
+    .min(0, "Sort order must be 0 or greater"),
 });
+
+export type FeatureFormValues = z.infer<typeof featureSchema>;

@@ -1,21 +1,35 @@
+// src/app/admin/feature-editor/page.tsx  (or wherever your admin page lives)
+
 import { prisma } from "@/src/lib/prisma";
 import { FeatureForm } from "@/src/feature/page-editor/features/components/featureForm";
-export const dynamic = "force-dynamic"; // ✅ add this
-export const revalidate = 0;
-export default async function FeatureEditorPage() {
-  // Fetch initial data to pass to the client
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+export default async function FeatureEditorPage() {
   const features = await prisma.feature.findMany({
-    orderBy: { createdAt: "desc" },
+    orderBy: { sortOrder: "asc" },
   });
 
   return (
-    <div className="p-10 max-w-5xl mx-auto">
-      <h1 className="text-2xl font-bold mb-8 text-gray-800">
-        Manage Feature Section & Why Choose Us
-      </h1>
+    <div className="min-h-screen py-12 px-4 sm:px-6">
+      <div className="max-w-4xl mx-auto">
+        {/* Page Header */}
+        <div className="mb-10">
+          <p className="text-xs font-semibold tracking-[0.25em] uppercase text-[#D4AF6A]/60 mb-2">
+            Page Editor
+          </p>
+          <h1 className=" text-[#000] font-serif font-semibold text-white">
+            Feature Section
+          </h1>
+          <p className="text-sm text-gray-500 mt-1">
+            Manage the dining &amp; experience cards shown on the homepage.
+          </p>
+        </div>
 
-      <FeatureForm initialFeatures={features} />
+        {/* Form + List */}
+        <FeatureForm initialFeatures={features} />
+      </div>
     </div>
   );
 }

@@ -1,19 +1,17 @@
-import { Prisma } from "@/src/generated/prisma/client";
-
-export interface MainTitleObject {
-  text: string;
-}
+// src/feature/page-editor/features/types/feature.types.ts
 
 export interface FeatureItem {
   id: number;
+  category?: string | null;
+  imageUrl?: string | null;
+  imageAlt?: string | null;
   title: string;
-  mainTitle: Prisma.JsonValue | MainTitleObject;
   description: string;
-  iconType: string;
-  buttonText: string | null; // Added field
-  buttonLink: string | null;
+  buttonText?: string | null;
+  buttonLink?: string | null;
   openInNewTab: boolean;
+  sortOrder: number;
+  isActive: boolean;
   createdAt: Date;
+  updatedAt: Date;
 }
-
-export type FeatureFormData = Omit<FeatureItem, "id" | "createdAt">;
