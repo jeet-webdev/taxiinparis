@@ -1,14 +1,15 @@
 "use client";
 
 import { Box } from "@mui/material";
-import FeatureCard from "./FeatureCard";
-import Section from "@/src/components/common/Ui/Section";
 import { motion, Variants } from "framer-motion";
 import { getIconComponent } from "@/src/components/common/utils/iconMap";
-import TestimonialCard from "./TestimonialCard";
+import { VerifiedUser } from "@mui/icons-material";
+import { useMemo } from "react";
 
 interface CommitmentSectionProps {
   title?: string | null;
+  subtitle?: string | null;
+  description?: string | null;
   secureBookingTitle?: string | null;
   reliableServiceTitle?: string | null;
   fairPriceTitle?: string | null;
@@ -19,7 +20,6 @@ interface CommitmentSectionProps {
   fairPrice?: string | null;
   customerService?: string | null;
 
-  // These must match the field names in your database/backend
   secureBookingIcon?: string | null;
   reliableServiceIcon?: string | null;
   fairPriceIcon?: string | null;
@@ -28,19 +28,24 @@ interface CommitmentSectionProps {
 
 export default function CommitmentSection({
   title,
+  subtitle,
+  description,
   secureBookingTitle,
   reliableServiceTitle,
   fairPriceTitle,
   customerServiceTitle,
-  customerService,
-  fairPrice,
-  reliableService,
+
   secureBooking,
+  reliableService,
+  fairPrice,
+  customerService,
+
   secureBookingIcon,
   reliableServiceIcon,
   fairPriceIcon,
   customerServiceIcon,
 }: Readonly<CommitmentSectionProps>) {
+  // ✅ SAME AS BEFORE
   const containerVariants: Variants = {
     hidden: {},
     visible: {
@@ -62,102 +67,142 @@ export default function CommitmentSection({
     },
   };
 
-  // Map the strings to actual components using your utility
   const features = [
     {
-      title: secureBookingTitle || "Secure Booking",
+      title: secureBookingTitle,
       description: secureBooking,
-      iconName: secureBookingIcon || "lock",
+      iconName: secureBookingIcon || "check",
     },
     {
-      title: reliableServiceTitle || "Reliable Service",
+      title: reliableServiceTitle,
       description: reliableService,
-      iconName: reliableServiceIcon || "road",
+      iconName: reliableServiceIcon || "check",
     },
     {
-      title: fairPriceTitle || "Fair Price",
+      title: fairPriceTitle,
       description: fairPrice,
-      iconName: fairPriceIcon || "price",
+      iconName: fairPriceIcon || "check",
     },
     {
-      title: customerServiceTitle || "Customer Service",
+      title: customerServiceTitle,
       description: customerService,
-      iconName: customerServiceIcon || "support",
+      iconName: customerServiceIcon || "check",
     },
   ];
 
   return (
-    <Section>
-      <Box className="relative max-w-7xl mx-auto z-10 sm:px-6">
-        {/* Heading Section */}
+    <section
+      className="relative py-12"
+      // style={{
+      //   backgroundImage: "url('/assets/bg-1.png')",
+      //   backgroundSize: "cover",
+      //   backgroundPosition: "center",
+      // }}
+    >
+      <Box className="max-w-7xl mx-auto px-6">
+        {/* ✅ HEADING SAME MOTION */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          transition={{ staggerChildren: 0.2 }}
-          className="flex items-center justify-center gap-6 mb-16"
+          className="text-start "
         >
-          <motion.div
+          <motion.h2
             variants={{
-              hidden: { opacity: 0, scaleX: 0 },
-              visible: { opacity: 1, scaleX: 1 },
+              hidden: { opacity: 0, y: 40 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: { duration: 0.7 },
+              },
             }}
-            transition={{ duration: 0.6 }}
-            className="hidden md:block h-0.5 w-40 bg-linear-to-r from-transparent via-[#D4AF6A] to-transparent origin-left"
-          />
+            className="text-3xl md:text-3xl font-heading text-[#2A2A2A] "
+          >
+            {title || "Luxury Chauffeur Paris"}
+          </motion.h2>
 
           <motion.h2
             variants={{
               hidden: { opacity: 0, y: 40 },
-              visible: { opacity: 1, y: 0 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                transition: { duration: 0.7 },
+              },
             }}
-            transition={{ duration: 0.8 }}
-            className="w-full text-center text-3xl md:text-4xl font-semibold tracking-wide bg-gradient-to-r from-[#D4AF6A] via-[#e2c47c] to-[#D4AF6A] bg-clip-text text-transparent px-4 relative drop-shadow-[0_2px_8px_rgba(212,175,106,0.4)]"
+            className="text-xl md:text-2xl font-heading my-4 text-gray-600 tracking-wide"
           >
-            {title || "Our Commitment to Excellence"}
+            {subtitle || "Private Transfer & Premium VTC Services in Paris"}
           </motion.h2>
-
-          <motion.div
-            variants={{
-              hidden: { opacity: 0, scaleX: 0 },
-              visible: { opacity: 1, scaleX: 1 },
-            }}
-            transition={{ duration: 0.6 }}
-            className="hidden md:block h-0.5 w-40 bg-linear-to-r from-transparent via-[#D4AF6A] to-transparent origin-right"
-          />
         </motion.div>
 
-        {/* Features Grid */}
+        {/* ✅ GRID */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="relative grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-12 text-center"
+          className="grid md:grid-cols-2 gap-12 items-start"
         >
-          {features.map((item, index) => {
-            // Only render if there is a description
-            if (!item.description) return null;
-            
+          {/* LEFT */}
+          <motion.div variants={cardVariants}>
+            <p className="text-gray-500 font-sans mb-6">
+              {description ||
+                "Travel in comfort, discretion and elegance with our premium chauffeur service in Paris."}
+            </p>
 
-            // Dynamically get the Icon Component based on the string name
-            const IconComponent = getIconComponent(item.iconName);
+            <div className="grid grid-cols-3 gap-4 mb-6">
+              {["24/7 Availability", "Fixed Price", "Discreet Chauffeurs"]
+                .slice(0, 3)
+                .map((item, i) => {
+                  return (
+                    <div key={i} className="flex gap-2 items-center">
+                      <VerifiedUser sx={{ fontSize: 20, color: "#C9A45C" }} />
+                      <span className="text-[#2A2A2A]">{item}</span>
+                    </div>
+                  );
+                })}
+            </div>
 
-            return (
-              <motion.div key={index} variants={cardVariants}>
-                <FeatureCard
-                  // Pass the actual component with styles
-                  icon={
-                    <IconComponent sx={{ fontSize: 30, color: "#D4AF6A" }} />
-                  }
-                  title={item.title}
-                  description={item.description}
-                />
-              </motion.div>
-            );
-          })}
+            <button className="btn-primary font-logo! ">
+              Book Your Chauffeur
+            </button>
+          </motion.div>
+
+          {/* RIGHT FEATURES */}
+          <motion.div variants={containerVariants} className="space-y-3">
+            {features.map((item, i) => {
+              const plainText = useMemo(() => {
+                return item?.description?.replace(/<[^>]+>/g, "") ?? "";
+              }, [item?.description]);
+
+              // Approximate length check (adjust 250 if needed)
+              // const isLongContent = plainText.length > 250;
+              if (!item.description) return null;
+
+              const Icon = getIconComponent(item.iconName);
+
+              return (
+                <motion.div
+                  key={i}
+                  variants={cardVariants}
+                  className="flex gap-4"
+                >
+                  <Icon sx={{ fontSize: 20, mt: 0.5, color: "#C9A45C" }} />
+
+                  <div>
+                    <h4 className="font-heading text-gray-600 text-xl ">
+                      {item.title}
+                    </h4>
+
+                    <p className="text-sm text-gray-600">{plainText}</p>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </motion.div>
         </motion.div>
       </Box>
-    </Section>
+    </section>
   );
 }

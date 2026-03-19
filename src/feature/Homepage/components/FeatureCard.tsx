@@ -27,11 +27,11 @@ export default function FeatureCard({
     <div className="px-1 text-left flex flex-col h-full">
       {/* Top Row */}
       <div className="flex items-center gap-3 mb-5">
-        <div className="w-12 h-12 rounded-full border-2 border-[#D4AF6A]/60 flex items-center justify-center">
+        <div className="w-12 h-12 rounded-full border-2 border-[#C6A85A]/60 flex items-center justify-center">
           {icon}
         </div>
 
-        <h3 className="text-[22px] text-[#D4AF6A] tracking-wide">
+        <h3 className="text-[22px] text-[#C6A85A] tracking-wide">
           {title}
         </h3>
       </div>
@@ -48,7 +48,7 @@ export default function FeatureCard({
       {isLongContent && (
         <button
           onClick={() => setExpanded(!expanded)}
-          className="mt-3 text-[#D4AF6A] text-sm font-medium hover:underline self-start"
+          className="mt-3 text-[#C6A85A] text-sm font-medium hover:underline self-start"
         >
           {expanded ? "Read Less" : "Read More"}
         </button>
