@@ -22,13 +22,19 @@ export default async function WhyChooseUsSection() {
         >
           Our Experiences
         </h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((item: FeatureItem) => (
-            <article
-              key={item.id}
-              className="group flex flex-col rounded-2xl overflow-hidden bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300"
-            >
+<div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 overflow-x-auto md:overflow-visible pb-4">
+  {features.map((item: FeatureItem) => (
+    <article
+      key={item.id}
+      className="
+        min-w-[85%] 
+        sm:min-w-[70%] 
+        md:min-w-0 
+        group flex flex-col overflow-hidden 
+        bg-white shadow-sm hover:shadow-md 
+        transition-shadow duration-300
+      "
+    >
               {/* Image container — explicit style position:relative required for Next fill */}
               <div
                 className="w-full overflow-hidden bg-gray-100 shrink-0"
@@ -82,20 +88,17 @@ export default async function WhyChooseUsSection() {
               </div>
 
               {/* Card body */}
-              <div className="flex flex-col flex-grow p-5">
+              <div className="flex bg-[#ece8df] flex-col flex-grow p-5">
                 {item.category && (
                   <span
-                    className="text-[10px] font-bold tracking-[0.2em] uppercase mb-2 block"
-                    style={{ color: "#C8954A" }}
+                    className="text-sm font-semibold tracking-[0.2em] uppercase mb-1 block"
+                    style={{ color: "#C6A85A" }}
                   >
                     {item.category}
                   </span>
                 )}
 
-                <h3
-                  className="text-base font-semibold text-gray-900 mb-3 leading-snug"
-                  style={{ fontFamily: "Georgia, serif" }}
-                >
+                <h3 className="text-base font-semibold text-gray-700 mb-3 leading-snug">
                   {item.title}
                 </h3>
 
@@ -107,9 +110,9 @@ export default async function WhyChooseUsSection() {
                   href={item.buttonLink || "#"}
                   target={item.openInNewTab ? "_blank" : "_self"}
                   rel={item.openInNewTab ? "noopener noreferrer" : undefined}
-                  className="group/cta flex items-center justify-between pt-4 border-t border-gray-100"
+                  className="group/cta flex items-center justify-between pt-1"
                 >
-                  <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-gray-800 group-hover/cta:text-gray-500 transition-colors duration-200 pr-4 leading-relaxed">
+                  <span className="text-base  text-gray-800 group-hover/cta:text-gray-500 transition-colors duration-200 pr-4 ">
                     {item.buttonText || "Explore"}
                   </span>
                   <div className="shrink-0 w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center group-hover/cta:bg-gray-50 transition-colors duration-200">
