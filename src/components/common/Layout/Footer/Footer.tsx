@@ -21,7 +21,11 @@ import {
   SocialLink,
   PaymentLink,
 } from "@/src/feature/page-editor/FooterEditor/types/footer.types";
-
+type AppLink = {
+  url: string;
+  platform: "google_play" | "app_store";
+  isVisible: boolean;
+};
 // Types to replace 'any'
 interface CategoryPage {
   title: string;
@@ -48,6 +52,7 @@ interface FooterProps {
     navLinks: unknown;
     socialLinks: unknown;
     paymentLinks: unknown;
+    appLinks: unknown;
   } | null;
   dbCategories: FooterCategory[];
 }
@@ -118,8 +123,10 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
 
   // Casting the JSON fields safely
   const navLinks = (footerData.navLinks as NavLink[]) || [];
+  const appLinks = (footerData?.appLinks as AppLink[]) || [];
   const socialLinks = (footerData.socialLinks as SocialLink[]) || [];
   const paymentLinks = (footerData.paymentLinks as PaymentLink[]) || [];
+  const visibleLinks = appLinks.filter((app) => app.isVisible);
 
   const quickLinks = navLinks.filter(
     (l) => l.type !== "category" && l.showInNav !== false,
@@ -133,17 +140,59 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
   const privacyLink = navLinks.find((link) => link.url === "/privacy");
 
   return (
-    <footer className="bg-[#0B0F1A] text-gray-300 pt-16 pb-8 border-t border-white/10 px-4 sm:px-6 lg:px-8">
+    <footer className="bg-[#0B0F1A] text-gray-300 pt-12 pb-8 border-t border-white/10 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl w-full mx-auto px-0 sm:px-6 lg:px-8">
+        {/* APP DOWNLOAD */}
+        <div className="pt-4">
+          {/* Title */}
+          <h4 className="text-base md:text-lg font-semibold text-white md:mb-2">
+            {footerData.title}
+          </h4>
+
+          <div className="flex pt-2 border-y border-white/10 flex-col gap-2">
+               {visibleLinks.map((app, index) => {
+            if (app.platform === "google_play") {
+              return (
+                <Link key={index} href={app.url} target="_blank">
+                  <Image
+                    src="/assets/images/google-play-store.png"
+                    alt="Google Play"
+                    width={170}
+                    height={55}
+                    className="transition-transform duration-300 hover:scale-105 cursor-pointer"
+                  />
+                </Link>
+              );
+            }
+            if (app.platform === "app_store") {
+              return (
+                <Link key={index} href={app.url} target="_blank">
+                  <Image
+                    src="/assets/images/app-store-1.png"
+                    alt="App Store"
+                    width={170}
+                    height={55}
+                    className="transition-transform duration-300 hover:scale-105 cursor-pointer"
+                  />
+                </Link>
+              );
+            }
+
+            return null;
+          })}
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
           {/* LEFT */}
           <div className="">
             <div className="w-full lg:w-auto grid grid-cols-2 md:grid-cols-1 gap-6 mb-6 lg:mb-0">
               {/* <div className="grid grid-cols-2 lg:grid-cols-1 gap-6 "> */}
               {/* TOP */}
+
               <div>
                 {/* Logo */}
-                <div className="mb-3">
+                <div className="my-3">
                   <Link href="/">
                     <div className="flex lg:justify-start justify-center items-center">
                       <FooterLogo
@@ -153,11 +202,6 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                     </div>
                   </Link>
                 </div>
-
-                {/* Title */}
-                <h4 className="text-base md:text-lg font-semibold text-[#D4AF6A] md:mb-2">
-                  {footerData.title}
-                </h4>
 
                 {/* Tagline */}
                 <p className="text-sm text-white font-semibold leading-relaxed mb-4">
@@ -229,7 +273,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
               </div>
 
               {/* Quick Links */}
-              <div className="block md:hidden ml-8 sm:ml:0 min-w-0 md:mt-0 mt-6">
+              <div className="block md:hidden ml-8 sm:ml:0 min-w-0 mt-2 ">
                 <h3 className="text-white pt-2 lg:pt-4 font-semibold mb-6 text-base ">
                   Quick Links
                 </h3>
@@ -377,18 +421,15 @@ gap-6 lg:gap-8 text-center lg:text-left"
                 </Link>
               </>
             )}
-            
-              
-                <span className="hidden lg:inline mx-1">|</span>
 
-                <Link
-                  href="/sitemap"
-                  className="hover:text-[#D4AF6A] transition-colors"
-                >
-                  Sitemap
-                </Link>
-              
-          
+            <span className="hidden lg:inline mx-1">|</span>
+
+            <Link
+              href="/sitemap"
+              className="hover:text-[#D4AF6A] transition-colors"
+            >
+              Sitemap
+            </Link>
           </div>
 
           {/* PAYMENTS */}
