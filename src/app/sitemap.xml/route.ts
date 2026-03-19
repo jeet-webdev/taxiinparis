@@ -1,16 +1,18 @@
 import { prisma } from "@/src/lib/prisma";
 import { getBlogPage } from "@/src/actions/blog/getBlogs";
-import { NavLink } from "@/src/feature/page-editor/HeaderEditor/types/header.types";
 
 export async function GET() {
-  const baseUrl = "http://91.134.142.9/";
+  const baseUrl = "http://91.134.142.9";
 
   const { blogs } = await getBlogPage();
 
   const footerData = await prisma.footer.findFirst();
-
-  const navLinks: NavLink[] = Array.isArray(footerData?.navLinks)
-    ? (footerData.navLinks as unknown as NavLink[])
+  const navLinks = Array.isArray(footerData?.navLinks)
+    ? (footerData.navLinks as unknown as {
+        label: string;
+        url: string;
+        showInNav?: boolean;
+      }[])
     : [];
 
   const categories = await prisma.category.findMany({
@@ -21,28 +23,19 @@ export async function GET() {
 
   let urls: string[] = [];
 
-  // ✅ Home
-  urls.push(`
+  // ✅ Nav links
+  navLinks.forEach((link) => {
+    if (!link.url) return;
+    if (link.showInNav === false) return;
+
+    urls.push(`
     <url>
-      <loc>${baseUrl}</loc>
-      <changefreq>daily</changefreq>
-      <priority>1.0</priority>
+      <loc>${baseUrl}${link.url}</loc>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
       <lastmod>${new Date().toISOString()}</lastmod>
     </url>
   `);
-
-  // ✅ Nav links
-  navLinks.forEach((link) => {
-    if (!link.href) return;
-
-    urls.push(`
-      <url>
-        <loc>${baseUrl}${link.href}</loc>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-        <lastmod>${new Date().toISOString()}</lastmod>
-      </url>
-    `);
   });
 
   // ✅ Categories + pages

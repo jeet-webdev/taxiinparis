@@ -1,7 +1,6 @@
 import { getBlogPage } from "@/src/actions/blog/getBlogs";
 import Link from "next/link";
 import { prisma } from "@/src/lib/prisma";
-import { NavLink } from "@/src/feature/page-editor/HeaderEditor/types/header.types";
 
 export const metadata = {
   title: "Sitemap | Luxury Limo",
@@ -11,10 +10,9 @@ export const metadata = {
 export default async function SitemapPage() {
   const { blogs } = await getBlogPage();
   const footerData = await prisma.footer.findFirst();
-  const navLinks: NavLink[] = Array.isArray(footerData?.navLinks)
-    ? (footerData.navLinks as unknown as NavLink[])
+  const navLinks = Array.isArray(footerData?.navLinks)
+    ? (footerData.navLinks as unknown as { label: string; href: string }[])
     : [];
-  console.log("Footer Data in Sitemap:", footerData); // Debug log to check footer data
   const categories = await prisma.category.findMany({
     include: {
       categoryPages: {
