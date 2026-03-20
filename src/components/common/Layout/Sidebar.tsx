@@ -22,6 +22,7 @@ import { TbLayoutNavbarCollapseFilled } from "react-icons/tb";
 import { TbLayoutBottombarCollapseFilled } from "react-icons/tb";
 import { MdFeaturedPlayList } from "react-icons/md";
 import { TbLayersDifference } from "react-icons/tb";
+import { TbMessageLanguage } from "react-icons/tb";
 
 import { MdCreditScore } from "react-icons/md";
 interface SidebarProps {
@@ -54,6 +55,11 @@ export const SIDEBAR_MENU = [
           { name: "Terms Page", link: "/admin/terms-editor" },
           { name: "Privacy Page", link: "/admin/privacy-editor" },
         ],
+      },
+      {
+        name: "All Page",
+        link: "/admin/language-page",
+        icon: <TbMessageLanguage size={20} />,
       },
 
       {
