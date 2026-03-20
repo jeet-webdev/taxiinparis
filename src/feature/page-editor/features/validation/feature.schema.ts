@@ -11,7 +11,6 @@ export const featureSchema = z.object({
 
   imageUrl: z
     .string()
-    .url("Must be a valid URL (e.g. https://example.com/image.jpg)")
     .max(500, "Image URL must be 500 characters or less")
     .optional()
     .or(z.literal("")),

@@ -10,6 +10,7 @@ import {
   saveFeatureAction,
   deleteFeatureAction,
 } from "@/src/actions/featureAction";
+import { uploadFeatureImage } from "@/src/actions/uploadFeatureImage";
 import { FeatureItem } from "../types/feature.types";
 
 // ─────────────────────────────────────────────
@@ -93,162 +94,188 @@ function GoldDivider() {
 }
 
 // ─────────────────────────────────────────────
-// IMAGE PREVIEW
+// IMAGE UPLOADER
 // ─────────────────────────────────────────────
-function ImagePreview({ url, alt }: { url?: string; alt?: string }) {
-  const [broken, setBroken] = useState(false);
-  if (!url || broken) return null;
-  return (
-    <div
-      className="rounded-xl overflow-hidden w-full h-40 relative"
-      style={{
-        border: "1px solid #D4B483",
-        boxShadow: "0 4px 16px rgba(180,140,80,0.12)",
-      }}
-    >
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        src={url}
-        alt={alt || "Preview"}
-        className="w-full h-full object-cover"
-        onError={() => setBroken(true)}
-      />
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(to top, rgba(44,31,14,0.4), transparent)",
-        }}
-      />
-      <span
-        className="absolute bottom-2 left-3 text-[10px] tracking-[0.2em] uppercase"
-        style={{ color: "#FAF7F2", fontFamily: "Georgia, serif" }}
-      >
-        Image Preview
-      </span>
-    </div>
-  );
-}
+function ImageUploader({
+  currentUrl,
+  onUploaded,
+  error,
+}: {
+  currentUrl?: string;
+  onUploaded: (url: string) => void;
+  error?: string;
+}) {
+  const [preview, setPreview] = useState<string | null>(currentUrl || null);
+  const [uploading, setUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
 
-// ─────────────────────────────────────────────
-// CARD PREVIEW
-// ─────────────────────────────────────────────
-function CardPreview({
-  category,
-  imageUrl,
-  title,
-  description,
-  buttonText,
-}: Partial<FeatureFormValues>) {
-  const [broken, setBroken] = useState(false);
-  if (!title && !category) return null;
+  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Show local preview immediately
+    setPreview(URL.createObjectURL(file));
+    setUploadError(null);
+    setUploading(true);
+
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+      const result = await uploadFeatureImage(formData);
+
+      if (result.success && result.publicPath) {
+        onUploaded(result.publicPath);
+      } else {
+        setUploadError(result.error ?? "Upload failed");
+        setPreview(currentUrl || null);
+      }
+    } catch {
+      setUploadError("Upload failed. Please try again.");
+      setPreview(currentUrl || null);
+    } finally {
+      setUploading(false);
+    }
+  };
+
   return (
-    <div
-      className="rounded-2xl overflow-hidden max-w-xs mx-auto"
-      style={{
-        background: "#FAF7F2",
-        border: "1px solid #D4B483",
-        boxShadow: "0 12px 40px rgba(180,140,80,0.18)",
-      }}
-    >
-      <div
-        className="relative w-full h-44 overflow-hidden"
-        style={{ background: "#EDE5D8" }}
+    <div className="flex flex-col gap-2">
+      {/* Upload button */}
+      <label
+        className="flex items-center gap-3 cursor-pointer rounded-lg px-4 py-2.5 transition-all duration-200 w-fit"
+        style={{
+          background: uploading ? "#EDE5D8" : "#F3EDE3",
+          border: `1px solid ${error ? "#C0392B" : "#D4B483"}`,
+          opacity: uploading ? 0.7 : 1,
+          pointerEvents: uploading ? "none" : "auto",
+        }}
       >
-        {imageUrl && !broken ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={imageUrl}
-            alt={title ?? ""}
-            className="w-full h-full object-cover"
-            onError={() => setBroken(true)}
-          />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            <span className="text-[11px] tracking-widest uppercase text-[#A08860]">
-              No Image
-            </span>
-          </div>
-        )}
-        <div
-          className="absolute top-3 right-3 w-8 h-8 rounded-full flex items-center justify-center shadow-sm"
-          style={{
-            background: "rgba(250,247,242,0.95)",
-            border: "1px solid rgba(212,180,131,0.4)",
-          }}
-        >
+        {uploading ? (
           <svg
-            className="w-3.5 h-3.5"
+            className="w-4 h-4 animate-spin shrink-0"
+            fill="none"
+            viewBox="0 0 24 24"
+            style={{ color: "#B8935A" }}
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            />
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8v8H4z"
+            />
+          </svg>
+        ) : (
+          <svg
+            className="w-4 h-4 shrink-0"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
-            strokeWidth={2.5}
-            style={{ color: "#2C1F0E" }}
+            strokeWidth={1.8}
+            style={{ color: "#B8935A" }}
           >
             <path
               strokeLinecap="round"
               strokeLinejoin="round"
-              d="M9 5l7 7-7 7"
+              d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
             />
           </svg>
-        </div>
-      </div>
-      <div className="p-5">
-        {category && (
-          <p
-            className="text-[9px] font-bold tracking-[0.25em] uppercase mb-2"
-            style={{ color: "#B8935A", fontFamily: "Georgia, serif" }}
-          >
-            {category}
-          </p>
         )}
-        {title && (
-          <h3
-            className="text-sm font-semibold mb-2 leading-snug"
-            style={{ color: "#2C1F0E", fontFamily: "Georgia, serif" }}
-          >
-            {title}
-          </h3>
-        )}
-        {description && (
-          <p
-            className="text-xs leading-relaxed mb-4 line-clamp-3"
-            style={{ color: "#5C4A30" }}
-          >
-            {description}
-          </p>
-        )}
-        <div
-          className="flex items-center justify-between pt-3"
-          style={{ borderTop: "1px solid #E8DCC8" }}
+        <span
+          className="text-xs tracking-[0.08em] uppercase"
+          style={{ color: "#8C6D3F", fontFamily: "Georgia, serif" }}
         >
-          <span
-            className="text-[9px] font-bold tracking-[0.2em] uppercase"
-            style={{ color: "#2C1F0E", fontFamily: "Georgia, serif" }}
+          {uploading ? "Uploading…" : preview ? "Change Image" : "Upload Image"}
+        </span>
+        <input
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={handleFile}
+          disabled={uploading}
+        />
+      </label>
+
+      {/* Error */}
+      {(uploadError || error) && (
+        <p className="text-[11px] text-[#C0392B] flex items-center gap-1">
+          <svg
+            className="w-3 h-3 shrink-0"
+            viewBox="0 0 20 20"
+            fill="currentColor"
           >
-            {buttonText || "Explore"}
-          </span>
+            <path
+              fillRule="evenodd"
+              d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z"
+              clipRule="evenodd"
+            />
+          </svg>
+          {uploadError || error}
+        </p>
+      )}
+
+      {/* Preview */}
+      {preview && (
+        <div
+          className="rounded-xl overflow-hidden w-full h-40 relative"
+          style={{
+            border: "1px solid #D4B483",
+            boxShadow: "0 4px 16px rgba(180,140,80,0.12)",
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={preview}
+            alt="Preview"
+            className="w-full h-full object-cover"
+          />
           <div
-            className="w-7 h-7 rounded-full flex items-center justify-center"
-            style={{ border: "1px solid #D4B483" }}
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to top, rgba(44,31,14,0.4), transparent)",
+            }}
+          />
+          <span
+            className="absolute bottom-2 left-3 text-[10px] tracking-[0.2em] uppercase"
+            style={{ color: "#FAF7F2", fontFamily: "Georgia, serif" }}
           >
-            <svg
-              className="w-3 h-3"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2.5}
-              style={{ color: "#8C6D3F" }}
+            {uploading ? "Uploading…" : "Image Preview"}
+          </span>
+          {uploading && (
+            <div
+              className="absolute inset-0 flex items-center justify-center"
+              style={{ background: "rgba(44,31,14,0.35)" }}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </div>
+              <svg
+                className="w-8 h-8 animate-spin"
+                fill="none"
+                viewBox="0 0 24 24"
+                style={{ color: "#FAF7F2" }}
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8H4z"
+                />
+              </svg>
+            </div>
+          )}
         </div>
-      </div>
+      )}
     </div>
   );
 }
@@ -305,7 +332,7 @@ function Toggle({
 }
 
 // ─────────────────────────────────────────────
-// FEATURE ROW — fixed action buttons
+// FEATURE ROW
 // ─────────────────────────────────────────────
 function FeatureRow({
   feature,
@@ -417,21 +444,13 @@ function FeatureRow({
         </p>
       </div>
 
-      {/* ── ACTION BUTTONS — fully Tailwind, no inline border ── */}
+      {/* Action Buttons */}
       <div className="flex items-center gap-2 shrink-0">
-        {/* Edit */}
         <button
           type="button"
           onClick={() => onEdit(feature)}
           title="Edit"
-          className="
-            inline-flex items-center justify-center
-            w-9 h-9 rounded-lg
-            bg-[#F3EDE3] border border-[#D4B483]/50
-            text-[#B8935A]
-            hover:bg-[#EDE5D8] hover:border-[#B8935A]
-            transition-all duration-200
-          "
+          className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-[#F3EDE3] border border-[#D4B483]/50 text-[#B8935A] hover:bg-[#EDE5D8] hover:border-[#B8935A] transition-all duration-200"
         >
           <svg
             className="w-4 h-4"
@@ -448,21 +467,12 @@ function FeatureRow({
           </svg>
         </button>
 
-        {/* Delete */}
         <button
           type="button"
           onClick={() => onDelete(feature.id)}
           disabled={isDeleting}
           title="Delete"
-          className="
-            inline-flex items-center justify-center
-            w-9 h-9 rounded-lg
-            bg-[#FDF5F3] border border-[#C0392B]/20
-            text-[#C0392B]
-            hover:bg-[#FCECEA] hover:border-[#C0392B]/50
-            disabled:opacity-40 disabled:cursor-not-allowed
-            transition-all duration-200
-          "
+          className="inline-flex items-center justify-center w-9 h-9 rounded-lg bg-[#FDF5F3] border border-[#C0392B]/20 text-[#C0392B] hover:bg-[#FCECEA] hover:border-[#C0392B]/50 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200"
         >
           {isDeleting ? (
             <svg
@@ -519,7 +529,10 @@ export function FeatureForm({
   const [deletingId, setDeletingId] = useState<number | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const [showPreview, setShowPreview] = useState(false);
+  // Tracks the uploaded image URL separately so ImageUploader can re-mount with correct initial value
+  const [uploadedImageUrl, setUploadedImageUrl] = useState<string | undefined>(
+    undefined,
+  );
 
   const isEditing = editingId !== null;
 
@@ -552,6 +565,7 @@ export function FeatureForm({
     setEditingId(feature.id);
     setSubmitError(null);
     setSubmitSuccess(false);
+    setUploadedImageUrl(feature.imageUrl ?? undefined);
     setValue("category", feature.category ?? "");
     setValue("imageUrl", feature.imageUrl ?? "");
     setValue("imageAlt", feature.imageAlt ?? "");
@@ -569,6 +583,7 @@ export function FeatureForm({
     setEditingId(null);
     setSubmitError(null);
     setSubmitSuccess(false);
+    setUploadedImageUrl(undefined);
     reset();
   };
 
@@ -586,6 +601,7 @@ export function FeatureForm({
       if (result.success) {
         setSubmitSuccess(true);
         setEditingId(null);
+        setUploadedImageUrl(undefined);
         reset();
         const updated = await fetch("/api/features")
           .then((r) => r.json())
@@ -677,258 +693,219 @@ export function FeatureForm({
               </p>
             </div>
           </div>
-
-          <button
-            type="button"
-            onClick={() => setShowPreview((p) => !p)}
-            className="text-[10px] tracking-[0.15em] uppercase px-3 py-1.5 rounded-lg transition-all duration-200"
-            style={{
-              color: showPreview ? "#FAF7F2" : "#8C6D3F",
-              background: showPreview
-                ? "linear-gradient(135deg, #D4B483, #B8935A)"
-                : "#F3EDE3",
-              border: "1px solid #D4B483",
-              fontFamily: "Georgia, serif",
-            }}
-          >
-            {showPreview ? "Hide Preview" : "Show Preview"}
-          </button>
         </div>
 
         {/* Form body */}
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
           <div className="px-8 py-8" style={{ background: "#FFFCF7" }}>
-            <div
-              className={`grid gap-8 ${showPreview ? "grid-cols-1 lg:grid-cols-2" : "grid-cols-1"}`}
-            >
-              {/* ── FIELDS ── */}
-              <div className="space-y-5">
-                <Field
-                  label="Category"
-                  error={errors.category?.message}
-                  hint="Shown above the title — e.g. DINING, SPA, WELLNESS"
-                >
-                  <input
-                    {...register("category")}
-                    placeholder="e.g. DINING"
-                    className={errors.category ? inputErrCls : inputCls}
-                    style={{
-                      textTransform: "uppercase",
-                      letterSpacing: "0.08em",
-                    }}
-                  />
-                </Field>
+            <div className="space-y-5">
+              <Field
+                label="Category"
+                error={errors.category?.message}
+                hint="Shown above the title — e.g. DINING, SPA, WELLNESS"
+              >
+                <input
+                  {...register("category")}
+                  placeholder="e.g. DINING"
+                  className={errors.category ? inputErrCls : inputCls}
+                  style={{
+                    textTransform: "uppercase",
+                    letterSpacing: "0.08em",
+                  }}
+                />
+              </Field>
 
-                <GoldDivider />
+              <GoldDivider />
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <Field
-                    label="Image URL"
-                    error={errors.imageUrl?.message}
-                    hint="Full HTTPS image URL"
-                  >
-                    <input
-                      {...register("imageUrl")}
-                      placeholder="https://example.com/image.jpg"
-                      className={errors.imageUrl ? inputErrCls : inputCls}
-                    />
-                  </Field>
-                  <Field
-                    label="Image Alt Text"
-                    error={errors.imageAlt?.message}
-                    hint="For accessibility"
-                  >
-                    <input
-                      {...register("imageAlt")}
-                      placeholder="e.g. Elegant restaurant interior"
-                      className={errors.imageAlt ? inputErrCls : inputCls}
-                    />
-                  </Field>
-                </div>
-
-                {!showPreview && (
-                  <ImagePreview url={watched.imageUrl} alt={watched.imageAlt} />
-                )}
-
-                <GoldDivider />
-
-                <Field label="Title" required error={errors.title?.message}>
-                  <input
-                    {...register("title")}
-                    placeholder="e.g. Restaurant le Meurice Alain Ducasse"
-                    className={errors.title ? inputErrCls : inputCls}
-                  />
-                  <p className="text-[11px] text-[#A08860] text-right">
-                    {watched.title?.length ?? 0} / 255
-                  </p>
-                </Field>
-
-                <Field
-                  label="Description"
-                  required
-                  error={errors.description?.message}
-                >
-                  <textarea
-                    {...register("description")}
-                    rows={4}
-                    placeholder="Describe this experience in a few sentences..."
-                    className={`${errors.description ? inputErrCls : inputCls} resize-none`}
-                  />
-                  <p className="text-[11px] text-[#A08860] text-right">
-                    {watched.description?.length ?? 0} / 1000
-                  </p>
-                </Field>
-
-                <GoldDivider />
-
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <Field
-                    label="Button Text"
-                    error={errors.buttonText?.message}
-                    hint="Defaults to Explore"
-                  >
-                    <input
-                      {...register("buttonText")}
-                      placeholder="Explore"
-                      className={errors.buttonText ? inputErrCls : inputCls}
-                    />
-                  </Field>
-                  <Field
-                    label="Button Link"
-                    error={errors.buttonLink?.message}
-                    hint="Full URL"
-                  >
-                    <input
-                      {...register("buttonLink")}
-                      placeholder="https://example.com"
-                      className={errors.buttonLink ? inputErrCls : inputCls}
-                    />
-                  </Field>
-                </div>
-
-                <Field
-                  label="Sort Order"
-                  error={errors.sortOrder?.message}
-                  hint="Lower = appears first"
-                >
-                  <input
-                    {...register("sortOrder", { valueAsNumber: true })}
-                    type="number"
-                    min={0}
-                    placeholder="0"
-                    className={`${errors.sortOrder ? inputErrCls : inputCls} w-28`}
-                  />
-                </Field>
-
-                <GoldDivider />
-
-                {/* Toggles */}
-                <div
-                  className="rounded-xl p-5 space-y-4"
-                  style={{ background: "#F3EDE3", border: "1px solid #E8DCC8" }}
-                >
-                  <Toggle
-                    label="Open link in new tab"
-                    description={
-                      <>
-                        Adds{" "}
-                        <code className="text-[#B8935A] text-[10px]">
-                          target=&quot;_blank&quot;
-                        </code>
-                      </>
+              {/* ── IMAGE UPLOAD + ALT TEXT ── */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#8C6D3F]">
+                    Image
+                  </label>
+                  {/* Hidden input keeps imageUrl registered with react-hook-form */}
+                  <input type="hidden" {...register("imageUrl")} />
+                  <ImageUploader
+                    key={editingId ?? "new"}
+                    currentUrl={uploadedImageUrl}
+                    onUploaded={(url) =>
+                      setValue("imageUrl", url, { shouldValidate: true })
                     }
-                    fieldName="openInNewTab"
-                    register={register}
-                    checked={!!watched.openInNewTab}
-                  />
-                  <div
-                    className="h-px"
-                    style={{
-                      background:
-                        "linear-gradient(90deg, transparent, #D4B483, transparent)",
-                    }}
-                  />
-                  <Toggle
-                    label="Active / Visible"
-                    description="Hide without deleting"
-                    fieldName="isActive"
-                    register={register}
-                    checked={!!watched.isActive}
+                    error={errors.imageUrl?.message}
                   />
                 </div>
-
-                {/* Error */}
-                {submitError && (
-                  <div
-                    className="rounded-xl px-4 py-3 flex gap-3 items-start"
-                    style={{
-                      background: "#FDF0ED",
-                      border: "1px solid rgba(192,57,43,0.2)",
-                    }}
-                  >
-                    <svg
-                      className="w-4 h-4 mt-0.5 shrink-0"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      style={{ color: "#C0392B" }}
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    <p className="text-sm text-[#C0392B]">{submitError}</p>
-                  </div>
-                )}
-
-                {/* Success */}
-                {submitSuccess && (
-                  <div
-                    className="rounded-xl px-4 py-3 flex gap-3 items-start"
-                    style={{
-                      background: "#EBF4EE",
-                      border: "1px solid rgba(61,122,79,0.2)",
-                    }}
-                  >
-                    <svg
-                      className="w-4 h-4 mt-0.5 shrink-0"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      style={{ color: "#3D7A4F" }}
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
-                    <p
-                      className="text-sm text-[#3D7A4F]"
-                      style={{ fontFamily: "Georgia, serif" }}
-                    >
-                      Feature {isEditing ? "updated" : "created"} successfully!
-                    </p>
-                  </div>
-                )}
+                <Field
+                  label="Image Alt Text"
+                  error={errors.imageAlt?.message}
+                  hint="For accessibility"
+                >
+                  <input
+                    {...register("imageAlt")}
+                    placeholder="e.g. Elegant restaurant interior"
+                    className={errors.imageAlt ? inputErrCls : inputCls}
+                  />
+                </Field>
               </div>
 
-              {/* ── LIVE PREVIEW ── */}
-              {showPreview && (
-                <div className="flex flex-col gap-4">
+              <GoldDivider />
+
+              <Field label="Title" required error={errors.title?.message}>
+                <input
+                  {...register("title")}
+                  placeholder="e.g. Restaurant le Meurice Alain Ducasse"
+                  className={errors.title ? inputErrCls : inputCls}
+                />
+                <p className="text-[11px] text-[#A08860] text-right">
+                  {watched.title?.length ?? 0} / 255
+                </p>
+              </Field>
+
+              <Field
+                label="Description"
+                required
+                error={errors.description?.message}
+              >
+                <textarea
+                  {...register("description")}
+                  rows={4}
+                  placeholder="Describe this experience in a few sentences..."
+                  className={`${errors.description ? inputErrCls : inputCls} resize-none`}
+                />
+                <p className="text-[11px] text-[#A08860] text-right">
+                  {watched.description?.length ?? 0} / 1000
+                </p>
+              </Field>
+
+              <GoldDivider />
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <Field
+                  label="Button Text"
+                  error={errors.buttonText?.message}
+                  hint="Defaults to Explore"
+                >
+                  <input
+                    {...register("buttonText")}
+                    placeholder="Explore"
+                    className={errors.buttonText ? inputErrCls : inputCls}
+                  />
+                </Field>
+                <Field
+                  label="Button Link"
+                  error={errors.buttonLink?.message}
+                  hint="Full URL"
+                >
+                  <input
+                    {...register("buttonLink")}
+                    placeholder="https://example.com"
+                    className={errors.buttonLink ? inputErrCls : inputCls}
+                  />
+                </Field>
+              </div>
+
+              <Field
+                label="Sort Order"
+                error={errors.sortOrder?.message}
+                hint="Lower = appears first"
+              >
+                <input
+                  {...register("sortOrder", { valueAsNumber: true })}
+                  type="number"
+                  min={0}
+                  placeholder="0"
+                  className={`${errors.sortOrder ? inputErrCls : inputCls} w-28`}
+                />
+              </Field>
+
+              <GoldDivider />
+
+              {/* Toggles */}
+              <div
+                className="rounded-xl p-5 space-y-4"
+                style={{ background: "#F3EDE3", border: "1px solid #E8DCC8" }}
+              >
+                <Toggle
+                  label="Open link in new tab"
+                  description={
+                    <>
+                      Adds{" "}
+                      <code className="text-[#B8935A] text-[10px]">
+                        target=&quot;_blank&quot;
+                      </code>
+                    </>
+                  }
+                  fieldName="openInNewTab"
+                  register={register}
+                  checked={!!watched.openInNewTab}
+                />
+                <div
+                  className="h-px"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, transparent, #D4B483, transparent)",
+                  }}
+                />
+                <Toggle
+                  label="Active / Visible"
+                  description="Hide without deleting"
+                  fieldName="isActive"
+                  register={register}
+                  checked={!!watched.isActive}
+                />
+              </div>
+
+              {/* Error */}
+              {submitError && (
+                <div
+                  className="rounded-xl px-4 py-3 flex gap-3 items-start"
+                  style={{
+                    background: "#FDF0ED",
+                    border: "1px solid rgba(192,57,43,0.2)",
+                  }}
+                >
+                  <svg
+                    className="w-4 h-4 mt-0.5 shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    style={{ color: "#C0392B" }}
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                  <p className="text-sm text-[#C0392B]">{submitError}</p>
+                </div>
+              )}
+
+              {/* Success */}
+              {submitSuccess && (
+                <div
+                  className="rounded-xl px-4 py-3 flex gap-3 items-start"
+                  style={{
+                    background: "#EBF4EE",
+                    border: "1px solid rgba(61,122,79,0.2)",
+                  }}
+                >
+                  <svg
+                    className="w-4 h-4 mt-0.5 shrink-0"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    style={{ color: "#3D7A4F" }}
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
                   <p
-                    className="text-[9px] uppercase tracking-[0.25em] text-center text-[#A08860]"
+                    className="text-sm text-[#3D7A4F]"
                     style={{ fontFamily: "Georgia, serif" }}
                   >
-                    &#10022; Live Card Preview &#10022;
+                    Feature {isEditing ? "updated" : "created"} successfully!
                   </p>
-                  <CardPreview
-                    category={watched.category}
-                    imageUrl={watched.imageUrl}
-                    title={watched.title}
-                    description={watched.description}
-                    buttonText={watched.buttonText}
-                  />
                 </div>
               )}
             </div>

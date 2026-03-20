@@ -26,6 +26,22 @@ const updatePageSchema = z.object({
   metaDescription: z.string().optional(),
   metaKeywords: z.string().optional(),
   status: z.enum(["active", "inactive"]),
+
+  // ── Hero fields ──
+  // heroTitle: z.string().max(255).optional().nullable(),
+  heroColorTitle: z.string().max(255).optional().nullable(),
+  heroSubtitle: z.string().max(255).optional().nullable(),
+  heroDescription: z.string().optional().nullable(),
+  heroButtonText: z.string().max(100).optional().nullable(),
+  heroButtonLink: z.string().max(255).optional().nullable(),
+  heroTrustText: z.string().max(255).optional().nullable(),
+  heroPoint1: z.string().max(100).optional().nullable(),
+  heroPoint2: z.string().max(100).optional().nullable(),
+  heroPoint3: z.string().max(100).optional().nullable(),
+  heroCard1Title: z.string().max(100).optional().nullable(),
+  heroCard2Title: z.string().max(100).optional().nullable(),
+  heroCard3Title: z.string().max(100).optional().nullable(),
+  heroCardFootnote: z.string().max(255).optional().nullable(),
 });
 
 export type UpdatePageInput = z.infer<typeof updatePageSchema>;
