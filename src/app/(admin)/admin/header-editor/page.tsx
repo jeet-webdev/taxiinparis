@@ -25,6 +25,8 @@ export default async function HeaderEditor() {
         initialData={navLinks}
         initialLogoUrl={data?.logoUrl}
         initialLogoAlt={data?.logoAlt}
+        initialMobileLogoUrl={data?.mobileLogoUrl}
+        initialMobileLogoAlt={data?.mobileLogoAlt}
       />
     </div>
   );
