@@ -33,6 +33,19 @@ model Page {
   fairPriceIcon        String?
   reliableServiceIcon  String?
   secureBookingIcon    String?
+  heroButtonLink       String?  @map("hero_button_link") @db.VarChar(255)
+  heroButtonText       String?  @map("hero_button_text") @db.VarChar(100)
+  heroCard1Title       String?  @map("hero_card1_title") @db.VarChar(100)
+  heroCard2Title       String?  @map("hero_card2_title") @db.VarChar(100)
+  heroCard3Title       String?  @map("hero_card3_title") @db.VarChar(100)
+  heroCardFootnote     String?  @map("hero_card_footnote") @db.VarChar(255)
+  heroDescription      String?  @map("hero_description")
+  heroPoint1           String?  @map("hero_point_1") @db.VarChar(100)
+  heroPoint2           String?  @map("hero_point_2") @db.VarChar(100)
+  heroPoint3           String?  @map("hero_point_3") @db.VarChar(100)
+  heroSubtitle         String?  @map("hero_subtitle") @db.VarChar(255)
+  heroColorTitle       String?  @map("hero_title") @db.VarChar(255)
+  heroTrustText        String?  @map("hero_trust_text") @db.VarChar(255)
 
   @@map("pages")
 }
@@ -94,18 +107,24 @@ model Footer {
   updatedAt     DateTime @updatedAt
   logoAlt       String?
   logoUrl       String?
+  mobileLogoUrl   String?  @map("mobile_logo_url")
+  mobileLogoAlt   String?  @map("mobile_logo_alt")
 }
 
 model Feature {
   id           Int      @id @default(autoincrement())
   title        String   @db.VarChar(255)
   description  String
-  iconType     String   @map("icon_type") @db.VarChar(100)
   createdAt    DateTime @default(now()) @map("created_at")
-  mainTitle    Json?
-  buttonText   String?  @default("Book Now") @db.VarChar(50)
-  buttonLink   String?  @default("https://portail.driverconnect.fr/vtc-fils/template?DS=1&tkn=00001_3739617_-1157023572_1769256160266")
-  openInNewTab Boolean  @default(false)
+  buttonText   String?  @default("Explore") @db.VarChar(100)
+  buttonLink   String?  @db.VarChar(500)
+  category     String?  @db.VarChar(100)
+  imageAlt     String?  @map("image_alt") @db.VarChar(255)
+  imageUrl     String?  @map("image_url") @db.VarChar(500)
+  isActive     Boolean  @default(true) @map("is_active")
+  openInNewTab Boolean  @default(false) @map("open_in_new_tab")
+  sortOrder    Int      @default(0) @map("sort_order")
+  updatedAt    DateTime @default(now()) @updatedAt @map("updated_at")
 
   @@map("features")
 }

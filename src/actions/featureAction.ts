@@ -1,76 +1,51 @@
+// src/actions/featureAction.ts
 "use server";
 
-import { prisma } from "@/src/lib/prisma";
+import { prisma } from "@/src/lib/prisma"; // adjust to your prisma client path
 import { revalidatePath } from "next/cache";
 
 export async function saveFeatureAction(formData: FormData) {
   try {
-    const id = formData.get("id") as string;
-    const title = formData.get("title") as string;
-    const description = formData.get("description") as string;
-    const iconType = formData.get("iconType") as string;
-    const buttonText = formData.get("buttonText") as string;
-    const buttonLink = formData.get("buttonLink") as string; // Correctly extract link
-    const mainTitleRaw = formData.get("mainTitle") as string;
+    const id = formData.get("id");
 
-    // Validation
-    if (!title || !description || !iconType) {
-      return {
-        success: false,
-        error: "Title, description, and icon are required.",
-      };
-    }
-    const openInNewTab = formData.get("openInNewTab") === "true";
-    // Prepare data object
-    // Note: We use JSON structure for mainTitle based on your schema
+    // ── Read every field explicitly by its FormData key ──
     const data = {
-      title,
-      description,
-      iconType,
-      buttonText: buttonText || "Book Now",
-      buttonLink: buttonLink || null,
-      mainTitle: mainTitleRaw ? { text: mainTitleRaw } : undefined,
-      openInNewTab,
+      category: (formData.get("category") as string) || null,
+      imageUrl: (formData.get("imageUrl") as string) || null, // ← KEY FIX
+      imageAlt: (formData.get("imageAlt") as string) || null,
+      title: formData.get("title") as string,
+      description: formData.get("description") as string,
+      buttonText: (formData.get("buttonText") as string) || "Explore",
+      buttonLink: (formData.get("buttonLink") as string) || null,
+      openInNewTab: formData.get("openInNewTab") === "true",
+      sortOrder: Number(formData.get("sortOrder") ?? 0),
+      isActive: formData.get("isActive") !== "false",
     };
 
-    if (id && id.trim() !== "") {
-      // --- UPDATE LOGIC ---
+    if (id) {
       await prisma.feature.update({
-        where: { id: parseInt(id) },
-        data: data,
+        where: { id: Number(id) },
+        data,
       });
     } else {
-      // --- CREATE LOGIC ---
-      await prisma.feature.create({
-        data: data,
-      });
+      await prisma.feature.create({ data });
     }
 
-    // Trigger UI updates
-    revalidatePath("/admin/feature-editor");
-    revalidatePath("/");
-
+    revalidatePath("/admin/page-editor"); // adjust to your path
     return { success: true };
   } catch (error) {
-    console.error("Failed to save feature:", error);
-    return { success: false, error: "Internal Server Error during save." };
+    console.error("saveFeatureAction error:", error);
+    return { success: false, error: "Failed to save feature." };
   }
 }
 
 export async function deleteFeatureAction(id: number) {
   try {
-    if (!id) throw new Error("ID is required");
-
-    await prisma.feature.delete({
-      where: { id: Number(id) },
-    });
-
-    revalidatePath("/admin/features-editor");
-    revalidatePath("/");
-
+    await prisma.feature.delete({ where: { id } });
+    revalidatePath("/admin/page-editor");
     return { success: true };
   } catch (error) {
-    console.error("Failed to delete feature:", error);
-    return { success: false, error: "Failed to delete from database." };
+    console.error("deleteFeatureAction error:", error);
+    return { success: false, error: "Failed to delete feature." };
   }
 }

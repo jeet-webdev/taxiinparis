@@ -44,7 +44,7 @@ export default async function TermsPage() {
     <>
       <DarkLuxuryBlock>
         <Content data={{ title: page?.title, content: page?.content }} />
-          <TestimonialsSection />
+        <TestimonialsSection />
       </DarkLuxuryBlock>
     </>
   );

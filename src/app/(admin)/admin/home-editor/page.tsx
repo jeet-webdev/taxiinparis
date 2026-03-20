@@ -38,6 +38,19 @@ export default async function HomeEditorPage() {
     metaDescription: page.metaDescription ?? "",
     metaKeywords: page.metaKeywords ?? "",
     status: (page.status as "active" | "inactive") ?? "active",
+    heroColorTitle: page.heroColorTitle ?? "",
+    heroSubtitle: page.heroSubtitle ?? "",
+    heroDescription: page.heroDescription ?? "",
+    heroButtonText: page.heroButtonText ?? "",
+    heroButtonLink: page.heroButtonLink ?? "",
+    heroTrustText: page.heroTrustText ?? "",
+    heroPoint1: page.heroPoint1 ?? "",
+    heroPoint2: page.heroPoint2 ?? "",
+    heroPoint3: page.heroPoint3 ?? "",
+    heroCard1Title: page.heroCard1Title ?? "",
+    heroCard2Title: page.heroCard2Title ?? "",
+    heroCard3Title: page.heroCard3Title ?? "",
+    heroCardFootnote: page.heroCardFootnote ?? "",
   };
 
   async function handleSave(data: UpdatePageInput) {

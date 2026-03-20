@@ -1,18 +1,3 @@
-// "use server";
-
-// import { prisma } from "@/src/lib/prisma";
-
-// export async function getCategories() {
-//   return prisma.category.findMany({
-//     orderBy: { createdAt: "desc" },
-//   });
-// }
-
-// export async function getCategoryById(id: number) {
-//   return prisma.category.findUnique({ where: { id } });
-// }
-
-// src/actions/category/getCategory.ts
 "use server";
 // Use the direct import. Ensure this path is correct based on your project structure.
 import { prisma } from "@/src/lib/prisma";
