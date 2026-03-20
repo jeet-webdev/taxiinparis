@@ -106,7 +106,7 @@ export default function Navbar({ footerData }: NavbarProps) {
             <div>
               <LanguageDropdown />
             </div>
-            <div className="btn-primary !font-logo hidden md:block">
+            <div className="btn-primary font-logo! hidden md:block">
               Book Now
             </div>
           </div>
@@ -114,7 +114,7 @@ export default function Navbar({ footerData }: NavbarProps) {
 
         {/* Mobile Menu Overlay */}
         <div
-          className={`fixed inset-0 top-[80px] bg-[#0A0F1C] z-[90] transition-all duration-300 ease-in-out ${
+          className={`fixed inset-0 top-16 bg-[#0A0F1C] z-90 transition-all duration-300 ease-in-out ${
             isOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full"
           } lg:hidden`}
         >
@@ -136,4 +136,3 @@ export default function Navbar({ footerData }: NavbarProps) {
     </header>
   );
 }
-
