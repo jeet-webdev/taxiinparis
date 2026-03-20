@@ -2,19 +2,27 @@
 import { Box } from "@mui/material";
 import { motion, Variants } from "framer-motion";
 import { getIconComponent } from "@/src/components/common/utils/iconMap";
-import { VerifiedUser } from "@mui/icons-material";
-import { useMemo } from "react";
 
 interface CommitmentSectionProps {
   title?: string | null;
   subtitle?: string | null;
   highlightText?: string | null;
+  heroPoint1?: string | null;
+  heroPoint2?: string | null;
+  
+heroCardFootnote?: string | null;
+  heroPoint3?: string | null;
+  heroTrustText?: string | null;
   description?: string | null;
+  ctaButtonText?: string | null;
+  heroButtonLink?: string | null;
   secureBookingTitle?: string | null;
   reliableServiceTitle?: string | null;
   fairPriceTitle?: string | null;
   customerServiceTitle?: string | null;
-
+heroCard1Title?: string | null;
+heroCard2Title?: string | null;
+heroCard3Title?: string | null;
   secureBooking?: string | null;
   reliableService?: string | null;
   fairPrice?: string | null;
@@ -30,6 +38,12 @@ export default function CommitmentSection({
   title,
   subtitle,
   description,
+  heroCard1Title,
+  heroCard2Title,
+  heroCard3Title,
+  ctaButtonText,
+  heroButtonLink,
+  heroCardFootnote,
   secureBookingTitle,
   reliableServiceTitle,
   fairPriceTitle,
@@ -38,6 +52,7 @@ export default function CommitmentSection({
   secureBooking,
   reliableService,
   fairPrice,
+  heroTrustText,heroPoint1,heroPoint2,heroPoint3,
   customerService,
 
   secureBookingIcon,
@@ -163,8 +178,15 @@ export default function CommitmentSection({
                     "Travel in comfort, discretion and elegance with our premium chauffeur service in Paris."}
                 </p>
 
-                <button className="btn-primary font-logo! ">
-                  Book Your Chauffeur
+                <button
+                  className="btn-primary font-logo! "
+                  onClick={() => {
+                    if (heroButtonLink) {
+                      window.location.href = heroButtonLink;
+                    }
+                  }}
+                >
+                  {ctaButtonText || "Book Your Chauffeur"}
                 </button>
               </motion.div>
             </motion.div>
@@ -181,7 +203,7 @@ export default function CommitmentSection({
                 <span className="text-[#C9A45C] text-lg">★★★★★</span>
 
                 <span className="text-xl text-gray-600">
-                  Trusted by international travelers
+                 {heroTrustText || "Trusted by international travelers"}
                 </span>
               </motion.div>
 
@@ -190,7 +212,7 @@ export default function CommitmentSection({
                 variants={cardVariants}
                 className="text-lg text-center text-gray-500"
               >
-                ✔ Fixed price • No hidden fees • Instant confirmation
+                ✔ {heroPoint1 || "Fixed price"} • {heroPoint2 || "No hidden fees"} • {heroPoint3 || "Instant confirmation"}
               </motion.div>
 
               {/* icons row */}
@@ -198,14 +220,13 @@ export default function CommitmentSection({
                 variants={cardVariants}
                 className="flex flex-wrap gap-6 mt-3"
               >
-                {features.slice(0, 3).map((item, i) => {
+                {[{ title: heroCard1Title,  },
+                  { title: heroCard2Title, },
+                  { title: heroCard3Title,}].slice(0, 3).map((item, i) => {
                   if (!item.title) return null;
-
-                  const Icon = getIconComponent(item.iconName);
 
                   return (
                     <div key={i} className="flex items-start gap-2 w-[130px]">
-                      <Icon sx={{ fontSize: 18, color: "#C6A85A" }} />
 
                       <span className="text-sm text-gray-500 leading-tight">
                         {item.title}

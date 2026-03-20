@@ -53,6 +53,20 @@ export default async function HomePage() {
           <TestimonialCard />
 
           <CommitmentSection
+            highlightText={page?.heroColorTitle}
+            subtitle={page?.heroSubtitle}
+            description={page?.heroDescription}
+            ctaButtonText={page?.heroButtonText}
+            heroButtonLink={page?.heroButtonLink}
+            heroTrustText={page?.heroTrustText}
+            heroPoint1={page?.heroPoint1}
+            heroPoint2={page?.heroPoint2}
+            heroCard1Title={page?.heroCard1Title}
+            heroCardFootnote={page?.heroCardFootnote}
+           
+            heroCard2Title={page?.heroCard2Title}
+            heroCard3Title={page?.heroCard3Title}
+            heroPoint3={page?.heroPoint3}
             title={page?.title}
             reliableServiceTitle={page?.reliableServiceTitle}
             customerServiceTitle={page?.customerServiceTitle}

@@ -107,8 +107,8 @@ model Footer {
   updatedAt     DateTime @updatedAt
   logoAlt       String?
   logoUrl       String?
-  mobileLogoUrl   String?  @map("mobile_logo_url")
-  mobileLogoAlt   String?  @map("mobile_logo_alt")
+  mobileLogoAlt String?  @map("mobile_logo_alt")
+  mobileLogoUrl String?  @map("mobile_logo_url")
 }
 
 model Feature {
