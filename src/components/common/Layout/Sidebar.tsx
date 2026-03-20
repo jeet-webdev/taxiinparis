@@ -21,6 +21,7 @@ import { RiPagesLine } from "react-icons/ri";
 import { TbLayoutNavbarCollapseFilled } from "react-icons/tb";
 import { TbLayoutBottombarCollapseFilled } from "react-icons/tb";
 import { MdFeaturedPlayList } from "react-icons/md";
+import { TbLayersDifference } from "react-icons/tb";
 
 import { MdCreditScore } from "react-icons/md";
 interface SidebarProps {
@@ -63,7 +64,7 @@ export const SIDEBAR_MENU = [
       {
         name: "Category",
         link: "/admin/categories",
-        icon: <MdFeaturedPlayList size={20} />,
+        icon: <TbLayersDifference size={20} />,
       },
 
       {
