@@ -47,7 +47,7 @@ export default async function HomePage() {
     <>
       <HeroSection img={page?.imageUpload} alt={page.imageAlt} />
 
-      <TestimonialCard />
+      {/* <TestimonialCard /> */}
       <DarkLuxuryBlock>
         <CommitmentSection
           title={page?.title}

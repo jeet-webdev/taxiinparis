@@ -36,7 +36,7 @@ const StarRating = ({ rating }: { rating: number }) => (
 // }
 async function getReviews(): Promise<GoogleReview[]> {
   const apiKey = process.env.GOOGLE_PLACES_API_KEY;
-  const placeId = "ChIJm_rvs3hm5kcRtcMPDil_et4";
+  const placeId = "ChIJm_rvs3hm5kcRtcMPDil_et4-testtesttest";
 
   // Google only returns up to 5 reviews in a single Place Details request.
   const res = await fetch(

@@ -33,21 +33,19 @@ model Page {
   fairPriceIcon        String?
   reliableServiceIcon  String?
   secureBookingIcon    String?
-
-  //heroTitle            String?  @map("hero_title") @db.VarChar(255)    use the title
-  heroColorTitle       String?  @map("hero_title") @db.VarChar(255)
-  heroSubtitle         String?  @map("hero_subtitle") @db.VarChar(255)
-  heroDescription      String?  @map("hero_description")
-  heroButtonText       String?  @map("hero_button_text") @db.VarChar(100)
   heroButtonLink       String?  @map("hero_button_link") @db.VarChar(255)
-  heroTrustText        String?  @map("hero_trust_text") @db.VarChar(255)
-  heroPoint1           String?  @map("hero_point_1") @db.VarChar(100)
-  heroPoint2           String?  @map("hero_point_2") @db.VarChar(100)
-  heroPoint3           String?  @map("hero_point_3") @db.VarChar(100)
+  heroButtonText       String?  @map("hero_button_text") @db.VarChar(100)
   heroCard1Title       String?  @map("hero_card1_title") @db.VarChar(100)
   heroCard2Title       String?  @map("hero_card2_title") @db.VarChar(100)
   heroCard3Title       String?  @map("hero_card3_title") @db.VarChar(100)
   heroCardFootnote     String?  @map("hero_card_footnote") @db.VarChar(255)
+  heroDescription      String?  @map("hero_description")
+  heroPoint1           String?  @map("hero_point_1") @db.VarChar(100)
+  heroPoint2           String?  @map("hero_point_2") @db.VarChar(100)
+  heroPoint3           String?  @map("hero_point_3") @db.VarChar(100)
+  heroSubtitle         String?  @map("hero_subtitle") @db.VarChar(255)
+  heroColorTitle       String?  @map("hero_title") @db.VarChar(255)
+  heroTrustText        String?  @map("hero_trust_text") @db.VarChar(255)
 
   @@map("pages")
 }
