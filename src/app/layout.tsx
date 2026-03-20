@@ -80,6 +80,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
+        suppressHydrationWarning
         className={`${montserrat.variable} ${cinzel.variable} ${playfair.variable} ${greatVibes.variable} font-sans`}
       >
         {children}
