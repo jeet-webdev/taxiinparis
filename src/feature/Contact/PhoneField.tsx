@@ -85,9 +85,19 @@ export default function PhoneField() {
         <input
           type="tel"
           value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          placeholder="612 345 678"
-          className="flex-1 p-2.5 outline-none bg-transparent text-sm text-white-800"
+          onChange={(e) => {
+            const value = e.target.value.replace(/\D/g, ""); // only numbers
+
+            if (value.length <= 10) {
+              setPhone(value);
+            }
+          }}
+          placeholder="6123456789"
+          maxLength={10}
+          inputMode="numeric"
+          pattern="[0-9]{10}"
+          required
+          className="flex-1 p-2.5 outline-none bg-transparent text-sm text-black"
         />
       </div>
     </div>

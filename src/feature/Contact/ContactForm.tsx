@@ -61,7 +61,7 @@
 //       {/* Name & Surname */}
 //       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 //         <div className="space-y-2">
-//           <label className="text-sm font-semibold text-[#d4af6a]">Name *</label>
+//           <label className="text-sm font-semibold text-[#C8954A]">Name *</label>
 //           <input
 //             name="name"
 //             type="text"
@@ -70,7 +70,7 @@
 //           />
 //         </div>
 //         <div className="space-y-2">
-//           <label className="text-sm font-semibold text-[#d4af6a]">
+//           <label className="text-sm font-semibold text-[#C8954A]">
 //             Surname *
 //           </label>
 //           <input
@@ -85,7 +85,7 @@
 //       {/* Email & Phone with Flag Selector */}
 //       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 //         <div className="space-y-2">
-//           <label className="text-sm font-semibold text-[#d4af6a]">
+//           <label className="text-sm font-semibold text-[#C8954A]">
 //             Email *
 //           </label>
 //           <input
@@ -96,14 +96,14 @@
 //           />
 //         </div>
 //         <div className="space-y-2">
-//           <label className="text-sm font-semibold text-[#d4af6a]">Phone</label>
+//           <label className="text-sm font-semibold text-[#C8954A]">Phone</label>
 //       <PhoneField/>
 //         </div>
 //       </div>
 
 //       {/* Message */}
 //       <div className="space-y-2">
-//         <label className="text-sm font-semibold text-[#d4af6a]">
+//         <label className="text-sm font-semibold text-[#C8954A]">
 //           Message *
 //         </label>
 //         <textarea
@@ -116,7 +116,7 @@
 
 //       {/* Math Solver */}
 //       <div className="max-w-[200px] space-y-2">
-//         <label className="text-sm font-semibold text-[#d4af6a] italic">
+//         <label className="text-sm font-semibold text-[#C8954A] italic">
 //           Solve: 4 + 7 = ?
 //         </label>
 //         <input
@@ -177,22 +177,22 @@ export default function ContactForm() {
       {/* Name & Surname */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-[#d4af6a]">Name *</label>
+          <label className="text-sm font-semibold text-[#C8954A]">Name *</label>
           <input
             name="name"
             type="text"
-            className={`w-full p-2.5 border rounded focus:ring-1 focus:ring-amber-500 outline-none transition-all ${fe?.name ? "border-amber-500" : "border-gray-300"}`}
+            className={`w-full p-2.5 border text-black rounded focus:ring-1 focus:ring-amber-500 outline-none transition-all ${fe?.name ? "border-amber-500" : "border-gray-300"}`}
           />
           {fe?.name && <p className="text-amber-500 text-xs">{fe.name[0]}</p>}
         </div>
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-[#d4af6a]">
+          <label className="text-sm font-semibold text-[#C8954A]">
             Surname *
           </label>
           <input
             name="surname"
             type="text"
-            className={`w-full p-2.5 border rounded focus:ring-1 focus:ring-amber-500 outline-none transition-all ${fe?.surname ? "border-amber-500" : "border-gray-300"}`}
+            className={`w-full p-2.5 border text-black rounded focus:ring-1 focus:ring-amber-500 outline-none transition-all ${fe?.surname ? "border-amber-500" : "border-gray-300"}`}
           />
           {fe?.surname && (
             <p className="text-amber-500 text-xs">{fe.surname[0]}</p>
@@ -203,18 +203,18 @@ export default function ContactForm() {
       {/* Email & Phone */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-[#d4af6a]">
+          <label className="text-sm font-semibold text-[#C8954A]">
             Email *
           </label>
           <input
             name="email"
             type="text"
-            className={`w-full p-2.5 border rounded focus:ring-1 focus:ring-amber-500 outline-none transition-all ${fe?.email ? "border-amber-500" : "border-gray-300"}`}
+            className={`w-full p-2.5 border text-black rounded focus:ring-1 focus:ring-amber-500 outline-none transition-all ${fe?.email ? "border-amber-500" : "border-gray-300"}`}
           />
           {fe?.email && <p className="text-amber-500 text-xs">{fe.email[0]}</p>}
         </div>
         <div className="space-y-2">
-          <label className="text-sm font-semibold text-[#d4af6a]">Phone</label>
+          <label className="text-sm font-semibold text-[#C8954A]">Phone</label>
           <PhoneField />
           {fe?.phone && (
             <p className="text-amber-500 focus:ring-amber-500  text-xs">
@@ -226,13 +226,13 @@ export default function ContactForm() {
 
       {/* Message */}
       <div className="space-y-2">
-        <label className="text-sm font-semibold text-[#d4af6a]">
+        <label className="text-sm font-semibold text-[#C8954A]">
           Message *
         </label>
         <textarea
           name="message"
           rows={5}
-          className={`w-full p-2.5 border rounded focus:ring-1 focus:ring-amber-500 outline-none resize-none transition-all ${fe?.message ? "border-amber-500" : "border-gray-300"}`}
+          className={`w-full p-2.5 border text-black rounded focus:ring-1 focus:ring-amber-500 outline-none resize-none transition-all ${fe?.message ? "border-amber-500" : "border-gray-300"}`}
         />
         {fe?.message && (
           <p className="text-amber-500 text-xs">{fe.message[0]}</p>
@@ -241,14 +241,14 @@ export default function ContactForm() {
 
       {/* Captcha */}
       <div className="max-w-[200px] space-y-2">
-        <label className="text-sm font-semibold text-[#d4af6a] italic">
+        <label className="text-sm font-semibold text-[#C8954A] italic">
           Solve: 4 + 7 = ?
         </label>
         <input
           name="captcha"
           type="text"
           placeholder="Answer"
-          className={`w-full p-2.5 border rounded outline-none focus:ring-1 focus:ring-amber-500 transition-all ${fe?.captcha ? "border-amber-500" : "border-gray-300"}`}
+          className={`w-full p-2.5 border text-black rounded outline-none focus:ring-1 focus:ring-amber-500 transition-all ${fe?.captcha ? "border-amber-500" : "border-gray-300"}`}
         />
         {fe?.captcha && (
           <p className="text-amber-500 text-xs">{fe.captcha[0]}</p>
@@ -260,7 +260,7 @@ export default function ContactForm() {
         <button
           type="submit"
           disabled={isPending}
-          className="px-10 py-2.5 bg-[#D4AF6A] text-black text-lg hover:text-white font-semibold rounded-md hover:bg-black transition-all duration-300 hover:scale-105 shadow-lg"
+          className="btn-primary font-logo"
         >
           {isPending ? "Sending..." : "Send"}
         </button>

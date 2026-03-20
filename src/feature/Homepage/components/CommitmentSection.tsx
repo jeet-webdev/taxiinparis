@@ -1,5 +1,4 @@
 "use client";
-
 import { Box } from "@mui/material";
 import { motion, Variants } from "framer-motion";
 import { getIconComponent } from "@/src/components/common/utils/iconMap";
@@ -9,6 +8,7 @@ import { useMemo } from "react";
 interface CommitmentSectionProps {
   title?: string | null;
   subtitle?: string | null;
+  highlightText?: string | null;
   description?: string | null;
   secureBookingTitle?: string | null;
   reliableServiceTitle?: string | null;
@@ -34,7 +34,7 @@ export default function CommitmentSection({
   reliableServiceTitle,
   fairPriceTitle,
   customerServiceTitle,
-
+  highlightText,
   secureBooking,
   reliableService,
   fairPrice,
@@ -94,7 +94,7 @@ export default function CommitmentSection({
     <section
       className="relative py-12"
       // style={{
-      //   backgroundImage: "url('/assets/bg-1.png')",
+      //   backgroundImage: "url('/assets/bg-1.jpg')",
       //   backgroundSize: "cover",
       //   backgroundPosition: "center",
       // }}
@@ -120,7 +120,6 @@ export default function CommitmentSection({
           >
             {title || "Luxury Chauffeur Paris"}
           </motion.h2>
-
           <motion.h2
             variants={{
               hidden: { opacity: 0, y: 40 },
@@ -130,77 +129,103 @@ export default function CommitmentSection({
                 transition: { duration: 0.7 },
               },
             }}
-            className="text-xl md:text-2xl font-heading my-4 text-gray-600 tracking-wide"
+            className="text-3xl md:text-3xl italic font-heading text-[#C6A85A] "
           >
-            {subtitle || "Private Transfer & Premium VTC Services in Paris"}
+            {highlightText || "in Paris"}
           </motion.h2>
-        </motion.div>
+          {/* ✅ GRID */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="flex flex-col lg:flex-row justify-between gap-12 lg:gap-30 items-start"
+          >
+            <motion.div>
+              <motion.h2
+                variants={{
+                  hidden: { opacity: 0, y: 40 },
+                  visible: {
+                    opacity: 1,
+                    y: 0,
+                    transition: { duration: 0.7 },
+                  },
+                }}
+                className="text-xl md:text-2xl font-heading my-4 text-gray-600 tracking-wide"
+              >
+                {subtitle ||
+                  "Private Airport Transfer & Premium VTC Services in Paris"}
+              </motion.h2>
 
-        {/* ✅ GRID */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="grid md:grid-cols-2 gap-12 items-start"
-        >
-          {/* LEFT */}
-          <motion.div variants={cardVariants}>
-            <p className="text-gray-500 font-sans mb-6">
-              {description ||
-                "Travel in comfort, discretion and elegance with our premium chauffeur service in Paris."}
-            </p>
+              <motion.div variants={cardVariants}>
+                <p className="text-gray-500 font-sans mb-6">
+                  {description ||
+                    "Travel in comfort, discretion and elegance with our premium chauffeur service in Paris."}
+                </p>
 
-            <div className="grid grid-cols-3 gap-4 mb-6">
-              {["24/7 Availability", "Fixed Price", "Discreet Chauffeurs"]
-                .slice(0, 3)
-                .map((item, i) => {
+                <button className="btn-primary font-logo! ">
+                  Book Your Chauffeur
+                </button>
+              </motion.div>
+            </motion.div>
+            {/* RIGHT TRUST BLOCK */}
+            <motion.div
+              variants={containerVariants}
+              className="space-y-4 text-[#2A2A2A]"
+            >
+              {/* Stars */}
+              <motion.div
+                variants={cardVariants}
+                className="flex items-center gap-2"
+              >
+                <span className="text-[#C9A45C] text-lg">★★★★★</span>
+
+                <span className="text-xl text-gray-600">
+                  Trusted by international travelers
+                </span>
+              </motion.div>
+
+              {/* small info */}
+              <motion.div
+                variants={cardVariants}
+                className="text-lg text-center text-gray-500"
+              >
+                ✔ Fixed price • No hidden fees • Instant confirmation
+              </motion.div>
+
+              {/* icons row */}
+              <motion.div
+                variants={cardVariants}
+                className="flex flex-wrap gap-6 mt-3"
+              >
+                {features.slice(0, 3).map((item, i) => {
+                  if (!item.title) return null;
+
+                  const Icon = getIconComponent(item.iconName);
+
                   return (
-                    <div key={i} className="flex gap-2 items-center">
-                      <VerifiedUser sx={{ fontSize: 20, color: "#C9A45C" }} />
-                      <span className="text-[#2A2A2A]">{item}</span>
+                    <div key={i} className="flex items-start gap-2 w-[130px]">
+                      <Icon sx={{ fontSize: 18, color: "#C6A85A" }} />
+
+                      <span className="text-sm text-gray-500 leading-tight">
+                        {item.title}
+                      </span>
                     </div>
                   );
                 })}
-            </div>
+              </motion.div>
 
-            <button className="btn-primary font-logo! ">
-              Book Your Chauffeur
-            </button>
+              {/* bottom text */}
+              <motion.div
+                variants={cardVariants}
+                className="text-lg text-center border-t text-gray-500 py-2"
+              >
+                We use Mercedes & luxury vehicles only.
+              </motion.div>
+            </motion.div>
           </motion.div>
 
-          {/* RIGHT FEATURES */}
-          <motion.div variants={containerVariants} className="space-y-3">
-            {features.map((item, i) => {
-              const plainText = useMemo(() => {
-                return item?.description?.replace(/<[^>]+>/g, "") ?? "";
-              }, [item?.description]);
-
-              // Approximate length check (adjust 250 if needed)
-              // const isLongContent = plainText.length > 250;
-              if (!item.description) return null;
-
-              const Icon = getIconComponent(item.iconName);
-
-              return (
-                <motion.div
-                  key={i}
-                  variants={cardVariants}
-                  className="flex gap-4"
-                >
-                  <Icon sx={{ fontSize: 20, mt: 0.5, color: "#C9A45C" }} />
-
-                  <div>
-                    <h4 className="font-heading text-gray-600 text-xl ">
-                      {item.title}
-                    </h4>
-
-                    <p className="text-sm text-gray-600">{plainText}</p>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </motion.div>
+          {/* LEFT */}
         </motion.div>
       </Box>
     </section>
