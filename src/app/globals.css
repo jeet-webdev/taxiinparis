@@ -21,6 +21,32 @@ body {
   font-size: 0px !important;
 }
 
+.btn-primary {
+ background: #C6A85A;
+ color: #FFFFFF;
+ padding: 12px 28px;
+ border-radius: 8px;
+ font-weight: 600;
+ border: none;
+ transition: all 0.3s ease;
+}
+.btn-primary:hover {
+ background: #A88435;
+ transform: translateY(-1px);
+}
+.btn-secondary {
+ background: transparent;
+ color: #C6A85A;
+ border: 1px solid #C6A85A;
+ padding: 14px 28px;
+ border-radius: 8px;
+ font-weight: 600;
+}
+.btn-secondary:hover {
+ background: #C6A85A;
+ color: #FFFFFF;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

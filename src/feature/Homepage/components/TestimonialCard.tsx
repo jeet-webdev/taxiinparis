@@ -11,8 +11,8 @@ interface GoogleReview {
 
 const StarRating = ({ rating }: { rating: number }) => (
   <div className="text-sm  font-semibold">
-    <span className="text-[#D4AF6A] ">{"★".repeat(rating)}</span>
-    <span className="text-[#D4AF6A] ml-1">5/5</span>
+    <span className="text-[#C6A85A] ">{"★".repeat(rating)}</span>
+    <span className="text-[#C6A85A] ml-1">5/5</span>
   </div>
 );
 
@@ -59,28 +59,17 @@ export default async function TestimonialCard() {
   return (
     <section className="relative py-20 px-6 overflow-hidden">
       {/* Background Image Layer */}
-      <div className="absolute inset-0 z-0">
-        <Image
-          src="/assets/images/pexels-jarod.jpg" // REPLACE with your image in public folder
-          alt="Background"
-          fill
-          className="object-cover"
-          priority
-        />
-        {/* Dark overlay for readability */}
-        <div className="absolute inset-0 bg-black/70" />
-      </div>
 
       {/* Content Layer */}
       <div className="relative z-10 max-w-6xl mx-auto text-center">
         <div className="mb-16">
-          <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-4 tracking-tight">
+          <h2 className="text-xl md:text-3xl font-heading text-[#2A2A2A] font-medium tracking-wide text-center">
             Trusted by Travelers in{" "}
-            <span className="text-[#D4AF6A]">Paris</span>
+            <span className="text-[#C6A85A]">Paris</span>
           </h2>
-          <div className="flex items-center justify-center gap-2 text-white font-medium">
+          <div className="flex items-center justify-center gap-2 text-[#2A2A2A] font-medium">
             <span>4.0</span>
-            <span className="text-[#D4AF6A]">★★★★☆</span>
+            <span className="text-[#C6A85A]">★★★★☆</span>
             <span>based on 56 verified Google reviews</span>
           </div>
         </div>
@@ -118,7 +107,7 @@ export default async function TestimonialCard() {
             href="https://www.google.com/maps/place/?q=place_id:ChIJm_rvs3hm5kcRtcMPDil_et4"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-8 py-3 bg-[#D4AF6A] text-white font-semibold rounded-full hover:bg-black transition-all duration-300 hover:scale-105 shadow-lg"
+            className="btn-primary font-logo shadow-lg"
           >
             View All Reviews on Google
           </a>

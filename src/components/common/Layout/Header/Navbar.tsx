@@ -37,8 +37,8 @@ export default function Navbar({ footerData }: NavbarProps) {
   }, [isOpen]);
 
   return (
-    <header className="relative z-[100] bg-[#0B0F1A]">
-      <nav className="max-w-7xl mx-auto px-4 py-4 md:px-6">
+    <header className="relative z-[100] bg-[#F5F1EB] ">
+      <nav className="max-w-7xl mx-auto px-4 py-2 md:px-6">
         <div className="flex items-center justify-between">
           {/* Hamburger (Left on mobile only) */}
           <div className="md:hidden">
@@ -93,7 +93,7 @@ export default function Navbar({ footerData }: NavbarProps) {
               <li key={item.url}>
                 <Link
                   href={item.url}
-                  className="text-[#D4AF6A] text-base hover:text-white transition-colors"
+                  className="text-[#2A2A2A] font-medium !font-heading text-base hover:text-[#C6A85A] transition-colors"
                 >
                   {item.label}
                 </Link>
@@ -102,8 +102,13 @@ export default function Navbar({ footerData }: NavbarProps) {
           </ul>
 
           {/* Language Dropdown - Far Right */}
-          <div className="flex items-center">
-            <LanguageDropdown />
+          <div className="flex items-center justify-between gap-4">
+            <div>
+              <LanguageDropdown />
+            </div>
+            <div className="btn-primary !font-logo hidden md:block">
+              Book Now
+            </div>
           </div>
         </div>
 
@@ -131,3 +136,4 @@ export default function Navbar({ footerData }: NavbarProps) {
     </header>
   );
 }
+
