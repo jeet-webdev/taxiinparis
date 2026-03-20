@@ -7,25 +7,31 @@ interface HeroSectionProps {
 }
 export default function HeroSection({ img, alt }: HeroSectionProps) {
   return (
-    <section className="relative min-h-screen w-full">
+    <section className="relative min-h-screen w-full overflow-hidden">
       {/* Background Image */}
       <Image
-        src={img ?? "/assets/images/hero-img.jpeg"}
+        src={img ?? "/assets/taxi.jpg"}
         alt={alt || "Luxury Car"}
         fill
         priority
-        className="
-    object-cover object-center
-    max-[640px]:!relative
-    max-[640px]:!h-[250px]
-  "
+        className="!relative object-top inset-0 object-cover object-center"
+        //       className="
+        //   object-cover object-center
+        //   max-[640px]:!relative
+        //   max-[640px]:!h-[250px]
+        // "
       />
 
       {/* Content Container */}
-      <div className="relative z-10 max-w-7xl mx-auto min-h-screen flex flex-col md:flex-row items-center justify-center md:justify-end px-0 md:px-6 py-0 md:py-10">
+      <div
+        className="absolute top-[160px] right-0 z-10 max-w-7xl mx-auto min-h-screen flex flex-col md:flex-row items-center justify-center md:justify-end px-0 md:px-6 py-0 md:py-10 
+
+md:absolute md:top-36 md:right-20 
+static !min-h-0 h-auto block !p-0"
+      >
         <div
           className="
-  w-full md:w-[375px] h-[710px]
+  w-full md:w-[375px]  h-[710px]
   rounded-xl
   taxi-calculator
 "

@@ -43,29 +43,33 @@ export default async function HomePage() {
   if (!page || page.status === "inactive") {
     notFound();
   }
+  console.log("🚀 ~ file: page.tsx:24 ~ HomePage ~ page:", page);
   return (
     <>
-      <HeroSection img={page?.imageUpload} alt={page.imageAlt} />
+      <div className="">
+        <HeroSection img={page?.imageUpload} alt={page?.imageAlt} />
 
-      {/* <TestimonialCard /> */}
-      <DarkLuxuryBlock>
-        <CommitmentSection
-          title={page?.title}
-          reliableServiceTitle={page?.reliableServiceTitle}
-          customerServiceTitle={page?.customerServiceTitle}
-          secureBookingTitle={page?.secureBookingTitle}
-          fairPriceTitle={page?.fairPriceTitle}
-          customerService={page?.customerService}
-          fairPrice={page?.fairPrice}
-          reliableService={page?.reliableService}
-          secureBooking={page?.secureBooking}
-          secureBookingIcon={page.secureBookingIcon}
-          reliableServiceIcon={page.reliableServiceIcon}
-          fairPriceIcon={page.fairPriceIcon}
-          customerServiceIcon={page.customerServiceIcon}
-        />
-        <TestimonialsSection />
-      </DarkLuxuryBlock>
+        <DarkLuxuryBlock>
+          <TestimonialCard />
+
+          <CommitmentSection
+            title={page?.title}
+            reliableServiceTitle={page?.reliableServiceTitle}
+            customerServiceTitle={page?.customerServiceTitle}
+            secureBookingTitle={page?.secureBookingTitle}
+            fairPriceTitle={page?.fairPriceTitle}
+            customerService={page?.customerService}
+            fairPrice={page?.fairPrice}
+            reliableService={page?.reliableService}
+            secureBooking={page?.secureBooking}
+            secureBookingIcon={page?.secureBookingIcon}
+            reliableServiceIcon={page?.reliableServiceIcon}
+            fairPriceIcon={page?.fairPriceIcon}
+            customerServiceIcon={page?.customerServiceIcon}
+          />
+          <TestimonialsSection />
+        </DarkLuxuryBlock>
+      </div>
     </>
   );
 }
