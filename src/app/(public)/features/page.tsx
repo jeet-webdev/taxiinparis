@@ -1,7 +1,6 @@
 import { prisma } from "@/src/lib/prisma";
 import Link from "next/link";
 import Image from "next/image";
-import { FeatureItem } from "@/src/feature/page-editor/features/types/feature.types";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -14,25 +13,23 @@ export default async function WhyChooseUsSection() {
   });
 
   return (
-    <section className="py-12 sm:py-16 lg:py-20">
+    <section className="py-2 sm:py-6 lg:py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Heading (UNCHANGED STYLE) */}
-        <h2
-          className="text-3xl md:text-4xl font-semibold text-center mb-12 text-[#C8954A]"
-          style={{ fontFamily: "Georgia, serif", color: "#C8954A" }}
-        >
-          Why Choose Us
+        <h2 className="text-xl md:text-3xl font-heading font-medium tracking-wide text-center mb-12 text-[#C8954A]">
+          Simplify your travel with our chauffeur service in Paris.Book now and
+          experience the ultimate in comfort, style, and reliability.
         </h2>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {features.map((item: FeatureItem) => (
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          {features.map((item) => (
             <article
               key={item.id}
-              className="group flex flex-col h-full rounded-md overflow-hidden bg-white border border-gray-100 shadow-sm hover:shadow-md transition-shadow duration-300"
+              className="group flex flex-col h-full overflow-hidden bg-[#f1eee7]  shadow-sm hover:shadow-md transition-shadow duration-300"
             >
               {/* Image (RESPONSIVE FIX ONLY) */}
-              <div className="relative w-full aspect-[4/3] bg-gray-100">
+              <div className="relative w-full aspect-4/3 bg-gray-100">
                 {item.imageUrl ? (
                   <Image
                     src={item.imageUrl}
@@ -66,23 +63,20 @@ export default async function WhyChooseUsSection() {
                 {/* Category (EXACT SAME) */}
                 {item.category && (
                   <span
-                    className="text-[10px] font-bold tracking-[0.2em] uppercase mb-2 block"
-                    style={{ color: "#C8954A" }}
+                    className="text-base font-medium uppercase  block"
+                    style={{ color: "#9C7A2B" }}
                   >
                     {item.category}
                   </span>
                 )}
 
                 {/* Title (EXACT SAME) */}
-                <h3
-                  className="text-base font-semibold text-gray-900 mb-3 leading-snug"
-                  style={{ fontFamily: "Georgia, serif" }}
-                >
+                <h3 className="text-lg font-medium text-black my-1.5 leading-snug">
                   {item.title}
                 </h3>
 
                 {/* Description (EXACT SAME) */}
-                <p className="text-sm text-gray-500 leading-relaxed flex-grow mb-5">
+                <p className="text-sm text-gray-600 leading-relaxed grow">
                   {item.description}
                 </p>
 
@@ -91,9 +85,9 @@ export default async function WhyChooseUsSection() {
                   href={item.buttonLink || "#"}
                   target={item.openInNewTab ? "_blank" : "_self"}
                   rel={item.openInNewTab ? "noopener noreferrer" : undefined}
-                  className="group/cta flex items-center justify-between pt-4 border-t border-gray-100"
+                  className="group/cta flex items-center gap-4 justify-end pt-4 "
                 >
-                  <span className="text-[10px] font-bold tracking-[0.15em] uppercase text-gray-800 group-hover/cta:text-gray-500 transition-colors duration-200 pr-4 leading-relaxed">
+                  <span className="text-base text-gray-800 group-hover/cta:text-gray-500 transition-colors duration-200 pr-4 leading-relaxed">
                     {item.buttonText || "Explore"}
                   </span>
 
