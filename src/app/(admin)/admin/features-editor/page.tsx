@@ -19,7 +19,7 @@ export default async function FeatureEditorPage() {
           <p className="text-xs font-semibold tracking-[0.25em] uppercase text-[#D4AF6A]/60 mb-2">
             Page Editor
           </p>
-          <h1 className=" text-[#000] font-serif font-semibold text-white">
+          <h1 className=" text-[#000] font-serif font-semibold">
             Feature Section
           </h1>
           <p className="text-sm text-gray-500 mt-1">
