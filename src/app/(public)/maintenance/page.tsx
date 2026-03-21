@@ -1,13 +1,11 @@
-import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
-import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
 import type { Metadata } from "next";
-import Link from "next/link";
+
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
+
 export const metadata: Metadata = {
   title: "Maintenance | Paris Black Car",
-  description:
-    "We're performing scheduled maintenance. Please check back again shortly.",
+  description: "Site under maintenance",
   robots: {
     index: false,
     follow: false,
@@ -16,41 +14,98 @@ export const metadata: Metadata = {
 
 export default function MaintenancePage() {
   return (
-    <DarkLuxuryBlock>
-      <section className="min-h-[70vh] flex items-center justify-center px-6 py-16">
-        <div className="w-full max-w-2xl rounded-2xl border border-white/10 bg-black/30 backdrop-blur-sm p-10 text-center shadow-2xl">
-          <p className="text-amber-500 text-xs font-semibold tracking-[0.35em]">
+    <>
+      <style>
+        {`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}
+      </style>
+
+      <div
+        style={{
+          minHeight: "100vh",
+          background: "#0b0b0b",
+          color: "white",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: "-apple-system, Arial, sans-serif",
+          padding: "20px",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "520px",
+            width: "100%",
+            textAlign: "center",
+            padding: "40px",
+            borderRadius: "16px",
+            border: "1px solid rgba(255,255,255,0.1)",
+            background: "rgba(255,255,255,0.05)",
+            backdropFilter: "blur(12px)",
+            boxShadow: "0 20px 60px rgba(0,0,0,0.6)",
+          }}
+        >
+          <p
+            style={{
+              color: "#f59e0b",
+              letterSpacing: "4px",
+              fontSize: "12px",
+              fontWeight: 600,
+            }}
+          >
             TEMPORARILY UNAVAILABLE
           </p>
-          <h1 className="mt-5 text-4xl md:text-5xl font-heading font-bold tracking-widest">
-            We&apos;ll be back soon
+
+          <h1
+            style={{
+              fontSize: "34px",
+              marginTop: "20px",
+            }}
+          >
+            We will be back soon
           </h1>
-          <p className="mt-5 text-white/70 leading-relaxed">
-            Paris Black Car is currently undergoing maintenance. Please try
-            again in a few minutes.
+
+          <p
+            style={{
+              marginTop: "16px",
+              color: "#cccccc",
+              lineHeight: 1.6,
+            }}
+          >
+            Luxury Limo Paris is currently undergoing maintenance.
+            <br />
+            We are improving your experience.
           </p>
 
-          <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Link
-              href="/"
-              className="w-full sm:w-auto rounded-xl bg-amber-500 px-7 py-3 text-sm font-semibold tracking-wide text-black hover:bg-amber-400 transition-colors"
-            >
-              Back to Home
-            </Link>
-            <Link
-              href="/contact"
-              className="w-full sm:w-auto rounded-xl border border-white/15 bg-white/5 px-7 py-3 text-sm font-semibold tracking-wide text-white hover:bg-white/10 transition-colors"
-            >
-              Contact Us
-            </Link>
-          </div>
+          <div
+            style={{
+              marginTop: "30px",
+              width: "42px",
+              height: "42px",
+              border: "4px solid rgba(255,255,255,0.2)",
+              borderTop: "4px solid #f59e0b",
+              borderRadius: "50%",
+              marginLeft: "auto",
+              marginRight: "auto",
+              animation: "spin 1s linear infinite",
+            }}
+          />
 
-          <p className="mt-8 text-xs text-white/50">
-            Need help now? Send us a message via the contact form.
+          <p
+            style={{
+              marginTop: "20px",
+              fontSize: "12px",
+              color: "#888",
+            }}
+          >
+            Thank you for your patience
           </p>
         </div>
-      </section>
-        <TestimonialsSection />
-    </DarkLuxuryBlock>
+      </div>
+    </>
   );
 }
