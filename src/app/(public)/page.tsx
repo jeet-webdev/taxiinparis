@@ -43,7 +43,7 @@ export default async function HomePage() {
   if (!page || page.status === "inactive") {
     notFound();
   }
-  console.log("🚀 ~ file: page.tsx:24 ~ HomePage ~ page:", page);
+  // console.log("🚀 ~ file: page.tsx:24 ~ HomePage ~ page:", page);
   return (
     <>
       <div className="">
@@ -63,7 +63,6 @@ export default async function HomePage() {
             heroPoint2={page?.heroPoint2}
             heroCard1Title={page?.heroCard1Title}
             heroCardFootnote={page?.heroCardFootnote}
-           
             heroCard2Title={page?.heroCard2Title}
             heroCard3Title={page?.heroCard3Title}
             heroPoint3={page?.heroPoint3}
