@@ -23,6 +23,8 @@ import { TbLayoutBottombarCollapseFilled } from "react-icons/tb";
 import { MdFeaturedPlayList } from "react-icons/md";
 import { TbLayersDifference } from "react-icons/tb";
 import { TbMessageLanguage } from "react-icons/tb";
+import { MdOutlineSettings } from "react-icons/md";
+import { MdOutlineFeaturedPlayList } from "react-icons/md";
 
 import { MdCreditScore } from "react-icons/md";
 interface SidebarProps {
@@ -65,12 +67,17 @@ export const SIDEBAR_MENU = [
       {
         name: "Features",
         link: "/admin/features-editor",
-        icon: <MdFeaturedPlayList size={20} />,
+        icon: <MdOutlineFeaturedPlayList size={20} />,
       },
       {
         name: "Category",
         link: "/admin/categories",
         icon: <TbLayersDifference size={20} />,
+      },
+      {
+        name: "Setting",
+        icon: <MdOutlineSettings size={20} />,
+        children: [{ name: "Email Setting", link: "/admin/email-setting" }],
       },
 
       {
