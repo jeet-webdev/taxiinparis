@@ -147,18 +147,18 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
         {/* APP DOWNLOAD */}
         <div className="pt-4">
           {/* Title */}
-          <h4 className="text-4xl font-heading font-medium text-black md:mb-2">
+          <h4 className="text-2xl font-heading font-medium text-black md:mb-2">
             {footerData.title}
           </h4>
 
-          <div className="border-y border-black/20 py-3">
+          <div className="border-b border-black/20 py-3">
             {/* Title */}
-            <h3 className="text-start font-mono tracking-tight text-black text-lg sm:text-xl font-medium mb-2">
+            {/* <h3 className="text-start font-mono tracking-tight text-black text-lg sm:text-xl font-medium mb-2">
               Download our app for priority booking
-            </h3>
+            </h3> */}
 
             {/* Buttons */}
-            <div className="flex flex-row justify-start gap-4 sm:gap-5">
+            {/* <div className="flex flex-row justify-start gap-4 sm:gap-5">
               {visibleLinks.map((app, index) => {
                 if (app.platform === "google_play") {
                   return (
@@ -194,7 +194,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
 
                 return null;
               })}
-            </div>
+            </div> */}
           </div>
         </div>
 
