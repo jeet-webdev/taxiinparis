@@ -24,7 +24,7 @@ export default function Content({ data: { title, content } }: ContentProps) {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
             viewport={{ once: true }}
-            className="text-xl md:text-3xl font-heading font-medium tracking-wide text-center mb-12 text-[#C8954A]"
+            className="text-xl md:text-3xl font-heading font-medium tracking-wide text-center mb-12 text-[#8B6C26]"
           >
             {title}
           </motion.h1>
@@ -37,7 +37,7 @@ export default function Content({ data: { title, content } }: ContentProps) {
             whileInView={{ width: "120px" }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
-            className="h-px bg-[#C8954A] mx-auto mb-4"
+            className="h-px bg-[#8B6C26] mx-auto mb-4"
           />
         )}
 
@@ -53,16 +53,16 @@ export default function Content({ data: { title, content } }: ContentProps) {
               leading-relaxed
               [&_h2]:text-3xl
               [&_h2]:font-serif
-              [&_h2]:text-[#C8954A]
+              [&_h2]:text-[#8B6C26]
               [&_h2]:mt-12
               [&_h2]:mb-6
               [&_h2]:border-b
-              [&_h2]:border-[#C8954A]/30
+              [&_h2]:border-[#8B6C26]/30
               [&_h2]:pb-3
               [&_p]:mb-6
-              [&_strong]:text-[#C8954A]
+              [&_strong]:text-[#8B6C26]
               [&_strong]:font-heading
-              [&_a]:text-[#C8954A]
+              [&_a]:text-[#8B6C26]
               [&_a]:no-underline
               [&_ul]:list-disc
               [&_ul]:pl-6

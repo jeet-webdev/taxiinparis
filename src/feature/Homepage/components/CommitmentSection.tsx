@@ -85,6 +85,17 @@ export default function CommitmentSection({
     },
   };
 
+
+
+const iconPulse = {
+  animate: {
+    scale: [1, 1.2, 1],
+    transition: {
+      repeat: Infinity,
+      duration: 1.5,
+    },
+  },
+};
   const features = [
     {
       title: secureBookingTitle,
@@ -119,46 +130,48 @@ export default function CommitmentSection({
     >
       <Box className="max-w-378 mx-auto px-6">
         {/* ✅ HEADING SAME MOTION */}
+        {/* LEFT */}
         <motion.div
+          variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="text-start "
+          className="flex flex-col lg:flex-row justify-between gap-12 lg:gap-8 items-start"
         >
-          <motion.h2
-            variants={{
-              hidden: { opacity: 0, y: 40 },
-              visible: {
-                opacity: 1,
-                y: 0,
-                transition: { duration: 0.7 },
-              },
-            }}
-            className="text-3xl md:text-3xl font-heading text-[#2A2A2A] "
-          >
-            {title || "Luxury Chauffeur Paris"}
-          </motion.h2>
-          <motion.h2
-            variants={{
-              hidden: { opacity: 0, y: 40 },
-              visible: {
-                opacity: 1,
-                y: 0,
-                transition: { duration: 0.7 },
-              },
-            }}
-            className="text-3xl md:text-3xl italic font-heading text-[#C6A85A] "
-          >
-            {highlightText || "in Paris"}
-          </motion.h2>
-          {/* ✅ GRID */}
           <motion.div
-            variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="flex flex-col lg:flex-row justify-between gap-12 lg:gap-30 items-start"
+            className="text-start "
           >
+            <motion.h2
+              variants={{
+                hidden: { opacity: 0, y: 40 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 0.7 },
+                },
+              }}
+              className="text-3xl md:text-3xl font-heading text-[#2A2A2A] "
+            >
+              {title || "Luxury Chauffeur Paris"}
+            </motion.h2>
+            <motion.h2
+              variants={{
+                hidden: { opacity: 0, y: 40 },
+                visible: {
+                  opacity: 1,
+                  y: 0,
+                  transition: { duration: 0.7 },
+                },
+              }}
+              className="text-3xl md:text-3xl italic font-heading text-[#C6A85A] "
+            >
+              {highlightText || "in Paris"}
+            </motion.h2>
+            {/* ✅ GRID */}
+
             <motion.div>
               <motion.h2
                 variants={{
@@ -169,14 +182,14 @@ export default function CommitmentSection({
                     transition: { duration: 0.7 },
                   },
                 }}
-                className="text-xl md:text-2xl font-heading my-4 text-gray-600 tracking-wide"
+                className="text-xl md:text-2xl font-heading my-4 text-black tracking-wide"
               >
                 {subtitle ||
                   "Private Airport Transfer & Premium VTC Services in Paris"}
               </motion.h2>
 
               <motion.div variants={cardVariants}>
-                <p className="text-gray-500 font-sans mb-6">
+                <p className="text-black font-sans mb-6">
                   {description ||
                     "Travel in comfort, discretion and elegance with our premium chauffeur service in Paris."}
                 </p>
@@ -193,82 +206,81 @@ export default function CommitmentSection({
                 </button>
               </motion.div>
             </motion.div>
+
             {/* RIGHT TRUST BLOCK */}
+          </motion.div>
+          <motion.div
+            variants={containerVariants}
+            className="space-y-4 border-3 lg:p-4 p-2  border-[#8b6c26] rounded-xl  text-[#2A2A2A]"
+          >
+            {/* Stars */}
             <motion.div
-              variants={containerVariants}
-              className="space-y-4 border-3 lg:p-4 p-2  border-[#8b6c26] rounded-xl  text-[#2A2A2A]"
+              variants={cardVariants}
+              className="flex items-start lg:items-center gap-2"
             >
-              {/* Stars */}
-              <motion.div
-                variants={cardVariants}
-                className="flex items-start lg:items-center gap-2"
-              >
-                <span className="text-[#A88435] text-xl">★★★★★</span>
+              <span className="text-[#A88435] text-xl">★★★★★</span>
 
-                <span className="text-xl text-[#A88435] lg:text-gray-600 ">
-                  {heroTrustText || "Trusted by international travelers"}
-                </span>
-              </motion.div>
+              <span className="text-xl text-[#A88435] lg:text-black ">
+                {heroTrustText || "Trusted by international travelers"}
+              </span>
+            </motion.div>
 
-              {/* small info */}
+            {/* small info */}
 
-              <motion.div
-                variants={cardVariants}
-                className="w-full max-w-xs mx-auto text-start text-gray-600"
-              >
-                {/* Points */}
-                <div className="space-y-2 text-sm leading-relaxed">
-                  <p>✔ {heroPoint1 || "Fixed price"}</p>
-                  <p>✔ {heroPoint2 || "No hidden fees"}</p>
-                  <p>✔ {heroPoint3 || "Instant confirmation"}</p>
-                </div>
+            <motion.div
+              variants={cardVariants}
+              className="w-full max-w-xs mx-auto text-start text-black"
+            >
+              {/* Points */}
+              <div className="space-y-1 text-sm leading-relaxed">
+                <p>✔ {heroPoint1 || "Fixed price"}</p>
+                <p>✔ {heroPoint2 || "No hidden fees"}</p>
+                <p>✔ {heroPoint3 || "Instant confirmation"}</p>
+              </div>
 
-                {/* Divider */}
-                <div className="flex items-center justify-center mt-4">
-                  <div className="h-px bg-[#A88435] flex-1"></div>
+              {/* Divider */}
+              <div className="flex items-center justify-center mt-1.5">
+                <div className="h-px bg-[#A88435] flex-1"></div>
 
-                  {/* Diamond */}
-                  <div className="mx-2 text-[#A88435] text-xs">◆</div>
+                {/* Diamond */}
+                <div className="mx-2 text-[#A88435] text-xs">◆</div>
 
-                  <div className="h-px bg-[#A88435] flex-1"></div>
-                </div>
-              </motion.div>
+                <div className="h-px bg-[#A88435] flex-1"></div>
+              </div>
+            </motion.div>
 
-              {/* icons row */}
-              <motion.div
-                variants={cardVariants}
-                className="flex flex-wrap gap-2 mt-3"
-              >
-                {[
-                  { title: heroCard1Title },
-                  { title: heroCard2Title },
-                  { title: heroCard3Title },
-                ]
-                  .slice(0, 3)
-                  .map((item, i) => {
-                    if (!item.title) return null;
+            {/* icons row */}
+            <motion.div
+              variants={cardVariants}
+              className="flex flex-wrap gap-2 mt-3"
+            >
+              {[
+                { title: heroCard1Title },
+                { title: heroCard2Title },
+                { title: heroCard3Title },
+              ]
+                .slice(0, 3)
+                .map((item, i) => {
+                  if (!item.title) return null;
 
-                    return (
-                      <div key={i} className="flex items-start gap-2 w-[140px]">
-                        <span className="text-sm text-black-500 leading-tight">
-                          {item.title}
-                        </span>
-                      </div>
-                    );
-                  })}
-              </motion.div>
+                  return (
+                    <div key={i} className="flex items-start gap-2 w-[140px]">
+                      <span className="text-sm text-black-500 leading-tight">
+                        {item.title}
+                      </span>
+                    </div>
+                  );
+                })}
+            </motion.div>
 
-              {/* bottom text */}
-              <motion.div
-                variants={cardVariants}
-                className="text-lg text-center border-t text-black-500 py-2"
-              >
-                We use Mercedes & luxury vehicles only.
-              </motion.div>
+            {/* bottom text */}
+            <motion.div
+              variants={cardVariants}
+              className="text-lg text-center border-t text-black-500 py-2"
+            >
+              We use Mercedes & luxury vehicles only.
             </motion.div>
           </motion.div>
-
-          {/* LEFT */}
         </motion.div>
       </Box>
     </section>

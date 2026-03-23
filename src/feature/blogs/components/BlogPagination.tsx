@@ -29,18 +29,18 @@ export default function BlogPagination({ totalPages, currentPage }: BlogPaginati
             href={`/blog${item.page === 1 ? "" : `?page=${item.page}`}`}
             {...item}
             sx={{
-              color: "#d4af6a",
-              borderColor: "rgba(212, 175, 106, 0.3)",
+              color: "#8B6C26",
+              borderColor: "rgba(139, 108, 38, 0.3)",
               "&.Mui-selected": {
-                backgroundColor: "#d4af6a",
-                color: "#292d37",
+                backgroundColor: "#8B6C26",
+                color: "#fff",
                 "&:hover": {
                   backgroundColor: "#c19b5a",
                 },
               },
               "&:hover": {
-                borderColor: "#d4af6a",
-                backgroundColor: "rgba(212, 175, 106, 0.1)",
+                borderColor: "#8B6C26",
+                backgroundColor: "rgba(139, 108, 38, 0.1)",
               },
               "& .MuiPaginationItem-icon": {
                 fontSize: "1.5rem",

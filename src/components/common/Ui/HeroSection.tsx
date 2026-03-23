@@ -26,7 +26,7 @@ export default function HeroSection({ img, alt }: HeroSectionProps) {
       <div
         className="absolute top-[160px] right-0 z-10 max-w-7xl mx-auto min-h-screen flex flex-col md:flex-row items-center justify-center md:justify-end px-0 md:px-6 py-0 md:py-10 
 ![@media(max-width:1200px)]:top-[4%]
-md:absolute md:top-36 md:right-20 
+md:absolute md:top-16 md:right-8 
 static !min-h-0 h-auto block !p-0"
       >
         <div

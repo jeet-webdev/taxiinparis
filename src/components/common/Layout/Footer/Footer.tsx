@@ -146,41 +146,54 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
         {/* APP DOWNLOAD */}
         <div className="pt-4">
           {/* Title */}
-          <h4 className="text-base md:text-lg font-medium text-black md:mb-2">
+          <h4 className="text-4xl font-heading font-medium text-black md:mb-2">
             {footerData.title}
           </h4>
 
-          <div className="flex pt-2 border-y border-black/800 flex-col gap-2">
-            {visibleLinks.map((app, index) => {
-              if (app.platform === "google_play") {
-                return (
-                  <Link key={index} href={app.url} target="_blank">
-                    <Image
-                      src="/assets/images/google-play-store.png"
-                      alt="Google Play"
-                      width={170}
-                      height={55}
-                      className="transition-transform duration-300 hover:scale-105 cursor-pointer"
-                    />
-                  </Link>
-                );
-              }
-              if (app.platform === "app_store") {
-                return (
-                  <Link key={index} href={app.url} target="_blank">
-                    <Image
-                      src="/assets/images/app-store-1.png"
-                      alt="App Store"
-                      width={170}
-                      height={55}
-                      className="transition-transform duration-300 hover:scale-105 cursor-pointer"
-                    />
-                  </Link>
-                );
-              }
+          <div className="border-y border-black/20 py-3">
+            {/* Title */}
+            <h3 className="text-start font-mono tracking-tight text-black text-lg sm:text-xl font-medium mb-2">
+              Download our app for priority booking
+            </h3>
 
-              return null;
-            })}
+            {/* Buttons */}
+            <div className="flex flex-row justify-start gap-4 sm:gap-5">
+              {visibleLinks.map((app, index) => {
+                if (app.platform === "google_play") {
+                  return (
+                    <Link key={index} href={app.url} target="_blank">
+                      <div className="appBadge">
+                        <Image
+                          src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
+                          alt="Google Play"
+                          width={240}
+                          height={80}
+                          className="h-15 w-auto"
+                        />
+                      </div>
+                    </Link>
+                  );
+                }
+
+                if (app.platform === "app_store") {
+                  return (
+                    <Link key={index} href={app.url} target="_blank">
+                      <div className="appBadge">
+                        <Image
+                          src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
+                          alt="App Store"
+                          width={240}
+                          height={80}
+                          className="h-15 w-auto"
+                        />
+                      </div>
+                    </Link>
+                  );
+                }
+
+                return null;
+              })}
+            </div>
           </div>
         </div>
 
@@ -205,7 +218,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                 </div>
 
                 {/* Tagline */}
-                <p className="text-sm text-black opacity-50 font-medium leading-relaxed mb-4">
+                <p className="text-sm text-black/75 font-medium leading-relaxed mb-4">
                   {footerData.tagline}
                 </p>
 
@@ -298,7 +311,10 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                 <ul className="space-y-2 text-base">
                   {quickLinks.map((link, i) => (
                     <li key={i}>
-                      <Link href={link.url} className="text-black hover:text-[#8b6c26] transition-colors">
+                      <Link
+                        href={link.url}
+                        className="text-black hover:text-[#8b6c26] transition-colors"
+                      >
                         {link.label}
                       </Link>
                     </li>
@@ -321,7 +337,10 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                 <ul className="space-y-2 text-base">
                   {quickLinks.map((link, i) => (
                     <li key={i}>
-                      <Link href={link.url} className="text-black hover:text-[#8b6c26] transition-colors">
+                      <Link
+                        href={link.url}
+                        className="text-black hover:text-[#8b6c26] transition-colors"
+                      >
                         {link.label}
                       </Link>
                     </li>

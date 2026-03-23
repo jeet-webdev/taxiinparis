@@ -36,8 +36,8 @@ body {
 }
 .btn-secondary {
  background: transparent;
- color: #8a6c26;
- border: 1px solid #8a6c26;
+ color: #A88435;
+ border: 4px solid #8a6c26;
  padding: 14px 28px;
  border-radius: 8px;
  font-weight: 600;
@@ -107,6 +107,23 @@ body {
   .prose h6 {
     @apply mt-6 mb-3;
   }
+}
+
+.appBadge {
+  border: 1px solid #C8A96A;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+  padding: 2px;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+}
+
+.appBadge:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25);
 }
 /* TipTap Heading Styles */
 .tiptap h1 {

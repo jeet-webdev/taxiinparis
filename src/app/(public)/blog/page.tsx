@@ -34,11 +34,11 @@ export default async function BlogPage({ searchParams }: Props) {
       <DarkLuxuryBlock>
         <section className="py-16 ">
           <div className="text-center px-6">
-            <h1 className="text-4xl md:text-5xl font-light text-[#d4af6a] mb-2 tracking-tight">
+            <h1 className="text-4xl md:text-5xl font-light text-[#8B6C26] mb-2 tracking-tight">
               Our Blogs
             </h1>
-            <div className="h-1 w-24 bg-[#d4af6a] mx-auto relative">
-              <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-[#d4af6a] rotate-45" />
+            <div className="h-1 w-24 bg-[#8B6C26] mx-auto relative">
+              <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-[#8B6C26] rotate-45" />
             </div>
           </div>
         </section>
@@ -64,7 +64,7 @@ export default async function BlogPage({ searchParams }: Props) {
                     <Link
                       key={blog.id}
                       href={`/blog/${blog.slug}`}
-                      className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-amber-400 flex flex-col h-full"
+                      className="group bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-2xl transition-all duration-300 border border-gray-100 hover:border-[#A88435] flex flex-col h-full"
                     >
                       <div className="relative w-full aspect-[4/3] overflow-hidden">
                         {firstImage ? (
@@ -89,7 +89,7 @@ export default async function BlogPage({ searchParams }: Props) {
                         <p className="text-gray-500 text-sm flex-grow line-clamp-3">
                           {previewText}
                         </p>
-                        <span className="mt-4 text-amber-500 font-medium text-sm uppercase tracking-wider">
+                        <span className="mt-4 text-[#8B6C26] font-medium text-sm uppercase tracking-wider">
                           Read More →
                         </span>
                       </div>
