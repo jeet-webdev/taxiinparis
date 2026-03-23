@@ -252,20 +252,18 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                       </a>
                     </li>
                   )}
+                    
+                    <li className="flex items-center gap-3 text-black opacity-50 font-medium hover:text-[#8b6c26] transition-colors">
+                      <WhatsApp className="text-black/900" sx={{ fontSize: 15 }} />
 
-                  <li className="flex items-center gap-3 text-black opacity-50 font-medium hover:text-[#8b6c26] transition-colors">
-                    <WhatsApp
-                      className="text-black/900"
-                      sx={{ fontSize: 15 }}
-                    />
-
-                    <a
-                      href={`https://wa.me/+33184190997`}
-                      className="text-sm hover:opacity-100 transition"
-                    >
-                      +33184190997
-                    </a>
-                  </li>
+                      <a
+                        href={`https://wa.me/+33184190997`}
+                        className="text-sm hover:opacity-100 transition"
+                      >
+                        +33184190997
+                      </a>
+                    </li>
+            
 
                   {footerData.address && (
                     <li className="flex items-center gap-3 text-black opacity-50 hover:text-[#8b6c26] transition-colors font-medium">
