@@ -150,11 +150,11 @@ export default async function TestimonialCard() {
         <div className="mb-16">
           <h2 className="text-xl md:text-3xl font-heading text-[#2A2A2A] font-medium tracking-wide">
             Trusted by Travelers in{" "}
-            <span className="text-[#C6A85A]">Paris</span>
+            <span className="text-[#8B6C26]">Paris</span>
           </h2>
           <div className="flex items-center justify-center gap-2 text-[#2A2A2A] font-medium mt-2">
             <span>5.0</span>
-            <span className="text-[#C6A85A]">★★★★★</span>
+            <span className="text-[#8B6C26]">★★★★★</span>
             <span>based on verified Google reviews</span>
           </div>
         </div>
@@ -198,7 +198,7 @@ export default async function TestimonialCard() {
             href="https://maps.google.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block bg-[#C6A85A] text-white px-8 py-3 rounded-full font-medium shadow-lg hover:bg-[#b5964a] transition-colors"
+            className="btn-primary font-logo! "
           >
             View All Reviews on Google
           </a>

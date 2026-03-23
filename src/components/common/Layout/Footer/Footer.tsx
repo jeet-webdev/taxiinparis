@@ -10,6 +10,7 @@ import {
   YouTube,
   LocationCity,
   Phone,
+  WhatsApp,
 } from "@mui/icons-material";
 import MarkEmailReadIcon from "@mui/icons-material/MarkEmailRead";
 import XIcon from "@mui/icons-material/X";
@@ -64,7 +65,7 @@ const PAYMENT_ICONS = {
   amex: "/assets/images/amex-3.svg",
   paypal: "/assets/images/paypal3.svg",
   applepay: "/assets/images/Apple_Pay-Logo.wine.svg",
-  gpay: "/assets/images/gpay.svg",
+  gpay: "/assets/images/google-pay.svg",
 };
 
 const iconMap: Record<string, React.ElementType> = {
@@ -251,6 +252,20 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                       </a>
                     </li>
                   )}
+
+                  <li className="flex items-center gap-3 text-black opacity-50 font-medium hover:text-[#8b6c26] transition-colors">
+                    <WhatsApp
+                      className="text-black/900"
+                      sx={{ fontSize: 15 }}
+                    />
+
+                    <a
+                      href={`https://wa.me/+33184190997`}
+                      className="text-sm hover:opacity-100 transition"
+                    >
+                      +33184190997
+                    </a>
+                  </li>
 
                   {footerData.address && (
                     <li className="flex items-center gap-3 text-black opacity-50 hover:text-[#8b6c26] transition-colors font-medium">
