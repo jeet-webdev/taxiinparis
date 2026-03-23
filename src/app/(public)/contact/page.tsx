@@ -50,11 +50,11 @@ export default async function ContactPage() {
         {/* Page Header */}
         <section className=" py-12">
           <div className="text-center px-6">
-            <h1 className="text-5xl font-light text-[#d4af6a] mb-4 tracking-tight">
+            <h1 className="text-5xl font-light text-[#8B6C26] mb-4 tracking-tight">
               Contact Us
             </h1>
-            <div className="h-[2px] w-28 bg-[#d4af6a] mx-auto relative">
-              <div className="absolute -top-[5px] left-1/2 -translate-x-1/2 w-3 h-3 bg-[#d4af6a] rotate-45" />
+            <div className="h-[2px] w-28 bg-[#8B6C26] mx-auto relative">
+              <div className="absolute -top-[5px] left-1/2 -translate-x-1/2 w-3 h-3 bg-[#8B6C26] rotate-45" />
             </div>
           </div>
         </section>

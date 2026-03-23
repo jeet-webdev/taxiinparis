@@ -17,7 +17,7 @@ export default function PhoneField() {
   const dialCode = "+" + getCountryCallingCode(country);
 
   return (
-    <div className="w-full border border-gray-300 rounded focus-within:ring-1 focus-within:ring-amber-500 transition-all">
+    <div className="w-full border border-gray-300 rounded focus-within:ring-1 focus-within:ring-[#8B6C26] transition-all">
       <div className="flex items-center">
         {/* Flag */}
         <div className="flex justify-center border-r border-gray-300">

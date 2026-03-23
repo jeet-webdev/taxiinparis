@@ -114,17 +114,17 @@ export default function Navbar({ footerData }: NavbarProps) {
 
         {/* Mobile Menu Overlay */}
         <div
-          className={`fixed inset-0 top-16 bg-[#0A0F1C] z-90 transition-all duration-300 ease-in-out ${
+          className={`fixed inset-0 top-16 bg-white z-90 transition-all duration-500 ease-in-out ${
             isOpen ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-full"
           } lg:hidden`}
         >
-          <ul className="flex flex-col items-center pt-10 gap-8">
+          <ul className="flex flex-col items-center pt-10 gap-4">
             {visibleLinks.map((item) => (
-              <li key={item.url} className="w-full text-center">
+              <li key={item.url} className="w-full text-start px-8">
                 <Link
                   href={item.url}
                   onClick={() => setIsOpen(false)}
-                  className="text-2xl text-[#D4AF6A] font-light tracking-[0.2em] block py-4 active:bg-white/5"
+                  className="text-xl text-[#8b6c26] font-light  block py-2 active:bg-white/5"
                 >
                   {item.label}
                 </Link>

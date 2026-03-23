@@ -59,11 +59,10 @@ export default async function WhyChooseUsSection({
                 <div className="flex flex-col flex-grow p-5">
                   {/* Category (EXACT SAME) */}
                   {item.category && (
-                    <span
-                      className="text-base font-medium uppercase  block"
-                      style={{ color: "#8b6c26" }}
-                    >
-                      {item.category}
+                    <span className="text-base font-medium font-sans p-0.5 rounded-full bg-[#8b6c26] text-white w-fit">
+                      <div className="border border-white px-3 py-1 rounded-full">
+                        {item.category}
+                      </div>
                     </span>
                   )}
 
@@ -73,7 +72,7 @@ export default async function WhyChooseUsSection({
                   </h3>
 
                   {/* Description (EXACT SAME) */}
-                  <p className="text-sm text-gray-600 leading-relaxed grow">
+                  <p className="text-sm text-black/75 leading-relaxed grow">
                     {item.description}
                   </p>
 
@@ -82,35 +81,39 @@ export default async function WhyChooseUsSection({
                     href={item.buttonLink || "#"}
                     target={item.openInNewTab ? "_blank" : "_self"}
                     rel={item.openInNewTab ? "noopener noreferrer" : undefined}
-                    className="group/cta flex items-center gap-4 justify-end pt-4 "
+                    className="group/cta mt-4  flex text-base items-center font-medium font-sans p-0.5 rounded-full bg-[#8b6c26] text-white w-fit transition-all duration-300 ease-out hover:bg-[#A88435] hover:text-white hover:shadow-lg hover:-translate-y-0.5 "
                   >
-                    <span className="text-base text-gray-800 group-hover/cta:text-gray-500 transition-colors duration-200 pr-4 leading-relaxed">
-                      {item.buttonText || "Explore"}
-                    </span>
-                    <div className="">
-                      <svg
-                        width="56"
-                        height="41"
-                        viewBox="0 0 56 41"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="rtl:rotate-180"
-                      >
-                        <rect
-                          x="0.5"
-                          y="1.49805"
-                          width="55"
-                          height="39"
-                          rx="19.5"
-                          className="stroke-[#8B6C26]/50 fill-transparent transition-all duration-300 group-hover/cta:fill-[#8B6C26]"
-                        />
+                    <div className="border border-white px-3 py-1 rounded-full flex items-center text-center justify-between gap-8 ">
+                      <span className="text-base text-white transition-colors duration-200">
+                        {item.buttonText || "Explore"}
+                      </span>
+                      <div className="ml-2 transition-all duration-300 group-hover/cta:translate-x-1">
+                        <svg
+                          width="20"
+                          height="20"
+                          viewBox="0 0 20 20"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="rtl:rotate-180"
+                        >
+                          <rect
+                            x="0.5"
+                            y="0.5"
+                            width="19"
+                            height="19"
+                            rx="9.5"
+                            className="transition-all duration-300"
+                          />
 
-                        <path
-                          d="M30.5 26.998C30.5 20.998 36 20.998 36 20.998M36 20.998C36 20.998 30.5 20.998 30.5 14.998M36 20.998H20"
-                          className="stroke-black transition-all duration-300 group-hover/cta:stroke-white"
-                          strokeLinejoin="bevel"
-                        />
-                      </svg>
+                          <path
+                            d="M10.5 13.998C10.5 7.998 16 7.998 16 7.998M16 7.998C16 7.998 10.5 7.998 10.5 1.998M16 7.998H4"
+                            stroke="#fff"
+                            strokeWidth="1.5"
+                            strokeLinejoin="bevel"
+                            className="transition-all duration-300"
+                          />
+                        </svg>
+                      </div>
                     </div>
                   </Link>
                 </div>
