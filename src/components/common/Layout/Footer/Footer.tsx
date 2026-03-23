@@ -9,6 +9,7 @@ import {
   Instagram,
   YouTube,
   LocationCity,
+  Phone,
 } from "@mui/icons-material";
 import MarkEmailReadIcon from "@mui/icons-material/MarkEmailRead";
 import XIcon from "@mui/icons-material/X";
@@ -150,36 +151,36 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
           </h4>
 
           <div className="flex pt-2 border-y border-black/800 flex-col gap-2">
-               {visibleLinks.map((app, index) => {
-            if (app.platform === "google_play") {
-              return (
-                <Link key={index} href={app.url} target="_blank">
-                  <Image
-                    src="/assets/images/google-play-store.png"
-                    alt="Google Play"
-                    width={170}
-                    height={55}
-                    className="transition-transform duration-300 hover:scale-105 cursor-pointer"
-                  />
-                </Link>
-              );
-            }
-            if (app.platform === "app_store") {
-              return (
-                <Link key={index} href={app.url} target="_blank">
-                  <Image
-                    src="/assets/images/app-store-1.png"
-                    alt="App Store"
-                    width={170}
-                    height={55}
-                    className="transition-transform duration-300 hover:scale-105 cursor-pointer"
-                  />
-                </Link>
-              );
-            }
+            {visibleLinks.map((app, index) => {
+              if (app.platform === "google_play") {
+                return (
+                  <Link key={index} href={app.url} target="_blank">
+                    <Image
+                      src="/assets/images/google-play-store.png"
+                      alt="Google Play"
+                      width={170}
+                      height={55}
+                      className="transition-transform duration-300 hover:scale-105 cursor-pointer"
+                    />
+                  </Link>
+                );
+              }
+              if (app.platform === "app_store") {
+                return (
+                  <Link key={index} href={app.url} target="_blank">
+                    <Image
+                      src="/assets/images/app-store-1.png"
+                      alt="App Store"
+                      width={170}
+                      height={55}
+                      className="transition-transform duration-300 hover:scale-105 cursor-pointer"
+                    />
+                  </Link>
+                );
+              }
 
-            return null;
-          })}
+              return null;
+            })}
           </div>
         </div>
 
@@ -211,19 +212,35 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                 {/* Info list */}
                 <ul className="space-y-3 text-sm">
                   {footerData.email && (
-                    <li className="flex flex-col sm:flex-row sm:items-center font-bold gap-1 sm:gap-3 text-black opacity-50 ">
+                    <li className="flex flex-col sm:flex-row sm:items-center font-bold gap-1 sm:gap-3 text-black opacity-50 hover:text-[#8b6c26] transition-colors">
                       <MarkEmailReadIcon
                         className="text-black/900"
                         sx={{ fontSize: 15 }}
                       />
-                      <span className="text-xs ">
+
+                      <a
+                        href={`mailto:${footerData.email}`}
+                        className="text-xs hover:opacity-100 transition"
+                      >
                         {footerData.email}
-                      </span>
+                      </a>
+                    </li>
+                  )}
+                  {footerData.phone && (
+                    <li className="flex items-center gap-3 text-black opacity-50 font-medium hover:text-[#8b6c26] transition-colors">
+                      <Phone className="text-black/900" sx={{ fontSize: 15 }} />
+
+                      <a
+                        href={`tel:${footerData.phone}`}
+                        className="text-sm hover:opacity-100 transition"
+                      >
+                        {footerData.phone}
+                      </a>
                     </li>
                   )}
 
                   {footerData.address && (
-                    <li className="flex items-center gap-3 text-black opacity-50 font-medium">
+                    <li className="flex items-center gap-3 text-black opacity-50 hover:text-[#8b6c26] transition-colors font-medium">
                       <LocationCity
                         className="text-black/900"
                         sx={{ fontSize: 15 }}
@@ -235,7 +252,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                   )}
 
                   {footerData.phone && (
-                    <li className="flex items-center gap-3 text-black opacity-50 font-medium">
+                    <li className="flex items-center gap-3 text-black opacity-50 hover:text-[#8b6c26] transition-colors font-medium">
                       <AccessTimeFilledIcon
                         className="text-black/900"
                         sx={{ fontSize: 15 }}
@@ -252,7 +269,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
               <div className="hidden md:block">
                 {firstCategory && (
                   <div className="mt-2">
-                    <h3 className="text-black opacity-50 font-semibold mb-6 text-base">
+                    <h3 className="text-black opacity-50  font-semibold mb-6 text-base">
                       {firstCategory.name}
                     </h3>
 
@@ -261,7 +278,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                         <li key={idx}>
                           <Link
                             href={`/category/${firstCategory.slug}/${page.slug}`}
-                            className="text-black  "
+                            className="text-black hover:text-[#8b6c26] transition-colors "
                           >
                             {page.title}
                           </Link>
@@ -281,10 +298,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                 <ul className="space-y-2 text-base">
                   {quickLinks.map((link, i) => (
                     <li key={i}>
-                      <Link
-                        href={link.url}
-                        className="text-black"
-                      >
+                      <Link href={link.url} className="text-black hover:text-[#8b6c26] transition-colors">
                         {link.label}
                       </Link>
                     </li>
@@ -307,10 +321,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                 <ul className="space-y-2 text-base">
                   {quickLinks.map((link, i) => (
                     <li key={i}>
-                      <Link
-                        href={link.url}
-                        className="text-black "
-                      >
+                      <Link href={link.url} className="text-black hover:text-[#8b6c26] transition-colors">
                         {link.label}
                       </Link>
                     </li>
@@ -329,7 +340,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                         <li key={idx}>
                           <Link
                             href={`/category/${firstCategory.slug}/${page.slug}`}
-                            className="text-black  "
+                            className="text-black hover:text-[#8b6c26] transition-colors "
                           >
                             {page.title}
                           </Link>
@@ -351,7 +362,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                       <li key={idx}>
                         <Link
                           href={`/category/${category.slug}/${page.slug}`}
-                          className="text-black "
+                          className="text-black hover:text-[#8b6c26] transition-colors"
                         >
                           {page.title}
                         </Link>
