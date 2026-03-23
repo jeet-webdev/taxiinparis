@@ -196,7 +196,7 @@ export default function CommitmentSection({
             {/* RIGHT TRUST BLOCK */}
             <motion.div
               variants={containerVariants}
-              className="space-y-4 text-[#2A2A2A]"
+              className="space-y-4 border-3 lg:p-4 p-2  border-[#8b6c26] rounded-xl  text-[#2A2A2A]"
             >
               {/* Stars */}
               <motion.div
@@ -249,7 +249,7 @@ export default function CommitmentSection({
                     if (!item.title) return null;
 
                     return (
-                      <div key={i} className="flex items-start gap-2 w-[160px]">
+                      <div key={i} className="flex items-start gap-2 w-[140px]">
                         <span className="text-sm text-black-500 leading-tight">
                           {item.title}
                         </span>
