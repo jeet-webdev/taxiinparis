@@ -192,7 +192,7 @@ export default async function SingleBlogPage({ params }: Props) {
 
         {/* --- TESTIMONIALS SECTION --- */}
         <section className="py-24 border-t border-white/10">
-          <div className="max-w-7xl mx-auto px-6">
+          <div className="max-w-378 mx-auto px-6">
             <TestimonialsSection />
           </div>
         </section>

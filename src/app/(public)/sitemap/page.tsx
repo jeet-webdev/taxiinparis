@@ -28,7 +28,7 @@ export default async function SitemapPage() {
   });
   return (
     <div className="min-h-screen bg-black text-white px-6 md:px-12 py-16">
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-378 mx-auto">
         {/* Title */}
         <h1 className="text-5xl font-bold mb-12">Sitemap</h1>
 

@@ -189,7 +189,7 @@ export default async function CategoryDetailPage({ params }: Props) {
 
         {/* Testimonials */}
         <section className="py-20 border-t border-white/5">
-          <div className="max-w-7xl mx-auto px-6">
+          <div className="max-w-378 mx-auto px-6">
             <TestimonialsSection />
           </div>
         </section>

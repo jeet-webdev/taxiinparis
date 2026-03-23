@@ -43,7 +43,7 @@ export default async function BlogPage({ searchParams }: Props) {
           </div>
         </section>
 
-        <section className="max-w-7xl mx-auto px-6 py-16">
+        <section className="max-w-378 mx-auto px-6 py-16">
           {blogs.length === 0 ? (
             <div className="text-center py-20 text-gray-500">
               No blog posts available.

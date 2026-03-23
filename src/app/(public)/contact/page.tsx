@@ -60,7 +60,7 @@ export default async function ContactPage() {
         </section>
 
         {/* Main Form and Widget Section */}
-        <section className="max-w-7xl mx-auto px-6 py-8">
+        <section className="max-w-378 mx-auto px-6 py-8">
           <div className="flex flex-col lg:flex-row gap-12">
             {/* Left Side: Map and Form */}
             <div className="flex-1">

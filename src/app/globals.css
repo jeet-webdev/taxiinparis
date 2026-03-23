@@ -22,7 +22,7 @@ body {
 }
 
 .btn-primary {
- background: #C6A85A;
+ background: #8a6c26;
  color: #FFFFFF;
  padding: 12px 28px;
  border-radius: 8px;
@@ -36,14 +36,14 @@ body {
 }
 .btn-secondary {
  background: transparent;
- color: #C6A85A;
- border: 1px solid #C6A85A;
+ color: #8a6c26;
+ border: 1px solid #8a6c26;
  padding: 14px 28px;
  border-radius: 8px;
  font-weight: 600;
 }
 .btn-secondary:hover {
- background: #C6A85A;
+ background: #A88435;
  color: #FFFFFF;
 }
 

@@ -62,7 +62,7 @@ const PAYMENT_ICONS = {
   mastercard: "/assets/images/mastercard1.svg",
   amex: "/assets/images/amex-3.svg",
   paypal: "/assets/images/paypal3.svg",
-  applepay: "/assets/images/applepay1.svg",
+  applepay: "/assets/images/Apple_Pay-Logo.wine.svg",
   gpay: "/assets/images/gpay.svg",
 };
 
@@ -140,16 +140,16 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
   const privacyLink = navLinks.find((link) => link.url === "/privacy");
 
   return (
-    <footer className="bg-[#0B0F1A] text-gray-300 pt-12 pb-8 border-t border-white/10 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl w-full mx-auto px-0 sm:px-6 lg:px-8">
+    <footer className="bg-[#F5F1EB] text-gray-300 pt-12 pb-8 border-t border-white/10 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-378 w-full mx-auto px-0 sm:px-6 lg:px-8">
         {/* APP DOWNLOAD */}
         <div className="pt-4">
           {/* Title */}
-          <h4 className="text-base md:text-lg font-semibold text-white md:mb-2">
+          <h4 className="text-base md:text-lg font-medium text-black md:mb-2">
             {footerData.title}
           </h4>
 
-          <div className="flex pt-2 border-y border-white/10 flex-col gap-2">
+          <div className="flex pt-2 border-y border-black/800 flex-col gap-2">
                {visibleLinks.map((app, index) => {
             if (app.platform === "google_play") {
               return (
@@ -204,43 +204,43 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                 </div>
 
                 {/* Tagline */}
-                <p className="text-sm text-white font-semibold leading-relaxed mb-4">
+                <p className="text-sm text-black opacity-50 font-medium leading-relaxed mb-4">
                   {footerData.tagline}
                 </p>
 
                 {/* Info list */}
                 <ul className="space-y-3 text-sm">
                   {footerData.email && (
-                    <li className="flex flex-col sm:flex-row sm:items-center font-bold gap-1 sm:gap-3 text-[#999]">
+                    <li className="flex flex-col sm:flex-row sm:items-center font-bold gap-1 sm:gap-3 text-black opacity-50 ">
                       <MarkEmailReadIcon
-                        className="text-white"
+                        className="text-black/900"
                         sx={{ fontSize: 15 }}
                       />
-                      <span className="text-xs hover:text-[#f4b400]">
+                      <span className="text-xs ">
                         {footerData.email}
                       </span>
                     </li>
                   )}
 
                   {footerData.address && (
-                    <li className="flex items-center gap-3 text-white">
+                    <li className="flex items-center gap-3 text-black opacity-50 font-medium">
                       <LocationCity
-                        className="text-white"
+                        className="text-black/900"
                         sx={{ fontSize: 15 }}
                       />
-                      <span className="text-[15px] hover:text-[#f4b400]">
+                      <span className="text-sm text-black font-medium">
                         Paris, France
                       </span>
                     </li>
                   )}
 
                   {footerData.phone && (
-                    <li className="flex items-center gap-3 text-white">
+                    <li className="flex items-center gap-3 text-black opacity-50 font-medium">
                       <AccessTimeFilledIcon
-                        className="text-white"
+                        className="text-black/900"
                         sx={{ fontSize: 15 }}
                       />
-                      <span className="text-[15px] hover:text-[#f4b400]">
+                      <span className="text-sm text-black  font-medium">
                         24/7 Service Available
                       </span>
                     </li>
@@ -252,16 +252,16 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
               <div className="hidden md:block">
                 {firstCategory && (
                   <div className="mt-2">
-                    <h3 className="text-white font-semibold mb-6 text-sm">
+                    <h3 className="text-black opacity-50 font-semibold mb-6 text-base">
                       {firstCategory.name}
                     </h3>
 
-                    <ul className="space-y-3 text-xs">
+                    <ul className="space-y-2 text-base">
                       {firstCategory.categoryPages.map((page, idx) => (
                         <li key={idx}>
                           <Link
                             href={`/category/${firstCategory.slug}/${page.slug}`}
-                            className="text-[#999] font-bold hover:text-[#f4b400]"
+                            className="text-black  "
                           >
                             {page.title}
                           </Link>
@@ -274,16 +274,16 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
 
               {/* Quick Links */}
               <div className="block md:hidden ml-8 sm:ml:0 min-w-0 mt-2 ">
-                <h3 className="text-white pt-2 lg:pt-4 font-semibold mb-6 text-base ">
+                <h3 className="text-black opacity-50  pt-2 lg:pt-4 font-semibold mb-6 text-base ">
                   Quick Links
                 </h3>
 
-                <ul className="space-y-3 text-xs">
+                <ul className="space-y-2 text-base">
                   {quickLinks.map((link, i) => (
                     <li key={i}>
                       <Link
                         href={link.url}
-                        className="text-[#999] font-bold hover:text-[#f4b400]"
+                        className="text-black"
                       >
                         {link.label}
                       </Link>
@@ -300,16 +300,16 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
               {/* Quick Links */}
               <div className="hidden md:block">
-                <h3 className="text-white pt-2 md:pt-4 font-semibold mb-6 text-sm ">
+                <h3 className="text-black opacity-50 pt-2 md:pt-4 font-semibold mb-6 text-base ">
                   Quick Links
                 </h3>
 
-                <ul className="space-y-3 text-xs">
+                <ul className="space-y-2 text-base">
                   {quickLinks.map((link, i) => (
                     <li key={i}>
                       <Link
                         href={link.url}
-                        className="text-[#999] font-bold hover:text-[#f4b400]"
+                        className="text-black "
                       >
                         {link.label}
                       </Link>
@@ -320,16 +320,16 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
               <div className=" md:hidden ">
                 {firstCategory && (
                   <div className="mt-2">
-                    <h3 className="text-white font-semibold mb-4 text-sm  ">
+                    <h3 className="text-black opacity-50  font-semibold mb-4 text-sm  ">
                       {firstCategory.name}
                     </h3>
 
-                    <ul className="space-y-2 text-xs">
+                    <ul className="space-y-2 text-base">
                       {firstCategory.categoryPages.map((page, idx) => (
                         <li key={idx}>
                           <Link
                             href={`/category/${firstCategory.slug}/${page.slug}`}
-                            className="text-[#999] font-bold hover:text-[#f4b400]"
+                            className="text-black  "
                           >
                             {page.title}
                           </Link>
@@ -342,16 +342,16 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
               {/* Categories */}
               {otherCategories.map((category) => (
                 <div key={category.id} className="min-w-0">
-                  <h3 className="text-white pt-2 lg:pt-4 font-semibold mb-6 text-base ">
+                  <h3 className="text-black opacity-50  pt-2 lg:pt-4 font-semibold mb-6 text-base ">
                     {category.name}
                   </h3>
 
-                  <ul className="space-y-3 text-xs">
+                  <ul className="space-y-2 text-base">
                     {category.categoryPages.map((page, idx) => (
                       <li key={idx}>
                         <Link
                           href={`/category/${category.slug}/${page.slug}`}
-                          className="text-[#999] font-bold hover:text-[#f4b400]"
+                          className="text-black "
                         >
                           {page.title}
                         </Link>
@@ -364,7 +364,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
           </div>
         </div>
         <div
-          className="mt-4 lg:mt-16 pt-4  border-t border-white/10 
+          className="mt-4 lg:mt-16 pt-4  border-t border-black/10 
 flex flex-col lg:flex-row 
 items-center justify-between 
 gap-6 lg:gap-8 text-center lg:text-left"
@@ -381,10 +381,10 @@ gap-6 lg:gap-8 text-center lg:text-left"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-9 h-9 flex items-center justify-center 
-          rounded-full border border-white/20 
-          text-gray-400 
-          hover:border-[#D4AF6A] 
-          hover:text-[#D4AF6A] 
+          rounded-full border border-black/20 
+          text-black
+          hover:border-[#8b6c26] hover:text-[#8b6c26]
+          hover:text-[#8b6c26]/80 
           transition-all duration-300"
                 >
                   <Icon sx={{ fontSize: 18 }} />
@@ -394,7 +394,7 @@ gap-6 lg:gap-8 text-center lg:text-left"
           </div>
 
           {/* COPYRIGHT */}
-          <div className="flex flex-wrap justify-center gap-2 text-xs text-[#a1a1a1] order-3 lg:order-2">
+          <div className="flex flex-wrap justify-center gap-2 text-xs text-[#000000] order-3 lg:order-2">
             <span>{footerData.copyrightText}</span>
 
             {privacyLink && (
@@ -403,7 +403,7 @@ gap-6 lg:gap-8 text-center lg:text-left"
 
                 <Link
                   href={privacyLink.url}
-                  className="hover:text-[#D4AF6A] transition-colors"
+                  className="hover:text-[#8b6c26] transition-colors"
                 >
                   {privacyLink.label}
                 </Link>
@@ -415,7 +415,7 @@ gap-6 lg:gap-8 text-center lg:text-left"
 
                 <Link
                   href={termsLink.url}
-                  className="hover:text-[#D4AF6A] transition-colors"
+                  className="hover:text-[#8b6c26] transition-colors"
                 >
                   {termsLink.label}
                 </Link>
@@ -426,7 +426,7 @@ gap-6 lg:gap-8 text-center lg:text-left"
 
             <Link
               href="/sitemap"
-              className="hover:text-[#D4AF6A] transition-colors"
+              className="hover:text-[#8b6c26] transition-colors"
             >
               Sitemap
             </Link>

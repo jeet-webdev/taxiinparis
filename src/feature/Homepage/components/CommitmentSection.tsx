@@ -9,8 +9,8 @@ interface CommitmentSectionProps {
   highlightText?: string | null;
   heroPoint1?: string | null;
   heroPoint2?: string | null;
-  
-heroCardFootnote?: string | null;
+
+  heroCardFootnote?: string | null;
   heroPoint3?: string | null;
   heroTrustText?: string | null;
   description?: string | null;
@@ -20,9 +20,9 @@ heroCardFootnote?: string | null;
   reliableServiceTitle?: string | null;
   fairPriceTitle?: string | null;
   customerServiceTitle?: string | null;
-heroCard1Title?: string | null;
-heroCard2Title?: string | null;
-heroCard3Title?: string | null;
+  heroCard1Title?: string | null;
+  heroCard2Title?: string | null;
+  heroCard3Title?: string | null;
   secureBooking?: string | null;
   reliableService?: string | null;
   fairPrice?: string | null;
@@ -52,7 +52,10 @@ export default function CommitmentSection({
   secureBooking,
   reliableService,
   fairPrice,
-  heroTrustText,heroPoint1,heroPoint2,heroPoint3,
+  heroTrustText,
+  heroPoint1,
+  heroPoint2,
+  heroPoint3,
   customerService,
 
   secureBookingIcon,
@@ -107,14 +110,14 @@ export default function CommitmentSection({
 
   return (
     <section
-      className="relative py-12"
+      className="relative border-y-2 border-[#8b6c26] py-12"
       // style={{
       //   backgroundImage: "url('/assets/bg-1.jpg')",
       //   backgroundSize: "cover",
       //   backgroundPosition: "center",
       // }}
     >
-      <Box className="max-w-7xl mx-auto px-6">
+      <Box className="max-w-378 mx-auto px-6">
         {/* ✅ HEADING SAME MOTION */}
         <motion.div
           initial="hidden"
@@ -198,48 +201,67 @@ export default function CommitmentSection({
               {/* Stars */}
               <motion.div
                 variants={cardVariants}
-                className="flex items-center gap-2"
+                className="flex items-start lg:items-center gap-2"
               >
-                <span className="text-[#C9A45C] text-lg">★★★★★</span>
+                <span className="text-[#A88435] text-xl">★★★★★</span>
 
-                <span className="text-xl text-gray-600">
-                 {heroTrustText || "Trusted by international travelers"}
+                <span className="text-xl text-[#A88435] lg:text-gray-600 ">
+                  {heroTrustText || "Trusted by international travelers"}
                 </span>
               </motion.div>
 
               {/* small info */}
+
               <motion.div
                 variants={cardVariants}
-                className="text-lg text-center text-gray-500"
+                className="w-full max-w-xs mx-auto text-start text-gray-600"
               >
-                ✔ {heroPoint1 || "Fixed price"} • {heroPoint2 || "No hidden fees"} • {heroPoint3 || "Instant confirmation"}
+                {/* Points */}
+                <div className="space-y-2 text-sm leading-relaxed">
+                  <p>✔ {heroPoint1 || "Fixed price"}</p>
+                  <p>✔ {heroPoint2 || "No hidden fees"}</p>
+                  <p>✔ {heroPoint3 || "Instant confirmation"}</p>
+                </div>
+
+                {/* Divider */}
+                <div className="flex items-center justify-center mt-4">
+                  <div className="h-px bg-[#A88435] flex-1"></div>
+
+                  {/* Diamond */}
+                  <div className="mx-2 text-[#A88435] text-xs">◆</div>
+
+                  <div className="h-px bg-[#A88435] flex-1"></div>
+                </div>
               </motion.div>
 
               {/* icons row */}
               <motion.div
                 variants={cardVariants}
-                className="flex flex-wrap gap-6 mt-3"
+                className="flex flex-wrap gap-2 mt-3"
               >
-                {[{ title: heroCard1Title,  },
-                  { title: heroCard2Title, },
-                  { title: heroCard3Title,}].slice(0, 3).map((item, i) => {
-                  if (!item.title) return null;
+                {[
+                  { title: heroCard1Title },
+                  { title: heroCard2Title },
+                  { title: heroCard3Title },
+                ]
+                  .slice(0, 3)
+                  .map((item, i) => {
+                    if (!item.title) return null;
 
-                  return (
-                    <div key={i} className="flex items-start gap-2 w-[130px]">
-
-                      <span className="text-sm text-gray-500 leading-tight">
-                        {item.title}
-                      </span>
-                    </div>
-                  );
-                })}
+                    return (
+                      <div key={i} className="flex items-start gap-2 w-[160px]">
+                        <span className="text-sm text-black-500 leading-tight">
+                          {item.title}
+                        </span>
+                      </div>
+                    );
+                  })}
               </motion.div>
 
               {/* bottom text */}
               <motion.div
                 variants={cardVariants}
-                className="text-lg text-center border-t text-gray-500 py-2"
+                className="text-lg text-center border-t text-black-500 py-2"
               >
                 We use Mercedes & luxury vehicles only.
               </motion.div>
