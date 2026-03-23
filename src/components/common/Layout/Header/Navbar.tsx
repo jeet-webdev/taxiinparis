@@ -38,7 +38,7 @@ export default function Navbar({ footerData }: NavbarProps) {
 
   return (
     <header className="relative z-[100] bg-[#F5F1EB] ">
-      <nav className="max-w-7xl mx-auto px-4 py-2 md:px-6">
+      <nav className="max-w-378 mx-auto px-4 py-2 md:px-6">
         <div className="flex items-center justify-between">
           {/* Hamburger (Left on mobile only) */}
           <div className="md:hidden">

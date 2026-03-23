@@ -16,13 +16,17 @@ type AppLink = {
 };
 export default async function TestimonialsSection() {
   const footer = await prisma.footer.findFirst();
-
+  const features = await prisma.feature.findMany({
+    where: { isActive: true },
+    orderBy: { sortOrder: "asc" },
+    take: 6,
+  });
   const appLinks = (footer?.appLinks as AppLink[]) || [];
 
   const visibleLinks = appLinks.filter((app) => app.isVisible);
   return (
     <Section>
-      <WhyChooseUsSection />
+      <WhyChooseUsSection features={features} />
 
       <Container className="relative z-10 py-2 text-center">
         {/* Phone */}
