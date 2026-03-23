@@ -168,7 +168,15 @@ model SiteSetting {
 
   @@map("site_settings")
 }
-
+model GoogleSettings {
+  id           Int      @id @default(1)
+  clientId     String
+  clientSecret String
+  refreshToken String
+  accountId    String
+  locationId   String
+  updatedAt    DateTime @updatedAt
+}
 enum Role {
   ADMIN
   EDITOR

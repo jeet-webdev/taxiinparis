@@ -77,7 +77,10 @@ export const SIDEBAR_MENU = [
       {
         name: "Setting",
         icon: <MdOutlineSettings size={20} />,
-        children: [{ name: "Email Setting", link: "/admin/email-setting" }],
+        children: [
+          { name: "Email Setting", link: "/admin/email-setting" },
+          { name: "Review Setting", link: "/admin/reviews" },
+        ],
       },
 
       {
