@@ -20,7 +20,12 @@ export default async function SitemapPage() {
       },
     },
   });
+  type ExtraPage = { id: number; title: string; slug: string };
 
+  const extraPages = await prisma.page.findMany({
+    where: { id: { gt: 6 } },
+    select: { id: true, title: true, slug: true },
+  });
   return (
     <div className="min-h-screen bg-black text-white px-6 md:px-12 py-16">
       <div className="max-w-7xl mx-auto">
@@ -35,7 +40,6 @@ export default async function SitemapPage() {
               <h2 className="text-lg font-semibold mb-4 border-b border-white/20 pb-2">
                 Main Pages
               </h2>
-
               <ul className="space-y-2 text-sm text-gray-300">
                 {navLinks.map((item, i) => (
                   <li key={i}>
@@ -47,9 +51,30 @@ export default async function SitemapPage() {
                     </Link>
                   </li>
                 ))}
-              </ul>
+              </ul>{" "}
             </div>
           )}
+          <ul>
+            {extraPages.length > 0 && (
+              <div>
+                <h2 className="text-lg font-semibold mb-4 border-b border-white/20 pb-2">
+                  Pages
+                </h2>
+                <ul className="space-y-2 text-sm text-gray-300">
+                  {extraPages.map((page) => (
+                    <li key={page.id}>
+                      <Link
+                        href={`/${page.slug}`}
+                        className="hover:text-white transition"
+                      >
+                        {page.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+          </ul>
 
           {/* Dynamic Categories */}
           {categories.map((cat) => (
