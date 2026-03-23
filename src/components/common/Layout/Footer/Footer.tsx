@@ -10,6 +10,7 @@ import {
   YouTube,
   LocationCity,
   Phone,
+  WhatsApp,
 } from "@mui/icons-material";
 import MarkEmailReadIcon from "@mui/icons-material/MarkEmailRead";
 import XIcon from "@mui/icons-material/X";
@@ -64,7 +65,7 @@ const PAYMENT_ICONS = {
   amex: "/assets/images/amex-3.svg",
   paypal: "/assets/images/paypal3.svg",
   applepay: "/assets/images/Apple_Pay-Logo.wine.svg",
-  gpay: "/assets/images/gpay.svg",
+  gpay: "/assets/images/google-pay.svg",
 };
 
 const iconMap: Record<string, React.ElementType> = {
@@ -146,18 +147,18 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
         {/* APP DOWNLOAD */}
         <div className="pt-4">
           {/* Title */}
-          <h4 className="text-4xl font-heading font-medium text-black md:mb-2">
+          <h4 className="text-2xl font-heading font-medium text-black md:mb-2">
             {footerData.title}
           </h4>
 
-          <div className="border-y border-black/20 py-3">
+          <div className="border-b border-black/20 py-3">
             {/* Title */}
-            <h3 className="text-start font-mono tracking-tight text-black text-lg sm:text-xl font-medium mb-2">
+            {/* <h3 className="text-start font-mono tracking-tight text-black text-lg sm:text-xl font-medium mb-2">
               Download our app for priority booking
-            </h3>
+            </h3> */}
 
             {/* Buttons */}
-            <div className="flex flex-row justify-start gap-4 sm:gap-5">
+            {/* <div className="flex flex-row justify-start gap-4 sm:gap-5">
               {visibleLinks.map((app, index) => {
                 if (app.platform === "google_play") {
                   return (
@@ -193,7 +194,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
 
                 return null;
               })}
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -251,6 +252,18 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                       </a>
                     </li>
                   )}
+                    
+                    <li className="flex items-center gap-3 text-black opacity-50 font-medium hover:text-[#8b6c26] transition-colors">
+                      <WhatsApp className="text-black/900" sx={{ fontSize: 15 }} />
+
+                      <a
+                        href={`https://wa.me/+33184190997`}
+                        className="text-sm hover:opacity-100 transition"
+                      >
+                        +33184190997
+                      </a>
+                    </li>
+            
 
                   {footerData.address && (
                     <li className="flex items-center gap-3 text-black opacity-50 hover:text-[#8b6c26] transition-colors font-medium">

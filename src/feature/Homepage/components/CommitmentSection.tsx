@@ -166,7 +166,7 @@ const iconPulse = {
                   transition: { duration: 0.7 },
                 },
               }}
-              className="text-3xl md:text-3xl italic font-heading text-[#C6A85A] "
+              className="text-3xl md:text-3xl italic font-heading text-[#8b6c26] "
             >
               {highlightText || "in Paris"}
             </motion.h2>

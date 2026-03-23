@@ -321,17 +321,17 @@ export default async function TestimonialCard() {
   if (reviews.length === 0) return null;
 
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-serif text-gray-900 mb-2">
-            Trusted by our <span className="text-[#C6A85A]">Guests</span>
+    <section className="relative py-20 px-6 overflow-hidden">
+      <div className="relative z-10 max-w-6xl mx-auto text-center">
+        <div className="mb-16">
+          <h2 className="text-xl md:text-3xl font-heading text-[#2A2A2A] font-medium tracking-wide">
+            Trusted by Travelers in{" "}
+            <span className="text-[#8B6C26]">Paris</span>
           </h2>
-          <div className="flex justify-center items-center gap-2">
-            <span className="text-[#C6A85A] text-lg">★★★★★</span>
-            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-gray-400">
-              based on verified Google reviews
-            </span>
+          <div className="flex items-center justify-center gap-2 text-[#2A2A2A] font-medium mt-2">
+            <span>5.0</span>
+            <span className="text-[#8B6C26]">★★★★★</span>
+            <span>based on verified Google reviews</span>
           </div>
         </div>
 
@@ -374,10 +374,10 @@ export default async function TestimonialCard() {
 
       <div className="mt-16 flex items-center justify-center">
         <a
-          href="https://share.google/Mv8eUcEV9r3lFghO3"
+          href="https://maps.google.com"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-block bg-[#C6A85A] text-white px-8 py-3 rounded-full font-medium shadow-lg hover:bg-[#b5964a] transition-colors"
+          className="btn-primary font-logo! "
         >
           View All Reviews on Google
         </a>
