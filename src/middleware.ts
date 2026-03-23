@@ -30,7 +30,8 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
-const MAINTENANCE = true;
+// const MAINTENANCE = true;
+const MAINTENANCE = false;
 
 export function middleware(request: NextRequest) {
   const session = request.cookies.get("admin_session");

@@ -156,6 +156,7 @@ model CategoryPage {
   @@index([categoryId])
   @@map("category_pages")
 }
+
 model SiteSetting {
   id           String   @id @default("singleton")
   smtpHost     String?  @map("smtp_host") @db.VarChar(255)
@@ -167,6 +168,7 @@ model SiteSetting {
 
   @@map("site_settings")
 }
+
 enum Role {
   ADMIN
   EDITOR
