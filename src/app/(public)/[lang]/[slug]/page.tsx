@@ -23,8 +23,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { lang, slug } = await params;
   const fullSlug = `${lang}/${slug}`;
 
-  console.log("generateMetadata fullSlug:", fullSlug);
-
   const page = await getLanguagePageBySlug(fullSlug);
   if (!page) return { title: "Page Not Found" };
 
@@ -47,11 +45,7 @@ export default async function LanguagePageFrontend({ params }: Props) {
   const { lang, slug } = await params;
   const fullSlug = `${lang}/${slug}`;
 
-  console.log("LanguagePageFrontend fullSlug:", fullSlug);
-
   const page = await getLanguagePageBySlug(fullSlug);
-
-  console.log("LanguagePageFrontend page:", page);
 
   if (!page || page.status === "inactive") {
     notFound();

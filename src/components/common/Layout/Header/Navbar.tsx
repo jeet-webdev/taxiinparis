@@ -13,6 +13,8 @@ interface FooterData {
   mobileLogoUrl?: string | null; // Add this to your interface
   logoAlt?: string | null;
   navLinks?: NavLink[] | unknown;
+  btnText?: string | null;
+  btnLink?: string | null;
 }
 
 interface NavbarProps {
@@ -31,13 +33,12 @@ export default function Navbar({ footerData }: NavbarProps) {
       : [];
 
   const visibleLinks = navLinks.filter((link) => link.showInNav);
-
   useEffect(() => {
     document.body.style.overflow = isOpen ? "hidden" : "unset";
   }, [isOpen]);
 
   return (
-    <header className="relative z-[100] bg-[#F5F1EB] ">
+    <header className="relative z-100 bg-[#F5F1EB] ">
       <nav className="max-w-378 mx-auto px-4 py-2 md:px-6">
         <div className="flex items-center justify-between">
           {/* Hamburger (Left on mobile only) */}
@@ -93,7 +94,7 @@ export default function Navbar({ footerData }: NavbarProps) {
               <li key={item.url}>
                 <Link
                   href={item.url}
-                  className="text-[#2A2A2A] font-medium !font-heading text-base hover:text-[#C6A85A] transition-colors"
+                  className="text-[#2A2A2A] font-medium font-heading! text-base hover:text-[#C6A85A] transition-colors"
                 >
                   {item.label}
                 </Link>
@@ -106,9 +107,13 @@ export default function Navbar({ footerData }: NavbarProps) {
             <div>
               <LanguageDropdown />
             </div>
-            <div className="btn-primary font-logo! hidden md:block">
-              Book Now
-            </div>
+            <Link
+              href={footerData?.btnLink || "/booking"}
+              target="_blank"
+              className="btn-primary font-logo! hidden md:block"
+            >
+              {footerData?.btnText || "Book Now"}
+            </Link>
           </div>
         </div>
 

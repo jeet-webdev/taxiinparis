@@ -43,7 +43,6 @@ export default async function HomePage() {
   if (!page || page.status === "inactive") {
     notFound();
   }
-  console.log("🚀 ~ file: page.tsx:35 ~ HomePage ~ page:", page);
   return (
     <>
       <div className="">

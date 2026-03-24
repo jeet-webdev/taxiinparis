@@ -8,32 +8,32 @@ datasource db {
 }
 
 model Page {
-  id                   Int      @id @default(autoincrement())
-  pageName             String?  @map("page_name") @db.VarChar(50)
-  title                String   @db.VarChar(255)
-  slug                 String   @unique @db.VarChar(255)
-  content              String?
-  text                 String?
-  imageUpload          String?  @map("imageupload") @db.VarChar(255)
-  metaTitle            String?  @map("meta_title") @db.VarChar(255)
-  metaDescription      String?  @map("meta_description")
-  metaKeywords         String?  @map("meta_keywords")
-  status               String   @default("active") @db.VarChar(255)
-  updatedAt            DateTime @default(now()) @updatedAt @map("updated_at")
-  imageAlt             String?  @map("imagealt") @db.VarChar(255)
-  heroButtonLink       String?  @map("hero_button_link") @db.VarChar(255)
-  heroButtonText       String?  @map("hero_button_text") @db.VarChar(100)
-  heroCard1Title       String?  @map("hero_card1_title") @db.VarChar(100)
-  heroCard2Title       String?  @map("hero_card2_title") @db.VarChar(100)
-  heroCard3Title       String?  @map("hero_card3_title") @db.VarChar(100)
-  heroCardFootnote     String?  @map("hero_card_footnote") @db.VarChar(255)
-  heroDescription      String?  @map("hero_description")
-  heroPoint1           String?  @map("hero_point_1") @db.VarChar(100)
-  heroPoint2           String?  @map("hero_point_2") @db.VarChar(100)
-  heroPoint3           String?  @map("hero_point_3") @db.VarChar(100)
-  heroSubtitle         String?  @map("hero_subtitle") @db.VarChar(255)
-  heroColorTitle       String?  @map("hero_title") @db.VarChar(255)
-  heroTrustText        String?  @map("hero_trust_text") @db.VarChar(255)
+  id               Int      @id @default(autoincrement())
+  pageName         String?  @map("page_name") @db.VarChar(50)
+  title            String   @db.VarChar(255)
+  slug             String   @unique @db.VarChar(255)
+  content          String?
+  text             String?
+  imageUpload      String?  @map("imageupload") @db.VarChar(255)
+  metaTitle        String?  @map("meta_title") @db.VarChar(255)
+  metaDescription  String?  @map("meta_description")
+  metaKeywords     String?  @map("meta_keywords")
+  status           String   @default("active") @db.VarChar(255)
+  updatedAt        DateTime @default(now()) @updatedAt @map("updated_at")
+  imageAlt         String?  @map("imagealt") @db.VarChar(255)
+  heroButtonLink   String?  @map("hero_button_link") @db.VarChar(255)
+  heroButtonText   String?  @map("hero_button_text") @db.VarChar(100)
+  heroCard1Title   String?  @map("hero_card1_title") @db.VarChar(100)
+  heroCard2Title   String?  @map("hero_card2_title") @db.VarChar(100)
+  heroCard3Title   String?  @map("hero_card3_title") @db.VarChar(100)
+  heroCardFootnote String?  @map("hero_card_footnote") @db.VarChar(255)
+  heroDescription  String?  @map("hero_description")
+  heroPoint1       String?  @map("hero_point_1") @db.VarChar(100)
+  heroPoint2       String?  @map("hero_point_2") @db.VarChar(100)
+  heroPoint3       String?  @map("hero_point_3") @db.VarChar(100)
+  heroSubtitle     String?  @map("hero_subtitle") @db.VarChar(255)
+  heroColorTitle   String?  @map("hero_title") @db.VarChar(255)
+  heroTrustText    String?  @map("hero_trust_text") @db.VarChar(255)
 
   @@map("pages")
 }
@@ -86,9 +86,6 @@ model Footer {
   copyrightText String?
   email         String?
   phone         String?
-  whatsapp      String?
-  btnText       String?
-  btnLink       String?
   address       String?
   socialLinks   Json?
   navLinks      Json?
@@ -100,11 +97,13 @@ model Footer {
   logoUrl       String?
   mobileLogoAlt String?  @map("mobile_logo_alt")
   mobileLogoUrl String?  @map("mobile_logo_url")
+  btnLink       String?
+  btnText       String?
+  whatsapp      String?
 }
 
 model Feature {
   id           Int      @id @default(autoincrement())
-  mainTitle    String?
   title        String   @db.VarChar(255)
   description  String
   createdAt    DateTime @default(now()) @map("created_at")
@@ -117,6 +116,7 @@ model Feature {
   openInNewTab Boolean  @default(false) @map("open_in_new_tab")
   sortOrder    Int      @default(0) @map("sort_order")
   updatedAt    DateTime @default(now()) @updatedAt @map("updated_at")
+  mainTitle    String?
 
   @@map("features")
 }

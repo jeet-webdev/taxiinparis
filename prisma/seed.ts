@@ -54,7 +54,6 @@ const STATIC_PAGES = [
 ];
 
 async function main() {
-  console.log("Seeding static pages...");
 
   for (const page of STATIC_PAGES) {
     await prisma.page.upsert({
@@ -62,10 +61,8 @@ async function main() {
       update: {}, // Don't overwrite existing admin edits
       create: page,
     });
-    console.log(`  ✓ ${page.slug}`);
   }
 
-  console.log("Seeding admin user...");
   const hashedPassword = await bcrypt.hash("password123", 10); // Replace with a secure password
 
   await prisma.account.upsert({
@@ -77,9 +74,7 @@ async function main() {
       role: "ADMIN",
     },
   });
-  console.log("  ✓ admin@example.com");
 
-  console.log("Seed complete.");
 }
 
 main()

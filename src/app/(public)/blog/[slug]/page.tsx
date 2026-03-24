@@ -86,7 +86,6 @@ export default async function SingleBlogPage({ params }: Props) {
   if (!blog) {
     notFound();
   }
-  console.log("Banner:", blog.bannerImage);
 
   const publishedDate = formatDate(blog.createdAt);
   const updatedDate = formatDate(blog.updatedAt);

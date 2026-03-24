@@ -117,7 +117,10 @@ export default async function CategoryDetailPage({ params }: Props) {
     <main className="min-h-screen bg-[#0A0F1C]">
       <DarkLuxuryBlock>
         {/* Hero */}
-        <HeroSection img="/assets/images/luxury-limo-chiah3.webp" alt={page.title} />
+        <HeroSection
+          img="/assets/images/luxury-limo-chiah3.webp"
+          alt={page.title}
+        />
 
         <section className="py-14 md:py-20">
           <div className="max-w-5xl mx-auto px-6">
@@ -169,10 +172,7 @@ export default async function CategoryDetailPage({ params }: Props) {
             {/* Buttons */}
             <div className="mt-20 pt-10 border-t border-white/10 flex flex-col items-center">
               <div className="flex flex-wrap justify-center gap-6">
-                <Link
-                  href="/booking"
-                  className="btn-primary font-logo! "
-                >
+                <Link href="/booking" className="btn-primary font-logo! ">
                   Book Your Transfer Now
                 </Link>
 

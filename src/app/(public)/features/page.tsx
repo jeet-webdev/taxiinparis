@@ -10,18 +10,15 @@ export default async function WhyChooseUsSection({
   mainTitle,
 }: {
   features: any[];
-  mainTitle?: string;
+  mainTitle: string;
 }) {
-  console.log(mainTitle);
   return (
     <section className=" py-2 sm:py-6 lg:py-8">
       <div className="max-w-378 mx-auto px-0 sm:px-6 lg:px-8">
         {/* Heading (UNCHANGED STYLE) */}
-        {mainTitle && (
-          <p className="text-2xl md:text-4xl lg:text-5xl font-light mb-12 text-black">
-            {mainTitle}
-          </p>
-        )}
+        <h2 className="text-2xl md:text-4xl lg:text-5xl font-light  mb-12 text-black">
+          {mainTitle}
+        </h2>
 
         {/* Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6">
