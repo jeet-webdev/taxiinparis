@@ -35,7 +35,7 @@ const greatVibes = Great_Vibes({
 // --- Metadata for SEO & Browser Icons ---
 export const metadata: Metadata = {
   verification: {
-    google: "google42334c8f133478d4",
+    google: "qnOdreBU0qcP1zD5bl5ZBioC8JSWtNcvumKyHGL3_F0",
   },
   title: "Luxury Limo Paris",
   description: "Premium Chauffeur Service in Paris",
