@@ -5,6 +5,9 @@ export interface FooterData {
   copyrightText: string;
   email: string;
   phone: string;
+  whatsapp?: string;
+  btnText?: string;
+  btnLink?: string;
   address: string;
   navLinks: NavLink[];
   socialLinks: SocialLink[];

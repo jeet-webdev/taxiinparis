@@ -3,7 +3,16 @@
 
 import { prisma } from "@/src/lib/prisma"; // adjust to your prisma client path
 import { revalidatePath } from "next/cache";
-
+export async function saveMainTitleAction(title: string) {
+  try {
+    await prisma.feature.updateMany({ data: { mainTitle: title } });
+    revalidatePath("/");
+    return { success: true };
+  } catch (error) {
+    console.error("saveMainTitleAction error:", error);
+    return { success: false, error: "Failed to save title." };
+  }
+}
 export async function saveFeatureAction(formData: FormData) {
   try {
     const id = formData.get("id");

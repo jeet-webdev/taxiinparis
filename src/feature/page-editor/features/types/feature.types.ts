@@ -2,6 +2,7 @@
 
 export interface FeatureItem {
   id: number;
+  mainTitle?: string | null;
   category?: string | null;
   imageUrl?: string | null;
   imageAlt?: string | null;

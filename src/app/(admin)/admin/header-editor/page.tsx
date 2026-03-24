@@ -27,6 +27,8 @@ export default async function HeaderEditor() {
         initialLogoAlt={data?.logoAlt}
         initialMobileLogoUrl={data?.mobileLogoUrl}
         initialMobileLogoAlt={data?.mobileLogoAlt}
+        initialBtnText={data?.btnText} // ← ADD
+        initialBtnLink={data?.btnLink} // ← ADD
       />
     </div>
   );

@@ -19,6 +19,8 @@ interface Props {
   // ── NEW: mobile logo props ──
   initialMobileLogoUrl?: string | null;
   initialMobileLogoAlt?: string | null;
+  initialBtnText?: string | null; // ← ADD
+  initialBtnLink?: string | null; // ← ADD
 }
 
 export default function HeaderForm({
@@ -27,6 +29,8 @@ export default function HeaderForm({
   initialLogoAlt,
   initialMobileLogoUrl,
   initialMobileLogoAlt,
+  initialBtnText, // ← ADD
+  initialBtnLink, // ← ADD
 }: Props) {
   const [navLinks, setNavLinks] = useState<NavLink[]>(() => {
     const hasPrivacy = initialData.some((link) => link.url === "/privacy");
@@ -55,6 +59,9 @@ export default function HeaderForm({
   );
   const [mobileLogoFile, setMobileLogoFile] = useState<File | null>(null);
 
+  // ── CTA Button state — read from props, not initialData array ──
+  const [btnText, setBtnText] = useState(initialBtnText || "Devis en ligne");
+  const [btnLink, setBtnLink] = useState(initialBtnLink || "/devis");
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const mobileFileInputRef = useRef<HTMLInputElement>(null);
@@ -94,6 +101,8 @@ export default function HeaderForm({
       const formData = new FormData();
       formData.append("navLinks", JSON.stringify(navLinks));
       formData.append("logoAlt", logoAlt);
+      formData.append("btnText", btnText); // ← sends to action
+      formData.append("btnLink", btnLink); // ← sends to action
       if (logoFile) formData.append("logoImage", logoFile);
 
       // ── NEW: append mobile logo fields ──
@@ -280,6 +289,47 @@ export default function HeaderForm({
             Header & Footer Settings
           </h1>
         </div>
+
+        {/* ── CTA Button Section ── */}
+        <section>
+          <div className="flex items-center gap-3 mb-5">
+            <span className="px-2 py-1 bg-green-50 text-green-600 text-[10px] font-bold rounded uppercase">
+              CTA
+            </span>
+            <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+              Header Button
+            </h2>
+            <span className="text-xs text-slate-400 normal-case tracking-normal font-normal">
+              — The button shown in the top navigation
+            </span>
+          </div>
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">
+                Button Text
+              </label>
+              <input
+                type="text"
+                className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-700 focus:ring-2 focus:ring-[#D4AF6A]/20 focus:border-[#D4AF6A] outline-none transition-all"
+                value={btnText}
+                onChange={(e) => setBtnText(e.target.value)}
+                placeholder="e.g. Devis en ligne"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">
+                Button Link
+              </label>
+              <input
+                type="text"
+                className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-700 focus:ring-2 focus:ring-[#D4AF6A]/20 focus:border-[#D4AF6A] outline-none transition-all"
+                value={btnLink}
+                onChange={(e) => setBtnLink(e.target.value)}
+                placeholder="e.g. /devis or https://..."
+              />
+            </div>
+          </div>
+        </section>
 
         {/* Navigation Sections */}
         <section>

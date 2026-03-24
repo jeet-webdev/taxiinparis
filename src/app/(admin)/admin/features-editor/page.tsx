@@ -7,9 +7,16 @@ export const dynamic = "force-dynamic";
 export const revalidate = 0;
 
 export default async function FeatureEditorPage() {
-  const features = await prisma.feature.findMany({
-    orderBy: { sortOrder: "asc" },
-  });
+  //   const features = await prisma.feature.findMany({
+  //     orderBy: { sortOrder: "asc" },
+  //   });
+  const [features, mainTitleRow] = await Promise.all([
+    prisma.feature.findMany({ orderBy: { updatedAt: "desc" } }),
+    prisma.feature.findFirst({
+      select: { mainTitle: true },
+      orderBy: { id: "asc" },
+    }),
+  ]);
 
   return (
     <div className="min-h-screen py-12 px-4 sm:px-6">
@@ -27,8 +34,10 @@ export default async function FeatureEditorPage() {
           </p>
         </div>
 
-        {/* Form + List */}
-        <FeatureForm initialFeatures={features} />
+        <FeatureForm
+          initialFeatures={features}
+          initialMainTitle={mainTitleRow?.mainTitle ?? ""}
+        />
       </div>
     </div>
   );

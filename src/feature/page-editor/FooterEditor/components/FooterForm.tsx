@@ -245,6 +245,22 @@ export default function FooterForm({
               }
             />
           </div>
+          <div>
+            <label className="text-sm font-medium text-gray-700">
+              WhatsApp Link or Number
+            </label>
+            <input
+              className="w-full p-2 border rounded mt-1 text-gray-900"
+              placeholder="https://wa.me/message/XXX or +33184190997"
+              value={formData.whatsapp || ""}
+              onChange={(e) =>
+                setFormData({ ...formData, whatsapp: e.target.value })
+              }
+            />
+            <p className="text-xs text-gray-400 mt-1">
+              Enter a full wa.me link or just the phone number with country code
+            </p>
+          </div>
         </section>
       </div>
 

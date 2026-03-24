@@ -19,6 +19,7 @@ export async function saveFooterData(data: FooterData) {
       email: data.email,
       phone: data.phone,
       address: data.address,
+      whatsapp: data.whatsapp,
       copyrightText: data.copyrightText,
       socialLinks: data.socialLinks as unknown as Prisma.InputJsonValue,
       navLinks: data.navLinks as unknown as Prisma.InputJsonValue,
@@ -40,8 +41,8 @@ export async function saveFooterData(data: FooterData) {
     }
 
     // 3. Clear the Next.js cache so the change reflects on the public site
-    revalidatePath("/"); 
-    
+    revalidatePath("/");
+
     return { success: true, message: "Footer updated successfully!" };
   } catch (error) {
     console.error("Footer Save Error:", error);

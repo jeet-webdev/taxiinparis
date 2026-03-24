@@ -15,24 +15,12 @@ model Page {
   content              String?
   text                 String?
   imageUpload          String?  @map("imageupload") @db.VarChar(255)
-  secureBooking        String?  @map("secure_booking")
-  reliableService      String?  @map("reliable_service")
-  customerService      String?  @map("customer_service")
-  fairPrice            String?  @map("fair_price")
   metaTitle            String?  @map("meta_title") @db.VarChar(255)
   metaDescription      String?  @map("meta_description")
   metaKeywords         String?  @map("meta_keywords")
   status               String   @default("active") @db.VarChar(255)
   updatedAt            DateTime @default(now()) @updatedAt @map("updated_at")
-  customerServiceTitle String?  @map("customer_service_title")
-  fairPriceTitle       String?  @map("fair_price_title")
-  reliableServiceTitle String?  @map("reliable_service_title")
-  secureBookingTitle   String?  @map("secure_booking_title")
   imageAlt             String?  @map("imagealt") @db.VarChar(255)
-  customerServiceIcon  String?
-  fairPriceIcon        String?
-  reliableServiceIcon  String?
-  secureBookingIcon    String?
   heroButtonLink       String?  @map("hero_button_link") @db.VarChar(255)
   heroButtonText       String?  @map("hero_button_text") @db.VarChar(100)
   heroCard1Title       String?  @map("hero_card1_title") @db.VarChar(100)
@@ -98,6 +86,9 @@ model Footer {
   copyrightText String?
   email         String?
   phone         String?
+  whatsapp      String?
+  btnText       String?
+  btnLink       String?
   address       String?
   socialLinks   Json?
   navLinks      Json?
@@ -113,6 +104,7 @@ model Footer {
 
 model Feature {
   id           Int      @id @default(autoincrement())
+  mainTitle    String?
   title        String   @db.VarChar(255)
   description  String
   createdAt    DateTime @default(now()) @map("created_at")

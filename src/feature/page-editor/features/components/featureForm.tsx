@@ -6,10 +6,13 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState, useTransition } from "react";
 import { featureSchema, FeatureFormValues } from "../validation/feature.schema";
+
 import {
   saveFeatureAction,
   deleteFeatureAction,
+  saveMainTitleAction, // ← ADD
 } from "@/src/actions/featureAction";
+import { toast } from "react-toastify";
 import { uploadFeatureImage } from "@/src/actions/uploadFeatureImage";
 import { FeatureItem } from "../types/feature.types";
 
@@ -40,7 +43,7 @@ function Field({
 }) {
   return (
     <div className="flex flex-col gap-1.5">
-      <label className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#8C6D3F]">
+      <label className="text-[10px] font-semibold tracking-[0.15em]  text-[#8C6D3F]">
         {label}
         {required && <span className="text-[#C0392B] ml-1">*</span>}
       </label>
@@ -187,7 +190,7 @@ function ImageUploader({
           </svg>
         )}
         <span
-          className="text-xs tracking-[0.08em] uppercase"
+          className="text-xs tracking-[0.08em] "
           style={{ color: "#8C6D3F", fontFamily: "Georgia, serif" }}
         >
           {uploading ? "Uploading…" : preview ? "Change Image" : "Upload Image"}
@@ -242,7 +245,7 @@ function ImageUploader({
             }}
           />
           <span
-            className="absolute bottom-2 left-3 text-[10px] tracking-[0.2em] uppercase"
+            className="absolute bottom-2 left-3 text-[10px] tracking-[0.2em] "
             style={{ color: "#FAF7F2", fontFamily: "Georgia, serif" }}
           >
             {uploading ? "Uploading…" : "Image Preview"}
@@ -398,7 +401,7 @@ function FeatureRow({
         <div className="flex items-center gap-2 mb-1">
           {feature.category && (
             <span
-              className="text-[9px] font-bold tracking-widest uppercase px-2 py-0.5 rounded-full"
+              className="text-[9px] font-bold tracking-widest  px-2 py-0.5 rounded-full"
               style={{
                 color: "#B8935A",
                 background: "#F3EDE3",
@@ -433,7 +436,7 @@ function FeatureRow({
 
       {/* Sort order */}
       <div className="text-center shrink-0 hidden sm:block px-3">
-        <p className="text-[9px] tracking-[0.15em] uppercase mb-0.5 text-[#A08860]">
+        <p className="text-[9px] tracking-[0.15em]  mb-0.5 text-[#A08860]">
           Order
         </p>
         <p
@@ -516,12 +519,161 @@ function FeatureRow({
 }
 
 // ─────────────────────────────────────────────
+// MAIN TITLE EDITOR (independent, inline)
+// ─────────────────────────────────────────────
+function MainTitleEditor({ initialTitle }: { initialTitle: string }) {
+  const [title, setTitle] = useState(initialTitle);
+  const [isPending, startTransition] = useTransition();
+
+  const handleSave = () => {
+    startTransition(async () => {
+      const result = await saveMainTitleAction(title);
+      if (result.success) toast.success("Section title saved!");
+      else toast.error(result.error ?? "Failed to save.");
+    });
+  };
+
+  const cardStyle: React.CSSProperties = {
+    background: "#FFFCF7",
+    border: "1px solid #D4B483",
+    boxShadow:
+      "0 4px 24px rgba(180,140,80,0.1), 0 1px 0 rgba(255,255,255,0.9) inset",
+    borderRadius: "1rem",
+    overflow: "hidden",
+  };
+
+  const headerStyle: React.CSSProperties = {
+    background: "linear-gradient(135deg, #F3EDE3 0%, #FAF7F2 100%)",
+    borderBottom: "1px solid #E8DCC8",
+    padding: "1.25rem 2rem",
+    display: "flex",
+    alignItems: "center",
+    gap: "0.75rem",
+  };
+
+  return (
+    <div style={cardStyle}>
+      {/* Header */}
+      <div style={headerStyle}>
+        <div
+          className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
+          style={{
+            background: "linear-gradient(135deg, #D4B483, #B8935A)",
+            boxShadow: "0 2px 8px rgba(180,140,80,0.3)",
+          }}
+        >
+          <svg
+            className="w-4 h-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            strokeWidth={1.8}
+            style={{ color: "#FAF7F2" }}
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M4 6h16M4 12h10M4 18h7"
+            />
+          </svg>
+        </div>
+        <div>
+          <h2
+            className="text-base font-semibold text-[#2C1F0E]"
+            style={{ fontFamily: "Georgia, serif" }}
+          >
+            Section Main Title
+          </h2>
+          <p className="text-xs text-[#A08860] mt-0.5">
+            Shown above the feature cards on the public site — saved
+            independently
+          </p>
+        </div>
+      </div>
+
+      {/* Input + Save */}
+      <div
+        className="px-8 py-6 flex items-center gap-4"
+        style={{ background: "#FFFCF7" }}
+      >
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && handleSave()}
+          placeholder="e.g. Simplify your travel with our chauffeur service in Paris..."
+          className={`flex-1 ${inputCls}`}
+        />
+        <button
+          type="button"
+          onClick={handleSave}
+          disabled={isPending}
+          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-lg text-sm tracking-[0.08em]  font-semibold transition-all duration-300 disabled:opacity-50 shrink-0"
+          style={{
+            background: isPending
+              ? "#D4B483"
+              : "linear-gradient(135deg, #D4B483 0%, #B8935A 100%)",
+            color: "#FAF7F2",
+            fontFamily: "Georgia, serif",
+            boxShadow: "0 2px 10px rgba(180,140,80,0.3)",
+          }}
+        >
+          {isPending ? (
+            <>
+              <svg
+                className="w-4 h-4 animate-spin"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v8H4z"
+                />
+              </svg>
+              Saving…
+            </>
+          ) : (
+            <>
+              <svg
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              Save Title
+            </>
+          )}
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// ─────────────────────────────────────────────
 // MAIN COMPONENT
 // ─────────────────────────────────────────────
 export function FeatureForm({
   initialFeatures,
+  initialMainTitle = "",
 }: {
   initialFeatures: FeatureItem[];
+  initialMainTitle?: string;
 }) {
   const [features, setFeatures] = useState<FeatureItem[]>(initialFeatures);
   const [editingId, setEditingId] = useState<number | null>(null);
@@ -646,6 +798,7 @@ export function FeatureForm({
 
   return (
     <div className="space-y-8">
+      <MainTitleEditor initialTitle={initialMainTitle} />
       {/* ══════════════════════════════════════
           FORM CARD
       ══════════════════════════════════════ */}
@@ -709,7 +862,6 @@ export function FeatureForm({
                   placeholder="e.g. DINING"
                   className={errors.category ? inputErrCls : inputCls}
                   style={{
-                    textTransform: "uppercase",
                     letterSpacing: "0.08em",
                   }}
                 />
@@ -720,7 +872,7 @@ export function FeatureForm({
               {/* ── IMAGE UPLOAD + ALT TEXT ── */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-semibold tracking-[0.15em] uppercase text-[#8C6D3F]">
+                  <label className="text-[10px] font-semibold tracking-[0.15em] text-[#8C6D3F]">
                     Image
                   </label>
                   {/* Hidden input keeps imageUrl registered with react-hook-form */}
@@ -922,7 +1074,7 @@ export function FeatureForm({
             <button
               type="button"
               onClick={handleCancel}
-              className="text-xs tracking-[0.15em] uppercase transition-colors duration-200 text-[#A08860] hover:text-[#B8935A]"
+              className="text-xs tracking-[0.15em]  transition-colors duration-200 text-[#A08860] hover:text-[#B8935A]"
               style={{ fontFamily: "Georgia, serif" }}
             >
               {isEditing ? "Cancel" : "Reset"}
@@ -931,7 +1083,7 @@ export function FeatureForm({
             <button
               type="submit"
               disabled={isSubmitting || isPending}
-              className="inline-flex items-center gap-2 px-7 py-2.5 rounded-lg text-sm tracking-[0.1em] uppercase font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="inline-flex items-center gap-2 px-7 py-2.5 rounded-lg text-sm tracking-[0.1em]  font-semibold transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               style={{
                 background:
                   isSubmitting || isPending

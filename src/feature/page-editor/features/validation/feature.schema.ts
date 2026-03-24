@@ -9,6 +9,8 @@ export const featureSchema = z.object({
     .optional()
     .or(z.literal("")),
 
+  mainTitle: z.string().optional(),
+
   imageUrl: z
     .string()
     .max(500, "Image URL must be 500 characters or less")
