@@ -1,19 +1,3 @@
-// "use server";
-// import { prisma } from "@/src/lib/prisma";
-// export async function getCategoryPageBySlug(slug: string) {
-//   try {
-//     const page = await prisma.categoryPage.findUnique({
-//       where: { slug },
-//       include: {
-//         category: true, // Optional: if you want to show parent category info
-//       },
-//     });
-//     return page;
-//   } catch (error) {
-//     console.error("Error fetching category page:", error);
-//     return null;
-//   }
-// }
 "use server";
 
 import { prisma } from "@/src/lib/prisma";

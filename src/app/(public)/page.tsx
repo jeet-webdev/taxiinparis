@@ -49,7 +49,7 @@ export default async function HomePage() {
         <HeroSection img={page?.imageUpload} alt={page?.imageAlt} />
 
         <DarkLuxuryBlock>
-          <TestimonialCard />
+          {/* <TestimonialCard /> */}
 
           <CommitmentSection
             highlightText={page?.heroColorTitle}
@@ -66,7 +66,6 @@ export default async function HomePage() {
             heroCard3Title={page?.heroCard3Title}
             heroPoint3={page?.heroPoint3}
             title={page?.title}
-            
           />
           <TestimonialsSection />
         </DarkLuxuryBlock>
