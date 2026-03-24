@@ -1,33 +1,28 @@
-// TestimonialsSection.tsx
-
-import Image from "next/image";
-import { prisma } from "@/src/lib/prisma";
-// import TestimonialCard from "./TestimonialCard";
-import { Container } from "@mui/material";
 import Section from "@/src/components/common/Ui/Section";
-import Link from "next/link";
-// import WhyChooseUsSection from "@/src/app/(public)/features/page";
+import { Container } from "@mui/material";
+import { prisma } from "@/src/lib/prisma";
 import WhyChooseUsSection from "@/src/app/(public)/features/page";
-import TestimonialCard from "./TestimonialCard";
-type AppLink = {
-  url: string;
-  platform: "google_play" | "app_store";
-  isVisible: boolean;
-};
-export default async function TestimonialsSection() {
-  const footer = await prisma.footer.findFirst();
-  const features = await prisma.feature.findMany({
-    where: { isActive: true },
-    orderBy: { sortOrder: "asc" },
-    take: 6,
-  });
-  const appLinks = (footer?.appLinks as AppLink[]) || [];
 
-  const visibleLinks = appLinks.filter((app) => app.isVisible);
+export default async function TestimonialsSection() {
+  // Use Promise.all to run queries in parallel
+  const [features, firstFeature] = await Promise.all([
+    prisma.feature.findMany({
+      where: { isActive: true },
+      orderBy: { sortOrder: "asc" },
+      take: 6,
+    }),
+    prisma.feature.findFirst({
+      where: { isActive: true },
+      select: { mainTitle: true },
+    }),
+  ]);
+
   return (
     <Section>
-      <WhyChooseUsSection features={features} />
-
+      <WhyChooseUsSection
+        features={features}
+        mainTitle={firstFeature?.mainTitle ?? "Why Choose Us"}
+      />
       <Container className="relative z-10 py-2 text-center">
         {/* Phone */}
         {/* <div className="mt-0.5 text-[#D4AF6A] text-2xl font-semibold tracking-widest">
