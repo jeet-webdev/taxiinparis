@@ -99,15 +99,15 @@ export default async function SingleBlogPage({ params }: Props) {
         {/* --- ARTICLE CONTENT SECTION --- */}
         <section className="py-14 md:py-18">
           <div className="max-w-5xl mx-auto px-6 py-2">
-            <p className="text-center text-[#D4AF6A] font-semibold uppercase tracking-widest text-xs mb-6">
+            <p className="text-center text-[#8a6c26] font-semibold uppercase tracking-widest text-xs mb-6">
               Paris Black Car Journal
             </p>
 
-            <h2 className="text-4xl md:text-5xl text-center mb-6 font-script text-[#D4AF6A]">
+            <h2 className="text-4xl md:text-5xl text-center mb-6 font-script text-[#8a6c26]">
               {blog.title}
             </h2>
 
-            <div className="h-px w-[140px] bg-[#D4AF6A] mx-auto mb-6" />
+            <div className="h-px w-[140px] bg-[#8a6c26] mx-auto mb-6" />
 
             <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-gray-300 mb-10">
               {publishedDate && <span>Published {publishedDate}</span>}
@@ -121,24 +121,24 @@ export default async function SingleBlogPage({ params }: Props) {
                 leading-relaxed
                  [&_h1]:text-4xl
                 [&_h1]:font-serif
-                [&_h1]:text-[#D4AF6A]
+                [&_h1]:text-[#8a6c26]
                 [&_h1]:mt-12
                 [&_h1]:mb-6
                 [&_h1]:border-b
-                [&_h1]:border-[#D4AF6A]/30
+                [&_h1]:border-[#8a6c26]/30
                 [&_h1]:pb-3
 
                 [&_h2]:text-3xl
                 [&_h2]:font-serif
-                [&_h2]:text-[#D4AF6A]
+                [&_h2]:text-[#8a6c26]
                 [&_h2]:mt-12
                 [&_h2]:mb-6
                 [&_h2]:border-b
-                [&_h2]:border-[#D4AF6A]/30
+                [&_h2]:border-[#8a6c26]/30
                 [&_h2]:pb-3
                 [&_h3]:text-2xl
                 [&_h3]:font-serif
-                [&_h3]:text-[#D4AF6A]
+                [&_h3]:text-[#8a6c26]
                 [&_h3]:mt-10
                 [&_h3]:mb-4
 
@@ -158,8 +158,8 @@ export default async function SingleBlogPage({ params }: Props) {
   [&_h6]:mb-2
   [&_h6]:text-gray-400
                 [&_p]:mb-6
-                [&_strong]:text-[#D4AF6A]
-                [&_a]:text-[#D4AF6A]
+                [&_strong]:text-[#8a6c26]
+                [&_a]:text-[#8a6c26]
                 [&_a]:no-underline
                 [&_a:hover]:underline
                 [&_ul]:list-disc
@@ -169,12 +169,12 @@ export default async function SingleBlogPage({ params }: Props) {
               dangerouslySetInnerHTML={{ __html: blog.text || "" }}
             />
 
-            <div className="mt-14 h-px w-full bg-linear-to-r from-transparent via-[#D4AF6A]/40 to-transparent" />
+            <div className="mt-14 h-px w-full bg-linear-to-r from-transparent via-[#8a6c26]/40 to-transparent" />
 
             <div className="mt-10 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-center">
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center rounded-xl bg-[#D4AF6A] px-7 py-3 text-sm font-semibold text-black hover:bg-amber-400 transition"
+                className="btn-primary font-logo!"
               >
                 Book now
               </Link>

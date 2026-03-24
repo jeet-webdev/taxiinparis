@@ -128,7 +128,6 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
   const appLinks = (footerData?.appLinks as AppLink[]) || [];
   const socialLinks = (footerData.socialLinks as SocialLink[]) || [];
   const paymentLinks = (footerData.paymentLinks as PaymentLink[]) || [];
-  const visibleLinks = appLinks.filter((app) => app.isVisible);
 
   const quickLinks = navLinks.filter(
     (l) => l.type !== "category" && l.showInNav !== false,
@@ -152,49 +151,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
           </h4>
 
           <div className="border-b border-black/20 py-3">
-            {/* Title */}
-            {/* <h3 className="text-start font-mono tracking-tight text-black text-lg sm:text-xl font-medium mb-2">
-              Download our app for priority booking
-            </h3> */}
-
-            {/* Buttons */}
-            {/* <div className="flex flex-row justify-start gap-4 sm:gap-5">
-              {visibleLinks.map((app, index) => {
-                if (app.platform === "google_play") {
-                  return (
-                    <Link key={index} href={app.url} target="_blank">
-                      <div className="appBadge">
-                        <Image
-                          src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg"
-                          alt="Google Play"
-                          width={240}
-                          height={80}
-                          className="h-15 w-auto"
-                        />
-                      </div>
-                    </Link>
-                  );
-                }
-
-                if (app.platform === "app_store") {
-                  return (
-                    <Link key={index} href={app.url} target="_blank">
-                      <div className="appBadge">
-                        <Image
-                          src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg"
-                          alt="App Store"
-                          width={240}
-                          height={80}
-                          className="h-15 w-auto"
-                        />
-                      </div>
-                    </Link>
-                  );
-                }
-
-                return null;
-              })}
-            </div> */}
+           
           </div>
         </div>
 
@@ -209,7 +166,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                 {/* Logo */}
                 <div className="my-3">
                   <Link href="/">
-                    <div className="flex lg:justify-start justify-center items-center">
+                    <div className="flex justify-start  items-center">
                       <FooterLogo
                         logoUrl={footerData.logoUrl}
                         logoAlt={footerData.logoAlt}
