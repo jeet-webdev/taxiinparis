@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://luxurylimo.com/sitemap.xml
+Sitemap: https://luxurylimoparis.fr/sitemap.xml
