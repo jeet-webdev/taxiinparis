@@ -3,10 +3,11 @@ import { getBlogPage } from "@/src/actions/blog/getBlogs";
 
 export async function GET() {
   const baseUrl = "https://luxurylimoparis.fr";
-
   const today = new Date().toISOString();
 
-  const { blogs } = await getBlogPage();
+  // ✅ FIX: Pass (1, 1000) to fetch the first page but with a limit of 1000 blogs
+  // This overrides the default limit of 6.
+  const { blogs } = await getBlogPage(1, 1000);
 
   const footerData = await prisma.footer.findFirst();
 
@@ -46,8 +47,9 @@ export async function GET() {
 
   // ✅ Nav pages
   navLinks.forEach((link) => {
+    if (!link.url) return;
     urls.push({
-      loc: `${baseUrl}${link.url}`,
+      loc: `${baseUrl}${link.url.startsWith("/") ? link.url : `/${link.url}`}`,
       priority: 0.9,
       changefreq: "weekly",
       lastmod: today,
@@ -67,11 +69,10 @@ export async function GET() {
   // ✅ Category pages
   categories.forEach((cat) => {
     cat.categoryPages.forEach((p) => {
+      const formattedSlug = p.slug.trim().toLowerCase().replace(/\s+/g, "-");
+
       urls.push({
-        loc: `${baseUrl}/category/${cat.slug}/${p.slug
-          .trim()
-          .toLowerCase()
-          .replace(/\s+/g, "-")}`,
+        loc: `${baseUrl}/category/${cat.slug}/${formattedSlug}`,
         priority: 0.7,
         changefreq: "weekly",
         lastmod: today,
@@ -79,20 +80,20 @@ export async function GET() {
     });
   });
 
-  // ✅ Blogs
+  // ✅ Blogs (Now showing all fetched blogs)
   blogs.forEach((b) => {
     urls.push({
       loc: `${baseUrl}/blog/${b.slug}`,
       priority: 0.6,
       changefreq: "monthly",
-      lastmod: today,
+      // Use the actual blog updated date if it exists, otherwise use today
+      lastmod: b.updatedAt ? new Date(b.updatedAt).toISOString() : today,
     });
   });
 
-  // ✅ XML
+  // ✅ Generate XML
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-
 ${urls
   .map(
     (u) => `
@@ -100,12 +101,10 @@ ${urls
     <loc>${u.loc}</loc>
     <lastmod>${u.lastmod}</lastmod>
     <changefreq>${u.changefreq}</changefreq>
-    <priority>${u.priority}</priority>
-  </url>
-`
+    <priority>${u.priority.toFixed(1)}</priority>
+  </url>`,
   )
   .join("")}
-
 </urlset>`;
 
   return new Response(xml, {
