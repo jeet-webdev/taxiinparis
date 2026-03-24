@@ -1,37 +1,22 @@
 "use client";
 import { Box } from "@mui/material";
 import { motion, Variants } from "framer-motion";
-import { getIconComponent } from "@/src/components/common/utils/iconMap";
 
 interface CommitmentSectionProps {
   title?: string | null;
   subtitle?: string | null;
-  highlightText?: string | null;
-  heroPoint1?: string | null;
-  heroPoint2?: string | null;
-
-  heroCardFootnote?: string | null;
-  heroPoint3?: string | null;
-  heroTrustText?: string | null;
   description?: string | null;
-  ctaButtonText?: string | null;
-  heroButtonLink?: string | null;
-  secureBookingTitle?: string | null;
-  reliableServiceTitle?: string | null;
-  fairPriceTitle?: string | null;
-  customerServiceTitle?: string | null;
   heroCard1Title?: string | null;
   heroCard2Title?: string | null;
   heroCard3Title?: string | null;
-  secureBooking?: string | null;
-  reliableService?: string | null;
-  fairPrice?: string | null;
-  customerService?: string | null;
-
-  secureBookingIcon?: string | null;
-  reliableServiceIcon?: string | null;
-  fairPriceIcon?: string | null;
-  customerServiceIcon?: string | null;
+  ctaButtonText?: string | null;
+  heroButtonLink?: string | null;
+  highlightText?: string | null;
+  heroTrustText?: string | null;
+  heroPoint1?: string | null;
+  heroPoint2?: string | null;
+  heroPoint3?: string | null;
+  heroCardFootnote?: string | null;
 }
 
 export default function CommitmentSection({
@@ -43,25 +28,12 @@ export default function CommitmentSection({
   heroCard3Title,
   ctaButtonText,
   heroButtonLink,
-  heroCardFootnote,
-  secureBookingTitle,
-  reliableServiceTitle,
-  fairPriceTitle,
-  customerServiceTitle,
   highlightText,
-  secureBooking,
-  reliableService,
-  fairPrice,
   heroTrustText,
   heroPoint1,
   heroPoint2,
   heroPoint3,
-  customerService,
-
-  secureBookingIcon,
-  reliableServiceIcon,
-  fairPriceIcon,
-  customerServiceIcon,
+  heroCardFootnote,
 }: Readonly<CommitmentSectionProps>) {
   // ✅ SAME AS BEFORE
   const containerVariants: Variants = {
@@ -96,37 +68,12 @@ const iconPulse = {
     },
   },
 };
-  const features = [
-    {
-      title: secureBookingTitle,
-      description: secureBooking,
-      iconName: secureBookingIcon || "check",
-    },
-    {
-      title: reliableServiceTitle,
-      description: reliableService,
-      iconName: reliableServiceIcon || "check",
-    },
-    {
-      title: fairPriceTitle,
-      description: fairPrice,
-      iconName: fairPriceIcon || "check",
-    },
-    {
-      title: customerServiceTitle,
-      description: customerService,
-      iconName: customerServiceIcon || "check",
-    },
-  ];
+
 
   return (
     <section
       className="relative border-y-2 border-[#8b6c26] py-12"
-      // style={{
-      //   backgroundImage: "url('/assets/bg-1.jpg')",
-      //   backgroundSize: "cover",
-      //   backgroundPosition: "center",
-      // }}
+
     >
       <Box className="max-w-378 mx-auto px-6">
         {/* ✅ HEADING SAME MOTION */}
@@ -264,7 +211,7 @@ const iconPulse = {
                   if (!item.title) return null;
 
                   return (
-                    <div key={i} className="flex items-start gap-2 w-[140px]">
+                    <div key={i} className="flex items-start gap-2 w-35">
                       <span className="text-sm text-black-500 leading-tight">
                         {item.title}
                       </span>
@@ -278,7 +225,7 @@ const iconPulse = {
               variants={cardVariants}
               className="text-lg text-center border-t text-black-500 py-2"
             >
-              We use Mercedes & luxury vehicles only.
+             {heroCardFootnote || "Experience the best of Paris with us!"}
             </motion.div>
           </motion.div>
         </motion.div>

@@ -168,6 +168,7 @@ model SiteSetting {
 
   @@map("site_settings")
 }
+
 model GoogleSettings {
   id           Int      @id @default(1)
   clientId     String
@@ -177,6 +178,7 @@ model GoogleSettings {
   locationId   String
   updatedAt    DateTime @updatedAt
 }
+
 enum Role {
   ADMIN
   EDITOR

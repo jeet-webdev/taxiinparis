@@ -117,21 +117,21 @@ export default async function CategoryDetailPage({ params }: Props) {
     <main className="min-h-screen bg-[#0A0F1C]">
       <DarkLuxuryBlock>
         {/* Hero */}
-        <HeroSection img="/images/luxury-hero-bg.jpg" alt={page.title} />
+        <HeroSection img="/assets/images/luxury-limo-chiah3.webp" alt={page.title} />
 
         <section className="py-14 md:py-20">
           <div className="max-w-5xl mx-auto px-6">
             {/* Category Name */}
-            <p className="text-center text-[#D4AF6A] font-semibold uppercase tracking-widest text-xs mb-4">
+            <p className="text-center text-[#8a6c26] font-semibold uppercase tracking-widest text-xs mb-4">
               {page.category?.name || "Premium Service"}
             </p>
 
             {/* Title */}
-            <h1 className="text-4xl md:text-6xl text-center mb-8 font-serif text-[#D4AF6A] leading-tight">
+            <h1 className="text-4xl md:text-6xl text-center mb-8 font-serif text-[#8a6c26] leading-tight">
               {page.title}
             </h1>
 
-            <div className="h-px w-32 bg-[#D4AF6A] mx-auto mb-12" />
+            <div className="h-px w-32 bg-[#8a6c26] mx-auto mb-12" />
 
             {/* Content */}
             <article
@@ -141,25 +141,25 @@ export default async function CategoryDetailPage({ params }: Props) {
                 text-lg
                 [&_h2]:text-3xl
                 [&_h2]:font-serif
-                [&_h2]:text-[#D4AF6A]
+                [&_h2]:text-[#8a6c26]
                 [&_h2]:mt-12
                 [&_h2]:mb-6
                 [&_h2]:border-b
-                [&_h2]:border-[#D4AF6A]/20
+                [&_h2]:border-[#8a6c26]/20
                 [&_h2]:pb-2
 
                 [&_h3]:text-2xl
                 [&_h3]:font-serif
-                [&_h3]:text-[#D4AF6A]
+                [&_h3]:text-[#8a6c26]
                 [&_h3]:mt-10
                 [&_h3]:mb-4
 
                 [&_p]:mb-6
-                [&_strong]:text-[#D4AF6A]
+                [&_strong]:text-[#8a6c26]
                 [&_ul]:list-disc
                 [&_ul]:pl-6
                 [&_li]:mb-2
-                [&_a]:text-[#D4AF6A]
+                [&_a]:text-[#8a6c26]
                 [&_a]:underline
                 [&_a:hover]:text-white
               "
@@ -171,7 +171,7 @@ export default async function CategoryDetailPage({ params }: Props) {
               <div className="flex flex-wrap justify-center gap-6">
                 <Link
                   href="/booking"
-                  className="bg-[#D4AF6A] text-black px-10 py-4 rounded-full font-bold uppercase hover:bg-amber-400 transition"
+                  className="btn-primary font-logo! "
                 >
                   Book Your Transfer Now
                 </Link>

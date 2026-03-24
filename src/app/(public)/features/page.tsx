@@ -1,4 +1,3 @@
-import { prisma } from "@/src/lib/prisma";
 import Link from "next/link";
 import Image from "next/image";
 import FeatureCardMotion from "./FeatureCardMotion";
@@ -15,13 +14,13 @@ export default async function WhyChooseUsSection({
     <section className=" py-2 sm:py-6 lg:py-8">
       <div className="max-w-378 mx-auto px-0 sm:px-6 lg:px-8">
         {/* Heading (UNCHANGED STYLE) */}
-        <h2 className="text-2xl md:text-5xl font-light  mb-12 text-black">
+        <h2 className="text-2xl md:text-4xl lg:text-5xl font-light  mb-12 text-black">
           Simplify your travel with our chauffeur service in Paris. Book now and
           experience the ultimate in comfort, style, and reliability.
         </h2>
 
         {/* Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-6">
           {features.map((item) => (
             <FeatureCardMotion key={item.id}>
               <article className="group flex flex-col h-full overflow-hidden bg-[#faf8f2]">
@@ -56,7 +55,7 @@ export default async function WhyChooseUsSection({
                 </div>
 
                 {/* Content */}
-                <div className="flex flex-col flex-grow p-5">
+                <div className="flex flex-col grow p-5">
                   {/* Category (EXACT SAME) */}
                   {item.category && (
                     <span className="text-base font-medium font-sans p-0.5 rounded-full bg-[#8b6c26] text-white w-fit">

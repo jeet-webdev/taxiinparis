@@ -43,7 +43,7 @@ export default async function HomePage() {
   if (!page || page.status === "inactive") {
     notFound();
   }
-  // console.log("🚀 ~ file: page.tsx:24 ~ HomePage ~ page:", page);
+  console.log("🚀 ~ file: page.tsx:35 ~ HomePage ~ page:", page);
   return (
     <>
       <div className="">
@@ -67,18 +67,7 @@ export default async function HomePage() {
             heroCard3Title={page?.heroCard3Title}
             heroPoint3={page?.heroPoint3}
             title={page?.title}
-            reliableServiceTitle={page?.reliableServiceTitle}
-            customerServiceTitle={page?.customerServiceTitle}
-            secureBookingTitle={page?.secureBookingTitle}
-            fairPriceTitle={page?.fairPriceTitle}
-            customerService={page?.customerService}
-            fairPrice={page?.fairPrice}
-            reliableService={page?.reliableService}
-            secureBooking={page?.secureBooking}
-            secureBookingIcon={page?.secureBookingIcon}
-            reliableServiceIcon={page?.reliableServiceIcon}
-            fairPriceIcon={page?.fairPriceIcon}
-            customerServiceIcon={page?.customerServiceIcon}
+            
           />
           <TestimonialsSection />
         </DarkLuxuryBlock>

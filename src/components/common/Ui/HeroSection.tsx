@@ -6,6 +6,7 @@ interface HeroSectionProps {
   alt?: string | null;
 }
 export default function HeroSection({ img, alt }: HeroSectionProps) {
+  console.log("🚀 ~ file: HeroSection.tsx:6 ~ HeroSection ~ img:", img);
   return (
     <section className="relative  w-full overflow-visible">
       {/* Background Image */}
