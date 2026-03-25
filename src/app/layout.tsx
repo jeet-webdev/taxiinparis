@@ -37,13 +37,23 @@ export const metadata: Metadata = {
   verification: {
     google: "VSVIVqpHdwUEgucHvN6CabseAmtHlg8cMYVlSUzz-6k",
   },
-  title: "Luxury Limo Paris",
+  metadataBase: new URL("https://www.luxurylimoparis.fr"),
+
+  title: {
+    default: "Luxury Limo Paris",
+    template: "%s | Luxury Limo Paris",
+  },
+
   description: "Premium Chauffeur Service in Paris",
 
   applicationName: "Luxury Limo Paris",
   openGraph: {
+    title: "Luxury Limo Paris",
     siteName: "Luxury Limo Paris",
+    url: "https://www.luxurylimoparis.fr",
+    type: "website",
   },
+
   icons: {
     icon: [
       { url: "/uploads/favicon.ico", sizes: "any" },
@@ -83,9 +93,22 @@ export default function RootLayout({
   // 1. Create the structured data object
   const jsonLd = {
     "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Luxury Limo Paris",
+    url: "https://www.luxurylimoparis.fr",
+    logo: "https://www.luxurylimoparis.fr/uploads/apple-touch-icon-180x180.png",
+    sameAs: ["https://www.facebook.com/", "https://www.instagram.com/"],
+  };
+  const jsonLdWebsite = {
+    "@context": "https://schema.org",
     "@type": "WebSite",
     name: "Luxury Limo Paris",
     url: "https://www.luxurylimoparis.fr",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: "https://www.luxurylimoparis.fr/?s={search_term_string}",
+      "query-input": "required name=search_term_string",
+    },
   };
   return (
     // <html lang="en">
@@ -97,7 +120,11 @@ export default function RootLayout({
     //   </body>
     // </html>
     <html lang="en">
-      <head>
+      {/* <head> */}
+      <body
+        suppressHydrationWarning
+        className={`${montserrat.variable} ${cinzel.variable} ${playfair.variable} ${greatVibes.variable} font-sans`}
+      >
         {/* 2. GTM Main Script - Placed in Head */}
         <Script id="gtm-script" strategy="afterInteractive">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -107,17 +134,21 @@ export default function RootLayout({
           })(window,document,'script','dataLayer','GTM-NZXJWVFC');`}
         </Script>
         <Script
-          id="structured-data"
+          id="structured-data-org"
           type="application/ld+json"
           strategy="beforeInteractive"
         >
           {JSON.stringify(jsonLd)}
         </Script>
-      </head>
-      <body
-        suppressHydrationWarning
-        className={`${montserrat.variable} ${cinzel.variable} ${playfair.variable} ${greatVibes.variable} font-sans`}
-      >
+
+        <Script
+          id="structured-data-website"
+          type="application/ld+json"
+          strategy="beforeInteractive"
+        >
+          {JSON.stringify(jsonLdWebsite)}
+        </Script>
+        {/* </head> */}
         {/* 3. GTM Noscript - Placed at the start of Body */}
         <noscript>
           <iframe
