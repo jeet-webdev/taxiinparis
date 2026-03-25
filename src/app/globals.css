@@ -156,3 +156,17 @@ body {
   font-size: 1rem;
   font-weight: 600;
 }
+
+@media (max-width: 1200px) {
+  .cstm-nav {
+    gap: 20px;
+    row-gap: 0px;
+  }
+  .cstm-navlink {
+    font-size: 14px !important;
+  }
+  .cstm-navbtn {
+    padding: 12px 18px !important;
+    font-size: 12px !important;
+  }
+}

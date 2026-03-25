@@ -89,12 +89,12 @@ export default function Navbar({ footerData }: NavbarProps) {
           </div>
 
           {/* Desktop Nav - Centered */}
-          <ul className="hidden  md:flex items-center gap-5 md:gap-8 lg:gap-15 absolute left-1/2 -translate-x-1/2">
+          <ul className="hidden cstm-nav md:flex items-center gap-5 md:gap-8 lg:gap-16 justify-center flex-wrap ">
             {visibleLinks.map((item) => (
               <li key={item.url}>
                 <Link
                   href={item.url}
-                  className="text-[#2A2A2A] font-medium font-heading text-sm lg:text-base hover:text-[#C6A85A] transition-colors"
+                  className="text-[#2A2A2A] cstm-navlink font-medium font-heading text-sm lg:text-base hover:text-[#C6A85A] transition-colors"
                 >
                   {item.label}
                 </Link>
@@ -110,7 +110,7 @@ export default function Navbar({ footerData }: NavbarProps) {
             <Link
               href={footerData?.btnLink || "/booking"}
               target="_blank"
-              className="btn-primary font-logo! hidden md:block"
+              className="btn-primary cstm-navbtn font-logo! hidden md:block "
             >
               {footerData?.btnText || "Book Now"}
             </Link>
