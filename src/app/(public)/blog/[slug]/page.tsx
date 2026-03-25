@@ -6,6 +6,7 @@ import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsS
 import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
 import HeroSection from "@/src/components/common/Ui/HeroSection";
 import { Metadata } from "next";
+import TestimonialCard from "@/src/feature/Homepage/components/TestimonialCard";
 
 interface Props {
   params: Promise<{ slug: string }>; // Next.js 15
@@ -95,6 +96,7 @@ export default async function SingleBlogPage({ params }: Props) {
     <main className="min-h-screen bg-[#0A0F1C]">
       <DarkLuxuryBlock>
         <HeroSection img={blog.bannerImage} alt={blog.bannerAlt} />
+        <TestimonialCard />
 
         {/* --- ARTICLE CONTENT SECTION --- */}
         <section className="py-14 md:py-18">
@@ -172,10 +174,7 @@ export default async function SingleBlogPage({ params }: Props) {
             <div className="mt-14 h-px w-full bg-linear-to-r from-transparent via-[#8a6c26]/40 to-transparent" />
 
             <div className="mt-10 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-center">
-              <Link
-                href="/contact"
-                className="btn-primary font-logo!"
-              >
+              <Link href="/contact" className="btn-primary font-logo!">
                 Book now
               </Link>
 

@@ -50,8 +50,9 @@ export default async function about() {
         }}
       >
         <HeroSection img={page?.imageUpload || undefined} alt={page.imageAlt} />
+
         <DarkLuxuryBlock>
-          {/* <TestimonialCard /> */}
+          <TestimonialCard />
           <Content data={{ title: page?.title, content: page?.content }} />
           <TestimonialsSection />
         </DarkLuxuryBlock>

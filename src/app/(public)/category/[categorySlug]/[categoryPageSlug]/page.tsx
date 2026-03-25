@@ -10,6 +10,7 @@ import { prisma } from "@/src/lib/prisma";
 import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
 import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
 import HeroSection from "@/src/components/common/Ui/HeroSection";
+import TestimonialCard from "@/src/feature/Homepage/components/TestimonialCard";
 
 /* ---------------- TYPES ---------------- */
 
@@ -121,6 +122,7 @@ export default async function CategoryDetailPage({ params }: Props) {
           img="/assets/images/luxury-limo-chiah3.webp"
           alt={page.title}
         />
+        <TestimonialCard />
 
         <section className="py-14 md:py-20">
           <div className="max-w-5xl mx-auto px-6">
