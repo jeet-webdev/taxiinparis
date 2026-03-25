@@ -252,7 +252,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
               <div className="hidden md:block">
                 {firstCategory && (
                   <div className="mt-2">
-                    <h3 className="text-black opacity-50  font-semibold mb-6 text-base">
+                    <h3 className="text-[#8a6c26] opacity-50  font-semibold mb-6 text-base">
                       {firstCategory.name}
                     </h3>
 
@@ -274,7 +274,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
 
               {/* Quick Links */}
               <div className="block md:hidden ml-8 sm:ml:0 min-w-0 mt-2 ">
-                <h3 className="text-black opacity-50  pt-2 lg:pt-4 font-semibold mb-6 text-base ">
+                <h3 className="text-[#8a6c26] opacity-50  pt-2 lg:pt-4 font-semibold mb-6 text-base ">
                   Quick Links
                 </h3>
 
@@ -300,7 +300,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
               {/* Quick Links */}
               <div className="hidden md:block">
-                <h3 className="text-black text-[#8a6c26] opacity-50 pt-2 md:pt-4 font-semibold mb-6 text-base ">
+                <h3 className=" text-[#8a6c26] opacity-50 pt-2 md:pt-4 font-semibold mb-6 text-base ">
                   Quick Links
                 </h3>
 
@@ -320,7 +320,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
               <div className=" md:hidden ">
                 {firstCategory && (
                   <div className="mt-2">
-                    <h3 className="text-black opacity-50 text-[#8a6c26] font-semibold mb-4 text-sm  ">
+                    <h3 className=" opacity-50 text-[#8a6c26] font-semibold mb-4 text-sm  ">
                       {firstCategory.name}
                     </h3>
 
@@ -342,7 +342,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
               {/* Categories */}
               {otherCategories.map((category) => (
                 <div key={category.id} className="min-w-0">
-                  <h3 className="text-black opacity-50 text-[#8a6c26]  pt-2 lg:pt-4 font-semibold mb-6 text-base ">
+                  <h3 className=" opacity-50 text-[#8a6c26]  pt-2 lg:pt-4 font-semibold mb-6 text-base ">
                     {category.name}
                   </h3>
 

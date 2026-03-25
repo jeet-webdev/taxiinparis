@@ -15,7 +15,7 @@ import {
 import { toast } from "react-toastify";
 import { uploadFeatureImage } from "@/src/actions/uploadFeatureImage";
 import { FeatureItem } from "../types/feature.types";
-
+import { useRouter } from "next/navigation";
 // ─────────────────────────────────────────────
 // INPUT CLASSES
 // ─────────────────────────────────────────────
@@ -675,6 +675,7 @@ export function FeatureForm({
   initialFeatures: FeatureItem[];
   initialMainTitle?: string;
 }) {
+  const router = useRouter();
   const [features, setFeatures] = useState<FeatureItem[]>(initialFeatures);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -737,6 +738,7 @@ export function FeatureForm({
     setSubmitSuccess(false);
     setUploadedImageUrl(undefined);
     reset();
+    router.refresh();
   };
 
   const onSubmit = async (data: FeatureFormValues) => {
@@ -1056,7 +1058,7 @@ export function FeatureForm({
                     className="text-sm text-[#3D7A4F]"
                     style={{ fontFamily: "Georgia, serif" }}
                   >
-                    Feature {isEditing ? "updated" : "created"} successfully!
+                    {isEditing ? "updated" : "created"} successfully!
                   </p>
                 </div>
               )}
