@@ -757,6 +757,12 @@ export function FeatureForm({
         setEditingId(null);
         setUploadedImageUrl(undefined);
         reset();
+        router.refresh();
+        const response = await fetch("/api/features");
+        if (response.ok) {
+          const updatedData = await response.json();
+          setFeatures(updatedData);
+        }
         const updated = await fetch("/api/features")
           .then((r) => r.json())
           .catch(() => null);
@@ -777,6 +783,12 @@ export function FeatureForm({
         if (editingId === id) handleCancel();
       }
       setDeletingId(null);
+      router.refresh();
+      const response = await fetch("/api/features");
+      if (response.ok) {
+        const updatedData = await response.json();
+        setFeatures(updatedData);
+      }
     });
   };
 
