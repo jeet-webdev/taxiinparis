@@ -17,7 +17,6 @@ import RichTextEditor from "@/src/components/common/Ui/Admin/RichTextEditor";
 import { createCategoryPage } from "@/src/actions/category/CategoryPage/createCategoryPage";
 import { getCategoryById } from "@/src/actions/category/getCategory";
 import { color } from "framer-motion";
-// Assuming you have a generic or category-specific upload action
 // import { uploadCategoryImage } from "@/src/actions/category/uploadCategoryImage";
 
 type CategoryPageFormValues = {
@@ -199,7 +198,7 @@ export default function AddPageToCategory({
               </Paper>
 
               {/* Editor Section */}
-              <Paper
+              {/* <Paper
                 sx={{ p: 3, borderRadius: 3, border: "1px solid #e2e8f0" }}
                 elevation={0}
               >
@@ -223,6 +222,71 @@ export default function AddPageToCategory({
                       // Use categoryId for asset organization
                       blogId={categoryId.toString()}
                       // onImageUpload={uploadCategoryImage}
+                    />
+                  )}
+                />
+              </Paper> */}
+              {/* Editor Section */}
+              <Paper
+                sx={{
+                  p: 3,
+                  borderRadius: 3,
+                  border: "1px solid #e2e8f0",
+                  // ADD THESE RULES HERE:
+                  "& .tiptap h1": {
+                    fontSize: "2.5rem",
+                    fontWeight: "bold",
+                    margin: "0.67em 0",
+                  },
+                  "& .tiptap h2": {
+                    fontSize: "2rem",
+                    fontWeight: "bold",
+                    margin: "0.83em 0",
+                  },
+                  "& .tiptap h3": {
+                    fontSize: "1.75rem",
+                    fontWeight: "bold",
+                    margin: "1em 0",
+                  },
+                  "& .tiptap h4": {
+                    fontSize: "1.5rem",
+                    fontWeight: "bold",
+                    margin: "1.33em 0",
+                  },
+                  "& .tiptap h5": {
+                    fontSize: "1.25rem",
+                    fontWeight: "bold",
+                    margin: "1.67em 0",
+                  },
+                  "& .tiptap h6": {
+                    fontSize: "1rem",
+                    fontWeight: "bold",
+                    margin: "2.33em 0",
+                  },
+                  "& .tiptap p": { margin: "1em 0" },
+                  "& .tiptap ul": { listStyleType: "disc", pl: 4 },
+                  "& .tiptap ol": { listStyleType: "decimal", pl: 4 },
+                }}
+                elevation={0}
+              >
+                <Typography
+                  variant="subtitle2"
+                  fontWeight="700"
+                  color="primary"
+                  gutterBottom
+                >
+                  PAGE CONTENT
+                </Typography>
+                <Controller
+                  name="content"
+                  control={control}
+                  render={({ field }) => (
+                    <RichTextEditor
+                      content={field.value}
+                      onChange={field.onChange}
+                      placeholder="Type the main content..."
+                      minHeight={450}
+                      blogId={categoryId.toString()}
                     />
                   )}
                 />

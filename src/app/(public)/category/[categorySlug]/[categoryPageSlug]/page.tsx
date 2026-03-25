@@ -139,7 +139,7 @@ export default async function CategoryDetailPage({ params }: Props) {
             <div className="h-px w-32 bg-[#8a6c26] mx-auto mb-12" />
 
             {/* Content */}
-            <article
+            {/* <article
               className="
                 text-gray-300
                 leading-relaxed
@@ -168,6 +168,66 @@ export default async function CategoryDetailPage({ params }: Props) {
                 [&_a]:underline
                 [&_a:hover]:text-white
               "
+              dangerouslySetInnerHTML={{ __html: displayContent }}
+            /> */}
+            <article
+              className="
+    text-black
+    leading-relaxed
+    text-lg
+    
+    /* H1 - Extra Large (if used inside content) */
+    [&_h1]:text-4xl
+    [&_h1]:font-serif
+    [&_h1]:text-[#8a6c26]
+    [&_h1]:mb-8
+
+    /* H2 - Large Section Titles */
+    [&_h2]:text-3xl
+    [&_h2]:font-serif
+    [&_h2]:text-[#8a6c26]
+    [&_h2]:mt-12
+    [&_h2]:mb-6
+    [&_h2]:border-b
+    [&_h2]:border-[#8a6c26]/20
+    [&_h2]:pb-2
+
+    /* H3 - Medium Subsection Titles */
+    [&_h3]:text-2xl
+    [&_h3]:font-serif
+    [&_h3]:text-[#8a6c26]
+    [&_h3]:mt-10
+    [&_h3]:mb-4
+
+    /* H4, H5, H6 - Small Headings */
+    [&_h4]:text-xl
+    [&_h4]:font-serif
+    [&_h4]:text-[#8a6c26]
+    [&_h4]:mt-8
+    [&_h4]:mb-3
+
+    [&_h5]:text-lg
+    [&_h5]:font-bold
+    [&_h5]:text-[#8a6c26]
+    [&_h5]:mt-6
+    [&_h5]:mb-2
+
+    [&_h6]:text-base
+    [&_h6]:font-bold
+    [&_h6]:uppercase
+    [&_h6]:text-[#8a6c26]
+    [&_h6]:mt-4
+    [&_h6]:mb-2
+
+    [&_p]:mb-6
+    [&_strong]:text-[#8a6c26]
+    [&_ul]:list-disc
+    [&_ul]:pl-6
+    [&_li]:mb-2
+    [&_a]:text-[#8a6c26]
+    [&_a]:underline
+    [&_a:hover]:text-white
+  "
               dangerouslySetInnerHTML={{ __html: displayContent }}
             />
 
