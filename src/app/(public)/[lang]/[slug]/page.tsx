@@ -55,8 +55,9 @@ export default async function LanguagePageFrontend({ params }: Props) {
   return (
     <>
       <HeroSection img={page.imageUpload || undefined} alt={page.imageAlt} />
-      <TestimonialCard />
+
       <DarkLuxuryBlock>
+        <TestimonialCard />
         <Content
           data={{
             title: page.title,
