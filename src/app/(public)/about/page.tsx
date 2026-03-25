@@ -43,15 +43,19 @@ export default async function about() {
   }
   return (
     <>
-       <div className="" style={{backgroundImage: `url(${page?.imageUpload||"/assets/images/hero-img.jpeg"})`}}>
-
-      <HeroSection img={page?.imageUpload || undefined} alt={page.imageAlt} />
-      <DarkLuxuryBlock>
-      {/* <TestimonialCard /> */}
-        <Content data={{ title: page?.title, content: page?.content }} />
-        <TestimonialsSection />
-      </DarkLuxuryBlock>
-       </div>
+      <div
+        className=""
+        style={{
+          backgroundImage: `url(${page?.imageUpload || "/assets/images/hero-img.jpeg"})`,
+        }}
+      >
+        <HeroSection img={page?.imageUpload || undefined} alt={page.imageAlt} />
+        <DarkLuxuryBlock>
+          {/* <TestimonialCard /> */}
+          <Content data={{ title: page?.title, content: page?.content }} />
+          <TestimonialsSection />
+        </DarkLuxuryBlock>
+      </div>
     </>
   );
 }

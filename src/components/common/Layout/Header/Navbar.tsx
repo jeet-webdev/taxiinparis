@@ -89,7 +89,7 @@ export default function Navbar({ footerData }: NavbarProps) {
           </div>
 
           {/* Desktop Nav - Centered */}
-          <ul className="hidden  md:flex items-center gap-5 md:gap-8 lg:gap-16 absolute left-1/2 -translate-x-1/2">
+          <ul className="hidden  md:flex items-center gap-5 md:gap-8 lg:gap-15 absolute left-1/2 -translate-x-1/2">
             {visibleLinks.map((item) => (
               <li key={item.url}>
                 <Link

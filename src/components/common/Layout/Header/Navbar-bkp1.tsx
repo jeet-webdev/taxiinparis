@@ -89,12 +89,12 @@ export default function Navbar({ footerData }: NavbarProps) {
           </div>
 
           {/* Desktop Nav - Centered */}
-          <ul className="hidden md:flex items-center gap-16 md:gap-8 absolute left-1/2 -translate-x-1/2">
+          <ul className="hidden  md:flex items-center gap-5 md:gap-8 lg:gap-16 absolute left-1/2 -translate-x-1/2">
             {visibleLinks.map((item) => (
               <li key={item.url}>
                 <Link
                   href={item.url}
-                  className="text-[#2A2A2A] font-medium font-heading! text-base hover:text-[#C6A85A] transition-colors"
+                  className="text-[#2A2A2A] font-medium font-heading text-sm lg:text-base hover:text-[#C6A85A] transition-colors"
                 >
                   {item.label}
                 </Link>
