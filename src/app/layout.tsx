@@ -1,169 +1,3 @@
-// import type { Metadata } from "next";
-// import {
-//   Cinzel,
-//   Great_Vibes,
-//   Montserrat,
-//   Playfair_Display,
-// } from "next/font/google";
-// import "./globals.css";
-// import Script from "next/script"; //1
-// // --- Font Configurations ---
-// const montserrat = Montserrat({
-//   subsets: ["latin"],
-//   weight: ["300", "400", "500", "600", "700"],
-//   variable: "--font-montserrat",
-// });
-
-// const cinzel = Cinzel({
-//   subsets: ["latin"],
-//   weight: ["400", "600", "700"],
-//   variable: "--font-cinzel",
-// });
-
-// const playfair = Playfair_Display({
-//   subsets: ["latin"],
-//   weight: ["400", "500", "600", "700"],
-//   variable: "--font-playfair",
-// });
-
-// const greatVibes = Great_Vibes({
-//   subsets: ["latin"],
-//   weight: ["400"],
-//   variable: "--font-greatvibes",
-// });
-
-// // --- Metadata for SEO & Browser Icons ---
-// export const metadata: Metadata = {
-//   verification: {
-//     google: "VSVIVqpHdwUEgucHvN6CabseAmtHlg8cMYVlSUzz-6k",
-//   },
-//   metadataBase: new URL("https://www.luxurylimoparis.fr"),
-
-//   title: {
-//     default: "Luxury Limo Paris",
-//     template: "%s | Luxury Limo Paris",
-//   },
-
-//   description: "Premium Chauffeur Service in Paris",
-
-//   applicationName: "Luxury Limo Paris",
-//   openGraph: {
-//     title: "Luxury Limo Paris",
-//     siteName: "Luxury Limo Paris",
-//     url: "https://www.luxurylimoparis.fr",
-//     type: "website",
-//   },
-
-//   icons: {
-//     icon: [
-//       { url: "/uploads/favicon.ico", sizes: "any" },
-//       {
-//         url: "/uploads/favicon-browser-32x32.png",
-//         sizes: "32x32",
-//         type: "image/png",
-//       },
-//       {
-//         url: "/uploads/favicon-browser-16x16.png",
-//         sizes: "16x16",
-//         type: "image/png",
-//       },
-//     ],
-//     apple: [
-//       {
-//         url: "/uploads/apple-touch-icon-180x180.png",
-//         sizes: "180x180",
-//         type: "image/png",
-//       },
-//     ],
-//     shortcut: "/uploads/favicon-browser-32x32.png",
-//   },
-//   manifest: "/site.webmanifest",
-// };
-
-// // Next.js App Router specific viewport configuration
-// export const viewport = {
-//   themeColor: "#0A0F1C",
-// };
-
-// export default function RootLayout({
-//   children,
-// }: Readonly<{
-//   children: React.ReactNode;
-// }>) {
-//   // 1. Create the structured data object
-//   const jsonLd = {
-//     "@context": "https://schema.org",
-//     "@type": "Organization",
-//     name: "Luxury Limo Paris",
-//     url: "https://www.luxurylimoparis.fr",
-//     logo: "https://www.luxurylimoparis.fr/uploads/apple-touch-icon-180x180.png",
-//     sameAs: ["https://www.facebook.com/", "https://www.instagram.com/"],
-//   };
-//   const jsonLdWebsite = {
-//     "@context": "https://schema.org",
-//     "@type": "WebSite",
-//     name: "Luxury Limo Paris",
-//     url: "https://www.luxurylimoparis.fr",
-//     potentialAction: {
-//       "@type": "SearchAction",
-//       target: "https://www.luxurylimoparis.fr/?s={search_term_string}",
-//       "query-input": "required name=search_term_string",
-//     },
-//   };
-//   return (
-//     // <html lang="en">
-//     //   <body
-//     //     suppressHydrationWarning
-//     //     className={`${montserrat.variable} ${cinzel.variable} ${playfair.variable} ${greatVibes.variable} font-sans`}
-//     //   >
-//     //     {children}
-//     //   </body>
-//     // </html>
-//     <html lang="en">
-//       <head>
-//         {/* 2. GTM Main Script - Placed in Head */}
-//         <Script id="gtm-script" strategy="afterInteractive">
-//           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-//           new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-//           j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-//           'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-//           })(window,document,'script','dataLayer','GTM-NZXJWVFC');`}
-//         </Script>
-//         <Script
-//           id="structured-data-org"
-//           type="application/ld+json"
-//           strategy="beforeInteractive"
-//         >
-//           {JSON.stringify(jsonLd)}
-//         </Script>
-
-//         <Script
-//           id="structured-data-website"
-//           type="application/ld+json"
-//           strategy="beforeInteractive"
-//         >
-//           {JSON.stringify(jsonLdWebsite)}
-//         </Script>
-//       </head>
-//       <body
-//         suppressHydrationWarning
-//         className={`${montserrat.variable} ${cinzel.variable} ${playfair.variable} ${greatVibes.variable} font-sans`}
-//       >
-//         {/* 3. GTM Noscript - Placed at the start of Body */}
-//         <noscript>
-//           <iframe
-//             src="https://www.googletagmanager.com/ns.html?id=GTM-NZXJWVFC"
-//             height="0"
-//             width="0"
-//             style={{ display: "none", visibility: "hidden" }}
-//           ></iframe>
-//         </noscript>
-
-//         {children}
-//       </body>
-//     </html>
-//   );
-// }
 import type { Metadata } from "next";
 import {
   Cinzel,
@@ -172,8 +6,7 @@ import {
   Playfair_Display,
 } from "next/font/google";
 import "./globals.css";
-import Script from "next/script";
-
+import Script from "next/script"; //1
 // --- Font Configurations ---
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -204,7 +37,6 @@ export const metadata: Metadata = {
   verification: {
     google: "VSVIVqpHdwUEgucHvN6CabseAmtHlg8cMYVlSUzz-6k",
   },
-
   metadataBase: new URL("https://www.luxurylimoparis.fr"),
 
   title: {
@@ -215,7 +47,6 @@ export const metadata: Metadata = {
   description: "Premium Chauffeur Service in Paris",
 
   applicationName: "Luxury Limo Paris",
-
   openGraph: {
     title: "Luxury Limo Paris",
     siteName: "Luxury Limo Paris",
@@ -246,82 +77,86 @@ export const metadata: Metadata = {
     ],
     shortcut: "/uploads/favicon-browser-32x32.png",
   },
-
   manifest: "/site.webmanifest",
 };
 
-// viewport
+// Next.js App Router specific viewport configuration
 export const viewport = {
   themeColor: "#0A0F1C",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
-  // Organization / LocalBusiness schema
+}>) {
+  // 1. Create the structured data object
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "LocalBusiness",
+    "@type": "Organization",
     name: "Luxury Limo Paris",
     url: "https://www.luxurylimoparis.fr",
     logo: "https://www.luxurylimoparis.fr/uploads/apple-touch-icon-180x180.png",
+    sameAs: ["https://www.facebook.com/", "https://www.instagram.com/"],
   };
-
-  // Website schema (for site name in Google)
   const jsonLdWebsite = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "Luxury Limo Paris",
-    alternateName: "Luxury Limo Paris",
     url: "https://www.luxurylimoparis.fr",
+    potentialAction: {
+      "@type": "SearchAction",
+      target: "https://www.luxurylimoparis.fr/?s={search_term_string}",
+      "query-input": "required name=search_term_string",
+    },
   };
-
   return (
-    <html lang="fr">
+    // <html lang="en">
+    //   <body
+    //     suppressHydrationWarning
+    //     className={`${montserrat.variable} ${cinzel.variable} ${playfair.variable} ${greatVibes.variable} font-sans`}
+    //   >
+    //     {children}
+    //   </body>
+    // </html>
+    <html lang="en">
       <head>
-        {/* GTM */}
+        {/* 2. GTM Main Script - Placed in Head */}
         <Script id="gtm-script" strategy="afterInteractive">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
           new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
           j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-          'https://www.googletagmanager.com/gtm.js?id='+i+dl;
-          f.parentNode.insertBefore(j,f);
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
           })(window,document,'script','dataLayer','GTM-NZXJWVFC');`}
         </Script>
-
-        {/* Organization */}
         <Script
           id="structured-data-org"
           type="application/ld+json"
-          strategy="afterInteractive"
+          strategy="beforeInteractive"
         >
           {JSON.stringify(jsonLd)}
         </Script>
 
-        {/* Website */}
         <Script
           id="structured-data-website"
           type="application/ld+json"
-          strategy="afterInteractive"
+          strategy="beforeInteractive"
         >
           {JSON.stringify(jsonLdWebsite)}
         </Script>
       </head>
-
       <body
         suppressHydrationWarning
         className={`${montserrat.variable} ${cinzel.variable} ${playfair.variable} ${greatVibes.variable} font-sans`}
       >
-        {/* GTM noscript */}
+        {/* 3. GTM Noscript - Placed at the start of Body */}
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-NZXJWVFC"
             height="0"
             width="0"
             style={{ display: "none", visibility: "hidden" }}
-          />
+          ></iframe>
         </noscript>
 
         {children}
@@ -329,3 +164,169 @@ export default function RootLayout({
     </html>
   );
 }
+
+// import type { Metadata } from "next";
+// import {
+//   Cinzel,
+//   Great_Vibes,
+//   Montserrat,
+//   Playfair_Display,
+// } from "next/font/google";
+// import "./globals.css";
+// import Script from "next/script";
+
+// // --- Font Configurations ---
+// const montserrat = Montserrat({
+//   subsets: ["latin"],
+//   weight: ["300", "400", "500", "600", "700"],
+//   variable: "--font-montserrat",
+// });
+
+// const cinzel = Cinzel({
+//   subsets: ["latin"],
+//   weight: ["400", "600", "700"],
+//   variable: "--font-cinzel",
+// });
+
+// const playfair = Playfair_Display({
+//   subsets: ["latin"],
+//   weight: ["400", "500", "600", "700"],
+//   variable: "--font-playfair",
+// });
+
+// const greatVibes = Great_Vibes({
+//   subsets: ["latin"],
+//   weight: ["400"],
+//   variable: "--font-greatvibes",
+// });
+
+// // --- Metadata for SEO & Browser Icons ---
+// export const metadata: Metadata = {
+//   verification: {
+//     google: "VSVIVqpHdwUEgucHvN6CabseAmtHlg8cMYVlSUzz-6k",
+//   },
+
+//   metadataBase: new URL("https://www.luxurylimoparis.fr"),
+
+//   title: {
+//     default: "Luxury Limo Paris",
+//     template: "%s | Luxury Limo Paris",
+//   },
+
+//   description: "Premium Chauffeur Service in Paris",
+
+//   applicationName: "Luxury Limo Paris",
+
+//   openGraph: {
+//     title: "Luxury Limo Paris",
+//     siteName: "Luxury Limo Paris",
+//     url: "https://www.luxurylimoparis.fr",
+//     type: "website",
+//   },
+
+//   icons: {
+//     icon: [
+//       { url: "/uploads/favicon.ico", sizes: "any" },
+//       {
+//         url: "/uploads/favicon-browser-32x32.png",
+//         sizes: "32x32",
+//         type: "image/png",
+//       },
+//       {
+//         url: "/uploads/favicon-browser-16x16.png",
+//         sizes: "16x16",
+//         type: "image/png",
+//       },
+//     ],
+//     apple: [
+//       {
+//         url: "/uploads/apple-touch-icon-180x180.png",
+//         sizes: "180x180",
+//         type: "image/png",
+//       },
+//     ],
+//     shortcut: "/uploads/favicon-browser-32x32.png",
+//   },
+
+//   manifest: "/site.webmanifest",
+// };
+
+// // viewport
+// export const viewport = {
+//   themeColor: "#0A0F1C",
+// };
+
+// export default function RootLayout({
+//   children,
+// }: {
+//   children: React.ReactNode;
+// }) {
+//   // Organization / LocalBusiness schema
+//   const jsonLd = {
+//     "@context": "https://schema.org",
+//     "@type": "LocalBusiness",
+//     name: "Luxury Limo Paris",
+//     url: "https://www.luxurylimoparis.fr",
+//     logo: "https://www.luxurylimoparis.fr/uploads/apple-touch-icon-180x180.png",
+//   };
+
+//   // Website schema (for site name in Google)
+//   const jsonLdWebsite = {
+//     "@context": "https://schema.org",
+//     "@type": "WebSite",
+//     name: "Luxury Limo Paris",
+//     alternateName: "Luxury Limo Paris",
+//     url: "https://www.luxurylimoparis.fr",
+//   };
+
+//   return (
+//     <html lang="fr">
+//       <head>
+//         {/* GTM */}
+//         <Script id="gtm-script" strategy="afterInteractive">
+//           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+//           new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+//           j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+//           'https://www.googletagmanager.com/gtm.js?id='+i+dl;
+//           f.parentNode.insertBefore(j,f);
+//           })(window,document,'script','dataLayer','GTM-NZXJWVFC');`}
+//         </Script>
+
+//         {/* Organization */}
+//         <Script
+//           id="structured-data-org"
+//           type="application/ld+json"
+//           strategy="afterInteractive"
+//         >
+//           {JSON.stringify(jsonLd)}
+//         </Script>
+
+//         {/* Website */}
+//         <Script
+//           id="structured-data-website"
+//           type="application/ld+json"
+//           strategy="afterInteractive"
+//         >
+//           {JSON.stringify(jsonLdWebsite)}
+//         </Script>
+//       </head>
+
+//       <body
+//         suppressHydrationWarning
+//         className={`${montserrat.variable} ${cinzel.variable} ${playfair.variable} ${greatVibes.variable} font-sans`}
+//       >
+//         {/* GTM noscript */}
+//         <noscript>
+//           <iframe
+//             src="https://www.googletagmanager.com/ns.html?id=GTM-NZXJWVFC"
+//             height="0"
+//             width="0"
+//             style={{ display: "none", visibility: "hidden" }}
+//           />
+//         </noscript>
+
+//         {children}
+//       </body>
+//     </html>
+//   );
+// }

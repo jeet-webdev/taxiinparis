@@ -238,12 +238,12 @@ export default async function CategoryDetailPage({ params }: Props) {
                   Book Your Transfer Now
                 </Link>
 
-                <Link
+                {/* <Link
                   href={`/category/${categorySlug}`}
                   className="border border-white/20 text-white px-10 py-4 rounded-full font-semibold hover:bg-white/10 transition"
                 >
                   View More in {page.category?.name}
-                </Link>
+                </Link> */}
               </div>
             </div>
           </div>
