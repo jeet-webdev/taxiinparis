@@ -9,11 +9,17 @@ export async function updateCategory(
   data: { name: string; slug: string },
 ) {
   try {
+    const slug = data.slug
+      .toLowerCase()
+      .replace(/%20/g, "-")
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9-]/g, "");
+
     const category = await prisma.category.update({
       where: { id },
       data: {
         name: data.name,
-        slug: data.slug,
+        slug: slug,
       },
     });
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
+import { useRouter } from "next/navigation";
 import {
   Box,
   Button,
@@ -101,11 +102,17 @@ export default function UpdateCategoryPageForm({
   initialData,
 }: UpdateCategoryPageFormProps) {
   const [isPending, startTransition] = useTransition();
-
+  const router = useRouter();
+  const normalizeSlug = (value: string) =>
+    value
+      .toLowerCase()
+      .replace(/%20/g, "-") // decode %20 to hyphen
+      .replace(/\s+/g, "-") // spaces to hyphen
+      .replace(/[^a-z0-9-]/g, ""); // strip anything else
   const methods = useForm<CategoryPageFormValues>({
     defaultValues: {
       title: initialData.title ?? "",
-      slug: initialData.slug ?? "",
+      slug: normalizeSlug(initialData.slug ?? ""),
       content: extractContent(initialData.content),
       metaTitle: initialData.metaTitle ?? "",
       metaDescription: initialData.metaDescription ?? "",
@@ -129,6 +136,7 @@ export default function UpdateCategoryPageForm({
 
         if (result.success) {
           toast.success("Category page updated successfully!");
+          router.push("/admin/categories");
         } else {
           toast.error(
             ("error" in result ? result.error : undefined) ??
@@ -177,6 +185,23 @@ export default function UpdateCategoryPageForm({
                   )}
                 />
               </Grid>
+              {/* <Grid item xs={12} md={6}>
+                <Controller
+                  name="slug"
+                  control={control}
+                  rules={{ required: "URL slug is required" }}
+                  render={({ field, fieldState }) => (
+                    <TextField
+                      {...field}
+                      label="URL Slug"
+                      fullWidth
+                      placeholder="e.g. services-overview"
+                      error={!!fieldState.error}
+                      helperText={fieldState.error?.message}
+                    />
+                  )}
+                />
+              </Grid> */}
               <Grid item xs={12} md={6}>
                 <Controller
                   name="slug"
@@ -185,6 +210,13 @@ export default function UpdateCategoryPageForm({
                   render={({ field, fieldState }) => (
                     <TextField
                       {...field}
+                      onChange={(e) => {
+                        const normalized = e.target.value
+                          .toLowerCase()
+                          .replace(/\s+/g, "-")
+                          .replace(/[^a-z0-9-]/g, "");
+                        field.onChange(normalized);
+                      }}
                       label="URL Slug"
                       fullWidth
                       placeholder="e.g. services-overview"

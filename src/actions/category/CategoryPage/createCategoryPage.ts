@@ -1,5 +1,3 @@
-
-
 "use server";
 
 import { prisma } from "@/src/lib/prisma";
@@ -47,7 +45,12 @@ export async function createCategoryPage(
     await prisma.categoryPage.create({
       data: {
         title: formData.get("title") as string,
-        slug: formData.get("slug") as string,
+        // slug: formData.get("slug") as string,
+        slug: (formData.get("slug") as string)
+          .toLowerCase()
+          .replace(/%20/g, "-")
+          .replace(/\s+/g, "-")
+          .replace(/[^a-z0-9-]/g, ""),
         imageUpload: (formData.get("imageUpload") as string) || null,
         imageAlt: (formData.get("imageAlt") as string) || null,
         metaTitle: (formData.get("metaTitle") as string) || null,

@@ -26,12 +26,15 @@ export async function updateCategoryPage(
       content: data.content,
       updatedAt: new Date().toISOString(),
     };
-
+    const slug = data.slug
+      .toLowerCase()
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9-]/g, "");
     const updated = await prisma.categoryPage.update({
       where: { id },
       data: {
         title: data.title,
-        slug: data.slug,
+        slug: slug,
         content: pageContentJson,
         metaTitle: data.metaTitle ?? null,
         metaDescription: data.metaDescription ?? null,
