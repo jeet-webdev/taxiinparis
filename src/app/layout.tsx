@@ -39,6 +39,7 @@ export const metadata: Metadata = {
   },
   title: "Luxury Limo Paris",
   description: "Premium Chauffeur Service in Paris",
+
   applicationName: "Luxury Limo Paris",
   openGraph: {
     siteName: "Luxury Limo Paris",
@@ -79,6 +80,13 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // 1. Create the structured data object
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Luxury Limo Paris",
+    url: "https://www.luxurylimoparis.fr",
+  };
   return (
     // <html lang="en">
     //   <body
@@ -98,6 +106,10 @@ export default function RootLayout({
           'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
           })(window,document,'script','dataLayer','GTM-NZXJWVFC');`}
         </Script>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body
         suppressHydrationWarning
