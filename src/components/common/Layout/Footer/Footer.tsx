@@ -150,9 +150,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
             {footerData.title}
           </h4>
 
-          <div className="border-b border-black/20 py-3">
-           
-          </div>
+          <div className="border-b border-black/20 py-3"></div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
@@ -209,18 +207,20 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
                       </a>
                     </li>
                   )}
-                    
-                    <li className="flex items-center gap-3 text-black opacity-50 font-medium hover:text-[#8b6c26] transition-colors">
-                      <WhatsApp className="text-black/900" sx={{ fontSize: 15 }} />
 
-                      <a
-                        href={`https://wa.me/+33184190997`}
-                        className="text-sm hover:opacity-100 transition"
-                      >
-                        +33184190997
-                      </a>
-                    </li>
-            
+                  <li className="flex items-center gap-3 text-black opacity-50 font-medium hover:text-[#8b6c26] transition-colors">
+                    <WhatsApp
+                      className="text-black/900"
+                      sx={{ fontSize: 15 }}
+                    />
+
+                    <a
+                      href={`https://wa.me/+33184190997`}
+                      className="text-sm hover:opacity-100 transition"
+                    >
+                      +33184190997
+                    </a>
+                  </li>
 
                   {footerData.address && (
                     <li className="flex items-center gap-3 text-black opacity-50 hover:text-[#8b6c26] transition-colors font-medium">
@@ -300,7 +300,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
               {/* Quick Links */}
               <div className="hidden md:block">
-                <h3 className="text-black opacity-50 pt-2 md:pt-4 font-semibold mb-6 text-base ">
+                <h3 className="text-black text-[#8a6c26] opacity-50 pt-2 md:pt-4 font-semibold mb-6 text-base ">
                   Quick Links
                 </h3>
 
@@ -320,7 +320,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
               <div className=" md:hidden ">
                 {firstCategory && (
                   <div className="mt-2">
-                    <h3 className="text-black opacity-50  font-semibold mb-4 text-sm  ">
+                    <h3 className="text-black opacity-50 text-[#8a6c26] font-semibold mb-4 text-sm  ">
                       {firstCategory.name}
                     </h3>
 
@@ -342,7 +342,7 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
               {/* Categories */}
               {otherCategories.map((category) => (
                 <div key={category.id} className="min-w-0">
-                  <h3 className="text-black opacity-50  pt-2 lg:pt-4 font-semibold mb-6 text-base ">
+                  <h3 className="text-black opacity-50 text-[#8a6c26]  pt-2 lg:pt-4 font-semibold mb-6 text-base ">
                     {category.name}
                   </h3>
 
