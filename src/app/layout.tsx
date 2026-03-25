@@ -120,11 +120,7 @@ export default function RootLayout({
     //   </body>
     // </html>
     <html lang="en">
-      {/* <head> */}
-      <body
-        suppressHydrationWarning
-        className={`${montserrat.variable} ${cinzel.variable} ${playfair.variable} ${greatVibes.variable} font-sans`}
-      >
+      <head>
         {/* 2. GTM Main Script - Placed in Head */}
         <Script id="gtm-script" strategy="afterInteractive">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -148,7 +144,11 @@ export default function RootLayout({
         >
           {JSON.stringify(jsonLdWebsite)}
         </Script>
-        {/* </head> */}
+      </head>
+      <body
+        suppressHydrationWarning
+        className={`${montserrat.variable} ${cinzel.variable} ${playfair.variable} ${greatVibes.variable} font-sans`}
+      >
         {/* 3. GTM Noscript - Placed at the start of Body */}
         <noscript>
           <iframe
