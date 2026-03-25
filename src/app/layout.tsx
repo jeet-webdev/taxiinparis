@@ -39,7 +39,10 @@ export const metadata: Metadata = {
   },
   title: "Luxury Limo Paris",
   description: "Premium Chauffeur Service in Paris",
-
+  applicationName: "Luxury Limo Paris",
+  openGraph: {
+    siteName: "Luxury Limo Paris",
+  },
   icons: {
     icon: [
       { url: "/uploads/favicon.ico", sizes: "any" },
