@@ -234,7 +234,7 @@ export default async function CategoryDetailPage({ params }: Props) {
             {/* Buttons */}
             <div className="mt-20 pt-10 border-t border-white/10 flex flex-col items-center">
               <div className="flex flex-wrap justify-center gap-6">
-                <Link href="/booking" className="btn-primary font-logo! ">
+                <Link href="/contact" className="btn-primary font-logo! ">
                   Book Your Transfer Now
                 </Link>
 
