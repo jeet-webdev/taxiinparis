@@ -252,9 +252,14 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
               <div className="hidden md:block">
                 {firstCategory && (
                   <div className="mt-2">
-                    <h3 className="text-[#8a6c26] opacity-50  font-semibold mb-6 text-base">
+                    {/* <h3 className="text-[#8a6c26] opacity-50  font-semibold mb-6 text-base">
                       {firstCategory.name}
-                    </h3>
+                    </h3> */}
+                    <Link href={`/category/${firstCategory.slug}`}>
+        <h3 className="text-[#8a6c26] opacity-50 font-semibold mb-6 text-base hover:opacity-100 hover:text-[#8b6c26] transition-colors cursor-pointer">
+          {firstCategory.name}
+        </h3>
+      </Link>
 
                     <ul className="space-y-2 text-base">
                       {firstCategory.categoryPages.map((page, idx) => (
@@ -320,9 +325,14 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
               <div className=" md:hidden ">
                 {firstCategory && (
                   <div className="mt-2">
-                    <h3 className=" opacity-50 text-[#8a6c26] font-semibold mb-4 text-sm  ">
+                    {/* <h3 className=" opacity-50 text-[#8a6c26] font-semibold mb-4 text-sm  ">
                       {firstCategory.name}
-                    </h3>
+                    </h3> */}
+                    <Link href={`/category/${firstCategory.slug}`}>
+        <h3 className="text-[#8a6c26] opacity-50 font-semibold mb-6 text-base hover:opacity-100 hover:text-[#8b6c26] transition-colors cursor-pointer">
+          {firstCategory.name}
+        </h3>
+      </Link>
 
                     <ul className="space-y-2 text-base">
                       {firstCategory.categoryPages.map((page, idx) => (
@@ -342,9 +352,14 @@ export default function Footer({ footerData, dbCategories }: FooterProps) {
               {/* Categories */}
               {otherCategories.map((category) => (
                 <div key={category.id} className="min-w-0">
-                  <h3 className=" opacity-50 text-[#8a6c26]  pt-2 lg:pt-4 font-semibold mb-6 text-base ">
+                  {/* <h3 className=" opacity-50 text-[#8a6c26]  pt-2 lg:pt-4 font-semibold mb-6 text-base ">
                     {category.name}
-                  </h3>
+                  </h3> */}
+                  <Link href={`/category/${category.slug}`}>
+      <h3 className="opacity-50 text-[#8a6c26] pt-2 lg:pt-4 font-semibold mb-6 text-base hover:opacity-100 hover:text-[#8b6c26] transition-colors cursor-pointer">
+        {category.name}
+      </h3>
+    </Link>
 
                   <ul className="space-y-2 text-base">
                     {category.categoryPages.map((page, idx) => (
