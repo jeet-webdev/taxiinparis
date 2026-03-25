@@ -268,7 +268,7 @@ export default function FooterForm({
       <section className="space-y-4 border-t pt-6">
         <div className="flex items-center justify-between border-b pb-2">
           <h3 className="font-semibold text-lg text-gray-800 flex items-center gap-2">
-            <Share className="text-[#D4AF6A]" /> Social Media Links
+            <Share className="text-[#8B6C26]" /> Social Media Links
           </h3>
 
           <button
@@ -445,7 +445,7 @@ export default function FooterForm({
         <button
           type="submit"
           disabled={isPending}
-          className={`bg-[#D4AF6A] text-white px-8 py-3 rounded-lg font-bold w-full md:w-auto ${
+          className={`bg-[#8B6C26] text-white px-8 py-3 rounded-lg font-bold w-full md:w-auto ${
             isPending ? "opacity-70 cursor-not-allowed" : "hover:bg-[#b8955a]"
           }`}
         >

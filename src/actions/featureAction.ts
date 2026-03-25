@@ -6,7 +6,8 @@ import { revalidatePath } from "next/cache";
 export async function saveMainTitleAction(title: string) {
   try {
     await prisma.feature.updateMany({ data: { mainTitle: title } });
-    revalidatePath("/");
+    
+    revalidatePath("/admin/feature-editor");
     return { success: true };
   } catch (error) {
     console.error("saveMainTitleAction error:", error);
@@ -40,7 +41,8 @@ export async function saveFeatureAction(formData: FormData) {
       await prisma.feature.create({ data });
     }
 
-    revalidatePath("/admin/page-editor"); // adjust to your path
+    
+    revalidatePath("/admin/feature-editor"); // adjust to your path
     return { success: true };
   } catch (error) {
     console.error("saveFeatureAction error:", error);
@@ -51,7 +53,8 @@ export async function saveFeatureAction(formData: FormData) {
 export async function deleteFeatureAction(id: number) {
   try {
     await prisma.feature.delete({ where: { id } });
-    revalidatePath("/admin/page-editor");
+   
+    revalidatePath("/admin/feature-editor");
     return { success: true };
   } catch (error) {
     console.error("deleteFeatureAction error:", error);

@@ -11,7 +11,7 @@ export default function NavLink({ href, children }: NavLinkProps) {
     <li>
       <Link
         href={href}
-        className="px-2 py-1 text-[#D4AF6A] text-base tracking-wide  font-medium hover:text-[#E6C27A] transition"
+        className="px-2 py-1 text-[#8B6C26] text-base tracking-wide  font-medium hover:text-[#E6C27A] transition"
       >
         {children}
       </Link>

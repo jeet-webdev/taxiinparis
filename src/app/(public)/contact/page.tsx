@@ -60,12 +60,12 @@ export default async function ContactPage() {
         </section>
 
         {/* Main Form and Widget Section */}
-        <section className="max-w-378 mx-auto px-6 py-8">
+        <section className="max-w-378 mx-auto  py-8">
           <div className="flex flex-col lg:flex-row gap-12">
             {/* Left Side: Map and Form */}
-            <div className="flex-1">
+            <div className="flex-1 px-6">
               {/* Google Map Section */}
-              <div className="w-full h-[380px] rounded-lg overflow-hidden border border-gray-200 mb-10 shadow-sm">
+              <div className="w-full  h-[380px] rounded-lg overflow-hidden border border-gray-200 mb-10 shadow-sm">
                 <iframe
                   src="https://maps.google.com/maps?q=48.8588589,2.3470599&z=11&output=embed"
                   className="w-full h-full border-none"
@@ -74,13 +74,12 @@ export default async function ContactPage() {
                 />
               </div>
 
-           
               <ContactForm />
             </div>
 
             {/* Right Side: Fixed Booking Widget */}
-            <aside className="w-full lg:w-[420px]">
-              <div className="sticky top-24 rounded-2xl overflow-hidden shadow-2xl border border-gray-200 h-[720px] bg-white">
+            <aside className="">
+              <div className="sticky top-24  overflow-hidden shadow-2xl border border-gray-200 w-full md:w-[375px]  h-[710px] rounded-xl taxi-calculator bg-white">
                 <iframe
                   src="https://portail.driverconnect.fr/vtc-fils/template?src=se&tkn=00001_2769650_-1157023572_1772012786065"
                   allow="geolocation"

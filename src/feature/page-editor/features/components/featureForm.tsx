@@ -4,7 +4,7 @@
 
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { featureSchema, FeatureFormValues } from "../validation/feature.schema";
 
 import {
@@ -687,6 +687,10 @@ export function FeatureForm({
     undefined,
   );
 
+  useEffect(() => {
+  setFeatures(initialFeatures);
+}, [initialFeatures]);
+
   const isEditing = editingId !== null;
 
   const {
@@ -741,56 +745,47 @@ export function FeatureForm({
     router.refresh();
   };
 
-  const onSubmit = async (data: FeatureFormValues) => {
-    setSubmitError(null);
-    setSubmitSuccess(false);
-    const formData = new FormData();
-    if (isEditing) formData.set("id", String(editingId));
-    (Object.keys(data) as (keyof FeatureFormValues)[]).forEach((key) => {
-      const val = data[key];
-      if (val !== undefined && val !== null) formData.set(key, String(val));
-    });
-    startTransition(async () => {
-      const result = await saveFeatureAction(formData);
-      if (result.success) {
-        setSubmitSuccess(true);
-        setEditingId(null);
-        setUploadedImageUrl(undefined);
-        reset();
-        router.refresh();
-        const response = await fetch("/api/features");
-        if (response.ok) {
-          const updatedData = await response.json();
-          setFeatures(updatedData);
-        }
-        const updated = await fetch("/api/features")
-          .then((r) => r.json())
-          .catch(() => null);
-        if (updated) setFeatures(updated);
-      } else {
-        setSubmitError(result.error ?? "Something went wrong.");
-      }
-    });
-  };
+ const onSubmit = async (data: FeatureFormValues) => {
+  setSubmitError(null);
+  setSubmitSuccess(false);
 
-  const handleDelete = (id: number) => {
-    if (!confirm("Delete this feature card? This cannot be undone.")) return;
-    setDeletingId(id);
-    startTransition(async () => {
-      const result = await deleteFeatureAction(id);
-      if (result.success) {
-        setFeatures((prev) => prev.filter((f) => f.id !== id));
-        if (editingId === id) handleCancel();
-      }
-      setDeletingId(null);
+  const formData = new FormData();
+
+  if (isEditing) formData.set("id", String(editingId));
+
+  Object.entries(data).forEach(([k, v]) => {
+    if (v !== undefined && v !== null) {
+      formData.set(k, String(v));
+    }
+  });
+
+  startTransition(async () => {
+    const result = await saveFeatureAction(formData);
+
+    if (!result.success) {
+      setSubmitError(result.error ?? "Error");
+      return;
+    }
+
+    setSubmitSuccess(true);
+    setEditingId(null);
+    setUploadedImageUrl(undefined);
+    reset();
+
+    router.refresh(); 
+  });
+};
+const handleDelete = (id: number) => {
+  if (!confirm("Delete this feature card?")) return;
+  setDeletingId(id);
+  startTransition(async () => {
+    const result = await deleteFeatureAction(id);
+    setDeletingId(null);
+    if (result.success) {
       router.refresh();
-      const response = await fetch("/api/features");
-      if (response.ok) {
-        const updatedData = await response.json();
-        setFeatures(updatedData);
-      }
-    });
-  };
+    }
+  });
+};
 
   const cardStyle: React.CSSProperties = {
     background: "#FFFCF7",
@@ -823,7 +818,7 @@ export function FeatureForm({
             <div
               className="w-9 h-9 rounded-full flex items-center justify-center shrink-0"
               style={{
-                background: "linear-gradient(135deg, #D4B483, #B8935A)",
+                background: "linear-gradient(135deg, #faf8f2, #B8935A)",
                 boxShadow: "0 2px 8px rgba(180,140,80,0.3)",
               }}
             >
@@ -853,7 +848,7 @@ export function FeatureForm({
               >
                 {isEditing ? "Edit Feature Card" : "Add New Feature Card"}
               </h2>
-              <p className="text-xs text-[#A08860] mt-0.5">
+              <p className="text-xs text-[#8B6C26] mt-0.5">
                 {isEditing
                   ? "Update the dining / experience card details"
                   : "Create a new dining / experience card"}

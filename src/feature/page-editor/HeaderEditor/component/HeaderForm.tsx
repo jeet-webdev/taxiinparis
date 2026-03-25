@@ -132,7 +132,7 @@ export default function HeaderForm({
       <div className="col-span-7">
         <input
           type="text"
-          className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-700 focus:ring-2 focus:ring-[#D4AF6A]/20 focus:border-[#D4AF6A] outline-none transition-all shadow-sm"
+          className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm font-medium text-slate-700 focus:ring-2 focus:ring-[#8B6C26] focus:border-[#8B6C26] outline-none transition-all shadow-sm"
           value={link.label}
           onChange={(e) => updateNavLink(link.url, e.target.value)}
           placeholder="Link Label"
@@ -217,7 +217,7 @@ export default function HeaderForm({
             </label>
             <div
               onClick={() => inputRef.current?.click()}
-              className="h-48 border-2 border-dashed border-slate-300 rounded-xl hover:border-[#D4AF6A] hover:bg-amber-50/30 transition-all cursor-pointer flex flex-col items-center justify-center gap-3 group"
+              className="h-48 border-2 border-dashed border-slate-300 rounded-xl hover:border-[#8B6C26] hover:bg-amber-50/30 transition-all cursor-pointer flex flex-col items-center justify-center gap-3 group"
             >
               <input
                 type="file"
@@ -227,7 +227,7 @@ export default function HeaderForm({
                 accept="image/*"
               />
               <div className="p-3 bg-white rounded-full shadow-sm group-hover:scale-110 transition-transform">
-                <CloudUploadIcon className="text-slate-400 group-hover:text-[#D4AF6A]" />
+                <CloudUploadIcon className="text-slate-400 group-hover:text-[#8B6C26]" />
               </div>
               <div className="text-center">
                 <p className="text-sm font-semibold text-slate-600">
@@ -245,7 +245,7 @@ export default function HeaderForm({
           </label>
           <input
             type="text"
-            className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-700 focus:ring-2 focus:ring-[#D4AF6A]/20 focus:border-[#D4AF6A] outline-none transition-all"
+            className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-700 focus:ring-2 focus:ring-[#8B6C26] focus:border-[#8B6C26] outline-none transition-all"
             value={altValue}
             onChange={(e) => onAltChange(e.target.value)}
             placeholder={altPlaceholder}
@@ -310,7 +310,7 @@ export default function HeaderForm({
               </label>
               <input
                 type="text"
-                className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-700 focus:ring-2 focus:ring-[#D4AF6A]/20 focus:border-[#D4AF6A] outline-none transition-all"
+                className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-700 focus:ring-2 focus:ring-[#8B6C26]/20 focus:border-[#8B6C26] outline-none transition-all"
                 value={btnText}
                 onChange={(e) => setBtnText(e.target.value)}
                 placeholder="e.g. Devis en ligne"
@@ -322,7 +322,7 @@ export default function HeaderForm({
               </label>
               <input
                 type="text"
-                className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-700 focus:ring-2 focus:ring-[#D4AF6A]/20 focus:border-[#D4AF6A] outline-none transition-all"
+                className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-700 focus:ring-2 focus:ring-[#8B6C26] focus:border-[#8B6C26] outline-none transition-all"
                 value={btnLink}
                 onChange={(e) => setBtnLink(e.target.value)}
                 placeholder="e.g. /devis or https://..."
@@ -334,7 +334,7 @@ export default function HeaderForm({
         {/* Navigation Sections */}
         <section>
           <div className="flex items-center gap-3 mb-5">
-            <span className="px-2 py-1 bg-[#D4AF6A]/10 text-[#D4AF6A] text-[10px] font-bold rounded uppercase">
+            <span className="px-2 py-1 bg-[#8B6C26]/10 text-[#8B6C26] text-[10px] font-bold rounded uppercase">
               Primary
             </span>
             <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest">
@@ -369,7 +369,7 @@ export default function HeaderForm({
           <button
             onClick={handleSubmit}
             disabled={loading}
-            className="flex items-center gap-3 bg-[#D4AF6A] hover:bg-[#C19B58] disabled:bg-slate-300 text-white font-bold px-10 py-4 rounded-xl shadow-lg transition-all active:scale-95"
+            className="flex items-center gap-3 bg-[#8B6C26] hover:bg-[#a88435] disabled:bg-slate-300 text-white font-bold px-10 py-4 rounded-xl shadow-lg transition-all active:scale-95"
           >
             {loading ? (
               <CircularProgress size={20} color="inherit" />

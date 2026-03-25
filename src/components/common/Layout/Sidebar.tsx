@@ -264,7 +264,7 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose, variant }) => {
                       minWidth: 0,
                       mr: open ? 2 : 0,
                       justifyContent: "center",
-                      color: isActive ? "#D4AF6A" : "inherit", ///
+                      color: isActive ? "#8B6C26" : "inherit", ///
                     }}
                   >
                     {item.icon}

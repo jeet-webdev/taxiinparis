@@ -44,7 +44,7 @@ export default function Navbar({ footerData }: NavbarProps) {
           {/* Hamburger (Left on mobile only) */}
           <div className="md:hidden">
             <button
-              className="text-[#D4AF6A] p-2"
+              className="text-[#8B6C26] p-2"
               onClick={() => setIsOpen(!isOpen)}
             >
               {isOpen ? <IoClose size={32} /> : <HiMenuAlt3 size={32} />}

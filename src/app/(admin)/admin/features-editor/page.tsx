@@ -23,7 +23,7 @@ export default async function FeatureEditorPage() {
       <div className="max-w-4xl mx-auto">
         {/* Page Header */}
         <div className="mb-10">
-          <p className="text-xs font-semibold tracking-[0.25em] uppercase text-[#D4AF6A]/60 mb-2">
+          <p className="text-xs font-semibold tracking-[0.25em] uppercase text-[#8B6C26] mb-2">
             Page Editor
           </p>
           <h1 className=" text-[#000] font-serif font-semibold">

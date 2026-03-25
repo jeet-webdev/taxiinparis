@@ -25,7 +25,7 @@ export default async function TestimonialsSection() {
       />
       <Container className="relative z-10 py-2 text-center">
         {/* Phone */}
-        {/* <div className="mt-0.5 text-[#D4AF6A] text-2xl font-semibold tracking-widest">
+        {/* <div className="mt-0.5 text-[#8B6C26] text-2xl font-semibold tracking-widest">
           +33 1 76 44 33 00
         </div> */}
       </Container>
