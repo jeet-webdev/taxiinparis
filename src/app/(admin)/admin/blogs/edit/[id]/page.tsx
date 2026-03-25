@@ -39,6 +39,9 @@ export default async function EditBlogPage({ params }: Props) {
     metaTitle: blog.metaTitle ?? "",
     metaDescription: blog.metaDescription ?? "",
     metaKeywords: blog.metaKeywords ?? "",
+    ctaBtnText: blog.ctaBtnText ?? "Book Your Transfer Now",    // ADD
+    ctaBtnLink: blog.ctaBtnLink ?? "https://portail.driverconnect.fr/vtc-fils/template?DS=1&tkn=00001_2769650_-1157023572_1772012786065",  // ADD
+
   };
 
   async function handleSave(data: BlogPagesFormValues) {

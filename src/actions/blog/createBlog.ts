@@ -24,8 +24,8 @@ export async function createBlog(raw: BlogPagesFormValues) {
         metaKeywords: data.metaKeywords || null,
         bannerImage: data.bannerImage || null,
         bannerAlt: data.bannerAlt || null,
-        // FIX: 'image' must be the URL string returned from your upload function
-        // Ensure 'image' is the correct column name in your schema.prisma
+        ctaBtnText: data.ctaBtnText || "Book Your Transfer Now",   // ADD
+        ctaBtnLink: data.ctaBtnLink || "https://portail.driverconnect.fr/vtc-fils/template?DS=1&tkn=00001_2769650_-1157023572_1772012786065",  // ADD
         imageUpload: data.image || null,
       },
     });

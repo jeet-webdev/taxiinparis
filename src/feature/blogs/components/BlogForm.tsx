@@ -7,6 +7,7 @@ import {
   TextField,
   Typography,
   Stack,
+  Paper,
 } from "@mui/material";
 import { blogPagesSchema } from "../validations/blogSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -296,7 +297,43 @@ export default function BlogForm({
               )}
             />
           </Grid>
-
+<Paper sx={{ mt:2, mb:2, p: 3, borderRadius: 3, border: "1px solid #e2e8f0" }} elevation={0}>
+  <Typography variant="subtitle2" fontWeight="700" color="primary" gutterBottom>
+    CTA BUTTON
+  </Typography>
+  <Grid container spacing={3} mt={1}>
+    <Grid item xs={12} md={6}>
+      <Controller
+        name="ctaBtnText"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            value={field.value ?? ""}
+            label="Button Text"
+            fullWidth
+            placeholder="Book Your Transfer Now"
+          />
+        )}
+      />
+    </Grid>
+    <Grid item xs={12} md={6}>
+      <Controller
+        name="ctaBtnLink"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            value={field.value ?? ""}
+            label="Button Link"
+            fullWidth
+            placeholder="https://..."
+          />
+        )}
+      />
+    </Grid>
+  </Grid>
+</Paper>
           {/* Meta Title */}
           <Grid item xs={12}>
             <Typography

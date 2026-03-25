@@ -10,6 +10,8 @@ export const blogPagesSchema = z.object({
   metaTitle: z.string().min(3, "Meta title is required"),
   metaDescription: z.string(),
   metaKeywords: z.string(),
+  ctaBtnText: z.string().optional().nullable(),
+ctaBtnLink: z.string().optional().nullable(),
 });
 
 export type BlogPagesSchemaType = z.infer<typeof blogPagesSchema>;

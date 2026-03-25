@@ -51,6 +51,9 @@ model Blog {
   createdAt       DateTime @default(now()) @map("created_at")
   updatedAt       DateTime @default(now()) @updatedAt @map("updated_at")
   bannerAlt       String?  @map("banner_alt") @db.VarChar(255)
+  ctaBtnText      String?  @default("Book Now") @map("cta_btn_text") @db.VarChar(100)
+  ctaBtnLink      String?  @default("https://portail.driverconnect.fr/vtc-fils/template?DS=1&tkn=00001_2769650_-1157023572_1772012786065") @map("cta_btn_link") @db.VarChar(500)
+
   bannerImage     String?  @map("banner_upload") @db.VarChar(255)
 
   @@map("blogs")

@@ -119,7 +119,7 @@ export default async function SingleBlogPage({ params }: Props) {
 
             <div
               className="
-                text-gray-300
+                text-black
                 leading-relaxed
                  [&_h1]:text-4xl
                 [&_h1]:font-serif
@@ -158,7 +158,7 @@ export default async function SingleBlogPage({ params }: Props) {
   [&_h6]:font-medium
   [&_h6]:mt-6
   [&_h6]:mb-2
-  [&_h6]:text-gray-400
+  [&_h6]:text-gray-500
                 [&_p]:mb-6
                 [&_strong]:text-[#8a6c26]
                 [&_a]:text-[#8a6c26]
@@ -173,16 +173,21 @@ export default async function SingleBlogPage({ params }: Props) {
 
             <div className="mt-14 h-px w-full bg-linear-to-r from-transparent via-[#8a6c26]/40 to-transparent" />
 
-            <div className="mt-10 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-center">
-              <Link href="/contact" className="btn-primary font-logo!">
-                Book now
-              </Link>
+           <div className="mt-10 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-center">
+  <Link
+    href={blog.ctaBtnLink ?? "https://portail.driverconnect.fr/vtc-fils/template?DS=1&tkn=00001_2769650_-1157023572_1772012786065"}
+    className="btn-primary font-logo!"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    {blog.ctaBtnText ?? "Book Now1"}
+  </Link>
 
               <Link
                 href="/blog"
-                className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-7 py-3 text-sm font-semibold text-white hover:bg-white/10 transition"
+                className="inline-flex items-center justify-center rounded-xl border border-[#8a6c26]/15 bg-white/5 px-7 py-3 text-sm font-semibold text-[#8a6c26] hover:bg-white/10 transition"
               >
-                Back to blogs
+                Back to Blogs
               </Link>
             </div>
           </div>

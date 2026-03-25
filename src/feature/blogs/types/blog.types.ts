@@ -8,4 +8,6 @@ export type BlogPagesFormValues = {
   metaTitle: string;
   metaDescription: string;
   metaKeywords: string;
+  ctaBtnText?: string | null;   // ADD
+  ctaBtnLink?: string | null;   // ADD
 };

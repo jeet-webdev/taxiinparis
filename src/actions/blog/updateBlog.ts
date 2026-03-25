@@ -20,6 +20,9 @@ export async function updateBlog(id: number, raw: BlogPagesFormValues) {
       imageUpload: data.image,
       bannerImage: data.bannerImage,
       bannerAlt: data.bannerAlt,
+      ctaBtnText: data.ctaBtnText ?? null,   // ADD
+      ctaBtnLink: data.ctaBtnLink ?? null,   // ADD
+
     },
   });
 
