@@ -232,20 +232,26 @@ export default async function CategoryDetailPage({ params }: Props) {
             />
 
             {/* Buttons */}
-            <div className="mt-20 pt-10 border-t border-white/10 flex flex-col items-center">
-              <div className="flex flex-wrap justify-center gap-6">
+          {/*  <div className="mt-20 pt-10 border-t border-white/10 flex flex-col items-center">
+               <div className="flex flex-wrap justify-center gap-6">
                 <Link href="/contact" className="btn-primary font-logo! ">
                   Book Your Transfer Now
                 </Link>
-
-                {/* <Link
-                  href={`/category/${categorySlug}`}
-                  className="border border-white/20 text-white px-10 py-4 rounded-full font-semibold hover:bg-white/10 transition"
-                >
-                  View More in {page.category?.name}
-                </Link> */}
               </div>
-            </div>
+            </div> */}
+            {/* Buttons */}
+<div className="mt-20 pt-10 border-t border-white/10 flex flex-col items-center">
+  <div className="flex flex-wrap justify-center gap-6">
+    <Link 
+      href={page.ctaBtnLink ?? "https://portail.driverconnect.fr/vtc-fils/template?DS=1&tkn=00001_2769650_-1157023572_1772012786065"} 
+      className="btn-primary font-logo!"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      {page.ctaBtnText ?? "1Book Your Transfer Now"}
+    </Link>
+  </div>
+</div>
           </div>
         </section>
 

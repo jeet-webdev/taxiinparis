@@ -12,6 +12,8 @@ export async function updateCategoryPage(
     metaTitle?: string;
     metaDescription?: string;
     metaKeywords?: string;
+    ctaBtnText?: string;
+    ctaBtnLink?: string;
   },
 ) {
   try {
@@ -39,6 +41,8 @@ export async function updateCategoryPage(
         metaTitle: data.metaTitle ?? null,
         metaDescription: data.metaDescription ?? null,
         metaKeywords: JSON.stringify(keywordArray),
+        ctaBtnText: data.ctaBtnText ?? null,
+        ctaBtnLink: data.ctaBtnLink ?? null,
       },
     });
 

@@ -25,6 +25,8 @@ type CategoryPageFormValues = {
   metaTitle: string;
   metaDescription: string;
   metaKeywords: string;
+  ctaBtnText: string;
+  ctaBtnLink: string;
 };
 
 interface UpdateCategoryPageFormProps {
@@ -37,6 +39,9 @@ interface UpdateCategoryPageFormProps {
     metaDescription?: string | null;
     metaKeywords?: string | null;
     categoryId: number;
+    ctaBtnText?: string | null;
+    ctaBtnLink?: string | null;
+    
   };
 }
 
@@ -117,6 +122,9 @@ export default function UpdateCategoryPageForm({
       metaTitle: initialData.metaTitle ?? "",
       metaDescription: initialData.metaDescription ?? "",
       metaKeywords: parseKeywords(initialData.metaKeywords),
+      ctaBtnText: initialData.ctaBtnText ?? "Book Your Transfer Now",
+      ctaBtnLink: initialData.ctaBtnLink ?? "https://portail.driverconnect.fr/vtc-fils/template?DS=1&tkn=00001_2769650_-1157023572_1772012786065",
+
     },
   });
 
@@ -132,6 +140,8 @@ export default function UpdateCategoryPageForm({
           metaTitle: data.metaTitle,
           metaDescription: data.metaDescription,
           metaKeywords: data.metaKeywords,
+          ctaBtnText: data.ctaBtnText,
+          ctaBtnLink: data.ctaBtnLink,
         });
 
         if (result.success) {
@@ -256,7 +266,50 @@ export default function UpdateCategoryPageForm({
               )}
             />
           </Paper>
-
+{/* CTA BUTTON */}
+<Paper
+  sx={{ p: 3, borderRadius: 3, border: "1px solid #e2e8f0" }}
+  elevation={0}
+>
+  <Typography
+    variant="subtitle2"
+    fontWeight="700"
+    color="primary"
+    gutterBottom
+  >
+    CTA BUTTON
+  </Typography>
+  <Grid container spacing={3} mt={1}>
+    <Grid item xs={12} md={6}>
+      <Controller
+        name="ctaBtnText"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            label="Button Text"
+            fullWidth
+            placeholder="Book Your Transfer Now"
+          />
+        )}
+      />
+    </Grid>
+    <Grid item xs={12} md={6}>
+      <Controller
+        name="ctaBtnLink"
+        control={control}
+        render={({ field }) => (
+          <TextField
+            {...field}
+            label="Button Link"
+            fullWidth
+            placeholder="https://..."
+          />
+        )}
+      />
+    </Grid>
+  </Grid>
+</Paper>
           {/* SEO CONFIGURATION */}
           <Paper
             sx={{ p: 3, borderRadius: 3, border: "1px solid #e2e8f0" }}

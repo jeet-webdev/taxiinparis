@@ -56,6 +56,9 @@ export async function createCategoryPage(
         metaTitle: (formData.get("metaTitle") as string) || null,
         metaDescription: (formData.get("metaDescription") as string) || null,
         metaKeywords: JSON.stringify(keywordArray),
+        ctaBtnText: (formData.get("ctaBtnText") as string) || "Book Your Transfer Now",
+        ctaBtnLink: (formData.get("ctaBtnLink") as string) || "https://portail.driverconnect.fr/vtc-fils/template?DS=1&tkn=00001_2769650_-1157023572_1772012786065",
+   
         // ✅ Prisma treats undefined on a Json field as DbNull (no value),
         // which avoids the JsonNullClass type mismatch entirely
         ...(contentValue !== undefined && { content: contentValue }),

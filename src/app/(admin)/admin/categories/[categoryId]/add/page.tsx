@@ -26,6 +26,9 @@ type CategoryPageFormValues = {
   metaTitle: string;
   metaDescription: string;
   metaKeywords: string;
+  ctaBtnText: string;
+  ctaBtnLink: string;
+
 };
 
 export default function AddPageToCategory({
@@ -47,6 +50,9 @@ export default function AddPageToCategory({
       metaTitle: "",
       metaDescription: "",
       metaKeywords: "",
+      ctaBtnText: "Book Your Transfer Now",
+      ctaBtnLink: "https://portail.driverconnect.fr/vtc-fils/template?DS=1&tkn=00001_2769650_-1157023572_1772012786065",
+
     },
   });
 
@@ -84,6 +90,8 @@ export default function AddPageToCategory({
         formData.append("metaTitle", data.metaTitle);
         formData.append("metaDescription", data.metaDescription);
         formData.append("metaKeywords", data.metaKeywords);
+        formData.append("ctaBtnText", data.ctaBtnText);
+        formData.append("ctaBtnLink", data.ctaBtnLink);
 
         const pageContentJson = JSON.stringify({
           type: "doc",

@@ -143,6 +143,9 @@ model CategoryPage {
   metaKeywords    String?  @map("meta_keywords")
   content         Json?
   createdAt       DateTime @default(now()) @map("created_at")
+  ctaBtnText      String?  @default("Book Your Transfer Now") @map("cta_btn_text") @db.VarChar(100)
+  ctaBtnLink      String?  @default("https://portail.driverconnect.fr/vtc-fils/template?DS=1&tkn=00001_2769650_-1157023572_1772012786065") @map("cta_btn_link") @db.VarChar(255)
+ 
   category        Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
 
   @@index([categoryId])
@@ -173,9 +176,9 @@ model GoogleSettings {
 }
 model GoogleReview {
   id              Int      @id @default(autoincrement())
-  review_id       String?  
-  author_name     String?  
-  profile_photo_url String? @db.Text
+  review_id       String?
+  author_name     String?
+  profile_photo_url String?
   rating          Int?
   review_text     String?  @db.Text
   review_time     String?  @db.VarChar(50)
