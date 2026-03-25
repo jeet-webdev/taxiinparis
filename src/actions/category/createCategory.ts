@@ -6,10 +6,15 @@ import { Prisma } from "@/src/generated/prisma/client";
 
 export async function createCategory(data: { name: string; slug: string }) {
   try {
+    const slug = data.slug
+      .toLowerCase()
+      .replace(/%20/g, "-")
+      .replace(/\s+/g, "-")
+      .replace(/[^a-z0-9-]/g, "");
     const category = await prisma.category.create({
       data: {
         name: data.name,
-        slug: data.slug,
+        slug: slug,
       },
     });
 
@@ -21,7 +26,8 @@ export async function createCategory(data: { name: string; slug: string }) {
         return { success: false, error: "This slug is already in use." };
       }
     }
-    const errorMessage = error instanceof Error ? error.message : "An unexpected error occurred";
+    const errorMessage =
+      error instanceof Error ? error.message : "An unexpected error occurred";
     return { success: false, error: errorMessage };
   }
 }
