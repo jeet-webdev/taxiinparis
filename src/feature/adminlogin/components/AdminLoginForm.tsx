@@ -55,7 +55,7 @@ export default function AdminLoginForm() {
 
         <div className="relative z-10 flex flex-col justify-start p-16 text-white">
           <h1 className="text-5xl font-extrabold tracking-tight leading-tight">
-            TaxiIn<span className="text-yellow-400">Paris</span>
+            Luxury Limo<span className="text-yellow-400">Paris</span>
           </h1>
           <p className="mt-6 text-lg text-zinc-300 max-w-md">
             Premium fleet management & luxury ride administration dashboard.
@@ -72,7 +72,6 @@ bg-[radial-gradient(circle_at_85%_20%,rgba(255,193,7,0.25),transparent_40%),line
 
         <div className="relative z-10 w-full max-w-md">
           <div className="relative rounded-3xl p-10 bg-white/5 backdrop-blur-xl border border-yellow-400/20 shadow-[0_0_60px_rgba(255,200,0,0.08)]">
-            
             <div className="text-center mb-10">
               <h2 className="text-3xl font-bold text-white tracking-wide">
                 Admin <span className="text-yellow-400">Login</span>
@@ -83,7 +82,6 @@ bg-[radial-gradient(circle_at_85%_20%,rgba(255,193,7,0.25),transparent_40%),line
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-
               {/* Email */}
               <div className="relative group">
                 <Mail className="absolute left-4 top-1/2 -translate-y-1/2 text-yellow-400 transition-colors duration-300 group-focus-within:text-yellow-300" />
@@ -146,7 +144,7 @@ bg-[radial-gradient(circle_at_85%_20%,rgba(255,193,7,0.25),transparent_40%),line
             </div>
 
             <div className="mt-6 text-center text-xs text-zinc-500">
-              © {new Date().getFullYear()} TaxiParis Admin Panel
+              © {new Date().getFullYear()} Luxury Limo Paris Admin Panel
             </div>
           </div>
         </div>
