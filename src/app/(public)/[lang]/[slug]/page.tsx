@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 import HeroSection from "@/src/components/common/Ui/HeroSection";
 import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
 import Content from "@/src/components/common/Ui/Content";
+import TestimonialCard from "@/src/feature/Homepage/components/TestimonialCard";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -54,6 +55,7 @@ export default async function LanguagePageFrontend({ params }: Props) {
   return (
     <>
       <HeroSection img={page.imageUpload || undefined} alt={page.imageAlt} />
+      <TestimonialCard />
       <DarkLuxuryBlock>
         <Content
           data={{
