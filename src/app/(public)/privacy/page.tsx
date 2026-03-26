@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
 import Content from "@/src/components/common/Ui/Content";
 import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
+import { prisma } from "@/src/lib/prisma";
 
 // Cache the database call for this request cycle
 const getPrivacyPage = cache(() => getPageBySlug("privacy"));
@@ -28,7 +29,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function PrivacyPage() {
-  const page = await getPrivacyPage();
+  const [page, footerData] = await Promise.all([
+    getPrivacyPage(),
+    prisma.footer.findFirst(),
+  ]);
 
   // If page doesn't exist or is set to inactive by admin, show 404
   if (!page || page.status === "inactive") {
@@ -42,6 +46,7 @@ export default async function PrivacyPage() {
           title: page.title,
           content: page.content,
         }}
+        footerData={footerData} // ← ADD
       />
       <TestimonialsSection />
     </DarkLuxuryBlock>

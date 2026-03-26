@@ -7,6 +7,7 @@ import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsS
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { cache } from "react";
+import { prisma } from "@/src/lib/prisma";
 
 const getAboutPage = cache(() => getPageBySlug("about"));
 const safe = (value?: string | null) => value ?? undefined;
@@ -37,7 +38,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function about() {
-  const page = await getAboutPage();
+  // const page = await getAboutPage();
+  const [page, footerData] = await Promise.all([
+    getAboutPage(),
+    prisma.footer.findFirst(),
+  ]);
   if (!page || page.status === "inactive") {
     notFound();
   }
@@ -53,7 +58,10 @@ export default async function about() {
 
         <DarkLuxuryBlock>
           <TestimonialCard />
-          <Content data={{ title: page?.title, content: page?.content }} />
+          <Content
+            data={{ title: page?.title, content: page?.content }}
+            footerData={footerData}
+          />
           <TestimonialsSection />
         </DarkLuxuryBlock>
       </div>

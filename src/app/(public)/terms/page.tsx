@@ -5,6 +5,8 @@ import { Metadata } from "next";
 import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
 import Content from "@/src/components/common/Ui/Content";
 import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
+import { prisma } from "@/src/lib/prisma";
+
 const getTermsPage = cache(() => getPageBySlug("terms"));
 const safe = (value?: string | null) => value ?? undefined;
 export const dynamic = "force-dynamic";
@@ -34,7 +36,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function TermsPage() {
-  const page = await getTermsPage();
+  // const page = await getTermsPage();
+  const [page, footerData] = await Promise.all([
+    getTermsPage(),
+    prisma.footer.findFirst(),
+  ]);
 
   if (!page || page.status === "inactive") {
     notFound();
@@ -43,7 +49,10 @@ export default async function TermsPage() {
   return (
     <>
       <DarkLuxuryBlock>
-        <Content data={{ title: page?.title, content: page?.content }} />
+        <Content
+          data={{ title: page?.title, content: page?.content }}
+          footerData={footerData}
+        />
         <TestimonialsSection />
       </DarkLuxuryBlock>
     </>

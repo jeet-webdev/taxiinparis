@@ -7,6 +7,8 @@ import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
 import Content from "@/src/components/common/Ui/Content";
 import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
 import TestimonialCard from "@/src/feature/Homepage/components/TestimonialCard";
+import { prisma } from "@/src/lib/prisma";
+
 const getServicesPage = cache(() => getPageBySlug("services"));
 const safe = (value?: string | null) => value ?? undefined;
 export const dynamic = "force-dynamic";
@@ -36,7 +38,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ServicesPage() {
-  const page = await getServicesPage();
+  const [page, footerData] = await Promise.all([
+    getServicesPage(),
+    prisma.footer.findFirst(),
+  ]);
   if (!page || page.status === "inactive") {
     notFound();
   }
@@ -47,7 +52,10 @@ export default async function ServicesPage() {
 
       <DarkLuxuryBlock>
         <TestimonialCard />
-        <Content data={{ title: page?.title, content: page?.content }} />
+        <Content
+          data={{ title: page?.title, content: page?.content }}
+          footerData={footerData}
+        />
         <TestimonialsSection />
       </DarkLuxuryBlock>
     </>

@@ -7,6 +7,7 @@ import HeroSection from "@/src/components/common/Ui/HeroSection";
 import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
 import Content from "@/src/components/common/Ui/Content";
 import TestimonialCard from "@/src/feature/Homepage/components/TestimonialCard";
+import { prisma } from "@/src/lib/prisma";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -45,8 +46,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function LanguagePageFrontend({ params }: Props) {
   const { lang, slug } = await params;
   const fullSlug = `${lang}/${slug}`;
-
-  const page = await getLanguagePageBySlug(fullSlug);
+  const [page, footerData] = await Promise.all([
+    getLanguagePageBySlug(fullSlug),
+    prisma.footer.findFirst(), // ← adjust model name to match yours
+  ]);
+  // const page = await getLanguagePageBySlug(fullSlug);
 
   if (!page || page.status === "inactive") {
     notFound();
@@ -63,6 +67,7 @@ export default async function LanguagePageFrontend({ params }: Props) {
             title: page.title,
             content: page.content,
           }}
+          footerData={footerData} // ← pass it here
         />
       </DarkLuxuryBlock>
     </>
