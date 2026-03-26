@@ -53,7 +53,7 @@ export async function uploadLanguagePageImage(formData: FormData) {
       .substring(2, 8)}.webp`;
 
     await sharp(buffer)
-      .resize(1920, 800, { fit: "cover", position: "center" })
+     .resize(1600)
       .webp({ quality: 85 })
       .toFile(path.join(uploadDir, filename));
 
