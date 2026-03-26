@@ -6,14 +6,23 @@ import Image from "next/image";
 import Link from "next/link";
 import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
 
+interface FooterData {
+  btnText?: string | null;
+  btnLink?: string | null;
+}
+
 interface ContentProps {
   data: {
     title?: string | null;
     content?: string | null;
   };
+  footerData?: FooterData | null; // ← ADD THIS
 }
 
-export default function Content({ data: { title, content } }: ContentProps) {
+export default function Content({
+  data: { title, content },
+  footerData,
+}: ContentProps) {
   return (
     <Section>
       <div className="max-w-5xl mx-auto px-6 py-2">
@@ -70,6 +79,15 @@ export default function Content({ data: { title, content } }: ContentProps) {
             "
             dangerouslySetInnerHTML={{ __html: content ?? "" }}
           />
+        )}
+        {footerData?.btnLink && (
+          <Link
+            href={footerData.btnLink}
+            target="_blank"
+            className="btn-primary cstm-navbtn font-logo! mt-8 inline-block"
+          >
+            {footerData.btnText || "Book Now"}
+          </Link>
         )}
       </div>
     </Section>

@@ -397,8 +397,19 @@ const MenuBar: React.FC<MenuBarProps> = ({ editor, blogId, onImageUpload }) => {
           <AlignRightIcon fontSize="small" />
         </MenuButton>
         <Divider orientation="vertical" flexItem />
-        <MenuButton
+        {/* <MenuButton
           onClick={() => setLinkDialogOpen(true)}
+          isActive={editor.isActive("link")}
+          tooltip="Link"
+        >
+          <LinkIcon fontSize="small" />
+        </MenuButton> */}
+        <MenuButton
+          onClick={() => {
+            const previousUrl = editor.getAttributes("link").href;
+            setLinkUrl(previousUrl || ""); // 👈 pre-fills URL if editing existing link
+            setLinkDialogOpen(true);
+          }}
           isActive={editor.isActive("link")}
           tooltip="Link"
         >
@@ -504,6 +515,61 @@ const MenuBar: React.FC<MenuBarProps> = ({ editor, blogId, onImageUpload }) => {
           )}
         </DialogActions>
       </Dialog>
+      {/* ADD THIS - Link Dialog was missing entirely */}
+      <Dialog
+        open={linkDialogOpen}
+        onClose={() => {
+          setLinkUrl("");
+          setLinkDialogOpen(false);
+        }}
+        maxWidth="sm"
+        fullWidth
+      >
+        <DialogTitle>Insert Link</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            fullWidth
+            label="URL"
+            placeholder="https://example.com"
+            value={linkUrl}
+            onChange={(e) => setLinkUrl(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") handleSetLink();
+            }}
+            sx={{ mt: 1 }}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            onClick={() => {
+              setLinkUrl("");
+              setLinkDialogOpen(false);
+            }}
+          >
+            Cancel
+          </Button>
+          {/* Button to remove existing link */}
+          {editor.isActive("link") && (
+            <Button
+              color="error"
+              onClick={() => {
+                editor.chain().focus().unsetLink().run();
+                setLinkDialogOpen(false);
+              }}
+            >
+              Remove Link
+            </Button>
+          )}
+          <Button
+            variant="contained"
+            onClick={handleSetLink}
+            disabled={!linkUrl}
+          >
+            Apply
+          </Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
@@ -522,7 +588,15 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     extensions: [
       StarterKit.configure({ heading: { levels: [1, 2, 3, 4, 5, 6] } }),
       Underline,
-      Link.configure({ openOnClick: false }),
+      // Link.configure({ openOnClick: false }),
+      Link.configure({
+        openOnClick: false,
+        autolink: true, // 👈 auto-detects URLs as you type
+        HTMLAttributes: {
+          rel: "noopener noreferrer",
+          style: "color: #1976d2; text-decoration: underline; cursor: pointer;", // 👈 makes links visible in editor
+        },
+      }),
       ResizableImage,
       Placeholder.configure({ placeholder }),
       TextAlign.configure({ types: ["heading", "paragraph"] }),
