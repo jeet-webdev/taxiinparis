@@ -8,7 +8,7 @@ export const metadata = {
 };
 
 export default async function SitemapPage() {
-  const { blogs } = await getBlogPage();
+  const { blogs } = await getBlogPage(1, 0);
   const footerData = await prisma.footer.findFirst();
   const navLinks = Array.isArray(footerData?.navLinks)
     ? (footerData.navLinks as unknown as { label: string; href: string }[])
@@ -26,6 +26,7 @@ export default async function SitemapPage() {
     where: { id: { gt: 6 } },
     select: { id: true, title: true, slug: true },
   });
+
   return (
     <div className="min-h-screen bg-black text-white px-6 md:px-12 py-16">
       <div className="max-w-378 mx-auto">
