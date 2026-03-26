@@ -88,23 +88,12 @@ export default function BlogsTable({ rows, onDelete }: BlogsTableProps) {
         <Typography variant="h4" fontWeight={500} mb={2}>
           Blogs
         </Typography>
-        <Button
-          variant="contained"
-          sx={{
-            backgroundColor: "#F4C430",
-            color: "#111",
-            textTransform: "none",
-            borderRadius: 2,
-            px: 3,
-            fontWeight: 600,
-            "&:hover": {
-              backgroundColor: "#F6D365",
-            },
-          }}
+        <button
+          className="btn-primary py-2!"
           onClick={() => router.push("/admin/blogs/add")}
         >
           Add New Blog
-        </Button>
+        </button>
       </Box>
 
       <Paper>
@@ -182,20 +171,15 @@ export default function BlogsTable({ rows, onDelete }: BlogsTableProps) {
                   <TableCell>{row.metaKeywords}</TableCell>
                   {/* Action Column */}
                   <TableCell align="center">
-                    <Button
-                      variant="contained"
-                      sx={{
-                        textTransform: "none",
-                        fontWeight: 500,
-                      }}
-                      size="small"
+                    <button
+                      className="btn-secondary py-1! border-2! font-logo"
                       onClick={(e) => {
                         setAnchorEl(e.currentTarget);
                         setSelectedRow(row);
                       }}
                     >
                       Action
-                    </Button>
+                    </button>
                   </TableCell>
                 </TableRow>
               ))}
