@@ -119,19 +119,16 @@ export default function CategoryForm({ mode, defaultValues, onSave }: Props) {
 
           {/* Submit */}
           <Grid item xs={12} mt={1}>
-            <Button
-              type="submit"
-              variant="contained"
-              color="primary"
+            <button
+              className="btn-primary py-2! px-4!"
               disabled={isPending}
-              startIcon={isPending ? <CircularProgress size={20} /> : null}
             >
               {isPending
                 ? "Saving..."
                 : isEdit
                   ? "Update Category"
                   : "Create Category"}
-            </Button>
+            </button>
           </Grid>
         </Grid>
       </form>

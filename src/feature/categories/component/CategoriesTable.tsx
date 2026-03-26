@@ -19,6 +19,7 @@ import {
   Divider,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
+import DeleteConfirmDialog from "../../DeleteConfirmDialog";
 
 export interface PageRow {
   id: number;
@@ -56,6 +57,9 @@ export default function CategoriesTable({
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [deleteOpen, setDeleteOpen] = React.useState(false);
+const [deleteAction, setDeleteAction] = React.useState<() => void>(() => {});
+const [deleteText, setDeleteText] = React.useState("");
   const [selectedCategory, setSelectedCategory] =
     React.useState<CategoryRow | null>(null);
   const [menuRow, setMenuRow] = React.useState<CategoryRow | null>(null);
@@ -106,13 +110,12 @@ export default function CategoriesTable({
           <Typography variant="h5" fontWeight={600} sx={{ color: "#333" }}>
             Category List
           </Typography>
-          <Button
-            variant="contained"
-            sx={{ backgroundColor: "#F4C430", color: "#111", fontWeight: 600 }}
+          <button
+          className="btn-primary py-2! px-4!"
             onClick={() => router.push("/admin/categories/add")}
           >
             + Add New Category
-          </Button>
+          </button>
         </Box>
 
         {/*
@@ -152,23 +155,21 @@ export default function CategoriesTable({
                     <Box
                       sx={{ display: "flex", gap: 1, justifyContent: "center" }}
                     >
-                      <Button
-                        variant="outlined"
-                        size="small"
+                      <button
+                        className="btn-secondary py-1! border-2! px-1!"
                         onClick={() => setSelectedCategory(row)}
                       >
                         View Pages
-                      </Button>
-                      <Button
-                        variant="contained"
-                        size="small"
+                      </button>
+                      <button
+                        className="btn-primary p-1!"
                         onClick={(e) => {
                           setAnchorEl(e.currentTarget);
                           setMenuRow(row);
                         }}
                       >
                         Action
-                      </Button>
+                      </button>
                     </Box>
                   </TableCell>
                 </TableRow>
@@ -284,10 +285,33 @@ export default function CategoriesTable({
                             }}
                             onClick={async () => {
                               if (!onDeletePage) return;
-                              const confirmed = window.confirm(
-                                `Are you sure you want to delete the page "${p.title}"?`,
-                              );
-                              if (!confirmed) return;
+                              setDeleteText(`Delete page "${p.title}"?`);
+
+setDeleteAction(() => async () => {
+  if (!onDeletePage) return;
+
+  const res = await onDeletePage(
+    p.id,
+    selectedCategory.id,
+  );
+
+  if (res.success) {
+    setSelectedCategory((prev) =>
+      prev
+        ? {
+            ...prev,
+            pages: prev.pages?.filter(
+              (pg) => pg.id !== p.id,
+            ),
+          }
+        : null,
+    );
+  }
+
+  setDeleteOpen(false);
+});
+
+setDeleteOpen(true);
                               try {
                                 const res = await onDeletePage(
                                   p.id,
@@ -317,17 +341,8 @@ export default function CategoriesTable({
                           >
                             Delete
                           </Button>
-                          <Button
-                            variant="contained"
-                            color="warning"
-                            size="small"
-                            sx={{
-                              minWidth: "50px",
-                              fontSize: "0.7rem",
-                              py: 0.5,
-                              backgroundColor: "#ffc107",
-                              color: "#000",
-                            }}
+                          <button
+                            className="btn-secondary py-0.5! px-1! border-2!"
                             onClick={() =>
                               window.open(
                                 `/category/${selectedCategory.slug}/${p.slug}`,
@@ -336,7 +351,7 @@ export default function CategoriesTable({
                             }
                           >
                             View
-                          </Button>
+                          </button>
                         </Box>
                       </TableCell>
                     </TableRow>
@@ -396,18 +411,31 @@ export default function CategoriesTable({
         >
           Edit Category
         </MenuItem>
-        <MenuItem
-          sx={{ color: "error.main" }}
-          onClick={async () => {
-            if (menuRow && onDelete) {
-              await onDelete(menuRow.id);
-            }
-            setAnchorEl(null);
-          }}
-        >
+  <MenuItem
+  sx={{ color: "error.main" }}
+  onClick={() => {
+    if (!menuRow || !onDelete) return;
+
+    setDeleteText(`Delete category "${menuRow.name}"?`);
+
+    setDeleteAction(() => async () => {
+      await onDelete(menuRow.id);
+      setDeleteOpen(false);
+    });
+
+    setDeleteOpen(true);
+    setAnchorEl(null);
+  }}
+>
           Delete Category
         </MenuItem>
       </Menu>
+      <DeleteConfirmDialog
+  open={deleteOpen}
+  description={deleteText}
+  onClose={() => setDeleteOpen(false)}
+  onConfirm={deleteAction}
+/>
     </Box>
   );
 }

@@ -45,6 +45,7 @@ import {
   type LanguagePageInput,
 } from "@/src/actions/languagePageActions";
 import { toast } from "react-toastify";
+import DeleteConfirmDialog from "../../DeleteConfirmDialog";
 
 const RichTextEditor = dynamic(
   () => import("@/src/components/common/Ui/Admin/RichTextEditor"),
@@ -152,6 +153,9 @@ export default function LanguagePagesAdmin({ initialPages }: Props) {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imageUploading, setImageUploading] = useState(false);
   const imageInputRef = useRef<HTMLInputElement | null>(null);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+  const [deleteAction, setDeleteAction] = useState<() => void>(() => {});
+  const [deleteText, setDeleteText] = useState("");
 
   const {
     control,
@@ -262,18 +266,25 @@ export default function LanguagePagesAdmin({ initialPages }: Props) {
   };
 
   const handleDelete = (id: number) => {
-    if (!confirm("Delete this page? This cannot be undone.")) return;
-    setDeletingId(id);
-    startTransition(async () => {
+    setDeleteText("Delete this page? This cannot be undone.");
+
+    setDeleteAction(() => async () => {
+      setDeletingId(id);
+
       const result = await deleteLanguagePage(id);
+
       if (result.success) {
         toast.success("Page deleted.");
         setPages((prev) => prev.filter((p) => p.id !== id));
       } else {
         toast.error(result.error ?? "Failed to delete.");
       }
+
       setDeletingId(null);
+      setDeleteOpen(false);
     });
+
+    setDeleteOpen(true);
   };
 
   const filtered = pages.filter(
@@ -290,361 +301,381 @@ export default function LanguagePagesAdmin({ initialPages }: Props) {
   // ─────────────────────────────────────────────
   if (view === "list") {
     return (
-      <Box>
-        {/* Header */}
-        <Box
-          display="flex"
-          alignItems="center"
-          justifyContent="space-between"
-          mb={4}
-        >
-          <Box>
-            <Typography variant="h5" fontWeight={700} color="text.primary">
-              Language Pages
-            </Typography>
-            <Typography variant="body2" color="text.secondary" mt={0.5}>
-              Localised pages at{" "}
-              <Box
-                component="code"
-                sx={{
-                  bgcolor: "grey.100",
-                  px: 1,
-                  py: 0.25,
-                  borderRadius: 1,
-                  fontSize: 12,
-                  color: "primary.main",
-                }}
-              >
-                /[lang]/[slug]
-              </Box>
-            </Typography>
+      <>
+        <Box>
+          {/* Header */}
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+            mb={4}
+          >
+            <Box>
+              <Typography variant="h5" fontWeight={700} color="text.primary">
+                Language Pages
+              </Typography>
+              <Typography variant="body2" color="text.secondary" mt={0.5}>
+                Localised pages at{" "}
+                <Box
+                  component="code"
+                  sx={{
+                    bgcolor: "grey.100",
+                    px: 1,
+                    py: 0.25,
+                    borderRadius: 1,
+                    fontSize: 12,
+                    color: "primary.main",
+                  }}
+                >
+                  /[lang]/[slug]
+                </Box>
+              </Typography>
+            </Box>
+            <Button
+              variant="contained"
+              startIcon={<AddIcon />}
+              onClick={openAdd}
+              sx={{
+                bgcolor: "#1e293b",
+                "&:hover": { bgcolor: "#0f172a" },
+                borderRadius: 2,
+                fontWeight: 700,
+                px: 3,
+                py: 1.2,
+                boxShadow: "0 4px 14px rgba(0,0,0,0.15)",
+              }}
+            >
+              Add Page
+            </Button>
           </Box>
-          <Button
-            variant="contained"
-            startIcon={<AddIcon />}
-            onClick={openAdd}
+
+          {/* Search */}
+          <TextField
+            size="small"
+            placeholder="Search by title, slug or language..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            sx={{ mb: 3, maxWidth: 420 }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon
+                    fontSize="small"
+                    sx={{ color: "text.disabled" }}
+                  />
+                </InputAdornment>
+              ),
+              sx: { borderRadius: 2 },
+            }}
+            fullWidth
+          />
+
+          {/* Table */}
+          <TableContainer
+            component={Paper}
+            elevation={0}
             sx={{
-              bgcolor: "#1e293b",
-              "&:hover": { bgcolor: "#0f172a" },
-              borderRadius: 2,
-              fontWeight: 700,
-              px: 3,
-              py: 1.2,
-              boxShadow: "0 4px 14px rgba(0,0,0,0.15)",
+              border: "1px solid",
+              borderColor: "divider",
+              borderRadius: 3,
+              overflow: "hidden",
             }}
           >
-            Add Page
-          </Button>
-        </Box>
-
-        {/* Search */}
-        <TextField
-          size="small"
-          placeholder="Search by title, slug or language..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          sx={{ mb: 3, maxWidth: 420 }}
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon fontSize="small" sx={{ color: "text.disabled" }} />
-              </InputAdornment>
-            ),
-            sx: { borderRadius: 2 },
-          }}
-          fullWidth
-        />
-
-        {/* Table */}
-        <TableContainer
-          component={Paper}
-          elevation={0}
-          sx={{
-            border: "1px solid",
-            borderColor: "divider",
-            borderRadius: 3,
-            overflow: "hidden",
-          }}
-        >
-          <Table>
-            <TableHead>
-              <TableRow sx={{ bgcolor: "grey.50" }}>
-                {["Page", "Slug / URL", "Language", "Status", "Actions"].map(
-                  (h) => (
-                    <TableCell
-                      key={h}
-                      sx={{
-                        fontWeight: 700,
-                        fontSize: 11,
-                        color: "text.disabled",
-                        textTransform: "uppercase",
-                        letterSpacing: "0.08em",
-                        py: 1.5,
-                      }}
-                    >
-                      {h}
-                    </TableCell>
-                  ),
-                )}
-              </TableRow>
-            </TableHead>
-
-            <TableBody>
-              {filtered.length === 0 ? (
-                <TableRow>
-                  <TableCell colSpan={5} align="center" sx={{ py: 8 }}>
-                    <Box
-                      display="flex"
-                      flexDirection="column"
-                      alignItems="center"
-                      gap={1.5}
-                    >
-                      <Box
+            <Table>
+              <TableHead>
+                <TableRow sx={{ bgcolor: "grey.50" }}>
+                  {["Page", "Slug / URL", "Language", "Status", "Actions"].map(
+                    (h) => (
+                      <TableCell
+                        key={h}
                         sx={{
-                          width: 52,
-                          height: 52,
-                          bgcolor: "grey.100",
-                          borderRadius: 3,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
+                          fontWeight: 700,
+                          fontSize: 11,
+                          color: "text.disabled",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.08em",
+                          py: 1.5,
                         }}
                       >
-                        <ImageIcon
-                          sx={{ color: "text.disabled", fontSize: 24 }}
-                        />
-                      </Box>
-                      <Typography
-                        variant="body2"
-                        fontWeight={600}
-                        color="text.secondary"
-                      >
-                        {search ? "No results found" : "No language pages yet"}
-                      </Typography>
-                      <Typography variant="caption" color="text.disabled">
-                        {search
-                          ? `Nothing matches "${search}"`
-                          : "Click Add Page to create your first one"}
-                      </Typography>
-                    </Box>
-                  </TableCell>
+                        {h}
+                      </TableCell>
+                    ),
+                  )}
                 </TableRow>
-              ) : (
-                filtered.map((page) => {
-                  const lc = getLangCode(page.slug);
-                  const lc_color = LANG_COLORS[lc] ?? {
-                    bg: "#F1F5F9",
-                    color: "#475569",
-                  };
+              </TableHead>
 
-                  return (
-                    <TableRow
-                      key={page.id}
-                      hover
-                      sx={{
-                        "&:last-child td": { borderBottom: 0 },
-                        cursor: "default",
-                      }}
-                    >
-                      {/* Page */}
-                      <TableCell sx={{ py: 2 }}>
-                        <Box display="flex" alignItems="center" gap={1.5}>
-                          <Avatar
-                            src={page.imageUpload ?? undefined}
-                            variant="rounded"
+              <TableBody>
+                {filtered.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={5} align="center" sx={{ py: 8 }}>
+                      <Box
+                        display="flex"
+                        flexDirection="column"
+                        alignItems="center"
+                        gap={1.5}
+                      >
+                        <Box
+                          sx={{
+                            width: 52,
+                            height: 52,
+                            bgcolor: "grey.100",
+                            borderRadius: 3,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          <ImageIcon
+                            sx={{ color: "text.disabled", fontSize: 24 }}
+                          />
+                        </Box>
+                        <Typography
+                          variant="body2"
+                          fontWeight={600}
+                          color="text.secondary"
+                        >
+                          {search
+                            ? "No results found"
+                            : "No language pages yet"}
+                        </Typography>
+                        <Typography variant="caption" color="text.disabled">
+                          {search
+                            ? `Nothing matches "${search}"`
+                            : "Click Add Page to create your first one"}
+                        </Typography>
+                      </Box>
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  filtered.map((page) => {
+                    const lc = getLangCode(page.slug);
+                    const lc_color = LANG_COLORS[lc] ?? {
+                      bg: "#F1F5F9",
+                      color: "#475569",
+                    };
+
+                    return (
+                      <TableRow
+                        key={page.id}
+                        hover
+                        sx={{
+                          "&:last-child td": { borderBottom: 0 },
+                          cursor: "default",
+                        }}
+                      >
+                        {/* Page */}
+                        <TableCell sx={{ py: 2 }}>
+                          <Box display="flex" alignItems="center" gap={1.5}>
+                            <Avatar
+                              src={page.imageUpload ?? undefined}
+                              variant="rounded"
+                              sx={{
+                                width: 44,
+                                height: 44,
+                                bgcolor: "grey.100",
+                                fontSize: 20,
+                                borderRadius: 2,
+                              }}
+                            >
+                              {!page.imageUpload && (LANG_FLAGS[lc] ?? "🌐")}
+                            </Avatar>
+                            <Box>
+                              <Typography
+                                variant="body2"
+                                fontWeight={600}
+                                color="text.primary"
+                                noWrap
+                                sx={{ maxWidth: 160 }}
+                              >
+                                {page.title}
+                              </Typography>
+                              <Typography
+                                variant="caption"
+                                color="text.disabled"
+                              >
+                                ID #{page.id}
+                              </Typography>
+                            </Box>
+                          </Box>
+                        </TableCell>
+
+                        {/* Slug */}
+                        <TableCell sx={{ py: 2 }}>
+                          <Box
                             sx={{
-                              width: 44,
-                              height: 44,
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: 0.75,
                               bgcolor: "grey.100",
-                              fontSize: 20,
+                              px: 1.5,
+                              py: 0.75,
                               borderRadius: 2,
+                              maxWidth: 200,
                             }}
                           >
-                            {!page.imageUpload && (LANG_FLAGS[lc] ?? "🌐")}
-                          </Avatar>
-                          <Box>
                             <Typography
-                              variant="body2"
-                              fontWeight={600}
-                              color="text.primary"
+                              variant="caption"
+                              fontFamily="monospace"
+                              color="text.secondary"
                               noWrap
-                              sx={{ maxWidth: 160 }}
                             >
-                              {page.title}
-                            </Typography>
-                            <Typography variant="caption" color="text.disabled">
-                              ID #{page.id}
+                              /{page.slug}
                             </Typography>
                           </Box>
-                        </Box>
-                      </TableCell>
+                        </TableCell>
 
-                      {/* Slug */}
-                      <TableCell sx={{ py: 2 }}>
-                        <Box
-                          sx={{
-                            display: "inline-flex",
-                            alignItems: "center",
-                            gap: 0.75,
-                            bgcolor: "grey.100",
-                            px: 1.5,
-                            py: 0.75,
-                            borderRadius: 2,
-                            maxWidth: 200,
-                          }}
-                        >
-                          <Typography
-                            variant="caption"
-                            fontFamily="monospace"
-                            color="text.secondary"
-                            noWrap
+                        {/* Language */}
+                        <TableCell sx={{ py: 2 }}>
+                          <Box
+                            sx={{
+                              display: "inline-flex",
+                              alignItems: "center",
+                              gap: 0.75,
+                              bgcolor: lc_color.bg,
+                              color: lc_color.color,
+                              px: 1.5,
+                              py: 0.75,
+                              borderRadius: 2,
+                              fontSize: 12,
+                              fontWeight: 700,
+                            }}
                           >
-                            /{page.slug}
-                          </Typography>
-                        </Box>
-                      </TableCell>
+                            <span>{LANG_FLAGS[lc] ?? "🌐"}</span>
+                            <span>{lc.toUpperCase()}</span>
+                            {LANG_FULL[lc] && (
+                              <Typography
+                                component="span"
+                                sx={{
+                                  fontSize: 11,
+                                  fontWeight: 400,
+                                  opacity: 0.75,
+                                }}
+                              >
+                                — {LANG_FULL[lc]}
+                              </Typography>
+                            )}
+                          </Box>
+                        </TableCell>
 
-                      {/* Language */}
-                      <TableCell sx={{ py: 2 }}>
-                        <Box
-                          sx={{
-                            display: "inline-flex",
-                            alignItems: "center",
-                            gap: 0.75,
-                            bgcolor: lc_color.bg,
-                            color: lc_color.color,
-                            px: 1.5,
-                            py: 0.75,
-                            borderRadius: 2,
-                            fontSize: 12,
-                            fontWeight: 700,
-                          }}
-                        >
-                          <span>{LANG_FLAGS[lc] ?? "🌐"}</span>
-                          <span>{lc.toUpperCase()}</span>
-                          {LANG_FULL[lc] && (
-                            <Typography
-                              component="span"
-                              sx={{
-                                fontSize: 11,
-                                fontWeight: 400,
-                                opacity: 0.75,
-                              }}
-                            >
-                              — {LANG_FULL[lc]}
-                            </Typography>
-                          )}
-                        </Box>
-                      </TableCell>
+                        {/* Status */}
+                        <TableCell sx={{ py: 2 }}>
+                          <Chip
+                            label={page.status}
+                            size="small"
+                            sx={{
+                              fontWeight: 700,
+                              fontSize: 10,
+                              textTransform: "uppercase",
+                              letterSpacing: "0.05em",
+                              bgcolor:
+                                page.status === "active"
+                                  ? "#DCFCE7"
+                                  : "#FEE2E2",
+                              color:
+                                page.status === "active"
+                                  ? "#15803D"
+                                  : "#DC2626",
+                              border: "none",
+                              height: 24,
+                            }}
+                          />
+                        </TableCell>
 
-                      {/* Status */}
-                      <TableCell sx={{ py: 2 }}>
-                        <Chip
-                          label={page.status}
-                          size="small"
-                          sx={{
-                            fontWeight: 700,
-                            fontSize: 10,
-                            textTransform: "uppercase",
-                            letterSpacing: "0.05em",
-                            bgcolor:
-                              page.status === "active" ? "#DCFCE7" : "#FEE2E2",
-                            color:
-                              page.status === "active" ? "#15803D" : "#DC2626",
-                            border: "none",
-                            height: 24,
-                          }}
-                        />
-                      </TableCell>
+                        {/* Actions */}
+                        <TableCell sx={{ py: 2 }}>
+                          <Box display="flex" alignItems="center" gap={0.75}>
+                            {/* View */}
+                            <Tooltip title="View page">
+                              <Button
+                                component="a"
+                                href={`/${page.slug}`}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                size="small"
+                                startIcon={
+                                  <OpenInNewIcon
+                                    sx={{ fontSize: "14px !important" }}
+                                  />
+                                }
+                                sx={{
+                                  bgcolor: "#EEF2FF",
+                                  color: "#4338CA",
+                                  fontWeight: 600,
+                                  fontSize: 11,
+                                  borderRadius: 1.5,
+                                  px: 1.5,
+                                  py: 0.5,
+                                  minWidth: 0,
+                                  textTransform: "none",
+                                  "&:hover": { bgcolor: "#E0E7FF" },
+                                }}
+                              >
+                                View
+                              </Button>
+                            </Tooltip>
 
-                      {/* Actions */}
-                      <TableCell sx={{ py: 2 }}>
-                        <Box display="flex" alignItems="center" gap={0.75}>
-                          {/* View */}
-                          <Tooltip title="View page">
-                            <Button
-                              component="a"
-                              href={`/${page.slug}`}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              size="small"
-                              startIcon={
-                                <OpenInNewIcon
-                                  sx={{ fontSize: "14px !important" }}
-                                />
-                              }
-                              sx={{
-                                bgcolor: "#EEF2FF",
-                                color: "#4338CA",
-                                fontWeight: 600,
-                                fontSize: 11,
-                                borderRadius: 1.5,
-                                px: 1.5,
-                                py: 0.5,
-                                minWidth: 0,
-                                textTransform: "none",
-                                "&:hover": { bgcolor: "#E0E7FF" },
-                              }}
-                            >
-                              View
-                            </Button>
-                          </Tooltip>
+                            {/* Edit */}
+                            <Tooltip title="Edit">
+                              <IconButton
+                                size="small"
+                                onClick={() => openEdit(page)}
+                                sx={{
+                                  bgcolor: "#FFF7ED",
+                                  color: "#C2410C",
+                                  borderRadius: 1.5,
+                                  "&:hover": { bgcolor: "#FFEDD5" },
+                                }}
+                              >
+                                <EditIcon sx={{ fontSize: 16 }} />
+                              </IconButton>
+                            </Tooltip>
 
-                          {/* Edit */}
-                          <Tooltip title="Edit">
-                            <IconButton
-                              size="small"
-                              onClick={() => openEdit(page)}
-                              sx={{
-                                bgcolor: "#FFF7ED",
-                                color: "#C2410C",
-                                borderRadius: 1.5,
-                                "&:hover": { bgcolor: "#FFEDD5" },
-                              }}
-                            >
-                              <EditIcon sx={{ fontSize: 16 }} />
-                            </IconButton>
-                          </Tooltip>
+                            {/* Delete */}
+                            <Tooltip title="Delete">
+                              <IconButton
+                                size="small"
+                                onClick={() => handleDelete(page.id)}
+                                disabled={deletingId === page.id}
+                                sx={{
+                                  bgcolor: "#FFF1F2",
+                                  color: "#BE123C",
+                                  borderRadius: 1.5,
+                                  "&:hover": { bgcolor: "#FFE4E6" },
+                                }}
+                              >
+                                {deletingId === page.id ? (
+                                  <CircularProgress size={14} color="inherit" />
+                                ) : (
+                                  <DeleteIcon sx={{ fontSize: 16 }} />
+                                )}
+                              </IconButton>
+                            </Tooltip>
+                          </Box>
+                        </TableCell>
+                      </TableRow>
+                    );
+                  })
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
 
-                          {/* Delete */}
-                          <Tooltip title="Delete">
-                            <IconButton
-                              size="small"
-                              onClick={() => handleDelete(page.id)}
-                              disabled={deletingId === page.id}
-                              sx={{
-                                bgcolor: "#FFF1F2",
-                                color: "#BE123C",
-                                borderRadius: 1.5,
-                                "&:hover": { bgcolor: "#FFE4E6" },
-                              }}
-                            >
-                              {deletingId === page.id ? (
-                                <CircularProgress size={14} color="inherit" />
-                              ) : (
-                                <DeleteIcon sx={{ fontSize: 16 }} />
-                              )}
-                            </IconButton>
-                          </Tooltip>
-                        </Box>
-                      </TableCell>
-                    </TableRow>
-                  );
-                })
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-
-        <Typography
-          variant="caption"
-          color="text.disabled"
-          sx={{ mt: 2, display: "block" }}
-        >
-          {filtered.length} page{filtered.length !== 1 ? "s" : ""}
-          {search ? ` matching "${search}"` : ""}
-        </Typography>
-      </Box>
+          <Typography
+            variant="caption"
+            color="text.disabled"
+            sx={{ mt: 2, display: "block" }}
+          >
+            {filtered.length} page{filtered.length !== 1 ? "s" : ""}
+            {search ? ` matching "${search}"` : ""}
+          </Typography>
+        </Box>
+        <DeleteConfirmDialog
+          open={deleteOpen}
+          description={deleteText}
+          onClose={() => setDeleteOpen(false)}
+          onConfirm={deleteAction}
+        />
+      </>
     );
   }
 

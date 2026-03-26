@@ -32,7 +32,7 @@ export async function uploadBlogBannerImage(
     const filePath = path.join(uploadDir, filename);
 
     await sharp(buffer)
-      .resize(1920, 800, { fit: "cover", position: "center" })
+      .resize(1600)
       .webp({ quality: 85 })
       .toFile(filePath);
 

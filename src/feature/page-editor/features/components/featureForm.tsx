@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import { uploadFeatureImage } from "@/src/actions/uploadFeatureImage";
 import { FeatureItem } from "../types/feature.types";
 import { useRouter } from "next/navigation";
+import DeleteConfirmDialog from "@/src/feature/DeleteConfirmDialog";
 // ─────────────────────────────────────────────
 // INPUT CLASSES
 // ─────────────────────────────────────────────
@@ -680,6 +681,9 @@ export function FeatureForm({
   const [editingId, setEditingId] = useState<number | null>(null);
   const [isPending, startTransition] = useTransition();
   const [deletingId, setDeletingId] = useState<number | null>(null);
+  const [deleteOpen, setDeleteOpen] = useState(false);
+const [deleteAction, setDeleteAction] = useState<() => void>(() => {});
+const [deleteText, setDeleteText] = useState("");
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   // Tracks the uploaded image URL separately so ImageUploader can re-mount with correct initial value
@@ -776,15 +780,22 @@ export function FeatureForm({
   });
 };
 const handleDelete = (id: number) => {
-  if (!confirm("Delete this feature card?")) return;
-  setDeletingId(id);
-  startTransition(async () => {
+  setDeleteText("Delete this feature card?");
+
+  setDeleteAction(() => async () => {
+    setDeletingId(id);
+
     const result = await deleteFeatureAction(id);
+
     setDeletingId(null);
+    setDeleteOpen(false);
+
     if (result.success) {
       router.refresh();
     }
   });
+
+  setDeleteOpen(true);
 };
 
   const cardStyle: React.CSSProperties = {
@@ -1212,6 +1223,12 @@ const handleDelete = (id: number) => {
           )}
         </div>
       </div>
+      <DeleteConfirmDialog
+  open={deleteOpen}
+  description={deleteText}
+  onClose={() => setDeleteOpen(false)}
+  onConfirm={deleteAction}
+/>
     </div>
   );
 }
