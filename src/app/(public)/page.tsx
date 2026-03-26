@@ -13,6 +13,31 @@ const getHomePage = cache(() => getPageBySlug("home"));
 // small helper to remove null
 const safe = (value?: string | null) => value ?? undefined;
 
+// export async function generateMetadata(): Promise<Metadata> {
+//   const page = await getHomePage();
+
+//   const title = page?.metaTitle ?? page?.title ?? undefined;
+//   const description = safe(page?.metaDescription);
+
+//   return {
+//     title,
+//     description,
+//     keywords: safe(page?.metaKeywords),
+
+//     openGraph: {
+//       title,
+//       description,
+//       type: "website",
+//     },
+
+//     twitter: {
+//       card: "summary_large_image",
+//       title,
+//       description,
+//     },
+//   };
+// }
+
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getHomePage();
 
@@ -28,6 +53,8 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description,
       type: "website",
+      siteName: "Luxury Limo Paris",
+      url: "https://www.luxurylimoparis.fr",
     },
 
     twitter: {
