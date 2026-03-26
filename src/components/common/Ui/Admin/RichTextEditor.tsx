@@ -168,20 +168,20 @@ const MenuBar: React.FC<MenuBarProps> = ({ editor, blogId, onImageUpload }) => {
   // };
   const handleSetLink = () => {
     if (linkUrl) {
-      // 1. Clean up the input immediately
       const rawUrl = linkUrl.trim();
 
-      // 2. Remove trailing slash ONLY if there's no dot (e.g., "google/" -> "google")
+      // 1. Improved Cleanup:
+      // Remove trailing slash if there's no dot (handles "google/" and "https://google/")
       const cleanUrl =
         rawUrl.endsWith("/") && !rawUrl.includes(".")
           ? rawUrl.slice(0, -1)
           : rawUrl;
 
-      // 3. Determine if it needs https://
+      // 2. Determine if it needs https://
       const hasProtocol = /^(https?:\/\/|mailto:|tel:)/i.test(cleanUrl);
       const isRelative = cleanUrl.startsWith("/") || cleanUrl.startsWith("#");
 
-      // 4. Final URL construction
+      // 3. Final URL construction
       const finalUrl =
         !hasProtocol && !isRelative ? `https://${cleanUrl}` : cleanUrl;
 
@@ -191,7 +191,7 @@ const MenuBar: React.FC<MenuBarProps> = ({ editor, blogId, onImageUpload }) => {
         .extendMarkRange("link")
         .setLink({
           href: finalUrl,
-          target: "_blank", // Ensures it always opens in a new tab
+          target: "_blank",
         })
         .run();
     }
@@ -621,17 +621,22 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
     extensions: [
       StarterKit.configure({ heading: { levels: [1, 2, 3, 4, 5, 6] } }),
       Underline,
-      // Link.configure({ openOnClick: false }),
       Link.configure({
         openOnClick: false,
-        autolink: true, // 👈 auto-detects URLs as you type
+        autolink: true,
         linkOnPaste: true,
         HTMLAttributes: {
           rel: "noopener noreferrer",
           target: "_blank",
-          style: "color: #1976d2; text-decoration: underline; cursor: pointer;", // 👈 makes links visible in editor
+          style: "color: #1976d2; text-decoration: underline; cursor: pointer;",
         },
-        // validate: (href) => /^https?:\/\//.test(href),
+        // This allows common domains (google.com) to be linked
+        // while still ensuring they aren't just random text.
+        validate: (href) =>
+          /^https?:\/\//.test(href) ||
+          /^[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/i.test(
+            href,
+          ),
       }),
       ResizableImage,
       Placeholder.configure({ placeholder }),
