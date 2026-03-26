@@ -114,7 +114,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* ✅ Native <script> tags — Google reads these directly in the HTML */}
+        <meta name="application-name" content="Luxury Limo Paris" />
+
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
