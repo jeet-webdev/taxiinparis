@@ -831,7 +831,7 @@ export default function LanguagePagesAdmin({ initialPages }: Props) {
                       src={imagePreview}
                       alt="Preview"
                       fill
-                      style={{ objectFit: "cover" }}
+                      style={{ objectFit: "contain" }} //style={{ objectFit: "contain" }} /
                       unoptimized
                     />
                   ) : (

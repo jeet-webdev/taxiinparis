@@ -92,7 +92,9 @@ export default async function CategoryOverviewPage({ params }: Props) {
               {/* Image Section */}
               <div className="relative aspect-[4/3] w-full overflow-hidden">
                 <Image
-                  src={page.imageUpload} // || "/assets/images/luxury-limo-chiah3.webp"
+                  src={
+                    page.imageUpload || "/assets/images/luxury-limo-chiah3.webp"
+                  }
                   alt={page.imageAlt || page.title}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
