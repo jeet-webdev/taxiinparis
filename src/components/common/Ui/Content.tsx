@@ -71,8 +71,11 @@ export default function Content({
               [&_p]:mb-6
               [&_strong]:text-[#8B6C26]
               [&_strong]:font-heading
+            
               [&_a]:text-[#8B6C26]
-              [&_a]:no-underline
+[&_a]:!no-underline
+[&_a:hover]:!no-underline
+[&_a]:decoration-0
               [&_ul]:list-disc
               [&_ul]:pl-6
               [&_li]:mb-2
