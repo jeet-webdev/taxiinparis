@@ -56,26 +56,26 @@ export const metadata: Metadata = {
 
   icons: {
     icon: [
-      { url: "/uploads/favicon.ico", sizes: "any" },
+      { url: "/favicon.ico", sizes: "any" },
       {
-        url: "/uploads/favicon-browser-32x32.png",
+        url: "/favicon-32x32.png",
         sizes: "32x32",
         type: "image/png",
       },
       {
-        url: "/uploads/favicon-browser-16x16.png",
+        url: "/favicon-16x16.png",
         sizes: "16x16",
         type: "image/png",
       },
     ],
     apple: [
       {
-        url: "/uploads/apple-touch-icon-180x180.png",
+        url: "/apple-touch-icon.png",
         sizes: "180x180",
         type: "image/png",
       },
     ],
-    shortcut: "/uploads/favicon-browser-32x32.png",
+    shortcut: "/favicon-32x32.png",
   },
   manifest: "/site.webmanifest",
 };
