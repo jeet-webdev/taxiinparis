@@ -164,6 +164,7 @@
 //     </html>
 //   );
 // }
+
 import type { Metadata } from "next";
 import {
   Cinzel,
@@ -211,12 +212,10 @@ export const metadata: Metadata = {
 
   description: "Premium Chauffeur Service in Paris",
 
-  // ✅ Already correct — keeps brand name in browser/PWA
   applicationName: "Luxury Limo Paris",
 
   openGraph: {
     title: "Luxury Limo Paris",
-    // ✅ This is what signals the brand name to Google for site name
     siteName: "Luxury Limo Paris",
     url: "https://www.luxurylimoparis.fr",
     type: "website",
@@ -266,12 +265,11 @@ export default function RootLayout({
     sameAs: ["https://www.facebook.com/", "https://www.instagram.com/"],
   };
 
-  // ✅ KEY FIX: Added "name" and "alternateName" — these were missing before
   const jsonLdWebsite = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Luxury Limo Paris", // ← THIS tells Google the site name
-    alternateName: "Luxury Chauffeur Paris", // ← fallback brand name
+    name: "Luxury Limo Paris",
+    alternateName: "Luxury Chauffeur Paris",
     url: "https://www.luxurylimoparis.fr",
     potentialAction: {
       "@type": "SearchAction",
@@ -283,6 +281,17 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* ✅ Native <script> tags — Google reads these directly in the HTML */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebsite) }}
+        />
+
+        {/* GTM — kept as Next.js Script component, this is correct */}
         <Script id="gtm-script" strategy="afterInteractive">
           {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
           new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -290,25 +299,12 @@ export default function RootLayout({
           'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
           })(window,document,'script','dataLayer','GTM-NZXJWVFC');`}
         </Script>
-        <Script
-          id="structured-data-org"
-          type="application/ld+json"
-          strategy="beforeInteractive"
-        >
-          {JSON.stringify(jsonLd)}
-        </Script>
-        <Script
-          id="structured-data-website"
-          type="application/ld+json"
-          strategy="beforeInteractive"
-        >
-          {JSON.stringify(jsonLdWebsite)}
-        </Script>
       </head>
       <body
         suppressHydrationWarning
         className={`${montserrat.variable} ${cinzel.variable} ${playfair.variable} ${greatVibes.variable} font-sans`}
       >
+        {/* GTM noscript */}
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-NZXJWVFC"
