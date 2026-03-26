@@ -172,11 +172,11 @@ const MenuBar: React.FC<MenuBarProps> = ({ editor, blogId, onImageUpload }) => {
 
       // 1. Improved Cleanup:
       // Remove trailing slash if there's no dot (handles "google/" and "https://google/")
-      const cleanUrl =
-        rawUrl.endsWith("/") && !rawUrl.includes(".")
-          ? rawUrl.slice(0, -1)
-          : rawUrl;
-
+      // const cleanUrl =
+      //   rawUrl.endsWith("/") && !rawUrl.includes(".")
+      //     ? rawUrl.slice(0, -1)
+      //     : rawUrl;
+      const cleanUrl = rawUrl.replace(/\/+$/, "");
       // 2. Determine if it needs https://
       const hasProtocol = /^(https?:\/\/|mailto:|tel:)/i.test(cleanUrl);
       const isRelative = cleanUrl.startsWith("/") || cleanUrl.startsWith("#");
