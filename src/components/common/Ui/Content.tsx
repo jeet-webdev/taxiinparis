@@ -58,8 +58,18 @@ export default function Content({
             transition={{ duration: 1, ease: "easeOut" }}
             viewport={{ once: true }}
             className="
-              text-[#2A2A2A] text-lg md:text-xl 
-              leading-relaxed
+               text-black
+                leading-relaxed
+                 [&_h1]:text-4xl
+                [&_h1]:font-serif
+                [&_h1]:text-[#8a6c26]
+                [&_h1]:mt-12
+                [&_h1]:mb-6
+                [&_h1]:border-b
+                [&_h1]:border-[#8a6c26]/30
+                [&_h1]:pb-3
+
+             
               [&_h2]:text-3xl
               [&_h2]:font-serif
               [&_h2]:text-[#8B6C26]
