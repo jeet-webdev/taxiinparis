@@ -154,15 +154,43 @@ const MenuBar: React.FC<MenuBarProps> = ({ editor, blogId, onImageUpload }) => {
 
   if (!editor) return null;
 
+  // const handleSetLink = () => {
+  //   if (linkUrl) {
+  //     editor
+  //       .chain()
+  //       .focus()
+  //       .extendMarkRange("link")
+  //       .setLink({ href: linkUrl })
+  //       .run();
+  //   }
+  //   setLinkUrl("");
+  //   setLinkDialogOpen(false);
+  // };
   const handleSetLink = () => {
     if (linkUrl) {
+      // 1. Trim whitespace to avoid broken links
+      const trimmedUrl = linkUrl.trim();
+
+      // 2. Check if it already has a protocol (http, https, mailto, tel)
+      // This regex looks for '://' or specific prefixes at the start
+      const hasProtocol = /^(https?:\/\/|mailto:|tel:)/i.test(trimmedUrl);
+
+      // 3. Check if it's a relative path (starts with / or #)
+      const isRelative =
+        trimmedUrl.startsWith("/") || trimmedUrl.startsWith("#");
+
+      // 4. If it's a standard domain like "google.com", prepend https://
+      const finalUrl =
+        !hasProtocol && !isRelative ? `https://${trimmedUrl}` : trimmedUrl;
+
       editor
         .chain()
         .focus()
         .extendMarkRange("link")
-        .setLink({ href: linkUrl })
+        .setLink({ href: finalUrl })
         .run();
     }
+
     setLinkUrl("");
     setLinkDialogOpen(false);
   };
@@ -594,8 +622,10 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         autolink: true, // 👈 auto-detects URLs as you type
         HTMLAttributes: {
           rel: "noopener noreferrer",
+          target: "_blank",
           style: "color: #1976d2; text-decoration: underline; cursor: pointer;", // 👈 makes links visible in editor
         },
+        validate: (href) => /^https?:\/\//.test(href),
       }),
       ResizableImage,
       Placeholder.configure({ placeholder }),
