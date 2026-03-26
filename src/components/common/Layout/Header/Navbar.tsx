@@ -104,16 +104,16 @@ export default function Navbar({ footerData }: NavbarProps) {
 
           {/* Language Dropdown - Far Right */}
           <div className="flex items-center justify-between gap-4">
-            <div>
-              <LanguageDropdown />
-            </div>
             <Link
-              href={footerData?.btnLink || "/booking"}
+              href={footerData?.btnLink || "/contact"}
               target="_blank"
               className="btn-primary cstm-navbtn font-logo! hidden md:block "
             >
               {footerData?.btnText || "Book Now"}
             </Link>
+            <div>
+              <LanguageDropdown />
+            </div>
           </div>
         </div>
 
