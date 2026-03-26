@@ -168,26 +168,31 @@ const MenuBar: React.FC<MenuBarProps> = ({ editor, blogId, onImageUpload }) => {
   // };
   const handleSetLink = () => {
     if (linkUrl) {
-      // 1. Trim whitespace to avoid broken links
-      const trimmedUrl = linkUrl.trim();
+      // 1. Clean up the input immediately
+      const rawUrl = linkUrl.trim();
 
-      // 2. Check if it already has a protocol (http, https, mailto, tel)
-      // This regex looks for '://' or specific prefixes at the start
-      const hasProtocol = /^(https?:\/\/|mailto:|tel:)/i.test(trimmedUrl);
+      // 2. Remove trailing slash ONLY if there's no dot (e.g., "google/" -> "google")
+      const cleanUrl =
+        rawUrl.endsWith("/") && !rawUrl.includes(".")
+          ? rawUrl.slice(0, -1)
+          : rawUrl;
 
-      // 3. Check if it's a relative path (starts with / or #)
-      const isRelative =
-        trimmedUrl.startsWith("/") || trimmedUrl.startsWith("#");
+      // 3. Determine if it needs https://
+      const hasProtocol = /^(https?:\/\/|mailto:|tel:)/i.test(cleanUrl);
+      const isRelative = cleanUrl.startsWith("/") || cleanUrl.startsWith("#");
 
-      // 4. If it's a standard domain like "google.com", prepend https://
+      // 4. Final URL construction
       const finalUrl =
-        !hasProtocol && !isRelative ? `https://${trimmedUrl}` : trimmedUrl;
+        !hasProtocol && !isRelative ? `https://${cleanUrl}` : cleanUrl;
 
       editor
         .chain()
         .focus()
         .extendMarkRange("link")
-        .setLink({ href: finalUrl })
+        .setLink({
+          href: finalUrl,
+          target: "_blank", // Ensures it always opens in a new tab
+        })
         .run();
     }
 
@@ -620,12 +625,13 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
       Link.configure({
         openOnClick: false,
         autolink: true, // 👈 auto-detects URLs as you type
+        linkOnPaste: true,
         HTMLAttributes: {
           rel: "noopener noreferrer",
           target: "_blank",
           style: "color: #1976d2; text-decoration: underline; cursor: pointer;", // 👈 makes links visible in editor
         },
-        validate: (href) => /^https?:\/\//.test(href),
+        // validate: (href) => /^https?:\/\//.test(href),
       }),
       ResizableImage,
       Placeholder.configure({ placeholder }),
