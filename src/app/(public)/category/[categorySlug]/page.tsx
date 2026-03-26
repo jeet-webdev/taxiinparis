@@ -21,7 +21,9 @@ interface Props {
 
 /* ---------------- FETCH ---------------- */
 
-async function getCategoryData(slug: string): Promise<CategoryWithPages | null> {
+async function getCategoryData(
+  slug: string,
+): Promise<CategoryWithPages | null> {
   try {
     const category = await prisma.category.findUnique({
       where: { slug },
@@ -66,10 +68,10 @@ export default async function CategoryOverviewPage({ params }: Props) {
     <main className="min-h-screen bg-white pb-20">
       {/* Explore Header Section */}
       <section className="pt-24 pb-12 text-center">
-         <h1 className="text-4xl md:text-5xl font-light text-gray-800 mb-4 tracking-tight capitalize">
-    {category.name}
-  </h1>
-        
+        <h1 className="text-4xl md:text-5xl font-light text-gray-800 mb-4 tracking-tight capitalize">
+          {category.name}
+        </h1>
+
         {/* Yellow Diamond Divider */}
         <div className="flex items-center justify-center gap-3">
           <div className="h-[1.5px] w-16 bg-[#eab308]" />
@@ -90,7 +92,7 @@ export default async function CategoryOverviewPage({ params }: Props) {
               {/* Image Section */}
               <div className="relative aspect-[4/3] w-full overflow-hidden">
                 <Image
-                  src={page.imageUpload || "/assets/images/luxury-limo-chiah3.webp"}
+                  src={page.imageUpload} // || "/assets/images/luxury-limo-chiah3.webp"
                   alt={page.imageAlt || page.title}
                   fill
                   className="object-cover transition-transform duration-700 group-hover:scale-110"
@@ -102,9 +104,10 @@ export default async function CategoryOverviewPage({ params }: Props) {
                 <h3 className="text-2xl font-medium text-gray-800 mb-4 group-hover:text-[#eab308] transition-colors">
                   {page.title}
                 </h3>
-                
+
                 <p className="text-gray-500 text-[15px] leading-relaxed line-clamp-2">
-                  {page.metaDescription || "Professional transport services. Experience luxury and comfort with our elite fleet."}
+                  {page.metaDescription ||
+                    "Professional transport services. Experience luxury and comfort with our elite fleet."}
                 </p>
               </div>
             </Link>

@@ -16,7 +16,7 @@ import { toast } from "react-toastify";
 import RichTextEditor from "@/src/components/common/Ui/Admin/RichTextEditor";
 import { createCategoryPage } from "@/src/actions/category/CategoryPage/createCategoryPage";
 import { getCategoryById } from "@/src/actions/category/getCategory";
-import { color } from "framer-motion";
+import { uploadCategoryImage } from "@/src/actions/category/CategoryPage/uploadCategoryImage";
 // import { uploadCategoryImage } from "@/src/actions/category/uploadCategoryImage";
 
 type CategoryPageFormValues = {
@@ -28,7 +28,6 @@ type CategoryPageFormValues = {
   metaKeywords: string;
   ctaBtnText: string;
   ctaBtnLink: string;
-
 };
 
 export default function AddPageToCategory({
@@ -51,8 +50,8 @@ export default function AddPageToCategory({
       metaDescription: "",
       metaKeywords: "",
       ctaBtnText: "Book Your Transfer Now",
-      ctaBtnLink: "https://portail.driverconnect.fr/vtc-fils/template?DS=1&tkn=00001_2769650_-1157023572_1772012786065",
-
+      ctaBtnLink:
+        "https://portail.driverconnect.fr/vtc-fils/template?DS=1&tkn=00001_2769650_-1157023572_1772012786065",
     },
   });
 
@@ -295,6 +294,7 @@ export default function AddPageToCategory({
                       placeholder="Type the main content..."
                       minHeight={450}
                       blogId={categoryId.toString()}
+                      onImageUpload={uploadCategoryImage}
                     />
                   )}
                 />
