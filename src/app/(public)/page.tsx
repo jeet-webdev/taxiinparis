@@ -6,37 +6,13 @@ import TestimonialCard from "@/src/feature/Homepage/components/TestimonialCard";
 import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsSection";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Script from "next/script";
 import { cache } from "react";
 
 const getHomePage = cache(() => getPageBySlug("home"));
 
 // small helper to remove null
 const safe = (value?: string | null) => value ?? undefined;
-
-// export async function generateMetadata(): Promise<Metadata> {
-//   const page = await getHomePage();
-
-//   const title = page?.metaTitle ?? page?.title ?? undefined;
-//   const description = safe(page?.metaDescription);
-
-//   return {
-//     title,
-//     description,
-//     keywords: safe(page?.metaKeywords),
-
-//     openGraph: {
-//       title,
-//       description,
-//       type: "website",
-//     },
-
-//     twitter: {
-//       card: "summary_large_image",
-//       title,
-//       description,
-//     },
-//   };
-// }
 
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getHomePage();
@@ -53,8 +29,6 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description,
       type: "website",
-      siteName: "Luxury Limo Paris",
-      url: "https://www.luxurylimoparis.fr",
     },
 
     twitter: {
@@ -72,6 +46,34 @@ export default async function HomePage() {
   }
   return (
     <>
+      <Script
+        id="website-schema"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            name: "Luxury Limo Paris",
+            alternateName: "Luxury Chauffeur Paris",
+            url: "https://www.luxurylimoparis.fr",
+          }),
+        }}
+      />
+      <Script
+        id="org-schema"
+        type="application/ld+json"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Organization",
+            name: "Luxury Limo Paris",
+            url: "https://www.luxurylimoparis.fr",
+            logo: "https://www.luxurylimoparis.fr/logo.png",
+          }),
+        }}
+      />
       <div className="">
         <HeroSection img={page?.imageUpload} alt={page?.imageAlt} />
 
