@@ -112,7 +112,7 @@ export default function ContactForm() {
 
       <div className="max-w-[220px] space-y-2">
         <CaptchaField
-        cssClass={`w-full p-2.5 border text-black rounded focus:ring-1 focus:ring-[#8B6C26] outline-none transition-all ${fe?.surname ? "border-[#8B6C26]" : "border-gray-300"}`}
+          cssClass={`w-full p-2.5 border text-black rounded focus:ring-1 focus:ring-[#8B6C26] outline-none transition-all ${fe?.surname ? "border-[#8B6C26]" : "border-gray-300"}`}
           onChange={(valid) => {
             setCaptchaValid(valid);
             if (valid) setCaptchaError("");

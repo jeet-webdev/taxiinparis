@@ -128,7 +128,7 @@ bg-[radial-gradient(circle_at_150%_20%,rgba(255,193,7,0.25),transparent_40%),lin
                 </p>
               )}
               <CaptchaField
-              cssClass="w-full pl-12 pr-4 py-3 rounded-xl bg-black/60 border border-zinc-700 text-white placeholder:text-zinc-500 focus:outline-none focus:border-[#a88435] focus:ring-2 focus:ring-[#a88435]/30 transition-all duration-300"
+              cssClass="w-full px-4 py-3 rounded-xl bg-black/60 border border-zinc-700 text-white placeholder:text-zinc-500 focus:outline-none focus:border-[#a88435] focus:ring-2 focus:ring-[#a88435]/30 transition-all duration-300"
                 onChange={(valid) => {
                   setCaptchaValid(valid);
                   if (valid) setCaptchaError("");
