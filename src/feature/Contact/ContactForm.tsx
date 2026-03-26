@@ -3,6 +3,7 @@
 import React, { useActionState, useState } from "react";
 import { sendContactEmail, FormState } from "@/src/actions/contactAction";
 import PhoneField from "./PhoneField";
+import CaptchaField from "../CaptchaField";
 
 const initialState: FormState = {
   error: null,
@@ -15,9 +16,21 @@ export default function ContactForm() {
     initialState,
   );
   const fe = state.fieldErrors;
-
+  const [captchaValid, setCaptchaValid] = useState(false);
+  const [captchaError, setCaptchaError] = useState("");
   return (
-    <form action={formAction} className="space-y-6">
+    <form
+      action={(formData) => {
+        if (!captchaValid) {
+          setCaptchaError("Invalid captcha");
+          return;
+        }
+
+        setCaptchaError("");
+        formAction(formData);
+      }}
+      className="space-y-6"
+    >
       {/* Status Notifications */}
       {state.success && (
         <div className="p-4 bg-green-50 border border-green-200 text-green-700 rounded-md">
@@ -96,18 +109,18 @@ export default function ContactForm() {
       </div>
 
       {/* Captcha */}
-      <div className="max-w-[200px] space-y-2">
-        <label className="text-sm font-semibold text-[#8B6C26] italic">
-          Solve: 4 + 7 = ?
-        </label>
-        <input
-          name="captcha"
-          type="text"
-          placeholder="Answer"
-          className={`w-full p-2.5 border text-black rounded outline-none focus:ring-1 focus:ring-[#8B6C26] transition-all ${fe?.captcha ? "border-[#8B6C26]" : "border-gray-300"}`}
+
+      <div className="max-w-[220px] space-y-2">
+        <CaptchaField
+          cssClass={`w-full p-2.5 border text-black rounded focus:ring-1 focus:ring-[#8B6C26] outline-none transition-all ${fe?.surname ? "border-[#8B6C26]" : "border-gray-300"}`}
+          onChange={(valid) => {
+            setCaptchaValid(valid);
+            if (valid) setCaptchaError("");
+          }}
         />
-        {fe?.captcha && (
-          <p className="text-[#8B6C26] text-xs">{fe.captcha[0]}</p>
+
+        {captchaError && (
+          <p className="text-[#8B6C26] text-xs">{captchaError}</p>
         )}
       </div>
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { Lock, Mail } from "@mui/icons-material";
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import {
   adminLoginSchema,
   AdminLoginSchemaType,
@@ -9,6 +9,7 @@ import {
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { loginAdminAction } from "@/src/actions/adminLogin";
+import CaptchaField from "../../CaptchaField";
 
 export default function AdminLoginForm() {
   const methods = useForm<AdminLoginSchemaType>({
@@ -23,8 +24,16 @@ export default function AdminLoginForm() {
   } = methods;
 
   const [isPending, startTransition] = useTransition();
-
+  const [captchaValid, setCaptchaValid] = useState(false);
+  const [captchaError, setCaptchaError] = useState("");
   const onSubmit = (data: AdminLoginSchemaType) => {
+    if (!captchaValid) {
+      setCaptchaError("Invalid captcha");
+      return;
+    } else {
+      setCaptchaError("");
+    }
+
     startTransition(async () => {
       const res = await loginAdminAction(data);
 
@@ -44,8 +53,7 @@ export default function AdminLoginForm() {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage:
-              "url('/assets/images/admin.webp')",
+            backgroundImage: "url('/assets/images/admin.webp')",
           }}
         />
         <div className="absolute inset-0 bg-black/30" />
@@ -118,6 +126,17 @@ bg-[radial-gradient(circle_at_150%_20%,rgba(255,193,7,0.25),transparent_40%),lin
                 <p className="text-red-500 text-sm text-center">
                   {errors.root.message}
                 </p>
+              )}
+              <CaptchaField
+              cssClass="w-full px-4 py-3 rounded-xl bg-black/60 border border-zinc-700 text-white placeholder:text-zinc-500 focus:outline-none focus:border-[#a88435] focus:ring-2 focus:ring-[#a88435]/30 transition-all duration-300"
+                onChange={(valid) => {
+                  setCaptchaValid(valid);
+                  if (valid) setCaptchaError("");
+                }}
+              />
+
+              {captchaError && (
+                <p className="text-red-500 text-sm">{captchaError}</p>
               )}
 
               {/* Button */}
