@@ -628,7 +628,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
         HTMLAttributes: {
           rel: "noopener noreferrer",
           target: "_blank",
-          style: "color: #1976d2; text-decoration: underline; cursor: pointer;",
+          style: "color: #1976d2; cursor: pointer;",
         },
         // This allows common domains (google.com) to be linked
         // while still ensuring they aren't just random text.

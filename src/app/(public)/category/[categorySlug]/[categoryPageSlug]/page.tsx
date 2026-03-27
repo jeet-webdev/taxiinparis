@@ -224,15 +224,16 @@ export default async function CategoryDetailPage({ params }: Props) {
     [&_ul]:list-disc
     [&_ul]:pl-6
     [&_li]:mb-2
-    [&_a]:text-[#8a6c26]
-    [&_a]:underline
-    [&_a:hover]:text-white
+   [&_a]:text-inherit      
+    [&_a]:!no-underline      
+    [&_a:hover]:text-[#8a6c26] 
+    [&_a:hover]:underline   
   "
               dangerouslySetInnerHTML={{ __html: displayContent }}
             />
 
             {/* Buttons */}
-          {/*  <div className="mt-20 pt-10 border-t border-white/10 flex flex-col items-center">
+            {/*  <div className="mt-20 pt-10 border-t border-white/10 flex flex-col items-center">
                <div className="flex flex-wrap justify-center gap-6">
                 <Link href="/contact" className="btn-primary font-logo! ">
                   Book Your Transfer Now
@@ -240,18 +241,21 @@ export default async function CategoryDetailPage({ params }: Props) {
               </div>
             </div> */}
             {/* Buttons */}
-<div className="mt-20 pt-10 border-t border-white/10 flex flex-col items-center">
-  <div className="flex flex-wrap justify-center gap-6">
-    <Link 
-      href={page.ctaBtnLink ?? "https://portail.driverconnect.fr/vtc-fils/template?DS=1&tkn=00001_2769650_-1157023572_1772012786065"} 
-      className="btn-primary font-logo!"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      {page.ctaBtnText ?? "1Book Your Transfer Now"}
-    </Link>
-  </div>
-</div>
+            <div className="mt-20 pt-10 border-t border-white/10 flex flex-col items-center">
+              <div className="flex flex-wrap justify-center gap-6">
+                <Link
+                  href={
+                    page.ctaBtnLink ??
+                    "https://portail.driverconnect.fr/vtc-fils/template?DS=1&tkn=00001_2769650_-1157023572_1772012786065"
+                  }
+                  className="btn-primary font-logo!"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {page.ctaBtnText ?? "1Book Your Transfer Now"}
+                </Link>
+              </div>
+            </div>
           </div>
         </section>
 

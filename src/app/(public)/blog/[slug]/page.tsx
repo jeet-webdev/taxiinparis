@@ -162,8 +162,10 @@ export default async function SingleBlogPage({ params }: Props) {
                 [&_p]:mb-6
                 [&_strong]:text-[#8a6c26]
                 [&_a]:text-[#8a6c26]
-                [&_a]:no-underline
-                [&_a:hover]:underline
+               
+                 [&_a]:!no-underline      
+    [&_a:hover]:text-[#8a6c26] 
+    [&_a:hover]:underline   
                 [&_ul]:list-disc
                 [&_ul]:pl-6
                 [&_li]:mb-2
@@ -173,15 +175,18 @@ export default async function SingleBlogPage({ params }: Props) {
 
             <div className="mt-14 h-px w-full bg-linear-to-r from-transparent via-[#8a6c26]/40 to-transparent" />
 
-           <div className="mt-10 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-center">
-  <Link
-    href={blog.ctaBtnLink ?? "https://portail.driverconnect.fr/vtc-fils/template?DS=1&tkn=00001_2769650_-1157023572_1772012786065"}
-    className="btn-primary font-logo!"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    {blog.ctaBtnText ?? "Book Now1"}
-  </Link>
+            <div className="mt-10 flex flex-col sm:flex-row gap-4 sm:items-center sm:justify-center">
+              <Link
+                href={
+                  blog.ctaBtnLink ??
+                  "https://portail.driverconnect.fr/vtc-fils/template?DS=1&tkn=00001_2769650_-1157023572_1772012786065"
+                }
+                className="btn-primary font-logo!"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {blog.ctaBtnText ?? "Book Now1"}
+              </Link>
 
               <Link
                 href="/blog"
