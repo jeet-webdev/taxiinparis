@@ -159,9 +159,9 @@ export default async function SingleBlogPage({ params }: Props) {
                 [&_p]:mb-6
               [&_strong]:text-[#8a6c26]
               [&_a]:!text-[#8a6c26]      
-                [&_a]:!no-underline       
+                [&_a]:[text-decoration:none]   
               [&_a:hover]:text-[#8a6c26] 
-                [&_a:hover]:underline      
+                [&_a:hover]:[text-decoration:underline]     
                 [&_ul]:list-disc
                 [&_ul]:pl-6
                 [&_li]:mb-2
