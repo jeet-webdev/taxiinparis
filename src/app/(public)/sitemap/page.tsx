@@ -108,7 +108,7 @@ export default async function SitemapPage() {
               Blog
             </h2>
 
-            <ul className="space-y-2 text-sm text-gray-300 max-h-[300px] overflow-y-auto pr-2">
+            <ul className="space-y-2 text-sm text-gray-300 max-h-none overflow-y-auto pr-2">
               {blogs.map((post) => (
                 <li key={post.slug}>
                   <Link
