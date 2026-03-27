@@ -143,29 +143,25 @@ export default async function SingleBlogPage({ params }: Props) {
                 [&_h3]:text-[#8a6c26]
                 [&_h3]:mt-10
                 [&_h3]:mb-4
-
-                 [&_h4]:text-xl
-  [&_h4]:font-semibold
-  [&_h4]:mt-8
-  [&_h4]:mb-3
-
-  [&_h5]:text-lg
-  [&_h5]:font-medium
-  [&_h5]:mt-6
-  [&_h5]:mb-2
-
-  [&_h6]:text-base
-  [&_h6]:font-medium
-  [&_h6]:mt-6
-  [&_h6]:mb-2
-  [&_h6]:text-gray-500
+                [&_h4]:text-xl
+                [&_h4]:font-semibold
+                [&_h4]:mt-8
+                [&_h4]:mb-3
+                [&_h5]:text-lg
+                [&_h5]:font-medium
+                [&_h5]:mt-6
+                [&_h5]:mb-2
+                [&_h6]:text-base
+                [&_h6]:font-medium
+                [&_h6]:mt-6
+                [&_h6]:mb-2
+              [&_h6]:text-gray-500
                 [&_p]:mb-6
-                [&_strong]:text-[#8a6c26]
-                [&_a]:text-[#8a6c26]
-               
-                 [&_a]:!no-underline      
-    [&_a:hover]:text-[#8a6c26] 
-    [&_a:hover]:underline   
+              [&_strong]:text-[#8a6c26]
+              [&_a]:!text-[#8a6c26]      
+                [&_a]:!no-underline       
+              [&_a:hover]:text-[#8a6c26] 
+                [&_a:hover]:underline      
                 [&_ul]:list-disc
                 [&_ul]:pl-6
                 [&_li]:mb-2
