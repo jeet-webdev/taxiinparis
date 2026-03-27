@@ -79,6 +79,7 @@
 //     };
 //   }
 // }
+
 "use server";
 
 import nodemailer from "nodemailer";
@@ -138,6 +139,9 @@ export async function sendContactEmail(
     auth: {
       user: settings.smtpUser,
       pass: settings.smtpPassword,
+    },
+    tls: {
+      rejectUnauthorized: false, // Add this to handle certificate handshake issues
     },
   });
 
