@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 
 type Props = {
-    cssClass?: string;
+  cssClass?: string;
   onChange: (isValid: boolean) => void;
 };
 
@@ -15,7 +15,6 @@ export default function CaptchaField({ onChange, cssClass }: Props) {
   const generate = () => {
     const a = Math.floor(Math.random() * 10);
     const b = Math.floor(Math.random() * 10);
-
     setNum1(a);
     setNum2(b);
     setValue("");
@@ -28,7 +27,6 @@ export default function CaptchaField({ onChange, cssClass }: Props) {
 
   const handleChange = (v: string) => {
     setValue(v);
-
     if (parseInt(v) === num1 + num2) {
       onChange(true);
     } else {
@@ -38,6 +36,9 @@ export default function CaptchaField({ onChange, cssClass }: Props) {
 
   return (
     <div>
+      {/* ✅ hidden input sends the correct answer to the server */}
+      <input type="hidden" name="captchaAnswer" value={num1 + num2} />
+
       <label className="text-zinc-400 text-sm flex items-center gap-2">
         Solve: {num1} + {num2} = ?
         <button
@@ -50,6 +51,7 @@ export default function CaptchaField({ onChange, cssClass }: Props) {
       </label>
 
       <input
+        name="captcha"
         type="text"
         value={value}
         onChange={(e) => handleChange(e.target.value)}
