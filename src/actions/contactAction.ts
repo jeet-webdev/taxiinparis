@@ -4,7 +4,6 @@ import nodemailer from "nodemailer";
 import { z } from "zod";
 import { getEmailSetting } from "./emailSettingAction";
 
-// ✅ captcha removed from schema — validated separately below
 const ContactSchema = z.object({
   name: z.string().min(2, "Name is required"),
   surname: z.string().min(2, "Surname is required"),
@@ -30,7 +29,7 @@ export async function sendContactEmail(
   prevState: FormState | null,
   formData: FormData,
 ): Promise<FormState> {
-  // ✅ Step 1: validate captcha server-side against the hidden answer
+  // 1. Captcha Validation
   const userAnswer = formData.get("captcha") as string;
   const expectedAnswer = formData.get("captchaAnswer") as string;
 
@@ -42,7 +41,7 @@ export async function sendContactEmail(
     };
   }
 
-  // Step 2: validate the rest of the fields
+  // 2. Zod Validation
   const rawData = Object.fromEntries(formData.entries());
   const validatedFields = ContactSchema.safeParse(rawData);
 
@@ -56,40 +55,75 @@ export async function sendContactEmail(
 
   const { name, surname, email, phone, message } = validatedFields.data;
 
-  // Step 3: fetch SMTP settings from DB
+  // 3. Load SMTP Settings
   const settings = await getEmailSetting();
 
-  // Step 4: setup transporter
+  if (
+    !settings.smtpHost ||
+    !settings.smtpUser ||
+    !settings.smtpPassword ||
+    !settings.contactEmail
+  ) {
+    return {
+      success: false,
+      error: "Mail server is not configured correctly.",
+    };
+  }
+
+  // 4. Create Transporter
   const transporter = nodemailer.createTransport({
     host: settings.smtpHost,
-    port: settings.smtpPort,
-    secure: settings.smtpPort === 465,
+    port: Number(settings.smtpPort),
+    secure: true,
     auth: {
       user: settings.smtpUser,
       pass: settings.smtpPassword,
     },
     tls: {
-      rejectUnauthorized: false,
+      rejectUnauthorized: false, // Helps with some OVH certificate issues
+      minVersion: "TLSv1.2",
     },
   });
 
-  const body = `From: ${name} ${surname}\n\nEmail: ${email}\n\nPhone: ${phone || "Not provided"}\n\nMessage:\n${message}`;
+  // 5. Prepare Email Content
+  // Plain text version (Fallback)
+  const textBody = `New Inquiry from ${name} ${surname}\n\nEmail: ${email}\nPhone: ${phone}\n\nMessage:\n${message}`;
 
+  // HTML version (Helps avoid Spam filters)
+  const htmlBody = `
+    <div style="font-family: sans-serif; line-height: 1.6; color: #333; max-width: 600px;">
+      <h2 style="color: #000; border-bottom: 2px solid #eee; padding-bottom: 10px;">New Contact Inquiry</h2>
+      <p><strong>Name:</strong> ${name} ${surname}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Phone:</strong> ${phone || "Not provided"}</p>
+      <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; margin-top: 20px;">
+        <p><strong>Message:</strong></p>
+        <p style="white-space: pre-wrap;">${message}</p>
+      </div>
+      <footer style="margin-top: 30px; font-size: 12px; color: #888;">
+        Sent from Luxury Limo Paris Contact Form
+      </footer>
+    </div>
+  `;
+
+  const mailOptions = {
+    from: `"Luxury Limo Paris" <${settings.smtpUser}>`,
+    to: settings.contactEmail,
+    replyTo: email, // This allows you to click 'Reply' in Gmail to reach the customer
+    subject: `New Inquiry from ${name} ${surname}`,
+    text: textBody,
+    html: htmlBody,
+  };
+
+  // 6. Send Email
   try {
-    await transporter.sendMail({
-      from: `"Luxury Limo Paris" <${settings.smtpUser}>`,
-      to: settings.contactEmail,
-      replyTo: email,
-      subject: "Message from Luxury Limo Paris",
-      text: body,
-    });
-
+    await transporter.sendMail(mailOptions);
     return { success: true, error: null };
   } catch (error) {
-    console.error("Mail Error:", error);
     return {
       success: false,
-      error: "The mail server is currently unavailable.",
+      error:
+        "We encountered an error sending your message. Please try again later.",
     };
   }
 }
