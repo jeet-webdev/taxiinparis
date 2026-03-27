@@ -84,20 +84,32 @@ export default function LanguageDropdown() {
     languages.find((l) => l.code === urlLang)?.flag || "/assets/flags/usa.png";
 
   // Sync Google Translate with the URL language
-  useEffect(() => {
-    if (urlLang === "en") {
-      const cookie = getGoogTransCookie();
-      if (cookie && cookie !== "/en/en") {
-        // Stale translation cookie — wipe it and reload once
-        clearCookies();
+useEffect(() => {
+  if (typeof window === "undefined") return;
+
+  const cookie = getGoogTransCookie();
+
+  // ✅ English page
+  if (urlLang === "en") {
+    if (cookie && cookie !== "/en/en") {
+      clearCookies();
+
+      // reload only once
+      if (!sessionStorage.getItem("langReload")) {
+        sessionStorage.setItem("langReload", "1");
         window.location.reload();
       }
-      // No stale cookie — nothing to do, page is already English
     } else {
-      // Language page — apply translation
-      setCookieAndTranslate(urlLang);
+      sessionStorage.removeItem("langReload");
     }
-  }, [urlLang]); // only re-runs when URL lang segment changes
+  }
+
+  // ✅ Other language
+  else {
+    setCookieAndTranslate(urlLang);
+    sessionStorage.removeItem("langReload");
+  }
+}, [urlLang]);
 
   // Init Google Translate widget once
   useEffect(() => {
