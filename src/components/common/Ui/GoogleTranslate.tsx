@@ -141,9 +141,9 @@ export function AutoTranslate() {
   const searchParams = useSearchParams();
 
   const urlLang = getLangFromPath(pathname);
-  const queryLang = searchParams.get("lang");
+  // const queryLang = searchParams.get("lang");
 
-  const lang = queryLang || urlLang;
+  const lang = urlLang;
 
   useEffect(() => {
     if (!lang) return;

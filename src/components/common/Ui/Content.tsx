@@ -81,11 +81,10 @@ export default function Content({
               [&_p]:mb-6
               [&_strong]:text-[#8B6C26]
               [&_strong]:font-heading
-            
-              [&_a]:text-[#8B6C26]
-[&_a]:!no-underline
-[&_a:hover]:!no-underline
-[&_a]:decoration-0
+            [&_a]:text-[#8B6C26]
+              [&_a]:[text-decoration:none]   
+            [&_a:hover]:text-[#8a6c26] 
+              [&_a:hover]:[text-decoration:none] 
               [&_ul]:list-disc
               [&_ul]:pl-6
               [&_li]:mb-2
