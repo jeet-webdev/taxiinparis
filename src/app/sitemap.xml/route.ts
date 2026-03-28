@@ -1,6 +1,9 @@
 import { prisma } from "@/src/lib/prisma";
 import { getBlogPage } from "@/src/actions/blog/getBlogs";
 
+//change1 1line
+export const dynamic = "force-dynamic";
+
 export async function GET() {
   const baseUrl = "https://luxurylimoparis.fr";
   const today = new Date().toISOString();
@@ -70,7 +73,6 @@ export async function GET() {
   categories.forEach((cat) => {
     cat.categoryPages.forEach((p) => {
       const formattedSlug = p.slug.trim().toLowerCase().replace(/\s+/g, "-");
-
       urls.push({
         loc: `${baseUrl}/category/${cat.slug}/${formattedSlug}`,
         priority: 0.7,
@@ -110,6 +112,7 @@ ${urls
   return new Response(xml, {
     headers: {
       "Content-Type": "application/xml",
+      "Cache-Control": "no-store, max-age=0",
     },
   });
 }
