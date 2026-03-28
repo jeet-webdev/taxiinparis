@@ -224,7 +224,7 @@ export default function LanguageDropdown() {
 
         if (!sessionStorage.getItem("langReloadEn")) {
           sessionStorage.setItem("langReloadEn", "1");
-          window.location.reload();
+          // window.location.reload();
         }
       } else {
         // Cookie is already clean — remove the one-shot reload guard
@@ -239,7 +239,7 @@ export default function LanguageDropdown() {
 
     const cancel = driveGoogleTranslate(urlLang, () => {
       // Widget never mounted — reload so the cookie is picked up natively
-      window.location.reload();
+      // window.location.reload();
     });
 
     return cancel; // cleanup if urlLang changes before poll resolves
@@ -257,31 +257,6 @@ export default function LanguageDropdown() {
     };
   }, []);
 
-  // ── Manual language selection ──────────────────────────────────────────────
-  // function handleSelectLanguage(lang: string) {
-  //   setOpen(false);
-  //   if (lang === displayLang) return;
-
-  //   // Update the flag immediately so the UI feels instant
-  //   setDisplayLang(lang);
-
-  //   // Cancel any previous in-flight widget poll
-  //   cancelPoll.current?.();
-
-  //   if (lang === "en") {
-  //     clearCookies();
-  //     sessionStorage.removeItem("langReloadEn");
-  //     // Reload to remove the active Google Translate overlay from the DOM
-  //     window.location.reload();
-  //     return;
-  //   }
-
-  //   setLangCookie(lang);
-
-  //   cancelPoll.current = driveGoogleTranslate(lang, () => {
-  //     window.location.reload();
-  //   });
-  // }
   function handleSelectLanguage(lang: string) {
     setOpen(false);
 
@@ -292,18 +267,18 @@ export default function LanguageDropdown() {
     // cancel previous polling
     cancelPoll.current?.();
 
-    if (lang === "en") {
-      clearCookies();
-      sessionStorage.removeItem("langReloadEn");
-      window.location.reload();
-      return;
-    }
+    // if (lang === "en") {
+    //   clearCookies();
+    //   sessionStorage.removeItem("langReloadEn");
+    //   // window.location.reload();
+    //   return;
+    // }
 
     setLangCookie(lang);
 
     // 🔥 IMPORTANT FIX
     cancelPoll.current = driveGoogleTranslate(lang, () => {
-      window.location.reload();
+      // window.location.reload();
     });
   }
   const currentFlag =
