@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import Script from "next/script";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 declare global {
   interface Window {
@@ -82,34 +83,105 @@ function isTranslationActive(): boolean {
  * Drives the hidden Google Translate <select> to `lang`.
  * Returns a cancel function. Calls `onFail` if widget never mounts in 3 s.
  */
+// function driveGoogleTranslate(lang: string, onFail?: () => void): () => void {
+//   let triggered = false;
+
+//   const interval = setInterval(() => {
+//     const select = document.querySelector(
+//       ".goog-te-combo",
+//     ) as HTMLSelectElement | null;
+//     if (select) {
+//       select.value = lang;
+//       select.dispatchEvent(new Event("change"));
+//       triggered = true;
+//       clearInterval(interval);
+//     }
+//   }, 100);
+
+//   const timeout = setTimeout(() => {
+//     clearInterval(interval);
+//     if (!triggered) onFail?.();
+//   }, 3000);
+
+//   return () => {
+//     clearInterval(interval);
+//     clearTimeout(timeout);
+//   };
+// }
+
+// ─── Component ────────────────────────────────────────────────────────────────
 function driveGoogleTranslate(lang: string, onFail?: () => void): () => void {
+  let attempts = 0;
   let triggered = false;
 
   const interval = setInterval(() => {
     const select = document.querySelector(
       ".goog-te-combo",
     ) as HTMLSelectElement | null;
+
     if (select) {
       select.value = lang;
       select.dispatchEvent(new Event("change"));
       triggered = true;
       clearInterval(interval);
     }
+
+    attempts++;
+    if (attempts > 30) {
+      clearInterval(interval);
+      if (!triggered) onFail?.();
+    }
   }, 100);
 
-  const timeout = setTimeout(() => {
-    clearInterval(interval);
-    if (!triggered) onFail?.();
-  }, 3000);
-
-  return () => {
-    clearInterval(interval);
-    clearTimeout(timeout);
-  };
+  return () => clearInterval(interval);
 }
 
-// ─── Component ────────────────────────────────────────────────────────────────
+export function AutoTranslate() {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
+  const urlLang = getLangFromPath(pathname);
+  const queryLang = searchParams.get("lang");
+
+  const lang = queryLang || urlLang;
+
+  useEffect(() => {
+    if (!lang) return;
+
+    const autoChangeLanguage = () => {
+      const select = document.querySelector(
+        ".goog-te-combo",
+      ) as HTMLSelectElement | null;
+
+      if (select) {
+        select.value = lang;
+        select.dispatchEvent(new Event("change"));
+
+        console.log("language changed auto", lang);
+
+        const li = document.querySelector(
+          `.translate-menu li[data-lang="${lang}"]`,
+        ) as HTMLElement | null;
+
+        if (li) {
+          console.log("flag change to", li);
+          li.click();
+        }
+      } else {
+        setTimeout(autoChangeLanguage, 500);
+      }
+    };
+
+    // same as window load + delay
+    const timer = setTimeout(() => {
+      autoChangeLanguage();
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [lang]);
+
+  return null;
+}
 export default function LanguageDropdown() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
@@ -122,22 +194,23 @@ export default function LanguageDropdown() {
   const cancelPoll = useRef<(() => void) | null>(null);
 
   // Keep flag in sync when the user navigates via Next.js router
- useEffect(() => {
-  const cookie = getGoogTransCookie();
 
-  if (cookie) {
-    const parts = cookie.split("/"); // "", "en", "it"
-    const langFromCookie = parts[2];
+  useEffect(() => {
+    const cookie = getGoogTransCookie();
 
-    if (langFromCookie && langFromCookie !== "en") {
-      setDisplayLang(langFromCookie);
-      return;
+    if (cookie) {
+      const parts = cookie.split("/"); // "", "en", "it"
+      const langFromCookie = parts[2];
+
+      if (langFromCookie && langFromCookie !== "en") {
+        setDisplayLang(langFromCookie);
+        return;
+      }
     }
-  }
 
-  // fallback to URL
-  setDisplayLang(urlLang);
-}, [urlLang]);
+    // fallback to URL
+    setDisplayLang(urlLang);
+  }, [urlLang]);
 
   // ── Core sync: align Google Translate with the URL language ───────────────
   useEffect(() => {
@@ -185,31 +258,54 @@ export default function LanguageDropdown() {
   }, []);
 
   // ── Manual language selection ──────────────────────────────────────────────
+  // function handleSelectLanguage(lang: string) {
+  //   setOpen(false);
+  //   if (lang === displayLang) return;
+
+  //   // Update the flag immediately so the UI feels instant
+  //   setDisplayLang(lang);
+
+  //   // Cancel any previous in-flight widget poll
+  //   cancelPoll.current?.();
+
+  //   if (lang === "en") {
+  //     clearCookies();
+  //     sessionStorage.removeItem("langReloadEn");
+  //     // Reload to remove the active Google Translate overlay from the DOM
+  //     window.location.reload();
+  //     return;
+  //   }
+
+  //   setLangCookie(lang);
+
+  //   cancelPoll.current = driveGoogleTranslate(lang, () => {
+  //     window.location.reload();
+  //   });
+  // }
   function handleSelectLanguage(lang: string) {
     setOpen(false);
+
     if (lang === displayLang) return;
 
-    // Update the flag immediately so the UI feels instant
     setDisplayLang(lang);
 
-    // Cancel any previous in-flight widget poll
+    // cancel previous polling
     cancelPoll.current?.();
 
     if (lang === "en") {
       clearCookies();
       sessionStorage.removeItem("langReloadEn");
-      // Reload to remove the active Google Translate overlay from the DOM
       window.location.reload();
       return;
     }
 
     setLangCookie(lang);
 
+    // 🔥 IMPORTANT FIX
     cancelPoll.current = driveGoogleTranslate(lang, () => {
       window.location.reload();
     });
   }
-
   const currentFlag =
     languages.find((l) => l.code === displayLang)?.flag ??
     "/assets/flags/usa.png";
