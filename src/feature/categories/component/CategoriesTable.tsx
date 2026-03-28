@@ -58,8 +58,8 @@ export default function CategoriesTable({
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [deleteOpen, setDeleteOpen] = React.useState(false);
-const [deleteAction, setDeleteAction] = React.useState<() => void>(() => {});
-const [deleteText, setDeleteText] = React.useState("");
+  const [deleteAction, setDeleteAction] = React.useState<() => void>(() => {});
+  const [deleteText, setDeleteText] = React.useState("");
   const [selectedCategory, setSelectedCategory] =
     React.useState<CategoryRow | null>(null);
   const [menuRow, setMenuRow] = React.useState<CategoryRow | null>(null);
@@ -111,7 +111,7 @@ const [deleteText, setDeleteText] = React.useState("");
             Category List
           </Typography>
           <button
-          className="btn-primary py-2! px-4!"
+            className="btn-primary py-2! px-4!"
             onClick={() => router.push("/admin/categories/add")}
           >
             + Add New Category
@@ -274,7 +274,7 @@ const [deleteText, setDeleteText] = React.useState("");
                           >
                             Edit
                           </Button>
-                          <Button
+                          {/* <Button
                             variant="contained"
                             color="error"
                             size="small"
@@ -287,31 +287,31 @@ const [deleteText, setDeleteText] = React.useState("");
                               if (!onDeletePage) return;
                               setDeleteText(`Delete page "${p.title}"?`);
 
-setDeleteAction(() => async () => {
-  if (!onDeletePage) return;
+                              setDeleteAction(() => async () => {
+                                if (!onDeletePage) return;
 
-  const res = await onDeletePage(
-    p.id,
-    selectedCategory.id,
-  );
+                                const res = await onDeletePage(
+                                  p.id,
+                                  selectedCategory.id,
+                                );
 
-  if (res.success) {
-    setSelectedCategory((prev) =>
-      prev
-        ? {
-            ...prev,
-            pages: prev.pages?.filter(
-              (pg) => pg.id !== p.id,
-            ),
-          }
-        : null,
-    );
-  }
+                                if (res.success) {
+                                  setSelectedCategory((prev) =>
+                                    prev
+                                      ? {
+                                          ...prev,
+                                          pages: prev.pages?.filter(
+                                            (pg) => pg.id !== p.id,
+                                          ),
+                                        }
+                                      : null,
+                                  );
+                                }
 
-  setDeleteOpen(false);
-});
+                                setDeleteOpen(false);
+                              });
 
-setDeleteOpen(true);
+                              setDeleteOpen(true);
                               try {
                                 const res = await onDeletePage(
                                   p.id,
@@ -337,6 +337,55 @@ setDeleteOpen(true);
                                 console.error("Delete page failed:", err);
                                 alert("An error occurred. Please try again.");
                               }
+                            }}
+                          >
+                            Delete
+                          </Button> */}
+                          <Button
+                            variant="contained"
+                            color="error"
+                            size="small"
+                            sx={{
+                              minWidth: "50px",
+                              fontSize: "0.7rem",
+                              py: 0.5,
+                            }}
+                            onClick={() => {
+                              // 1. Safety check & Capture local constants to avoid 'null' or 'missing p' errors
+                              if (!onDeletePage || !selectedCategory) return;
+
+                              const pageId = p.id;
+                              const pageTitle = p.title;
+                              const catId = selectedCategory.id;
+
+                              setDeleteText(`Delete page "${pageTitle}"?`);
+
+                              // 2. ONLY set the action here. Do NOT call onDeletePage immediately.
+                              setDeleteAction(() => async () => {
+                                try {
+                                  const res = await onDeletePage(pageId, catId);
+                                  if (res.success) {
+                                    setSelectedCategory((prev) =>
+                                      prev
+                                        ? {
+                                            ...prev,
+                                            pages: prev.pages?.filter(
+                                              (pg) => pg.id !== pageId,
+                                            ),
+                                          }
+                                        : null,
+                                    );
+                                  } else {
+                                    alert("Failed to delete the page.");
+                                  }
+                                } catch (err) {
+                                  console.error("Delete page failed:", err);
+                                } finally {
+                                  setDeleteOpen(false); // Close dialog after completion
+                                }
+                              });
+
+                              setDeleteOpen(true);
                             }}
                           >
                             Delete
@@ -411,31 +460,62 @@ setDeleteOpen(true);
         >
           Edit Category
         </MenuItem>
-  <MenuItem
-  sx={{ color: "error.main" }}
-  onClick={() => {
-    if (!menuRow || !onDelete) return;
+        {/* <MenuItem
+          sx={{ color: "error.main" }}
+          onClick={() => {
+            if (!menuRow || !onDelete) return;
 
-    setDeleteText(`Delete category "${menuRow.name}"?`);
+            setDeleteText(`Delete category "${menuRow.name}"?`);
 
-    setDeleteAction(() => async () => {
-      await onDelete(menuRow.id);
-      setDeleteOpen(false);
-    });
+            setDeleteAction(() => async () => {
+              await onDelete(menuRow.id);
+              setDeleteOpen(false);
+            });
 
-    setDeleteOpen(true);
-    setAnchorEl(null);
-  }}
->
+            setDeleteOpen(true);
+            setAnchorEl(null);
+          }}
+        >
+          Delete Category
+        </MenuItem> */}
+        <MenuItem
+          sx={{ color: "error.main" }}
+          onClick={() => {
+            if (!menuRow || !onDelete) return;
+
+            const categoryId = menuRow.id;
+            const categoryName = menuRow.name;
+
+            setDeleteText(`Delete category "${categoryName}"?`);
+
+            setDeleteAction(() => async () => {
+              try {
+                const res = await onDelete(categoryId);
+                if (res.success) {
+                  // If you want the category to disappear from the table immediately:
+                  // Note: This requires 'rows' to be part of a parent state or handled via router.refresh()
+                  router.refresh();
+                }
+              } catch (err) {
+                console.error("Delete category failed:", err);
+              } finally {
+                setDeleteOpen(false);
+              }
+            });
+
+            setDeleteOpen(true);
+            setAnchorEl(null);
+          }}
+        >
           Delete Category
         </MenuItem>
       </Menu>
       <DeleteConfirmDialog
-  open={deleteOpen}
-  description={deleteText}
-  onClose={() => setDeleteOpen(false)}
-  onConfirm={deleteAction}
-/>
+        open={deleteOpen}
+        description={deleteText}
+        onClose={() => setDeleteOpen(false)}
+        onConfirm={deleteAction}
+      />
     </Box>
   );
 }
