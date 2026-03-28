@@ -1,6 +1,202 @@
+// "use client";
+
+// import { useEffect, useState } from "react";
+// import Script from "next/script";
+// import Image from "next/image";
+// import { usePathname } from "next/navigation";
+
+// declare global {
+//   interface Window {
+//     googleTranslateElementInit: () => void;
+//     google?: {
+//       translate: {
+//         TranslateElement: new (
+//           options: { pageLanguage: string; autoDisplay?: boolean },
+//           elementId: string,
+//         ) => void;
+//       };
+//     };
+//   }
+// }
+
+// const languages = [
+//   { code: "en", flag: "/assets/flags/usa.png" },
+//   { code: "fr", flag: "/assets/flags/france.png" },
+//   { code: "de", flag: "/assets/flags/Deutsch.png" },
+//   { code: "es", flag: "/assets/flags/Español.png" },
+//   { code: "pt", flag: "/assets/flags/Português.png" },
+//   { code: "it", flag: "/assets/flags/Italiano.png" },
+//   { code: "pl", flag: "/assets/flags/Polski.png" },
+//   { code: "zh-CN", flag: "/assets/flags/cn.png" },
+//   { code: "ja", flag: "/assets/flags/japan.png" },
+//   { code: "ar", flag: "/assets/flags/saudi-arabia.png" },
+// ];
+
+// function getLangFromPath(pathname: string): string {
+//   const segment = pathname.split("/")[1];
+//   const match = languages.find((l) => l.code === segment);
+//   return match ? match.code : "en";
+// }
+
+// function getGoogTransCookie(): string | null {
+//   const match = document.cookie
+//     .split("; ")
+//     .find((row) => row.startsWith("googtrans="));
+//   return match ? match.split("=")[1] : null;
+// }
+
+// function clearCookies() {
+//   const expiry = "expires=Thu, 01 Jan 1970 00:00:00 UTC";
+//   const h = window.location.hostname;
+//   document.cookie = `googtrans=; ${expiry}; path=/`;
+//   document.cookie = `googtrans=; ${expiry}; path=/; domain=${h}`;
+//   document.cookie = `googtrans=; ${expiry}; path=/; domain=.${h}`;
+// }
+// function getLangFromCookie(): string {
+//   if (typeof window === "undefined") return "en";
+//   const cookie = getGoogTransCookie();
+//   if (!cookie) return "en";
+//   const parts = cookie.split("/");
+//   const lang = parts[2];
+//   return lang && languages.some((l) => l.code === lang) ? lang : "en";
+// }
+// function setCookieAndTranslate(lang: string) {
+//   clearCookies();
+//   if (lang !== "en") {
+//     const h = window.location.hostname;
+//     document.cookie = `googtrans=/en/${lang}; path=/`;
+//     document.cookie = `googtrans=/en/${lang}; path=/; domain=${h}`;
+//   }
+//   // Trigger the widget
+//   const interval = setInterval(() => {
+//     const select = document.querySelector(
+//       ".goog-te-combo",
+//     ) as HTMLSelectElement | null;
+//     if (select) {
+//       select.value = lang;
+//       select.dispatchEvent(new Event("change"));
+//       clearInterval(interval);
+//     }
+//   }, 100);
+//   setTimeout(() => clearInterval(interval), 5000);
+// }
+
+// export default function LanguageDropdown() {
+//   const [open, setOpen] = useState(false);
+//   const pathname = usePathname();
+
+//   // // Derived — never stored in state
+//   // const urlLang = getLangFromPath(pathname);
+//   // const currentFlag =
+//   //   languages.find((l) => l.code === urlLang)?.flag || "/assets/flags/usa.png";
+// // ADD THESE
+// const urlLang = getLangFromPath(pathname);
+// const [displayLang, setDisplayLang] = useState<string>(urlLang);
+
+// useEffect(() => {
+//   setDisplayLang(urlLang);
+// }, [urlLang]);
+
+// const currentFlag = languages.find((l) => l.code === displayLang)?.flag || "/assets/flags/usa.png";
+//   // Sync Google Translate with the URL language
+// useEffect(() => {
+//   if (typeof window === "undefined") return;
+
+//   const cookie = getGoogTransCookie();
+
+//   // ✅ English page
+//   if (urlLang === "en") {
+//     if (cookie && cookie !== "/en/en") {
+//       clearCookies();
+
+//       // reload only once
+//       if (!sessionStorage.getItem("langReload")) {
+//         sessionStorage.setItem("langReload", "1");
+//         window.location.reload();
+//       }
+//     } else {
+//       sessionStorage.removeItem("langReload");
+//     }
+//   }
+
+//   // ✅ Other language
+//   else {
+//     setCookieAndTranslate(urlLang);
+//     sessionStorage.removeItem("langReload");
+//   }
+// }, [urlLang]);
+
+//   // Init Google Translate widget once
+//   useEffect(() => {
+//     window.googleTranslateElementInit = function () {
+//       if (window.google?.translate?.TranslateElement) {
+//         new window.google.translate.TranslateElement(
+//           { pageLanguage: "en", autoDisplay: false },
+//           "google_translate_element",
+//         );
+//       }
+//     };
+//   }, []);
+
+//   // Manual language selection — just writes cookies and triggers GT directly
+//   // No setState involved at all
+//   function handleSelectLanguage(lang: string) {
+//     setOpen(false);
+//     setDisplayLang(lang);
+//     setCookieAndTranslate(lang);
+//   }
+
+//   return (
+//     <>
+//       <div className="relative">
+//         <button
+//           onClick={() => setOpen(!open)}
+//           className="overflow-hidden border border-white/20"
+//         >
+//           <Image
+//             src={currentFlag}
+//             alt={urlLang}
+//             width={30}
+//             height={40}
+//             className="object-cover"
+//           />
+//         </button>
+
+//         {open && (
+//           <div className="absolute right-0 mt-2 bg-[#00000050] rounded-2xl shadow-xl p-2 space-y-0.5 w-14">
+//             {languages
+//              .filter((lang) => lang.code !== displayLang)
+//               .map((lang) => (
+//                 <button
+//                   key={lang.code}
+//                   onClick={() => handleSelectLanguage(lang.code)}
+//                   className="w-10 h-10 overflow-hidden hover:scale-110 transition"
+//                 >
+//                   <Image
+//                     src={lang.flag}
+//                     alt={lang.code}
+//                     width={30}
+//                     height={40}
+//                     className="object-cover mx-auto"
+//                   />
+//                 </button>
+//               ))}
+//           </div>
+//         )}
+//       </div>
+
+//       <div id="google_translate_element" className="hidden" />
+
+//       <Script
+//         src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+//         strategy="afterInteractive"
+//       />
+//     </>
+//   );
+// }
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Script from "next/script";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -32,6 +228,8 @@ const languages = [
   { code: "ar", flag: "/assets/flags/saudi-arabia.png" },
 ];
 
+// ─── Helpers ─────────────────────────────────────────────────────────────────
+
 function getLangFromPath(pathname: string): string {
   const segment = pathname.split("/")[1];
   const match = languages.find((l) => l.code === segment);
@@ -39,10 +237,11 @@ function getLangFromPath(pathname: string): string {
 }
 
 function getGoogTransCookie(): string | null {
+  if (typeof document === "undefined") return null;
   const match = document.cookie
     .split("; ")
     .find((row) => row.startsWith("googtrans="));
-  return match ? match.split("=")[1] : null;
+  return match ? decodeURIComponent(match.split("=")[1]) : null;
 }
 
 function clearCookies() {
@@ -52,22 +251,36 @@ function clearCookies() {
   document.cookie = `googtrans=; ${expiry}; path=/; domain=${h}`;
   document.cookie = `googtrans=; ${expiry}; path=/; domain=.${h}`;
 }
-function getLangFromCookie(): string {
-  if (typeof window === "undefined") return "en";
-  const cookie = getGoogTransCookie();
-  if (!cookie) return "en";
-  const parts = cookie.split("/");
-  const lang = parts[2];
-  return lang && languages.some((l) => l.code === lang) ? lang : "en";
-}
-function setCookieAndTranslate(lang: string) {
+
+function setLangCookie(lang: string) {
   clearCookies();
-  if (lang !== "en") {
-    const h = window.location.hostname;
-    document.cookie = `googtrans=/en/${lang}; path=/`;
-    document.cookie = `googtrans=/en/${lang}; path=/; domain=${h}`;
-  }
-  // Trigger the widget
+  if (lang === "en") return;
+  const h = window.location.hostname;
+  document.cookie = `googtrans=/en/${lang}; path=/`;
+  document.cookie = `googtrans=/en/${lang}; path=/; domain=${h}`;
+  document.cookie = `googtrans=/en/${lang}; path=/; domain=.${h}`;
+}
+
+/**
+ * Returns true if the googtrans cookie is pointing to a non-English language.
+ * "/en/fr", "/en/de", "/en/zh-CN" → true
+ * missing, "/en/en", "/en"         → false
+ */
+function isTranslationActive(): boolean {
+  const cookie = getGoogTransCookie();
+  if (!cookie) return false;
+  const parts = cookie.split("/"); // ["", "en", "fr"]
+  const target = parts[2];
+  return !!target && target !== "en";
+}
+
+/**
+ * Drives the hidden Google Translate <select> to `lang`.
+ * Returns a cancel function. Calls `onFail` if widget never mounts in 3 s.
+ */
+function driveGoogleTranslate(lang: string, onFail?: () => void): () => void {
+  let triggered = false;
+
   const interval = setInterval(() => {
     const select = document.querySelector(
       ".goog-te-combo",
@@ -75,58 +288,74 @@ function setCookieAndTranslate(lang: string) {
     if (select) {
       select.value = lang;
       select.dispatchEvent(new Event("change"));
+      triggered = true;
       clearInterval(interval);
     }
   }, 100);
-  setTimeout(() => clearInterval(interval), 5000);
+
+  const timeout = setTimeout(() => {
+    clearInterval(interval);
+    if (!triggered) onFail?.();
+  }, 3000);
+
+  return () => {
+    clearInterval(interval);
+    clearTimeout(timeout);
+  };
 }
+
+// ─── Component ────────────────────────────────────────────────────────────────
 
 export default function LanguageDropdown() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
-  // // Derived — never stored in state
-  // const urlLang = getLangFromPath(pathname);
-  // const currentFlag =
-  //   languages.find((l) => l.code === urlLang)?.flag || "/assets/flags/usa.png";
-// ADD THESE
-const urlLang = getLangFromPath(pathname);
-const [displayLang, setDisplayLang] = useState<string>(urlLang);
+  // "en" for /about, /contact, /services …
+  // "fr" for /fr/about, "de" for /de/contact, etc.
+  const urlLang = getLangFromPath(pathname);
 
-useEffect(() => {
-  setDisplayLang(urlLang);
-}, [urlLang]);
+  const [displayLang, setDisplayLang] = useState<string>(urlLang);
+  const cancelPoll = useRef<(() => void) | null>(null);
 
-const currentFlag = languages.find((l) => l.code === displayLang)?.flag || "/assets/flags/usa.png";
-  // Sync Google Translate with the URL language
-useEffect(() => {
-  if (typeof window === "undefined") return;
+  // Keep flag in sync when the user navigates via Next.js router
+  useEffect(() => {
+    setDisplayLang(urlLang);
+  }, [urlLang]);
 
-  const cookie = getGoogTransCookie();
+  // ── Core sync: align Google Translate with the URL language ───────────────
+  useEffect(() => {
+    if (typeof window === "undefined") return;
 
-  // ✅ English page
-  if (urlLang === "en") {
-    if (cookie && cookie !== "/en/en") {
-      clearCookies();
+    // ✅ ENGLISH route  →  /about, /contact, /services, etc.
+    if (urlLang === "en") {
+      if (isTranslationActive()) {
+        // A stale translation cookie is still set — clear it and reload ONCE
+        clearCookies();
 
-      // reload only once
-      if (!sessionStorage.getItem("langReload")) {
-        sessionStorage.setItem("langReload", "1");
-        window.location.reload();
+        if (!sessionStorage.getItem("langReloadEn")) {
+          sessionStorage.setItem("langReloadEn", "1");
+          window.location.reload();
+        }
+      } else {
+        // Cookie is already clean — remove the one-shot reload guard
+        sessionStorage.removeItem("langReloadEn");
       }
-    } else {
-      sessionStorage.removeItem("langReload");
+      return; // nothing more to do for English pages
     }
-  }
 
-  // ✅ Other language
-  else {
-    setCookieAndTranslate(urlLang);
-    sessionStorage.removeItem("langReload");
-  }
-}, [urlLang]);
+    // ✅ TRANSLATED route  →  /fr/about, /de/contact, etc.
+    sessionStorage.removeItem("langReloadEn");
+    setLangCookie(urlLang);
 
-  // Init Google Translate widget once
+    const cancel = driveGoogleTranslate(urlLang, () => {
+      // Widget never mounted — reload so the cookie is picked up natively
+      window.location.reload();
+    });
+
+    return cancel; // cleanup if urlLang changes before poll resolves
+  }, [urlLang]);
+
+  // ── Init Google Translate widget (runs once on mount) ─────────────────────
   useEffect(() => {
     window.googleTranslateElementInit = function () {
       if (window.google?.translate?.TranslateElement) {
@@ -138,24 +367,47 @@ useEffect(() => {
     };
   }, []);
 
-  // Manual language selection — just writes cookies and triggers GT directly
-  // No setState involved at all
+  // ── Manual language selection ──────────────────────────────────────────────
   function handleSelectLanguage(lang: string) {
     setOpen(false);
-    setDisplayLang(lang); 
-    setCookieAndTranslate(lang);
+    if (lang === displayLang) return;
+
+    // Update the flag immediately so the UI feels instant
+    setDisplayLang(lang);
+
+    // Cancel any previous in-flight widget poll
+    cancelPoll.current?.();
+
+    if (lang === "en") {
+      clearCookies();
+      sessionStorage.removeItem("langReloadEn");
+      // Reload to remove the active Google Translate overlay from the DOM
+      window.location.reload();
+      return;
+    }
+
+    setLangCookie(lang);
+
+    cancelPoll.current = driveGoogleTranslate(lang, () => {
+      window.location.reload();
+    });
   }
+
+  const currentFlag =
+    languages.find((l) => l.code === displayLang)?.flag ??
+    "/assets/flags/usa.png";
 
   return (
     <>
       <div className="relative">
         <button
-          onClick={() => setOpen(!open)}
+          onClick={() => setOpen((prev) => !prev)}
           className="overflow-hidden border border-white/20"
+          aria-label="Select language"
         >
           <Image
             src={currentFlag}
-            alt={urlLang}
+            alt={displayLang}
             width={30}
             height={40}
             className="object-cover"
@@ -163,14 +415,15 @@ useEffect(() => {
         </button>
 
         {open && (
-          <div className="absolute right-0 mt-2 bg-[#00000050] rounded-2xl shadow-xl p-2 space-y-0.5 w-14">
+          <div className="absolute right-0 mt-2 bg-[#00000050] rounded-2xl shadow-xl p-2 space-y-0.5 w-14 z-50">
             {languages
-             .filter((lang) => lang.code !== displayLang)
+              .filter((lang) => lang.code !== displayLang)
               .map((lang) => (
                 <button
                   key={lang.code}
                   onClick={() => handleSelectLanguage(lang.code)}
                   className="w-10 h-10 overflow-hidden hover:scale-110 transition"
+                  aria-label={`Switch to ${lang.code}`}
                 >
                   <Image
                     src={lang.flag}
