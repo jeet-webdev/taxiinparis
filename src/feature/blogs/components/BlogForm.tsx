@@ -258,6 +258,15 @@ export default function BlogForm({
                   fullWidth
                   error={!!fieldState.error}
                   helperText={fieldState.error?.message}
+                  onChange={(e) => {
+                    const sanitized = e.target.value
+                      .toLowerCase()
+                      .replace(/%20/g, "-")
+                      .replace(/\s+/g, "-")
+                      .replace(/[^a-z0-9-]/g, "")
+                      .replace(/-+/g, "-");
+                    field.onChange(sanitized);
+                  }}
                 />
               )}
             />
@@ -297,43 +306,57 @@ export default function BlogForm({
               )}
             />
           </Grid>
-<Paper sx={{ mt:2, mb:2, p: 3, borderRadius: 3, border: "1px solid #e2e8f0" }} elevation={0}>
-  <Typography variant="subtitle2" fontWeight="700" color="primary" gutterBottom>
-    CTA BUTTON
-  </Typography>
-  <Grid container spacing={3} mt={1}>
-    <Grid item xs={12} md={6}>
-      <Controller
-        name="ctaBtnText"
-        control={control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            value={field.value ?? ""}
-            label="Button Text"
-            fullWidth
-            placeholder="Book Your Transfer Now"
-          />
-        )}
-      />
-    </Grid>
-    <Grid item xs={12} md={6}>
-      <Controller
-        name="ctaBtnLink"
-        control={control}
-        render={({ field }) => (
-          <TextField
-            {...field}
-            value={field.value ?? ""}
-            label="Button Link"
-            fullWidth
-            placeholder="https://..."
-          />
-        )}
-      />
-    </Grid>
-  </Grid>
-</Paper>
+          <Paper
+            sx={{
+              mt: 2,
+              mb: 2,
+              p: 3,
+              borderRadius: 3,
+              border: "1px solid #e2e8f0",
+            }}
+            elevation={0}
+          >
+            <Typography
+              variant="subtitle2"
+              fontWeight="700"
+              color="primary"
+              gutterBottom
+            >
+              CTA BUTTON
+            </Typography>
+            <Grid container spacing={3} mt={1}>
+              <Grid item xs={12} md={6}>
+                <Controller
+                  name="ctaBtnText"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      value={field.value ?? ""}
+                      label="Button Text"
+                      fullWidth
+                      placeholder="Book Your Transfer Now"
+                    />
+                  )}
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <Controller
+                  name="ctaBtnLink"
+                  control={control}
+                  render={({ field }) => (
+                    <TextField
+                      {...field}
+                      value={field.value ?? ""}
+                      label="Button Link"
+                      fullWidth
+                      placeholder="https://..."
+                    />
+                  )}
+                />
+              </Grid>
+            </Grid>
+          </Paper>
           {/* Meta Title */}
           <Grid item xs={12}>
             <Typography
