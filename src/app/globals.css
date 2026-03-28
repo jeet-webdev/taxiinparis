@@ -170,3 +170,8 @@ body {
     font-size: 12px !important;
   }
 }
+@layer base {
+  u {
+    @apply no-underline;
+  }
+}
