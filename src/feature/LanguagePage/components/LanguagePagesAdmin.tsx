@@ -81,7 +81,7 @@ const formSchema = z.object({
   content: z.string().optional().nullable(),
   imageUpload: z.string().optional().nullable(),
   imageAlt: z.string().optional().nullable(),
-  metaTitle: z.string().max(255).optional().nullable(),
+  metaTitle: z.string().optional().nullable(),
   metaDescription: z.string().optional().nullable(),
   metaKeywords: z.string().optional().nullable(),
   status: z.enum(["active", "inactive"]),
@@ -130,7 +130,19 @@ const LANG_COLORS: Record<string, { bg: string; color: string }> = {
   zh: { bg: "#FFF1F2", color: "#9F1239" },
   ja: { bg: "#FDF4FF", color: "#7E22CE" },
 };
-
+function toSlug(value: string) {
+  const parts = value.split("/");
+  if (parts.length < 2) return value.toLowerCase().replace(/\s+/g, "-");
+  const lang = parts[0].toLowerCase().trim();
+  const rest = parts.slice(1).join("/")
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+  return `${lang}/${rest}`;
+}
 function getLangCode(slug: string) {
   return slug.split("/")[0] ?? "";
 }
@@ -752,6 +764,7 @@ export default function LanguagePagesAdmin({ initialPages }: Props) {
                 render={({ field, fieldState }) => (
                   <TextField
                     {...field}
+                    onChange={(e) => field.onChange(toSlug(e.target.value))}
                     label="Slug"
                     required
                     fullWidth

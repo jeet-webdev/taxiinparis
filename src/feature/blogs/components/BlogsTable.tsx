@@ -18,7 +18,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
-
+import DeleteConfirmDialog from "../../DeleteConfirmDialog";
 export interface BlogRow {
   id: number;
   title: string;
@@ -38,10 +38,13 @@ export default function BlogsTable({ rows, onDelete }: BlogsTableProps) {
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof BlogRow>("title");
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
   const [selectedRowId, setSelectedRowId] = React.useState<number | null>(null);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [selectedRow, setSelectedRow] = React.useState<BlogRow | null>(null);
+  const [deleteOpen, setDeleteOpen] = React.useState(false);
+  const [deleteText, setDeleteText] = React.useState("");
+  const [deleteAction, setDeleteAction] = React.useState<() => void>(() => {});
   const router = useRouter();
 
   const handleSort = (property: keyof BlogRow) => {
@@ -254,17 +257,50 @@ export default function BlogsTable({ rows, onDelete }: BlogsTableProps) {
         </MenuItem>
 
         <MenuItem onClick={() => setAnchorEl(null)}>Block</MenuItem>
-        <MenuItem
+        {/* <MenuItem
           onClick={async () => {
             if (selectedRow && onDelete) {
               await onDelete(selectedRow.id);
             }
             setAnchorEl(null);
           }}
-        >
+         >
           Delete
-        </MenuItem>
+        </MenuItem> */}
+        <MenuItem
+  sx={{ color: "error.main" }}
+  onClick={() => {
+    if (!selectedRow || !onDelete) return;
+
+    const blogId = selectedRow.id;
+    const blogTitle = selectedRow.title;
+
+    setDeleteText(`Delete blog "${blogTitle}"?`);
+
+    setDeleteAction(() => async () => {
+      try {
+        const res = await onDelete(blogId);
+        if (!res.success) alert("Failed to delete the blog.");
+      } catch (err) {
+        console.error("Delete blog failed:", err);
+      } finally {
+        setDeleteOpen(false);
+      }
+    });
+
+    setDeleteOpen(true);
+    setAnchorEl(null);
+  }}
+>
+  Delete
+</MenuItem>
       </Menu>
+      <DeleteConfirmDialog
+  open={deleteOpen}
+  description={deleteText}
+  onClose={() => setDeleteOpen(false)}
+  onConfirm={deleteAction}
+/>
     </Box>
   );
 }

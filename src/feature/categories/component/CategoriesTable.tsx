@@ -55,7 +55,7 @@ export default function CategoriesTable({
   const [order, setOrder] = React.useState<Order>("asc");
   const [orderBy, setOrderBy] = React.useState<keyof CategoryRow>("name");
   const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [rowsPerPage, setRowsPerPage] = React.useState(5);    //pagination if i want to add more then 5 in one page 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [deleteOpen, setDeleteOpen] = React.useState(false);
   const [deleteAction, setDeleteAction] = React.useState<() => void>(() => {});

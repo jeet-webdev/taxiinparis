@@ -98,7 +98,7 @@ export default function ServicesSection({
       <form onSubmit={handleSubmit(onSubmit)}>
         <Grid container spacing={2}>
           {/* Header Image */}
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <Controller
               name="servicesHeaderImage"
               control={control}
