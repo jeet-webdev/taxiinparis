@@ -11,7 +11,7 @@ export default async function SitemapPage() {
   const { blogs } = await getBlogPage(1, 0);
   const footerData = await prisma.footer.findFirst();
   const navLinks = Array.isArray(footerData?.navLinks)
-    ? (footerData.navLinks as unknown as { label: string; href: string }[])
+    ? (footerData.navLinks as unknown as { label: string; url: string }[])
     : [];
   const categories = await prisma.category.findMany({
     include: {
@@ -26,7 +26,7 @@ export default async function SitemapPage() {
     where: { id: { gt: 6 } },
     select: { id: true, title: true, slug: true },
   });
-
+  // console.log("navLinks:", JSON.stringify(navLinks, null, 2));
   return (
     <div className="min-h-screen bg-black text-white px-6 md:px-12 py-16">
       <div className="max-w-378 mx-auto">
@@ -45,37 +45,36 @@ export default async function SitemapPage() {
                 {navLinks.map((item, i) => (
                   <li key={i}>
                     <Link
-                      href={item.href || "/"}
+                      href={item.url || "/"}
                       className="hover:text-white transition"
                     >
                       {item.label}
                     </Link>
                   </li>
                 ))}
-              </ul>{" "}
+              </ul>
             </div>
           )}
-          <ul>
-            {extraPages.length > 0 && (
-              <div>
-                <h2 className="text-lg font-semibold mb-4 border-b border-white/20 pb-2">
-                  Pages
-                </h2>
-                <ul className="space-y-2 text-sm text-gray-300">
-                  {extraPages.map((page) => (
-                    <li key={page.id}>
-                      <Link
-                        href={`/${page.slug}`}
-                        className="hover:text-white transition"
-                      >
-                        {page.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </ul>
+
+          {extraPages.length > 0 && (
+            <div>
+              <h2 className="text-lg font-semibold mb-4 border-b border-white/20 pb-2">
+                Pages
+              </h2>
+              <ul className="space-y-2 text-sm text-gray-300">
+                {extraPages.map((page) => (
+                  <li key={page.id}>
+                    <Link
+                      href={`/${page.slug}`}
+                      className="hover:text-white transition"
+                    >
+                      {page.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
 
           {/* Dynamic Categories */}
           {categories.map((cat) => (
