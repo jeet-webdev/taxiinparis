@@ -175,3 +175,11 @@ body {
     @apply no-underline;
   }
 }
+@layer base {
+  a {
+    text-decoration: none !important;
+  }
+  a:hover {
+    text-decoration: none !important;
+  }
+}
