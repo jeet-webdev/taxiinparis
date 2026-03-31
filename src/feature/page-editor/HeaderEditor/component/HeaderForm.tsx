@@ -308,18 +308,18 @@ export default function HeaderForm({
               — The button shown in the top navigation
             </span>
           </div>
-          {/* <label className="relative inline-flex items-center cursor-pointer">
+          <label className="relative inline-flex items-center cursor-pointer">
             <input
               type="checkbox"
               className="sr-only peer"
               checked={showBtn}
               onChange={(e) => setShowBtn(e.target.checked)}
-            /> 
+            />
             <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#8B6C26]"></div>
             <span className="ms-3 text-sm font-medium text-slate-600">
               {showBtn ? "Enabled" : "Disabled"}
             </span>
-          </label>*/}
+          </label>
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">
