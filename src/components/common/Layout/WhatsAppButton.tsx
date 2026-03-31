@@ -18,8 +18,8 @@ export default function WhatsAppButton({ phone }: { phone?: string }) {
     <div
       style={{
         position: "fixed",
-        bottom: "100px", // Adjusted for better thumb reach
-        right: "30px",
+        bottom: "25px", // Adjusted for better thumb reach
+        left: "30px",
         zIndex: 9999,
         display: "flex",
         alignItems: "center",
