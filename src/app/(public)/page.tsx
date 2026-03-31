@@ -29,12 +29,15 @@ export async function generateMetadata(): Promise<Metadata> {
       title,
       description,
       type: "website",
+      siteName: "Luxury Limo Paris", // ✅ Added
+      url: "https://www.luxurylimoparis.fr", // ✅ Added
     },
 
     twitter: {
       card: "summary_large_image",
       title,
       description,
+      site: "Luxury Limo Paris", // ✅ Added
     },
   };
 }
@@ -70,7 +73,7 @@ export default async function HomePage() {
             "@type": "Organization",
             name: "Luxury Limo Paris",
             url: "https://www.luxurylimoparis.fr",
-            logo: "https://www.luxurylimoparis.fr/logo.png",
+            logo: "https://www.luxurylimoparis.fr/uploads/apple-touch-icon-180x180.png", // ✅
           }),
         }}
       />
