@@ -7,6 +7,7 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
+import DisableRightClick from "../components/common/Layout/DisableRightClick";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -169,6 +170,7 @@ export default function RootLayout({
             style={{ display: "none", visibility: "hidden" }}
           ></iframe>
         </noscript>
+        <DisableRightClick />
         {children}
       </body>
     </html>

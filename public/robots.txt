@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
+Sitemap: https://www.luxurylimoparis.fr/sitemap.xml
 Sitemap: https://luxurylimoparis.fr/sitemap.xml
