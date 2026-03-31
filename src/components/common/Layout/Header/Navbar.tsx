@@ -15,6 +15,7 @@ interface FooterData {
   navLinks?: NavLink[] | unknown;
   btnText?: string | null;
   btnLink?: string | null;
+  showBtn?: boolean; // <-- ADD THIS
 }
 
 interface NavbarProps {
@@ -104,13 +105,15 @@ export default function Navbar({ footerData }: NavbarProps) {
 
           {/* Language Dropdown - Far Right */}
           <div className="flex items-center justify-between gap-4">
-            <Link
-              href={footerData?.btnLink || "/contact"}
-              target="_blank"
-              className="btn-primary cstm-navbtn font-logo! hidden md:block "
-            >
-              {footerData?.btnText || "Book Now"}
-            </Link>
+            {footerData?.showBtn !== false && (
+              <Link
+                href={footerData?.btnLink || "/contact"}
+                target="_blank"
+                className="btn-primary cstm-navbtn font-logo! hidden md:block "
+              >
+                {footerData?.btnText || "Book Now"}
+              </Link>
+            )}
             <div>
               <LanguageDropdown />
             </div>

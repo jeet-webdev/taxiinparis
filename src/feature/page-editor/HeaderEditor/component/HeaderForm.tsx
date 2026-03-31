@@ -21,6 +21,7 @@ interface Props {
   initialMobileLogoAlt?: string | null;
   initialBtnText?: string | null; // ← ADD
   initialBtnLink?: string | null; // ← ADD
+  initialShowBtn?: boolean | null; // 1. ADD THIS
 }
 
 export default function HeaderForm({
@@ -31,6 +32,7 @@ export default function HeaderForm({
   initialMobileLogoAlt,
   initialBtnText, // ← ADD
   initialBtnLink, // ← ADD
+  initialShowBtn, // 2. ADD THIS
 }: Props) {
   const [navLinks, setNavLinks] = useState<NavLink[]>(() => {
     const hasPrivacy = initialData.some((link) => link.url === "/privacy");
@@ -62,6 +64,7 @@ export default function HeaderForm({
   // ── CTA Button state — read from props, not initialData array ──
   const [btnText, setBtnText] = useState(initialBtnText || "Devis en ligne");
   const [btnLink, setBtnLink] = useState(initialBtnLink || "/devis");
+  const [showBtn, setShowBtn] = useState(initialShowBtn ?? true);
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const mobileFileInputRef = useRef<HTMLInputElement>(null);
@@ -103,6 +106,7 @@ export default function HeaderForm({
       formData.append("logoAlt", logoAlt);
       formData.append("btnText", btnText); // ← sends to action
       formData.append("btnLink", btnLink); // ← sends to action
+      formData.append("showBtn", String(showBtn));
       if (logoFile) formData.append("logoImage", logoFile);
 
       // ── NEW: append mobile logo fields ──
@@ -299,10 +303,23 @@ export default function HeaderForm({
             <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest">
               Header Button
             </h2>
+
             <span className="text-xs text-slate-400 normal-case tracking-normal font-normal">
               — The button shown in the top navigation
             </span>
           </div>
+          <label className="relative inline-flex items-center cursor-pointer">
+            <input
+              type="checkbox"
+              className="sr-only peer"
+              checked={showBtn}
+              onChange={(e) => setShowBtn(e.target.checked)}
+            />
+            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#8B6C26]"></div>
+            <span className="ms-3 text-sm font-medium text-slate-600">
+              {showBtn ? "Enabled" : "Disabled"}
+            </span>
+          </label>
           <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">

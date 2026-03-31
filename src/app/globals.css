@@ -10,6 +10,20 @@
   -ms-user-select: none;
   user-select: none;
 }
+
+img {
+  -webkit-user-drag: none;
+  user-drag: none;
+  pointer-events: none;
+}
+
+::selection {
+  background: transparent;
+}
+
+::-moz-selection {
+  background: transparent;
+}
 .skiptranslate {
   display: none !important;
 }

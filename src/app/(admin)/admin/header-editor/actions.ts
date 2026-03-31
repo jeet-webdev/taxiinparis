@@ -82,6 +82,7 @@ export async function updateHeaderAndLogo(formData: FormData) {
     // ── CHANGE 1: read btnText and btnLink from formData ──
     const btnText = (formData.get("btnText") as string) ?? "";
     const btnLink = (formData.get("btnLink") as string) ?? "";
+    const showBtn = formData.get("showBtn") === "true";
 
     // Fetch current DB record so we know the old file paths
     const existing = await prisma.footer.findUnique({ where: { id: 1 } });
@@ -105,6 +106,7 @@ export async function updateHeaderAndLogo(formData: FormData) {
       mobileLogoAlt,
       btnText, // ← ADDED
       btnLink, // ← ADDED
+      showBtn,
     };
     if (desktopPath) updateData.logoUrl = desktopPath;
     if (mobilePath) updateData.mobileLogoUrl = mobilePath;
@@ -122,6 +124,7 @@ export async function updateHeaderAndLogo(formData: FormData) {
         mobileLogoUrl: mobilePath,
         btnText, // ← ADDED
         btnLink, // ← ADDED
+        showBtn, // ← ADDED
       },
     });
 

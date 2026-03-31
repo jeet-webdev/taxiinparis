@@ -101,6 +101,7 @@ model Footer {
   mobileLogoUrl String?  @map("mobile_logo_url")
   btnLink       String?
   btnText       String?
+  showBtn       Boolean  @default(true)
   whatsapp      String?
 }
 
