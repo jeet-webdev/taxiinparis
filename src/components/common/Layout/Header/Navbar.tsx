@@ -110,7 +110,7 @@ export default function Navbar({ footerData }: NavbarProps) {
             {footerData?.phone && (
               <a
                 href={`tel:${footerData.phone}`}
-                className="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-tr from-[#8B6C26] via-[#C6A85A] to-[#F5E6AD] text-white shadow-lg animate-premium-pulse"
+                className=" flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-tr from-[#8B6C26] via-[#C6A85A] to-[#F5E6AD] text-white shadow-lg animate-premium-pulse"
               >
                 <FiPhone size={20} />
               </a>
