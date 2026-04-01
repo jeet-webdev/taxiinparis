@@ -7,6 +7,7 @@ import { NavLink } from "@/src/feature/page-editor/HeaderEditor/types/header.typ
 import LanguageDropdown from "../../Ui/GoogleTranslate";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { IoClose } from "react-icons/io5";
+import { FiPhone } from "react-icons/fi"; // Add this
 
 interface FooterData {
   logoUrl?: string | null;
@@ -16,6 +17,7 @@ interface FooterData {
   btnText?: string | null;
   btnLink?: string | null;
   showBtn?: boolean; // <-- ADD THIS
+  phone?: string | null;
 }
 
 interface NavbarProps {
@@ -105,6 +107,14 @@ export default function Navbar({ footerData }: NavbarProps) {
 
           {/* Language Dropdown - Far Right */}
           <div className="flex items-center justify-between gap-4">
+            {footerData?.phone && (
+              <a
+                href={`tel:${footerData.phone}`}
+                className="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-tr from-[#8B6C26] via-[#C6A85A] to-[#F5E6AD] text-white shadow-lg animate-premium-pulse"
+              >
+                <FiPhone size={20} />
+              </a>
+            )}
             {footerData?.showBtn !== false && (
               <Link
                 href={footerData?.btnLink || "/contact"}

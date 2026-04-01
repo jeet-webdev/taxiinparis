@@ -202,3 +202,18 @@ body {
     text-decoration: none !important;
   }
 }
+/* @keyframes luxe-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(198, 168, 90, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(198, 168, 90, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(198, 168, 90, 0);
+  }
+}
+
+.animate-luxe-pulse {
+  animation: luxe-pulse 3s infinite;
+} */

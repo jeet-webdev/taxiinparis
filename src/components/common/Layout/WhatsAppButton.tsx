@@ -42,14 +42,14 @@ export default function WhatsAppButton({ phone }: { phone?: string }) {
               delay: i * 1,
               ease: [0.16, 1, 0.3, 1], // Custom cubic-bezier for "exhausting" ripple look
             }}
-            style={{
-              position: "absolute",
-              width: "60px",
-              height: "60px",
-              borderRadius: "50%",
-              backgroundColor: "rgba(37, 211, 102, 0.4)", // Glow instead of just a border
-              border: "1px solid rgba(37, 211, 102, 0.2)",
-            }}
+            // style={{
+            //   position: "absolute",
+            //   width: "60px",
+            //   height: "60px",
+            //   borderRadius: "50%",
+            //   backgroundColor: "rgba(37, 211, 102, 0.4)", // Glow instead of just a border
+            //   border: "1px solid rgba(37, 211, 102, 0.2)",
+            // }}
           />
         ))}
       </AnimatePresence>
