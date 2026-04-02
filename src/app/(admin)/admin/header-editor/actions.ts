@@ -75,6 +75,9 @@ export async function updateHeaderAndLogo(formData: FormData) {
     const logoAlt = formData.get("logoAlt") as string;
     const logoFile = formData.get("logoImage") as File | null;
 
+    const headerPhone = (formData.get("headerPhone") as string) ?? "";
+    const showPhone = formData.get("showPhone") === "true";
+
     // ── Mobile logo ──
     const mobileLogoAlt = (formData.get("mobileLogoAlt") as string) ?? "";
     const mobileLogoFile = formData.get("mobileLogoImage") as File | null;
@@ -107,6 +110,8 @@ export async function updateHeaderAndLogo(formData: FormData) {
       btnText, // ← ADDED
       btnLink, // ← ADDED
       showBtn,
+      headerPhone, // ← NEW
+      showPhone, // ← NEW
     };
     if (desktopPath) updateData.logoUrl = desktopPath;
     if (mobilePath) updateData.mobileLogoUrl = mobilePath;
@@ -125,6 +130,8 @@ export async function updateHeaderAndLogo(formData: FormData) {
         btnText, // ← ADDED
         btnLink, // ← ADDED
         showBtn, // ← ADDED
+        headerPhone, // ← NEW
+        showPhone, // ← NEW
       },
     });
 

@@ -30,6 +30,8 @@ export default async function HeaderEditor() {
         initialBtnText={data?.btnText} // ← ADD
         initialBtnLink={data?.btnLink} // ← ADD
         initialShowBtn={data?.showBtn}
+        initialHeaderPhone={data?.headerPhone}
+        initialShowPhone={data?.showPhone}
       />
     </div>
   );

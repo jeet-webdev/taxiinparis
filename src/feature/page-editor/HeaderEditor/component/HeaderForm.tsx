@@ -22,6 +22,8 @@ interface Props {
   initialBtnText?: string | null; // ← ADD
   initialBtnLink?: string | null; // ← ADD
   initialShowBtn?: boolean | null; // 1. ADD THIS
+  initialHeaderPhone?: string | null; // ← NEW
+  initialShowPhone?: boolean | null; // ← NEW
 }
 
 export default function HeaderForm({
@@ -33,6 +35,8 @@ export default function HeaderForm({
   initialBtnText, // ← ADD
   initialBtnLink, // ← ADD
   initialShowBtn, // 2. ADD THIS
+  initialHeaderPhone, // ← NEW
+  initialShowPhone, // ← NEW
 }: Props) {
   const [navLinks, setNavLinks] = useState<NavLink[]>(() => {
     const hasPrivacy = initialData.some((link) => link.url === "/privacy");
@@ -65,6 +69,8 @@ export default function HeaderForm({
   const [btnText, setBtnText] = useState(initialBtnText || "Devis en ligne");
   const [btnLink, setBtnLink] = useState(initialBtnLink || "/devis");
   const [showBtn, setShowBtn] = useState(initialShowBtn ?? true);
+  const [headerPhone, setHeaderPhone] = useState(initialHeaderPhone || "");
+  const [showPhone, setShowPhone] = useState(initialShowPhone ?? true);
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const mobileFileInputRef = useRef<HTMLInputElement>(null);
@@ -107,6 +113,8 @@ export default function HeaderForm({
       formData.append("btnText", btnText); // ← sends to action
       formData.append("btnLink", btnLink); // ← sends to action
       formData.append("showBtn", String(showBtn));
+      formData.append("headerPhone", headerPhone); // ← NEW
+      formData.append("showPhone", String(showPhone)); // ← NEW
       if (logoFile) formData.append("logoImage", logoFile);
 
       // ── NEW: append mobile logo fields ──
@@ -293,7 +301,49 @@ export default function HeaderForm({
             Header & Footer Settings
           </h1>
         </div>
+        <section>
+          <div className="flex items-center gap-3 mb-5">
+            <span className="px-2 py-1 bg-blue-50 text-blue-600 text-[10px] font-bold rounded uppercase">
+              Phone
+            </span>
+            <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+              Header Phone Button
+            </h2>
+            <span className="text-xs text-slate-400 normal-case tracking-normal font-normal">
+              — The phone icon shown in the top navigation
+            </span>
+          </div>
 
+          {/* Toggle */}
+          <label className="relative inline-flex items-center cursor-pointer mb-4">
+            <input
+              type="checkbox"
+              className="sr-only peer"
+              checked={showPhone}
+              onChange={(e) => setShowPhone(e.target.checked)}
+            />
+            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#8B6C26]" />
+            <span className="ms-3 text-sm font-medium text-slate-600">
+              {showPhone ? "Enabled" : "Disabled"}
+            </span>
+          </label>
+
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">
+              Phone Number
+            </label>
+            <input
+              type="text"
+              className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-700 focus:ring-2 focus:ring-[#8B6C26]/20 focus:border-[#8B6C26] outline-none transition-all"
+              value={headerPhone}
+              onChange={(e) => setHeaderPhone(e.target.value)}
+              placeholder="e.g. +33 1 45 66 88 12"
+            />
+            <p className="text-xs text-slate-400 mt-2">
+              This is separate from the footer phone number.
+            </p>
+          </div>
+        </section>
         {/* ── CTA Button Section ── */}
         <section>
           <div className="flex items-center gap-3 mb-5">
