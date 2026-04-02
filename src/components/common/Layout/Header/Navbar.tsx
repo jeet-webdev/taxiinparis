@@ -18,6 +18,8 @@ interface FooterData {
   btnLink?: string | null;
   showBtn?: boolean; // <-- ADD THIS
   phone?: string | null;
+  headerPhone?: string | null; // ← NEW (header-specific)
+  showPhone?: boolean; // ← NEW
 }
 
 interface NavbarProps {
@@ -107,10 +109,10 @@ export default function Navbar({ footerData }: NavbarProps) {
 
           {/* Language Dropdown - Far Right */}
           <div className="flex items-center justify-between gap-4">
-            {footerData?.phone && (
+            {footerData?.showPhone !== false && footerData?.headerPhone && (
               <a
-                href={`tel:${footerData.phone}`}
-                className=" flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-tr from-[#8B6C26] via-[#C6A85A] to-[#F5E6AD] text-white shadow-lg animate-premium-pulse"
+                href={`tel:${footerData.headerPhone}`}
+                className="flex items-center justify-center w-10 h-10 rounded-full bg-gradient-to-tr from-[#8B6C26] via-[#C6A85A] to-[#F5E6AD] text-white shadow-lg animate-premium-pulse"
               >
                 <FiPhone size={20} />
               </a>

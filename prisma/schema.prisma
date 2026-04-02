@@ -88,6 +88,8 @@ model Footer {
   copyrightText String?
   email         String?
   phone         String?
+  headerPhone   String?  @map("header_phone")
+  showPhone     Boolean  @default(true) @map("show_phone")
   address       String?
   socialLinks   Json?
   navLinks      Json?
