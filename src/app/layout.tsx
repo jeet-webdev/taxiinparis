@@ -44,41 +44,62 @@ export const metadata: Metadata = {
     template: "%s | Luxury Limo Paris",
   },
 
-  description: "Premium Chauffeur Service in Paris",
+  description:
+    "Book a luxury limousine with private chauffeur in Paris. Airport transfers, business travel, weddings and city tours. Available 24/7. Book now.",
+  keywords: [
+    "luxury limo paris",
+    "chauffeur paris",
+    "private driver paris",
+    "airport transfer paris",
+    "luxury car paris",
+    "VTC paris",
+  ],
 
   applicationName: "Luxury Limo Paris",
+  alternates: {
+    canonical: "https://www.luxurylimoparis.fr",
+  },
 
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
+  // openGraph: {
+  //   title: "Luxury Limo Paris",
+  //   siteName: "Luxury Limo Paris",
+  //   url: "https://www.luxurylimoparis.fr",
+  //   type: "website",
+  // },
   openGraph: {
-    title: "Luxury Limo Paris",
+    title: "Luxury Limo Paris | Premium Chauffeur Service",
+    description:
+      "Book a luxury limousine with private chauffeur in Paris. Airport transfers, business travel, weddings and city tours. Available 24/7.",
     siteName: "Luxury Limo Paris",
     url: "https://www.luxurylimoparis.fr",
     type: "website",
+    locale: "en_FR",
+    images: [
+      {
+        url: "https://www.luxurylimoparis.fr/uploads/apple-touch-icon-180x180.png",
+        width: 1200,
+        height: 630,
+        alt: "Luxury Limo Paris",
+      },
+    ],
   },
-
-  // icons: {
-  //   icon: [
-  //     { url: "/favicon.ico", sizes: "any" },
-  //     {
-  //       url: "/favicon-32x32.png",
-  //       sizes: "32x32",
-  //       type: "image/png",
-  //     },
-  //     {
-  //       url: "/favicon-16x16.png",
-  //       sizes: "16x16",
-  //       type: "image/png",
-  //     },
-  //   ],
-  //   apple: [
-  //     {
-  //       url: "/apple-touch-icon.png",
-  //       sizes: "180x180",
-  //       type: "image/png",
-  //     },
-  //   ],
-  //   shortcut: "/favicon-32x32.png",
-  // },
-
+  twitter: {
+    card: "summary_large_image",
+    title: "Luxury Limo Paris | Premium Chauffeur Service",
+    description:
+      "Book a luxury limousine with private chauffeur in Paris. Available 24/7.",
+    images: [
+      "https://www.luxurylimoparis.fr/uploads/apple-touch-icon-180x180.png",
+    ],
+  },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },
