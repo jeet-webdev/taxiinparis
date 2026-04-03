@@ -217,3 +217,36 @@ body {
 .animate-luxe-pulse {
   animation: luxe-pulse 3s infinite;
 } */
+
+.animate-premium-pulse {
+  display: flex;
+
+  /* NEW: independent scale property */
+
+  scale: 1;
+
+  animation: bounce 3.5s infinite ease-in-out;
+
+  transition: scale 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* Only animate translate (NOT scale) */
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Smooth scaling */
+
+.animate-premium-pulse:hover {
+  scale: 1.1;
+
+  /* box-shadow: 0px 0px 20px 1px #c59d32; */
+}

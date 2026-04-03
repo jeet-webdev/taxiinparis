@@ -7,10 +7,17 @@ import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsS
 import Image from "next/image";
 // import BlogPagination from "@/src/feature/Blog/components/BlogPagination";
 import BlogPagination from "@/src/feature/blogs/components/BlogPagination";
+import { prisma } from "@/src/lib/prisma";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
+
+interface FooterData {
+  btnText?: string | null;
+  btnLink?: string | null;
+}
 interface Props {
   searchParams: Promise<{ page?: string }>;
+  footerData?: FooterData | null; // ← ADD THIS
 }
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -27,7 +34,11 @@ export default async function BlogPage({ searchParams }: Props) {
   const currentPage = Number(resolvedParams.page) || 1;
   const limit = 6;
 
-  const { blogs, totalPages } = await getBlogPage(currentPage, limit);
+  // const { blogs, totalPages } = await getBlogPage(currentPage, limit);
+  const [{ blogs, totalPages }, footerData] = await Promise.all([
+    getBlogPage(currentPage, limit),
+    prisma.footer.findFirst(),
+  ]);
 
   return (
     <main className="min-h-screen bg-[#292d37]">
@@ -104,6 +115,17 @@ export default async function BlogPage({ searchParams }: Props) {
                   totalPages={totalPages}
                   currentPage={currentPage}
                 />
+              )}
+              {footerData?.btnLink && (
+                <div className="text-center">
+                  <Link
+                    href={footerData.btnLink}
+                    target="_blank"
+                    className="btn-primary cstm-navbtn  font-logo! mt-8 inline-block"
+                  >
+                    {footerData.btnText || "Book Now"}
+                  </Link>
+                </div>
               )}
             </>
           )}

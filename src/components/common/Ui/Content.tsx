@@ -93,13 +93,15 @@ export default function Content({
           />
         )}
         {footerData?.btnLink && (
-          <Link
-            href={footerData.btnLink}
-            target="_blank"
-            className="btn-primary cstm-navbtn font-logo! mt-8 inline-block"
-          >
-            {footerData.btnText || "Book Now"}
-          </Link>
+          <div className="text-center">
+            <Link
+              href={footerData.btnLink}
+              target="_blank"
+              className="btn-primary cstm-navbtn  font-logo! mt-8 inline-block"
+            >
+              {footerData.btnText || "Book Now"}
+            </Link>
+          </div>
         )}
       </div>
     </Section>

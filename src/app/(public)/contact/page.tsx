@@ -6,6 +6,8 @@ import TestimonialsSection from "@/src/feature/Homepage/components/TestimonialsS
 import DarkLuxuryBlock from "@/src/components/common/Ui/DarkLuxuryBlock";
 // import ContactForm from "@/src/feature/Contact/ContactForm";
 import ContactForm from "@/src/feature/Contact/ContactForm";
+import { prisma } from "@/src/lib/prisma";
+import Link from "next/link";
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
 const getContactPage = cache(() => getPageBySlug("contact"));
@@ -38,7 +40,11 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function ContactPage() {
-  const page = await getContactPage();
+  // const page = await getContactPage();
+  const [page, footerData] = await Promise.all([
+    getContactPage(),
+    prisma.footer.findFirst(),
+  ]);
 
   if (page && page.status === "inactive") {
     notFound();
@@ -89,6 +95,17 @@ export default async function ContactPage() {
               </div>
             </aside>
           </div>
+          {footerData?.btnLink && (
+            <div className="text-center">
+              <Link
+                href={footerData.btnLink}
+                target="_blank"
+                className="btn-primary cstm-navbtn font-logo! mt-8 inline-block"
+              >
+                {footerData.btnText || "Book Now"}
+              </Link>
+            </div>
+          )}
         </section>
         <TestimonialsSection />
       </DarkLuxuryBlock>
