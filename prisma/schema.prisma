@@ -88,8 +88,6 @@ model Footer {
   copyrightText String?
   email         String?
   phone         String?
-  headerPhone   String?  @map("header_phone")
-  showPhone     Boolean  @default(true) @map("show_phone")
   address       String?
   socialLinks   Json?
   navLinks      Json?
@@ -103,8 +101,10 @@ model Footer {
   mobileLogoUrl String?  @map("mobile_logo_url")
   btnLink       String?
   btnText       String?
-  showBtn       Boolean  @default(true)
   whatsapp      String?
+  showBtn       Boolean  @default(true)
+  headerPhone   String?  @map("header_phone")
+  showPhone     Boolean  @default(true) @map("show_phone")
 }
 
 model Feature {
