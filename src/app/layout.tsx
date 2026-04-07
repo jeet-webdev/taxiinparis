@@ -7,7 +7,6 @@ import {
 } from "next/font/google";
 import "./globals.css";
 import Script from "next/script";
-import DisableRightClick from "../components/common/Layout/DisableRightClick";
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -183,6 +182,15 @@ export default function RootLayout({
         </Script>
 
         <Script id="gtm-script" strategy="afterInteractive"></Script>
+
+        <style>
+          {`
+  link[rel="icon"],
+  link[rel="apple-touch-icon"] {
+    background: transparent !important;
+  }
+`}
+        </style>
       </head>
       <body
         suppressHydrationWarning
