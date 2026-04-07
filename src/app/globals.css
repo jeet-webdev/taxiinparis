@@ -4,26 +4,57 @@
   --background: #ffffff;
   --foreground: #171717;
 }
-* {
+
+/* ⚠️ ONLY apply to public sections - NOT globally */
+.public-section * {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
 
-img {
+/* ✅ Allow text selection in admin sections */
+.admin-section * {
+  -webkit-user-select: text !important;
+  -moz-user-select: text !important;
+  -ms-user-select: text !important;
+  user-select: text !important;
+}
+
+.public-section img {
   -webkit-user-drag: none;
   user-drag: none;
   pointer-events: none;
 }
 
-::selection {
+/* ✅ Allow image drag in admin */
+.admin-section img {
+  -webkit-user-drag: auto !important;
+  user-drag: auto !important;
+  pointer-events: auto !important;
+}
+
+.public-section ::selection {
   background: transparent;
 }
 
-::-moz-selection {
+.public-section ::-moz-selection {
   background: transparent;
 }
+
+/* ✅ Allow text selection highlighting in admin */
+.admin-section ::selection {
+  background: rgba(138, 108, 38, 0.3) !important;
+}
+
+.admin-section ::-moz-selection {
+  background: rgba(138, 108, 38, 0.3) !important;
+}
+
+.skiptranslate {
+  display: none !important;
+}
+
 .skiptranslate {
   display: none !important;
 }

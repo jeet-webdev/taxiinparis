@@ -1,4 +1,5 @@
 import AppLayout from "@/src/components/common/Layout/AppLayout";
+import DisableRightClick from "@/src/components/common/Layout/DisableRightClick";
 import TawkTo from "@/src/components/common/Layout/TawkTo";
 import WhatsAppButton from "@/src/components/common/Layout/WhatsAppButton";
 // import WhatsAppButton from "@/src/components/common/Layout/WhatsAppButton";
@@ -19,10 +20,13 @@ export default async function PublicLayout({
   }
 
   return (
-    <AppLayout>
-      {children}
-      <WhatsAppButton />
-      <TawkTo />
-    </AppLayout>
+    <div className="public-section">
+      <DisableRightClick />
+      <AppLayout>
+        {children}
+        <WhatsAppButton />
+        <TawkTo />
+      </AppLayout>
+    </div>
   );
 }
