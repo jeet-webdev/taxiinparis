@@ -24,6 +24,8 @@ interface Props {
   initialShowBtn?: boolean | null; // 1. ADD THIS
   initialHeaderPhone?: string | null; // ← NEW
   initialShowPhone?: boolean | null; // ← NEW
+  initialWhatsapp?: string | null;
+  initialShowWhatsapp?: boolean | null;
 }
 
 export default function HeaderForm({
@@ -37,6 +39,8 @@ export default function HeaderForm({
   initialShowBtn, // 2. ADD THIS
   initialHeaderPhone, // ← NEW
   initialShowPhone, // ← NEW
+  initialWhatsapp,
+  initialShowWhatsapp,
 }: Props) {
   const [navLinks, setNavLinks] = useState<NavLink[]>(() => {
     const hasPrivacy = initialData.some((link) => link.url === "/privacy");
@@ -71,6 +75,8 @@ export default function HeaderForm({
   const [showBtn, setShowBtn] = useState(initialShowBtn ?? true);
   const [headerPhone, setHeaderPhone] = useState(initialHeaderPhone || "");
   const [showPhone, setShowPhone] = useState(initialShowPhone ?? true);
+  const [whatsapp, setWhatsapp] = useState(initialWhatsapp || "");
+  const [showWhatsapp, setShowWhatsapp] = useState(initialShowWhatsapp ?? true);
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const mobileFileInputRef = useRef<HTMLInputElement>(null);
@@ -115,6 +121,8 @@ export default function HeaderForm({
       formData.append("showBtn", String(showBtn));
       formData.append("headerPhone", headerPhone); // ← NEW
       formData.append("showPhone", String(showPhone)); // ← NEW
+      formData.append("whatsapp", whatsapp);
+      formData.append("showWhatsapp", String(showWhatsapp));
       if (logoFile) formData.append("logoImage", logoFile);
 
       // ── NEW: append mobile logo fields ──
@@ -344,6 +352,52 @@ export default function HeaderForm({
             </p>
           </div>
         </section>
+
+        {/* ── WhatsApp Button Section ── */}
+        <section>
+          <div className="flex items-center gap-3 mb-5">
+            <span className="px-2 py-1 bg-green-50 text-green-600 text-[10px] font-bold rounded uppercase">
+              WhatsApp
+            </span>
+            <h2 className="text-xs font-bold text-slate-400 uppercase tracking-widest">
+           WhatsApp ICON
+            </h2>
+            {/* <span className="text-xs text-slate-400 normal-case tracking-normal font-normal">
+              — The WhatsApp icon shown in the corner of the site, separate from the footer WhatsApp button
+            </span> */}
+          </div>
+
+          {/* Toggle */}
+          <label className="relative inline-flex items-center cursor-pointer mb-4">
+            <input
+              type="checkbox"
+              className="sr-only peer"
+              checked={showWhatsapp}
+              onChange={(e) => setShowWhatsapp(e.target.checked)}
+            />
+            <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#8B6C26]" />
+            <span className="ms-3 text-sm font-medium text-slate-600">
+              {showWhatsapp ? "Enabled" : "Disabled"}
+            </span>
+          </label>
+
+          <div className="bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+            <label className="text-xs font-bold text-slate-500 uppercase tracking-wider block mb-2">
+              WhatsApp Link or Number
+            </label>
+            <input
+              type="text"
+              className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm text-slate-700 focus:ring-2 focus:ring-[#8B6C26]/20 focus:border-[#8B6C26] outline-none transition-all"
+              value={whatsapp}
+              onChange={(e) => setWhatsapp(e.target.value)}
+              placeholder="e.g. https://wa.me/+33184190997"
+            />
+            <p className="text-xs text-slate-400 mt-2">
+              Enter a full wa.me link or just the phone number with country code
+            </p>
+          </div>
+        </section>
+
         {/* ── CTA Button Section ── */}
         <section>
           <div className="flex items-center gap-3 mb-5">

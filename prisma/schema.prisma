@@ -103,6 +103,7 @@ model Footer {
   btnText       String?
   whatsapp      String?
   showBtn       Boolean  @default(true)
+  showWhatsapp  Boolean  @default(true) @map("show_whatsapp")
   headerPhone   String?  @map("header_phone")
   showPhone     Boolean  @default(true) @map("show_phone")
 }
