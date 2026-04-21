@@ -124,7 +124,7 @@ export default function HeaderForm({
       const result = await updateHeaderAndLogo(formData);
 
       if (result.success) {
-        toast.success("Header and Logo updated successfully");
+        toast.success("Header Section updated successfully");
         setLogoFile(null);
         setMobileLogoFile(null);
       }
