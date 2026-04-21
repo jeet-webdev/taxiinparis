@@ -32,6 +32,8 @@ export default async function HeaderEditor() {
         initialShowBtn={data?.showBtn}
         initialHeaderPhone={data?.headerPhone}
         initialShowPhone={data?.showPhone}
+        initialWhatsapp={data?.whatsapp}
+        initialShowWhatsapp={data?.showWhatsapp}
       />
     </div>
   );
