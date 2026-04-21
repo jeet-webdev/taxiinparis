@@ -245,7 +245,7 @@ export default function FooterForm({
               }
             />
           </div>
-          <div>
+          {/* <div>
             <label className="text-sm font-medium text-gray-700">
               WhatsApp Link or Number
             </label>
@@ -260,7 +260,7 @@ export default function FooterForm({
             <p className="text-xs text-gray-400 mt-1">
               Enter a full wa.me link or just the phone number with country code
             </p>
-          </div>
+          </div> */}
         </section>
       </div>
 
