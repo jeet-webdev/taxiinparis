@@ -90,6 +90,10 @@ export async function updateHeaderAndLogo(formData: FormData) {
     // Fetch current DB record so we know the old file paths
     const existing = await prisma.footer.findUnique({ where: { id: 1 } });
 
+    //Fetch whatsapp and visibal or disable it
+    const whatsapp = formData.get("whatsapp") as string;
+    const showWhatsapp = formData.get("showWhatsapp") === "true";
+
     // Upload new files (returns null if no new file was provided)
     const desktopPath = await uploadLogoFile(logoFile, "logo");
     const mobilePath = await uploadLogoFile(mobileLogoFile, "logo-mobile");
@@ -103,7 +107,8 @@ export async function updateHeaderAndLogo(formData: FormData) {
     }
 
     // ── CHANGE 2: add btnText + btnLink to updateData ──
-    const updateData: Prisma.FooterUpdateInput = {
+    // NOTE: use `any` to avoid type errors while interacting with generated types
+    const updateData: any = {
       navLinks: navLinks as unknown as Prisma.InputJsonValue,
       logoAlt,
       mobileLogoAlt,
@@ -112,6 +117,8 @@ export async function updateHeaderAndLogo(formData: FormData) {
       showBtn,
       headerPhone, // ← NEW
       showPhone, // ← NEW
+      whatsapp, // ← NEW
+      showWhatsapp, // ← NEW
     };
     if (desktopPath) updateData.logoUrl = desktopPath;
     if (mobilePath) updateData.mobileLogoUrl = mobilePath;
@@ -132,6 +139,8 @@ export async function updateHeaderAndLogo(formData: FormData) {
         showBtn, // ← ADDED
         headerPhone, // ← NEW
         showPhone, // ← NEW
+        whatsapp, // ← NEW
+        showWhatsapp, // ← NEW
       },
     });
 
