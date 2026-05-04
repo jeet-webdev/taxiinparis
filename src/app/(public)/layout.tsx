@@ -30,6 +30,7 @@ export default async function PublicLayout({
       <DisableRightClick />
       <AppLayout>
         {children}
+        <TawkTo />
         {showWhatsapp ? <WhatsAppButton phone={whatsapp ?? undefined} /> : null}
       </AppLayout>
     </div>
