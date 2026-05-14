@@ -1,3 +1,5 @@
+
+
 import type { Metadata } from "next";
 import {
   Cinzel,
@@ -67,12 +69,6 @@ export const metadata: Metadata = {
       follow: true,
     },
   },
-  // openGraph: {
-  //   title: "Luxury Limo Paris",
-  //   siteName: "Luxury Limo Paris",
-  //   url: "https://www.luxurylimoparis.fr",
-  //   type: "website",
-  // },
   openGraph: {
     title: "Luxury Limo Paris | Premium Chauffeur Service",
     description:
@@ -153,6 +149,7 @@ export default function RootLayout({
       <head>
         <meta name="application-name" content="Luxury Limo Paris" />
 
+        {/* JSON-LD Structured Data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -162,52 +159,53 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLdWebsite) }}
         />
 
-        {/* GTM — kept as Next.js Script component, this is correct */}
-        {/* <Script id="gtm-script" strategy="afterInteractive">
-          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-          })(window,document,'script','dataLayer','GTM-NZXJWVFC');`}
-        </Script> */}
+        {/* Favicon background fix */}
+        <style>{`
+          link[rel="icon"],
+          link[rel="apple-touch-icon"] {
+            background: transparent !important;
+          }
+        `}</style>
+
+        {/* Clean _gl param from URL before page renders */}
         <Script id="clean-url" strategy="beforeInteractive">
           {`
-      (function() {
-        if (window.location.search.includes('_gl')) {
-          var clean = window.location.origin + window.location.pathname;
-          window.history.replaceState({}, '', clean);
-        }
-      })();
-    `}
+            (function() {
+              if (window.location.search.includes('_gl')) {
+                var clean = window.location.origin + window.location.pathname;
+                window.history.replaceState({}, '', clean);
+              }
+            })();
+          `}
         </Script>
-
-        <Script id="gtm-script" strategy="afterInteractive"></Script>
-
-        <style>
-          {`
-  link[rel="icon"],
-  link[rel="apple-touch-icon"] {
-    background: transparent !important;
-  }
-`}
-        </style>
       </head>
+
       <body
         suppressHydrationWarning
         className={`${montserrat.variable} ${cinzel.variable} ${playfair.variable} ${greatVibes.variable} font-sans`}
       >
-        {/* GTM noscript */}
+        {/* GTM noscript — must be immediately after opening <body> tag */}
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-NZXJWVFC"
             height="0"
             width="0"
             style={{ display: "none", visibility: "hidden" }}
-          ></iframe>
+          />
         </noscript>
-        {/* <DisableRightClick /> */}
+
+        {/* GTM script — afterInteractive loads after page is interactive */}
+        <Script id="gtm-script" strategy="afterInteractive">
+          {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+          new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+          j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+          'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+          })(window,document,'script','dataLayer','GTM-NZXJWVFC');`}
+        </Script>
+
         {children}
       </body>
     </html>
   );
 }
+
